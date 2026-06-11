@@ -71,7 +71,10 @@ before Core commands — a `production` value breaks dev installs/builds.
 
 - A fresh Core dev DB reports `status: FAIL` / "Version mismatch … to fix, run migration" at
   `/health`. This is normal — run the migration in the WebUI (**Settings → Upgrade Database →
-  Run automatic migration procedure**) to move it to an operational state; the UI loads regardless.
+  Run automatic migration procedure**); the UI loads regardless. After migrating, `/health` may
+  still report `FAIL`/`WARNING` from unconfigured demo blueprints ("Invalid configuration") and from
+  a connected Rundown Editor peripheral reporting an older `server-core-integration` version — both
+  are expected on a fresh dev instance and don't indicate a broken Core.
 - The standalone `[TSC]` watcher in `core` `yarn dev` prints many `Cannot find module 'meteor/…'`
   errors. These are expected false‑positives (Meteor's own build resolves those modules) and do not
   stop the server.
