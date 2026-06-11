@@ -1,0 +1,14 @@
+[submodule "blueprints"]
+  path = blueprints
+  url = https://github.com/tojemoc/sofie-demo-blueprints.git
+  branch = main
+
+[submodule "core"]
+  path = core
+  url = https://github.com/tojemoc/sofie-core.git
+  branch = main
+
+[submodule "rundown-editor"]
+  path = rundown-editor
+  url = https://github.com/tojemoc/unopus.git
+  branch = main
