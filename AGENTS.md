@@ -4,7 +4,7 @@
 
 ### What this repository is
 
-This is a **superproject** that aggregates three Sofie TV‑automation projects, declared in
+This is a **superproject** that aggregates four Sofie TV‑automation projects, declared in
 `.gitmodules`:
 
 | Path | Upstream | Product |
@@ -12,12 +12,13 @@ This is a **superproject** that aggregates three Sofie TV‑automation projects,
 | `core/` | `tojemoc/sofie-core` | **Sofie Core** — Meteor 3 + Node backend + React (Vite) WebUI |
 | `blueprints/` | `tojemoc/sofie-demo-blueprints` | **Demo Blueprints** — builds `*-bundle.js` uploaded into Core |
 | `rundown-editor/` | `tojemoc/unopus` | **Sofie Rundown Editor** — standalone Express + Socket.IO / React rundown tool |
+| `demo-assets/` | `tojemoc/sofie-demo-assets` | **Demo Assets** — Vue/HTML CasparCG templates + media scaffold; `yarn build` → `deploy/` |
 
 Each submodule has its own, more detailed `AGENTS.md` (e.g. `core/AGENTS.md`) — read it before
 working inside that submodule.
 
 > **Submodules are independent clones, not git‑linked.** The superproject tracks only `.gitmodules`
-> (no committed gitlinks), so `git submodule update --init` does nothing. The three directories are
+> (no committed gitlinks), so `git submodule update --init` does nothing. The four directories are
 > full standalone clones that are provisioned by the VM environment / persisted in the snapshot. To
 > update one, `cd` into it and use normal git. Do not `git add` these directories into the
 > superproject.
@@ -48,6 +49,7 @@ before Core commands — a `production` value breaks dev installs/builds.
 | Rundown Editor backend | `rundown-editor` | 3010 | `yarn dev:backend` (or `yarn dev` for both) |
 | Rundown Editor frontend | `rundown-editor` | 5173 | `yarn dev:ui` |
 | Blueprints docs (optional) | `blueprints` | 3030 | `yarn watch:docs` (base path `/sofie-demo-blueprints/`) |
+| CasparCG template dev (optional) | `demo-assets` | 8080 | `yarn serve` → e.g. `http://localhost:8080/l3d.html` |
 
 - **Core** uses an embedded MongoDB managed by Meteor in dev — no separate DB to start. First run
   needs packages built once: `node ./scripts/install-and-build.mjs` (or `yarn build:packages`).
@@ -66,6 +68,17 @@ before Core commands — a `production` value breaks dev installs/builds.
 | `core` | `yarn lint` (`lint:packages` fast; `lint:meteor` is slow, several minutes) | `yarn unit:packages` (Jest, ~1000+ tests), `yarn unit:meteor` | `node ./scripts/install-and-build.mjs` |
 | `blueprints` | `cd packages/blueprints && yarn lint` | `yarn test:blueprints` | `cd packages/blueprints && yarn dist` |
 | `rundown-editor` | `yarn lint` | (no test suite) | `yarn build` |
+| `demo-assets` | `yarn lint` | (none yet) | `yarn build` → `deploy/template-path` + `deploy/media-path` |
+
+### Hypercomposed Caspar (WIP)
+
+SPRÁVY targets a **single CasparCG server** compositing background loop, camera, ILU, HTML
+graphics, and alpha wipes — without vision-mixer program cuts. Blueprint support lands in PR 2
+(`hypercomposed` studio preset); templates and media are built from `demo-assets/`.
+
+**LED ≠ PGM:** one Caspar can output **different content on different channels/consumers**
+(e.g. ch1 → LED, ch2 → PGM). A second Caspar server is not required. See
+`demo-assets/docs/OUTPUT_TOPOLOGY.md`.
 
 ### Gotchas
 
@@ -80,4 +93,5 @@ before Core commands — a `production` value breaks dev installs/builds.
   stop the server.
 - Rundown Editor logs `Core Initialization Error: connect ECONNREFUSED 127.0.0.1:3000` when Core is
   not running — benign; the editor is fully usable standalone.
-- All three repos use Husky `lint-staged` pre‑commit hooks.
+- All four repos use Husky `lint-staged` pre‑commit hooks where configured.
+- `demo-assets` webpack 4 needs OpenSSL legacy provider — `yarn build` sets it in `package.json` scripts.
