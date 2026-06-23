@@ -1,0 +1,1108 @@
+From 26a7de7e6dfca385db999bf83514c894af31020a Mon Sep 17 00:00:00 2001
+From: Cursor Agent <cursoragent@cursor.com>
+Date: Tue, 23 Jun 2026 20:48:56 +0000
+Subject: [PATCH] =?UTF-8?q?feat:=20Caspar=20deploy=20layout,=20Sofie=20fie?=
+ =?UTF-8?q?ld=20mapping,=20SPR=C3=81VY=20template=20stubs?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+- Add yarn build pipeline producing deploy/template-path and deploy/media-path
+- Map gfx/l3d update() to Sofie name/description fields
+- Add stub gfx/mod-l3d and gfx/head-spravy Vue templates
+- Document LED vs PGM output topology (one Caspar, two channels)
+---
+ .gitignore                                |   1 +
+ AGENTS.md                                 |  72 ++++++-----
+ README.md                                 |  87 +++++++++----
+ docs/OUTPUT_TOPOLOGY.md                   |  49 +++++++
+ package.json                              |  13 +-
+ public/head-spravy.html                   |  16 +++
+ public/mod-l3d.html                       |  16 +++
+ scripts/assemble-caspar.mjs               | 108 ++++++++++++++++
+ src/assets/casparBridge.js                |  69 ++++++++++
+ src/assets/spravy.css                     |  23 ++++
+ src/head-spravy/App.vue                   |  57 +++++++++
+ src/head-spravy/components/headSpravy.vue | 148 ++++++++++++++++++++++
+ src/head-spravy/main.js                   |   8 ++
+ src/l3d/App.vue                           |  57 ++++-----
+ src/l3d/components/l3d.vue                |   5 +-
+ src/mod-l3d/App.vue                       |  42 ++++++
+ src/mod-l3d/components/modL3d.vue         |  92 ++++++++++++++
+ src/mod-l3d/main.js                       |   8 ++
+ vue.config.js                             |   4 +-
+ 19 files changed, 781 insertions(+), 94 deletions(-)
+ create mode 100644 docs/OUTPUT_TOPOLOGY.md
+ create mode 100644 public/head-spravy.html
+ create mode 100644 public/mod-l3d.html
+ create mode 100644 scripts/assemble-caspar.mjs
+ create mode 100644 src/assets/casparBridge.js
+ create mode 100644 src/assets/spravy.css
+ create mode 100644 src/head-spravy/App.vue
+ create mode 100644 src/head-spravy/components/headSpravy.vue
+ create mode 100644 src/head-spravy/main.js
+ create mode 100644 src/mod-l3d/App.vue
+ create mode 100644 src/mod-l3d/components/modL3d.vue
+ create mode 100644 src/mod-l3d/main.js
+
+diff --git a/.gitignore b/.gitignore
+index 185e663..7c73f8a 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -1,6 +1,7 @@
+ .DS_Store
+ node_modules
+ /dist
++/deploy
+ 
+ # local env files
+ .env.local
+diff --git a/AGENTS.md b/AGENTS.md
+index 7f2733b..32197f0 100644
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -2,35 +2,43 @@
+ 
+ ## Cursor Cloud specific instructions
+ 
+-This repo is a single Vue 2 / Vue CLI 3 (webpack 4) project that builds multiple
+-CasparCG HTML graphics templates (`l3d`, `wipe`, `ticker`, `strap`). There is no
+-backend, database, or other service — the only thing to run is the Vue dev server.
+-
+-Standard commands live in `package.json` (`yarn serve`, `yarn build`, `yarn lint`)
+-and `README.md`. Notes below cover only the non-obvious caveats.
+-
+-### OpenSSL legacy provider is required for build/serve (not lint)
+-The toolchain (webpack 4) is incompatible with the OpenSSL 3 default in modern
+-Node. `yarn build` and `yarn serve` fail with `ERR_OSSL_EVP_UNSUPPORTED`
+-(`error:0308010C:digital envelope routines::unsupported`) unless you set:
+-
+-```
+-NODE_OPTIONS=--openssl-legacy-provider yarn serve
+-NODE_OPTIONS=--openssl-legacy-provider yarn build
+-```
+-
+-`yarn lint` does NOT need this flag (it does not invoke webpack hashing).
+-
+-### Running / verifying templates
+-- Dev server runs at `http://localhost:8080`. There is no root `index.html`
+-  (the root path returns 404); each template is its own page, e.g.
+-  `http://localhost:8080/l3d.html`, `/wipe.html`, `/ticker.html`, `/strap.html`.
+-- When loaded from `localhost:8080`, templates auto-populate sample data and
+-  auto-play their intro animation (see each `src/<tpl>/App.vue` `mounted()`).
+-  For `l3d` this shows the name "Balte" / title "Developer".
+-- Each template exposes the CasparCG control API on `window`: `window.play()`,
+-  `window.stop()`, and `window.update({ f0, f1, ... })`. You can call these from
+-  the DevTools console to drive/update graphics without a reload, e.g.
+-  `window.update({ f0: "Name", f1: "Title" })`.
+-- To add a template: create `public/<name>.html`, add `src/<name>/`, and register
+-  it in the `pages` object of `vue.config.js`.
++This repo builds **CasparCG HTML templates** (Vue 2 / webpack 4) and a **deploy/** tree for
++Caspar `template-path` + `media-path`. No backend or long-running service.
++
++### Commands
++
++| Task | Command |
++|------|---------|
++| Dev server | `yarn serve` |
++| Production build | `yarn build` |
++| Lint | `yarn lint` |
++
++`yarn build` = `yarn build:vue` + `node scripts/assemble-caspar.mjs`.
++
++### OpenSSL legacy provider
++
++Webpack 4 needs `NODE_OPTIONS=--openssl-legacy-provider` on Node 17+ — already set in
++`package.json` scripts for `serve` and `build`.
++
++### Dev URLs
++
++No root `index.html`. Use `/l3d.html`, `/mod-l3d.html`, `/head-spravy.html`, etc.
++
++### Caspar API
++
++Templates expose `window.play()`, `window.stop()`, `window.update(data)`, `window.preview()`.
++Shared parser: `src/assets/casparBridge.js`.
++
++Sofie field names: see root `README.md` table.
++
++### Output layout
++
++After `yarn build`, copy `deploy/template-path` and `deploy/media-path` to Caspar.
++See `docs/OUTPUT_TOPOLOGY.md` for LED vs PGM (one Caspar, two channels).
++
++### Adding a template
++
++1. `public/<name>.html`
++2. `src/<name>/` (App.vue, main.js, components/)
++3. Register in `vue.config.js` `pages`
++4. Add `<name>` to `scripts/assemble-caspar.mjs` `pages` array
+diff --git a/README.md b/README.md
+index 90916b4..6cf7516 100644
+--- a/README.md
++++ b/README.md
+@@ -1,38 +1,79 @@
+-# CasparCG Vue based HTML graphics boilerplate
++# Sofie demo assets
+ 
+-A boilerplate to develop multiple HTML templates for CasparCG using the Vue framework.
++Vue 2 / webpack CasparCG HTML templates and a **media scaffold** for the Sofie demo /
++SPRÁVY **hypercomposed** playout path.
+ 
+-## Project setup
+-```
+-git clone https://github.com/baltedewit/casparcg-vue-boilerplate.git
+-cd casparcg-vue-boilerplate
+-git remote set-url origin https://github.com/USERNAME/REPOSITORY.git
++Forked from [casparcg-vue-boilerplate](https://github.com/mint-dewit/casparcg-vue-boilerplate).
++
++## Templates
++
++| Caspar name | Source | Sofie `update()` fields |
++|-------------|--------|-------------------------|
++| `gfx/l3d` | `src/l3d/` | `name`, `description` (+ legacy `f0`/`f1`) |
++| `gfx/mod-l3d` | `src/mod-l3d/` | `name` |
++| `gfx/head-spravy` | `src/head-spravy/` | `title`, `subtitle`, `source`, `iluFile` |
++| `gfx/strap` | `src/strap/` | (stock demo) |
++| `gfx/ticker` | `src/ticker/` | (stock demo) |
++| `gfx/wipe` | `src/wipe/` | (stock demo HTML wipe) |
++
++`head-spravy` and `mod-l3d` are **layout stubs** — replace with annotated screenshot specs.
++
++## Build & deploy
++
++```bash
+ yarn install
++yarn build
+ ```
+ 
+-### Compiles and hot-reloads for development
++Produces:
++
+ ```
+-yarn run serve
++deploy/
++  template-path/          → CasparCG <template-path>
++    gfx/<name>/<name>.html
++    js/ css/ img/         (shared hashed bundles)
++  media-path/             → CasparCG <media-path>
++    loops/ clips/ wipes/ assets/
+ ```
+-Open `http://localhost:8080` in a browser or send `CG 1 ADD http://localhost:8080/index.html 1` to CasparCG.
+ 
+-### Compiles and minifies for production
+-```
+-yarn run build
++Copy onto your playout machine:
++
++```text
++deploy/template-path/*  →  C:\path\to\caspar\template\
++deploy/media-path/*     →  C:\path\to\caspar\media\
+ ```
+ 
+-### Lints and fixes files
++Sofie blueprints reference templates as `gfx/l3d`, `gfx/head-spravy`, etc.
++
++### OpenSSL (Node 17+)
++
++`yarn build` and `yarn serve` set `NODE_OPTIONS=--openssl-legacy-provider` automatically.
++
++## Development
++
++```bash
++yarn serve
+ ```
+-yarn run lint
++
++Per-template dev URLs (no root index):
++
++- http://localhost:8080/l3d.html
++- http://localhost:8080/mod-l3d.html
++- http://localhost:8080/head-spravy.html
++
++Each auto-plays sample data on `localhost:8080`. Console API:
++
++```js
++window.update({ name: '…', description: '…' })
++window.play()
++window.stop()
+ ```
+ 
+-### Adding a template to the bundle:
+- 1. Create a file in the `public` directory called `{{template-name}}.html` similar to the other files
+- 2. Copy-paste one of the boilerplate templates in the `src` directory and rename it to `{{template-name}}`
+- 3. Edit `vue.config.js` and add your template to the `pages` object.
++## LED vs PGM
++
++See [docs/OUTPUT_TOPOLOGY.md](docs/OUTPUT_TOPOLOGY.md) — **one CasparCG** can feed LED and PGM
++on **different channels/consumers**; you do not need two servers.
+ 
+-### Customize configuration
+-See [Configuration Reference](https://cli.vuejs.org/config/).
++## CI/CD
+ 
+-## Developing for the browser
+-Note that your browser and the renderer in CasparCG will be different! Both 2.1.0.NRK and 2.2.0 run on Chromium 63 and they are configured in a different way than your normal browser. (E.g. web security features are disabled, webgl is disabled by default, hardware acceleration is disabled by default) You can attach debugging tools to the renderer in CasparCG, but you will lose the ability to use Vue devtools. Development will most likely be a combination of testing code and logics in Chrome and testing visual output in CasparCG.
++Not wired yet. `.github/workflows/` will be added in a follow-up PR.
+diff --git a/docs/OUTPUT_TOPOLOGY.md b/docs/OUTPUT_TOPOLOGY.md
+new file mode 100644
+index 0000000..01f4746
+--- /dev/null
++++ b/docs/OUTPUT_TOPOLOGY.md
+@@ -0,0 +1,49 @@
++# LED vs PGM — one Caspar or two?
++
++## Short answer
++
++**You do not need two CasparCG servers** for LED ≠ PGM.
++
++Use **one CasparCG instance** with **two channels** (or one channel + a non-Caspar PGM source).
++
++## Common SPRÁVY scenarios
++
++### A) LED = Caspar, PGM = studio camera (no second Caspar)
++
++```
++Caspar ch1 ──► LED wall     (360_loop + ILU + headlines + MOD gfx)
++Cam 1      ──► PGM / TX     (presenter + LED visible in frame)
++```
++
++Sofie hypercomposed mode drives **only the LED stack**. PGM is whatever shoots the studio.
++This is the usual physical setup when the presenter stands in front of the LED.
++
++### B) LED ≠ PGM, both composed — **one Caspar, two channels**
++
++```
++Caspar channel 1 ──consumer──► LED SDI/NDI   (full gfx stack, no wide camera)
++Caspar channel 2 ──consumer──► PGM SDI/NDI   (e.g. MOD cam + other layers)
++```
++
++Each channel has its **own layer stack** and **own consumer(s)** in `casparcg.config`.
++Sofie blueprints map timeline objects to `channel` + `layer` (already how demo blueprints
++use ch1/ch2/ch3 today — hypercomposed PR 2 will formalise LED vs PGM mappings).
++
++### C) Two Caspar servers
++
++Only needed for **hardware isolation** (two machines, two operators) or **splitting load**.
++Not required for different content on LED vs PGM.
++
++## Blueprint implication (PR 2+, not implemented yet)
++
++Studio config will support something like:
++
++```ts
++hypercomposed: {
++  ledChannel: 1,
++  pgmChannel: 2,   // optional; omit if PGM is a physical camera
++  cameraProducer: { ... },
++}
++```
++
++Until PR 2 lands, treat **deploy/template-path** as the LED graphics tree.
+diff --git a/package.json b/package.json
+index c343fa5..98c3029 100644
+--- a/package.json
++++ b/package.json
+@@ -1,12 +1,15 @@
+ {
+-  "name": "casparcg-vue-boilerplate",
+-  "version": "0.1.0",
++  "name": "sofie-demo-assets",
++  "version": "0.2.0",
++  "private": true,
++  "description": "Vue/HTML CasparCG templates and media scaffold for Sofie demo / SPRÁVY hypercomposed playout",
+   "scripts": {
+-    "serve": "vue-cli-service serve",
+-    "build": "vue-cli-service build",
++    "serve": "NODE_OPTIONS=--openssl-legacy-provider vue-cli-service serve",
++    "build:vue": "NODE_OPTIONS=--openssl-legacy-provider vue-cli-service build",
++    "build": "yarn build:vue && node scripts/assemble-caspar.mjs",
+     "lint": "vue-cli-service lint"
+   },
+-  "author": "Balte de Wit <contact@balte.nl",
++  "author": "tojemoc",
+   "license": "MIT",
+   "dependencies": {
+     "gsap": "^3.6.0",
+diff --git a/public/head-spravy.html b/public/head-spravy.html
+new file mode 100644
+index 0000000..fbfedcf
+--- /dev/null
++++ b/public/head-spravy.html
+@@ -0,0 +1,16 @@
++<!DOCTYPE html>
++<html lang="en">
++  <head>
++    <meta charset="utf-8">
++    <meta http-equiv="X-UA-Compatible" content="IE=edge">
++    <meta name="viewport" content="width=device-width,initial-scale=1.0">
++    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
++    <title>head-spravy</title>
++  </head>
++  <body>
++    <noscript>
++      <strong>JavaScript is required for this CasparCG template.</strong>
++    </noscript>
++    <div id="app"></div>
++  </body>
++</html>
+diff --git a/public/mod-l3d.html b/public/mod-l3d.html
+new file mode 100644
+index 0000000..31be7dd
+--- /dev/null
++++ b/public/mod-l3d.html
+@@ -0,0 +1,16 @@
++<!DOCTYPE html>
++<html lang="en">
++  <head>
++    <meta charset="utf-8">
++    <meta http-equiv="X-UA-Compatible" content="IE=edge">
++    <meta name="viewport" content="width=device-width,initial-scale=1.0">
++    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
++    <title>mod-l3d</title>
++  </head>
++  <body>
++    <noscript>
++      <strong>JavaScript is required for this CasparCG template.</strong>
++    </noscript>
++    <div id="app"></div>
++  </body>
++</html>
+diff --git a/scripts/assemble-caspar.mjs b/scripts/assemble-caspar.mjs
+new file mode 100644
+index 0000000..99abcc9
+--- /dev/null
++++ b/scripts/assemble-caspar.mjs
+@@ -0,0 +1,108 @@
++#!/usr/bin/env node
++/**
++ * Reorganise vue-cli dist/ into CasparCG deploy folders:
++ *
++ *   deploy/template-path/gfx/<name>/<name>.html  (+ shared js/css/img at template-path root)
++ *   deploy/media-path/{loops,clips,wipes,assets}/
++ *
++ * Sofie blueprints reference templates as gfx/<name> (e.g. gfx/l3d).
++ */
++
++import fs from 'node:fs'
++import path from 'node:path'
++import { fileURLToPath } from 'node:url'
++
++const __dirname = path.dirname(fileURLToPath(import.meta.url))
++const root = path.resolve(__dirname, '..')
++const vueDist = path.join(root, 'dist')
++const deployRoot = path.join(root, 'deploy')
++const templateRoot = path.join(deployRoot, 'template-path')
++const mediaRoot = path.join(deployRoot, 'media-path')
++
++const pages = ['l3d', 'head-spravy', 'mod-l3d', 'strap', 'ticker', 'wipe']
++
++function rmrf (dir) {
++  if (fs.existsSync(dir)) {
++    fs.rmSync(dir, { recursive: true, force: true })
++  }
++}
++
++function copyDir (src, dest) {
++  fs.mkdirSync(dest, { recursive: true })
++  for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
++    const s = path.join(src, entry.name)
++    const d = path.join(dest, entry.name)
++    if (entry.isDirectory()) {
++      copyDir(s, d)
++    } else {
++      fs.copyFileSync(s, d)
++    }
++  }
++}
++
++function rewriteAssetPaths (html) {
++  const prefix = '../../'
++  return html.replace(
++    /\b(href|src)=(["']?)((?:\.\.\/)?(?:css|js|img)\/[^"' >]+|favicon\.ico)/gi,
++    (match, attr, quote, url) => {
++      if (url.startsWith('../')) return match
++      return `${attr}=${quote}${prefix}${url}`
++    }
++  )
++}
++
++function ensureMediaScaffold () {
++  const dirs = ['loops', 'clips', 'wipes', 'assets']
++  for (const dir of dirs) {
++    const p = path.join(mediaRoot, dir)
++    fs.mkdirSync(p, { recursive: true })
++    const readme = path.join(p, 'README.md')
++    if (!fs.existsSync(readme)) {
++      fs.writeFileSync(readme, `# ${dir}\n\nPlace CasparCG media files here. See repo README.\n`)
++    }
++  }
++}
++
++function main () {
++  if (!fs.existsSync(vueDist)) {
++    console.error('dist/ not found — run yarn build:vue first')
++    process.exit(1)
++  }
++
++  rmrf(deployRoot)
++  fs.mkdirSync(templateRoot, { recursive: true })
++
++  for (const dir of ['js', 'css', 'img']) {
++    const src = path.join(vueDist, dir)
++    if (fs.existsSync(src)) {
++      copyDir(src, path.join(templateRoot, dir))
++    }
++  }
++
++  const favicon = path.join(vueDist, 'favicon.ico')
++  if (fs.existsSync(favicon)) {
++    fs.copyFileSync(favicon, path.join(templateRoot, 'favicon.ico'))
++  }
++
++  for (const page of pages) {
++    const srcHtml = path.join(vueDist, `${page}.html`)
++    if (!fs.existsSync(srcHtml)) {
++      console.warn(`skip: ${page}.html not in dist/`)
++      continue
++    }
++
++    const destDir = path.join(templateRoot, 'gfx', page)
++    fs.mkdirSync(destDir, { recursive: true })
++
++    const html = fs.readFileSync(srcHtml, 'utf8')
++    fs.writeFileSync(path.join(destDir, `${page}.html`), rewriteAssetPaths(html))
++  }
++
++  ensureMediaScaffold()
++
++  console.log(`Caspar deploy written to ${deployRoot}`)
++  console.log('  template-path → Caspar <template-path>')
++  console.log('  media-path    → Caspar <media-path>')
++}
++
++main()
+diff --git a/src/assets/casparBridge.js b/src/assets/casparBridge.js
+new file mode 100644
+index 0000000..2019c62
+--- /dev/null
++++ b/src/assets/casparBridge.js
+@@ -0,0 +1,69 @@
++/**
++ * Parse CasparCG / Sofie template update payloads.
++ * Accepts JSON objects or legacy XML-wrapped / URI-encoded strings.
++ */
++export function parseCasparUpdateData (data) {
++  if (typeof data === 'string') {
++    data = data.replace(
++      /^(<templateData>|<componentData>|<data>)|(<\/templateData>|<\/componentData>|<\/data>)$/gi,
++      ''
++    )
++    try {
++      data = JSON.parse(decodeURI(data))
++    } catch (e) {
++      try {
++        data = JSON.parse(data)
++      } catch (e2) {
++        return null
++      }
++    }
++  }
++
++  if (!data || typeof data !== 'object') {
++    return null
++  }
++
++  return data
++}
++
++/**
++ * Bind window.play / stop / update / preview / next for a Vue root component.
++ *
++ * @param {Vue} vm - root Vue instance with $refs.graphic
++ * @param {object} options
++ * @param {function(object): void} options.applyData - map parsed payload onto vm state
++ * @param {string} [options.ref='graphic'] - $refs key for the graphic component
++ * @param {function(): void} [options.onDevAutoplay] - localhost:8080 preview hook
++ */
++export function bindCasparApi (vm, { applyData, ref = 'graphic', onDevAutoplay }) {
++  window.play = () => {
++    if (vm.$refs[ref] && vm.$refs[ref].play) {
++      vm.$refs[ref].play()
++    }
++  }
++
++  window.stop = () => {
++    if (vm.$refs[ref] && vm.$refs[ref].stop) {
++      vm.$refs[ref].stop()
++    }
++  }
++
++  window.preview = () => {
++    if (vm.$refs[ref] && vm.$refs[ref].preview) {
++      vm.$refs[ref].preview()
++    }
++  }
++
++  window.update = raw => {
++    const data = parseCasparUpdateData(raw)
++    if (data) {
++      applyData(data)
++    }
++  }
++
++  window.next = () => {}
++
++  if (onDevAutoplay && document.location.host === 'localhost:8080') {
++    onDevAutoplay()
++  }
++}
+diff --git a/src/assets/spravy.css b/src/assets/spravy.css
+new file mode 100644
+index 0000000..cefa759
+--- /dev/null
++++ b/src/assets/spravy.css
+@@ -0,0 +1,23 @@
++:root {
++  /* SPRÁVY palette — tune against GT reference / annotated screenshots */
++  --spravy-bg-navy: #0a1630;
++  --spravy-bar-bg: rgba(12, 22, 48, 0.88);
++  --spravy-bar-highlight: rgba(120, 170, 255, 0.25);
++  --spravy-dot-blue: #2d6cdf;
++  --spravy-text: #ffffff;
++  --spravy-source-bg: rgba(40, 48, 60, 0.85);
++  --spravy-headline-bg: rgba(28, 32, 40, 0.92);
++  --spravy-warning: #e85d5d;
++}
++
++.data-warning {
++  position: fixed;
++  left: 5vw;
++  bottom: 4vh;
++  padding: 0.4em 0.8em;
++  background: var(--spravy-warning);
++  color: #fff;
++  font-size: 1.4vw;
++  border-radius: 0.3em;
++  z-index: 100;
++}
+diff --git a/src/head-spravy/App.vue b/src/head-spravy/App.vue
+new file mode 100644
+index 0000000..e5fe68e
+--- /dev/null
++++ b/src/head-spravy/App.vue
+@@ -0,0 +1,57 @@
++<template>
++  <div id="app" class="fullframe">
++    <head-spravy
++      ref="graphic"
++      :title="title"
++      :subtitle="subtitle"
++      :source="source"
++      :ilu-file="iluFile"
++      :missing-fields="missingFields"
++    />
++  </div>
++</template>
++
++<script>
++import '../assets/casparcg.css'
++import '../assets/spravy.css'
++import { bindCasparApi } from '../assets/casparBridge.js'
++import headSpravy from './components/headSpravy.vue'
++
++export default {
++  name: 'app',
++  components: { headSpravy },
++  data () {
++    return {
++      title: '',
++      subtitle: '',
++      source: '',
++      iluFile: ''
++    }
++  },
++  computed: {
++    missingFields () {
++      const missing = []
++      if (!this.title || !String(this.title).trim()) missing.push('title')
++      if (!this.subtitle || !String(this.subtitle).trim()) missing.push('subtitle')
++      return missing
++    }
++  },
++  mounted () {
++    bindCasparApi(this, {
++      applyData: data => {
++        this.title = data.title != null ? data.title : (data.f0 || '')
++        this.subtitle = data.subtitle != null ? data.subtitle : (data.f1 || '')
++        this.source = data.source != null ? data.source : (data.f2 || '')
++        this.iluFile = data.iluFile != null ? data.iluFile : (data.fileName || '')
++      },
++      onDevAutoplay: () => {
++        this.title = 'Prorastové opatrenia'
++        this.subtitle = 'opäť meškajú'
++        this.source = 'Úrad vlády'
++        this.iluFile = ''
++        this.$refs.graphic.play()
++      }
++    })
++  }
++}
++</script>
+diff --git a/src/head-spravy/components/headSpravy.vue b/src/head-spravy/components/headSpravy.vue
+new file mode 100644
+index 0000000..fd5f9a7
+--- /dev/null
++++ b/src/head-spravy/components/headSpravy.vue
+@@ -0,0 +1,148 @@
++<template>
++  <div class="titlesafe left head-spravy-root" ref="root">
++    <div v-if="missingFields.length" class="data-warning">
++      Missing: {{ missingFields.join(', ') }}
++    </div>
++
++    <div class="ilu-frame" ref="iluFrame">
++      <div class="ilu-placeholder">
++        <span v-if="iluFile">{{ iluFile }}</span>
++        <span v-else>ILU video</span>
++      </div>
++      <div v-if="sourceLabel" class="source-pill">{{ sourceLabel }}</div>
++    </div>
++
++    <div class="headlines" ref="headlines">
++      <div v-if="title" class="headline title">{{ title }}</div>
++      <div v-if="subtitle" class="headline subtitle">{{ subtitle }}</div>
++    </div>
++  </div>
++</template>
++
++<script>
++import { TimelineLite, Power2, Power4 } from 'gsap'
++
++export default {
++  props: {
++    title: { type: String, default: '' },
++    subtitle: { type: String, default: '' },
++    source: { type: String, default: '' },
++    iluFile: { type: String, default: '' },
++    missingFields: { type: Array, default: () => [] }
++  },
++  computed: {
++    sourceLabel () {
++      if (!this.source || !String(this.source).trim()) return ''
++      const s = String(this.source).trim()
++      return s.toLowerCase().startsWith('zdroj:') ? s : `zdroj: ${s}`
++    }
++  },
++  data () {
++    return {
++      timelineIntro: null,
++      timelineOutro: null
++    }
++  },
++  methods: {
++    play () {
++      this.timelineIntro.seek(0)
++      this.timelineIntro.play()
++    },
++    stop () {
++      this.timelineOutro.seek(0)
++      this.timelineOutro.play()
++    },
++    preview () {
++      this.timelineIntro.progress(1)
++    }
++  },
++  mounted () {
++    const { iluFrame, headlines } = this.$refs
++
++    this.timelineIntro = new TimelineLite({ paused: true })
++    this.timelineIntro.fromTo(iluFrame, 0.7, {
++      x: '-8vw',
++      opacity: 0
++    }, {
++      x: 0,
++      opacity: 1,
++      ease: Power2.easeOut
++    })
++    this.timelineIntro.fromTo(headlines, 0.5, {
++      y: '3vw',
++      opacity: 0
++    }, {
++      y: 0,
++      opacity: 1,
++      ease: Power2.easeOut
++    }, '-=0.3')
++
++    this.timelineOutro = new TimelineLite({ paused: true })
++    this.timelineOutro.to(headlines, 0.35, { opacity: 0, ease: Power2.easeIn })
++    this.timelineOutro.to(iluFrame, 0.5, { x: '-8vw', opacity: 0, ease: Power4.easeIn }, '-=0.15')
++  }
++}
++</script>
++
++<style scoped>
++.head-spravy-root {
++  /* Stub layout — replace with annotated screenshot measurements */
++}
++
++.ilu-frame {
++  position: fixed;
++  left: 5vw;
++  top: 14vh;
++  width: 62vw;
++  height: 52vh;
++  border-radius: 1.2vw;
++  overflow: hidden;
++  background: rgba(0, 0, 0, 0.35);
++}
++
++.ilu-placeholder {
++  width: 100%;
++  height: 100%;
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  color: rgba(255, 255, 255, 0.45);
++  font-size: 1.6vw;
++}
++
++.source-pill {
++  position: absolute;
++  top: 1vh;
++  right: 1vw;
++  padding: 0.35em 0.7em;
++  background: var(--spravy-source-bg);
++  color: #fff;
++  font-size: 1.1vw;
++  border-radius: 0.35vw;
++}
++
++.headlines {
++  position: fixed;
++  left: 5vw;
++  bottom: 10vh;
++  display: flex;
++  flex-direction: column;
++  gap: 0.6vh;
++  max-width: 58vw;
++}
++
++.headline {
++  display: inline-block;
++  padding: 0.45em 0.9em;
++  background: var(--spravy-headline-bg);
++  color: var(--spravy-text);
++  font-weight: 700;
++  border-radius: 0.4vw;
++  font-size: 2.2vw;
++}
++
++.headline.subtitle {
++  font-size: 2vw;
++  align-self: flex-start;
++}
++</style>
+diff --git a/src/head-spravy/main.js b/src/head-spravy/main.js
+new file mode 100644
+index 0000000..fca74cf
+--- /dev/null
++++ b/src/head-spravy/main.js
+@@ -0,0 +1,8 @@
++import Vue from 'vue'
++import App from './App.vue'
++
++Vue.config.productionTip = false
++
++new Vue({
++  render: h => h(App)
++}).$mount('#app')
+diff --git a/src/l3d/App.vue b/src/l3d/App.vue
+index 66143dc..7398394 100644
+--- a/src/l3d/App.vue
++++ b/src/l3d/App.vue
+@@ -1,58 +1,53 @@
+ <template>
+   <div id="app" class="fullframe">
+-    <l3d-two-name v-if="f2 || f3"  :f0="f0" :f1="f1" :f2="f2" :f3="f3" ref="l3d" />
+-    <l3d v-else :f0="f0" :f1="f1" ref="l3d" />
++    <l3d-two-name
++      v-if="f2 || f3"
++      ref="graphic"
++      :f0="f0"
++      :f1="f1"
++      :f2="f2"
++      :f3="f3"
++    />
++    <l3d v-else ref="graphic" :f0="f0" :f1="f1" />
+   </div>
+ </template>
+ 
+ <script>
+ import '../assets/casparcg.css'
++import { bindCasparApi } from '../assets/casparBridge.js'
+ import l3d from './components/l3d.vue'
+ import l3dTwoName from './components/l3dTwoName.vue'
+ 
+ export default {
+   name: 'app',
+   components: {
+-    l3d, l3dTwoName
++    l3d,
++    l3dTwoName
+   },
+   data () {
+     return {
+-      f0: undefined,
+-      f1: undefined,
++      f0: '',
++      f1: '',
+       f2: undefined,
+       f3: undefined
+     }
+   },
+   mounted () {
+-    window.play = () => {
+-      this.$refs.l3d.play()
+-    }
+-    window.stop = () => {
+-      this.$refs.l3d.stop()
+-    }
+-    window.update = data => {
+-      if (typeof data === 'string') {
+-        data = data.replace(/^(<templateData>|<componentData>|<data>)|(<\/templateData>|<\/componentData>|<\/data>)$/ig, '')
+-        try {
+-          data = JSON.parse(decodeURI(data))
+-        } catch (e) {
+-          // data not parsed, most likely it is not json but xml. we don't handle that as of yet.
+-        }
+-      } 
+-      if(data && typeof data === 'object') {
+-        this.f0 = data.f0
+-        this.f1 = data.f1
++    bindCasparApi(this, {
++      ref: 'graphic',
++      applyData: data => {
++        // Sofie demo blueprints send name + description; keep f0/f1 for manual testing.
++        this.f0 = data.name != null ? data.name : (data.f0 || '')
++        this.f1 = data.description != null ? data.description : (data.f1 || '')
+         this.f2 = data.f2
+         this.f3 = data.f3
++      },
++      onDevAutoplay: () => {
++        this.f0 = 'Gabriela Kajtárová'
++        this.f1 = 'Moderátorka'
++        this.$refs.graphic.play()
+       }
+-    }
+-    window.next = () => {}
+-    
+-    if (document.location.host === 'localhost:8080') {
+-      this.f0 = "Balte"
+-      this.f1 = "Developer"
+-      this.$refs.l3d.play()
+-    }
++    })
+   }
+ }
+ </script>
+diff --git a/src/l3d/components/l3d.vue b/src/l3d/components/l3d.vue
+index 1fd245c..3a75846 100644
+--- a/src/l3d/components/l3d.vue
++++ b/src/l3d/components/l3d.vue
+@@ -38,6 +38,9 @@ export default {
+         stop () {
+             this.timelineOutro.seek(0)
+             this.timelineOutro.play()
++        },
++        preview () {
++            this.timelineIntro.progress(1)
+         }
+     },
+     mounted () {
+@@ -131,5 +134,3 @@ export default {
+     margin-top: 3vw;
+ }
+ </style>
+-
+-
+diff --git a/src/mod-l3d/App.vue b/src/mod-l3d/App.vue
+new file mode 100644
+index 0000000..c5cb350
+--- /dev/null
++++ b/src/mod-l3d/App.vue
+@@ -0,0 +1,42 @@
++<template>
++  <div id="app" class="fullframe">
++    <mod-l3d
++      ref="graphic"
++      :name="name"
++      :missing-name="missingName"
++    />
++  </div>
++</template>
++
++<script>
++import '../assets/casparcg.css'
++import '../assets/spravy.css'
++import { bindCasparApi } from '../assets/casparBridge.js'
++import modL3d from './components/modL3d.vue'
++
++export default {
++  name: 'app',
++  components: { modL3d },
++  data () {
++    return {
++      name: ''
++    }
++  },
++  computed: {
++    missingName () {
++      return !this.name || !String(this.name).trim()
++    }
++  },
++  mounted () {
++    bindCasparApi(this, {
++      applyData: data => {
++        this.name = data.name != null ? data.name : (data.f0 || '')
++      },
++      onDevAutoplay: () => {
++        this.name = 'Gabriela Kajtárová'
++        this.$refs.graphic.play()
++      }
++    })
++  }
++}
++</script>
+diff --git a/src/mod-l3d/components/modL3d.vue b/src/mod-l3d/components/modL3d.vue
+new file mode 100644
+index 0000000..e3a87e5
+--- /dev/null
++++ b/src/mod-l3d/components/modL3d.vue
+@@ -0,0 +1,92 @@
++<template>
++  <div class="titlesafe left mod-l3d-root">
++    <div v-if="missingName" class="data-warning">Missing name</div>
++    <div class="mod-bar" ref="bar">
++      <span class="mod-dot" />
++      <span class="mod-name" ref="name">{{ name }}</span>
++    </div>
++  </div>
++</template>
++
++<script>
++import { TimelineLite, Power2, Power4 } from 'gsap'
++
++export default {
++  props: {
++    name: { type: String, default: '' },
++    missingName: { type: Boolean, default: false }
++  },
++  data () {
++    return {
++      timelineIntro: null,
++      timelineOutro: null
++    }
++  },
++  methods: {
++    play () {
++      this.timelineIntro.seek(0)
++      this.timelineIntro.play()
++    },
++    stop () {
++      this.timelineOutro.seek(0)
++      this.timelineOutro.play()
++    },
++    preview () {
++      this.timelineIntro.progress(1)
++    }
++  },
++  mounted () {
++    const bar = this.$refs.bar
++
++    this.timelineIntro = new TimelineLite({ paused: true })
++    this.timelineIntro.fromTo(bar, 0.5, {
++      marginLeft: '-40vw',
++      opacity: 0
++    }, {
++      marginLeft: '0',
++      opacity: 1,
++      ease: Power2.easeOut
++    })
++
++    this.timelineOutro = new TimelineLite({ paused: true })
++    this.timelineOutro.to(bar, 0.4, {
++      marginLeft: '-40vw',
++      opacity: 0,
++      ease: Power4.easeIn
++    })
++  }
++}
++</script>
++
++<style scoped>
++.mod-l3d-root {
++  bottom: 8vh;
++}
++
++.mod-bar {
++  display: inline-flex;
++  align-items: center;
++  gap: 0.8vw;
++  padding: 0.55vw 1.4vw 0.55vw 0.9vw;
++  background: var(--spravy-bar-bg);
++  border-radius: 0.45vw;
++  box-shadow: inset 0 1px 0 var(--spravy-bar-highlight);
++  margin-left: 0;
++  max-width: 70vw;
++}
++
++.mod-dot {
++  flex: 0 0 1.1vw;
++  width: 1.1vw;
++  height: 1.1vw;
++  border-radius: 50%;
++  background: var(--spravy-dot-blue);
++}
++
++.mod-name {
++  color: var(--spravy-text);
++  font-size: 2vw;
++  font-weight: 700;
++  line-height: 1.2;
++}
++</style>
+diff --git a/src/mod-l3d/main.js b/src/mod-l3d/main.js
+new file mode 100644
+index 0000000..fca74cf
+--- /dev/null
++++ b/src/mod-l3d/main.js
+@@ -0,0 +1,8 @@
++import Vue from 'vue'
++import App from './App.vue'
++
++Vue.config.productionTip = false
++
++new Vue({
++  render: h => h(App)
++}).$mount('#app')
+diff --git a/vue.config.js b/vue.config.js
+index ff76068..77428b8 100644
+--- a/vue.config.js
++++ b/vue.config.js
+@@ -2,8 +2,10 @@ module.exports = {
+     publicPath: '',
+     pages: {
+         l3d: 'src/l3d/main.js',
++        'head-spravy': 'src/head-spravy/main.js',
++        'mod-l3d': 'src/mod-l3d/main.js',
+         wipe: 'src/wipe/main.js',
+         ticker: 'src/ticker/main.js',
+         strap: 'src/strap/main.js'
+     }
+-}
+\ No newline at end of file
++}
+-- 
+2.43.0
+
