@@ -12,3 +12,8 @@
   path = rundown-editor
   url = https://github.com/tojemoc/unopus.git
   branch = main
+
+[submodule "demo-assets"]
+  path = demo-assets
+  url = https://github.com/tojemoc/sofie-demo-assets.git
+  branch = main
