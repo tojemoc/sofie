@@ -49,7 +49,7 @@ before Core commands — a `production` value breaks dev installs/builds.
 | Rundown Editor backend | `rundown-editor` | 3010 | `yarn dev:backend` (or `yarn dev` for both) |
 | Rundown Editor frontend | `rundown-editor` | 5173 | `yarn dev:ui` |
 | Blueprints docs (optional) | `blueprints` | 3030 | `yarn watch:docs` (base path `/sofie-demo-blueprints/`) |
-| CasparCG template dev (optional) | `demo-assets` | 8080 | `yarn serve` → e.g. `http://localhost:8080/l3d.html` |
+| CasparCG template dev (optional) | `demo-assets` | 8080 | `yarn serve` → e.g. `http://localhost:8080/l3d-tema/index.html` |
 
 - **Core** uses an embedded MongoDB managed by Meteor in dev — no separate DB to start. First run
   needs packages built once: `node ./scripts/install-and-build.mjs` (or `yarn build:packages`).
@@ -70,7 +70,25 @@ before Core commands — a `production` value breaks dev installs/builds.
 | `rundown-editor` | `yarn lint` | (no test suite) | `yarn build` |
 | `demo-assets` | `yarn lint` | (none yet) | `yarn build` → `deploy/template-path` + `deploy/media-path` |
 
-### Hypercomposed Caspar (WIP)
+### SPRÁVY v2 integration (cross-repo)
+
+**Integration log:** `docs/integration/SPRAVY-V2-INTEGRATION.md` — template catalogue,
+deploy contract, repo status, verification checklist. Update when cross-repo progress changes.
+
+**Blueprints handoff prompt:** `docs/integration/handoffs/blueprints-v2-wiring.md` — copy into
+a Cursor agent session on `sofie-demo-blueprints`.
+
+| Repo | Status (2026-06-24) |
+|------|---------------------|
+| `demo-assets` | **PR #3 merged** — 10 v2 templates + `assemble-caspar.mjs`; **PR #4 open** — CI pre-releases |
+| `blueprints` | **Not wired** — still v1 `gfx/l3d` etc.; critical path for Friday demo |
+| `rundown-editor` | Import piece types from blueprints after wiring; minimal changes for demo |
+| `core` / playout-gateway | No template code; upload blueprint bundle + apply studio config |
+
+v2 Caspar `clipName` convention: `gfx/<template-folder>` (e.g. `gfx/l3d-tema`). Built layout:
+`deploy/template-path/gfx/<name>/<name>.html`. See integration log for full payload table.
+
+### Hypercomposed Caspar (WIP — post-demo PR2)
 
 SPRÁVY targets a **single CasparCG server** compositing background loop, camera, ILU, HTML
 graphics, and alpha wipes — without vision-mixer program cuts. Blueprint support lands in PR 2
