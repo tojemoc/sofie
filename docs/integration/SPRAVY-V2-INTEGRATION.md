@@ -3,7 +3,7 @@
 Living document for agents working across the Sofie megarepo. Update this file when
 demo-assets, blueprints, rundown-editor, or core integration status changes.
 
-**Last updated:** 2026-06-24
+**Last updated:** 2026-06-28
 
 ---
 
@@ -25,7 +25,10 @@ imported H.264 clips. Full hypercomposed (LED≠PGM, wipes, all 10 templates) is
 | `tojemoc/sofie-demo-assets` | [PR #4](https://github.com/tojemoc/sofie-demo-assets/pull/4) | **Open** — CI/CD, pre-releases (`sofie-demo-assets-pre-<sha>.zip`), Docker image |
 | `tojemoc/sofie-demo-blueprints` | `main` | **Not wired** — still v1 piece types (`l3d`, `strap`, `ticker`, `head`, `fullscreen`) |
 | `tojemoc/sofie-demo-blueprints` | `vmix-demo-blueprints` | vMix registry work; **no v2 Caspar template wiring** |
-| `tojemoc/unopus` (Rundown Editor) | `main` | Built-in manifests; **no v2 piece types** |
+| `tojemoc/unopus` (Rundown Editor) | `main` @ `6e1f08a` | **PR #32 merged** — readiness badges, Octopus story list, dark/light theme |
+| `tojemoc/unopus` (Rundown Editor) | `cursor/quick-story-toolbar-cc55` | **Open** — fix quick-add button overlap; toolbar in blue timing bar |
+| `tojemoc/sofie-demo-assets` | `cursor/fix-headline-ilu-play-layer-715a` | **Open** — ILU WebM in template `<video>`, no layer-110 PLAY |
+| `tojemoc/sofie-demo-blueprints` | `cursor/fix-headline-ilu-play-layer-715a` | **Open** — remove `getIluMediaTimelineObject()`; template-layer only |
 | `tojemoc/sofie-core` | — | No template-specific code; Playout Gateway is transport only |
 
 ---
@@ -113,7 +116,8 @@ The bridge accepts JSON objects and XML-wrapped JSON from Caspar.
 ```
 
 **Production media still missing** — demo must import/transcode clips. Use H.264 MP4 for
-reliability. Dev autoplay on `headline` uses `iluFile: 'clips/premiera.mp4'`.
+reliability. Dev autoplay on `headline` uses `iluFile: 'clips/premiera.mp4'`. CEF maps
+`.mp4`/`.mov` → `.webm` sibling at runtime; **both files must exist on ingest**.
 
 ### Still open on demo-assets side (not blocking blueprint spec)
 
@@ -167,12 +171,35 @@ Defer: `weather`, `l3d-sport`, `headline`+ILU pair, hypercomposed multi-channel,
 
 ---
 
-## Rundown Editor
+## Rundown Editor (`tojemoc/unopus`)
 
 - No template rendering; stores `pieceType` + payload only
 - Import piece types from blueprints JSON after blueprints PR lands
 - Built-in `l3d` manifest uses `name`+`title`; blueprints JSON uses `name`+`description` — **align on import**
-- Minimal RE changes for Friday; avoid UI rework
+
+### Merged (PR #32, `6e1f08a`)
+
+- **Media readiness:** `GET /api/rundowns/:id/readiness` — evaluates `mediaPick` fields + WebM
+  sibling for `iluFile`; polls every 10s via `RundownReadinessProvider`
+- **Story sidebar:** columnar list (Status | Type | Story | Dur) with READY/NOT READY badges
+- **Theming:** dark default + light option; semantic `--re-*` tokens; ThemeToggle in navbar/login
+- **Rebrand:** Unopus (navbar breadcrumb)
+
+Key files: `backend/src/background/mediaReadiness.ts`, `frontend/src/hooks/useRundownReadiness.ts`,
+`RundownReadinessContext.tsx`, `sidebar/partRow.tsx`, `readinessBadge.tsx`, `theme/tokens.scss`
+
+### Open branch: `cursor/quick-story-toolbar-cc55`
+
+PR #32 left per-row `PartTypeButtons` with absolute positioning from the old layout, causing
+complete overlap with the new story table. Fix moves a **single** quick-add strip (ILU, SYN, Cam,
+VO, …) into the blue timing bar; `usePartInsertTarget` inserts after the open story (or at
+segment end). Compare: https://github.com/tojemoc/unopus/compare/main...cursor/quick-story-toolbar-cc55
+
+### ILU architecture (cross-repo, branches `cursor/fix-headline-ilu-play-layer-715a`)
+
+- **demo-assets:** ILU video plays inside template `<video>` via WebM sibling (CEF), not Caspar layer 110 PLAY
+- **blueprints:** removed ILU PLAY on layer 110; `expectedPackages` targets template layer only
+- **Operator:** transcode `headline1.webm` alongside MP4 on Caspar ingest; rebuild + deploy
 
 ---
 
