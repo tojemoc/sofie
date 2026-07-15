@@ -221,7 +221,7 @@ segment end). Compare: https://github.com/tojemoc/unopus/compare/main...cursor/q
 
 Symptoms that look like “PM cannot connect” but Core is up:
 
-1. Nested Softie `mediaPackages` object **does not persist in Settings** (edits vanish). Fixed by flattening to top-level fields on `cursor/pm-accessor-type-ingest-09c3`. After uploading that bundle + refresh: edit **Ingest media folder** as a normal string (no nested “Media package containers” object), use `c:/casparcg/sofie-demo-media`, then Apply Configuration. Until then, you cannot save that nested field in the UI — upload the new blueprints first.
+1. Nested Sofie `mediaPackages` object **does not persist in Settings** (edits vanish). Fixed by flattening to top-level fields on `cursor/pm-accessor-type-ingest-09c3`. After uploading that bundle + refresh: edit **Ingest media folder** as a normal string (no nested “Media package containers” object), use `c:/casparcg/sofie-demo-media`, then Apply Configuration. Until then, you cannot save that nested field in the UI — upload the new blueprints first.
 2. `getAccessorStaticHandle: Accessor type is undefined` — ExpectedPackage source accessors lacked `type`; also on `cursor/pm-accessor-type-ingest-09c3`. After upload, re-apply studio config and re-ingest/reset the rundown so packages regenerate.
 
 ---
