@@ -30,6 +30,7 @@ imported H.264 clips. Full hypercomposed (LED≠PGM, wipes, all 10 templates) is
 | `tojemoc/sofie-demo-assets` | `cursor/fix-headline-ilu-play-layer-715a` | **Open** — ILU WebM in template `<video>`, no layer-110 PLAY |
 | `tojemoc/sofie-demo-blueprints` | `cursor/fix-headline-ilu-play-layer-715a` | **Open** — remove `getIluMediaTimelineObject()`; template-layer only |
 | `tojemoc/sofie-demo-blueprints` | `cursor/ilu-fill-dedicated-layer-09c3` | **Pushed** — ILU MIXER FILL on dedicated layer **115** (not 110); open PR manually (token cannot create PRs) |
+| `tojemoc/sofie-demo-blueprints` | `cursor/pm-accessor-type-ingest-09c3` | **Pushed** — ExpectedPackage ingest accessors need `type: LOCAL_FOLDER` (fixes PM `Accessor type is undefined`) |
 | `tojemoc/sofie-core` | — | No template-specific code; Playout Gateway is transport only |
 
 ---
