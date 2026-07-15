@@ -215,7 +215,14 @@ segment end). Compare: https://github.com/tojemoc/unopus/compare/main...cursor/q
 
 - No code changes for new template names
 - Upload new blueprint bundle → apply studio config → verify Playout Gateway + Caspar subdevice
-- `packageContainers.casparcg0.folderPath` hardcoded `c:/casparcg/media` — fix or symlink on Linux demo host
+- Package Manager connects to Core at `coreHost:corePort` (look for `Core Connected!` / `studioId`)
+
+### Package Manager misconfig (not a Core disconnect)
+
+Symptoms that look like “PM cannot connect” but Core is up:
+
+1. `ENOENT … sofie-demo-media-ingest` — create `c:\casparcg\sofie-demo-media-ingest` (or set studio `mediaPackages.ingestMediaFolder` to an existing path; for demo you can point it at `sofie-demo-media` if files already live there)
+2. `getAccessorStaticHandle: Accessor type is undefined` — ExpectedPackage source accessors lacked `type`; fixed on `cursor/pm-accessor-type-ingest-09c3` (compare: https://github.com/tojemoc/sofie-demo-blueprints/compare/develop...cursor/pm-accessor-type-ingest-09c3). After upload, re-apply studio config and re-ingest/reset the rundown so packages regenerate.
 
 ---
 
