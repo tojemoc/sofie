@@ -247,8 +247,8 @@ Ops: mount media at the configured ingest root so both RE readiness and Softie P
 [ ] Copy zip to Caspar; AMCP: CG <ch> ADD 0 "<clipName>" 1
 [ ] CG <ch> UPDATE 0 "<clipName>" "{\"headline\":\"test\"}"
 [ ] Blueprints dist bundle uploaded to Core
-[ ] Studio config applied; mappings include ClipPlayer=110, IluPlayer=115, LowerThird=121
-[ ] Headline with ILU: AMCP shows MIXER FILL on 1-115 only; loop keeps PLAY on 1-110
+[ ] Studio config applied; mappings include casparcg_clip_player1→110, casparcg_ilu_player→115, casparcg_graphics_l3d→121
+[ ] Headline with ILU: AMCP shows MIXER FILL 0.08 / 0.15 / 0.62 / 0.73 on 1-115 (casparcg_ilu_player) only; loop keeps PLAY on 1-110
 [ ] RE rundown ingested; take fires correct template + data
 [ ] logo-bug survives across parts until rundown end
 ```
