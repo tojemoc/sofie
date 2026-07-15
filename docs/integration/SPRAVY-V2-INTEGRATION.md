@@ -3,7 +3,7 @@
 Living document for agents working across the Sofie megarepo. Update this file when
 demo-assets, blueprints, rundown-editor, or core integration status changes.
 
-**Last updated:** 2026-06-28
+**Last updated:** 2026-07-15
 
 ---
 
@@ -29,6 +29,8 @@ imported H.264 clips. Full hypercomposed (LED≠PGM, wipes, all 10 templates) is
 | `tojemoc/unopus` (Rundown Editor) | `cursor/quick-story-toolbar-cc55` | **Open** — fix quick-add button overlap; toolbar in blue timing bar |
 | `tojemoc/sofie-demo-assets` | `cursor/fix-headline-ilu-play-layer-715a` | **Open** — ILU WebM in template `<video>`, no layer-110 PLAY |
 | `tojemoc/sofie-demo-blueprints` | `cursor/fix-headline-ilu-play-layer-715a` | **Open** — remove `getIluMediaTimelineObject()`; template-layer only |
+| `tojemoc/sofie-demo-blueprints` | `cursor/ilu-fill-dedicated-layer-09c3` | **Pushed** — ILU MIXER FILL on dedicated layer **115** (not 110); open PR manually (token cannot create PRs) |
+| `tojemoc/sofie-demo-blueprints` | `cursor/pm-accessor-type-ingest-09c3` | **Pushed** — ExpectedPackage ingest accessors need `type: LOCAL_FOLDER` (fixes PM `Accessor type is undefined`) |
 | `tojemoc/sofie-core` | — | No template-specific code; Playout Gateway is transport only |
 
 ---
@@ -195,11 +197,17 @@ complete overlap with the new story table. Fix moves a **single** quick-add stri
 VO, …) into the blue timing bar; `usePartInsertTarget` inserts after the open story (or at
 segment end). Compare: https://github.com/tojemoc/unopus/compare/main...cursor/quick-story-toolbar-cc55
 
-### ILU architecture (cross-repo, branches `cursor/fix-headline-ilu-play-layer-715a`)
+### ILU architecture (cross-repo)
 
-- **demo-assets:** ILU video plays inside template `<video>` via WebM sibling (CEF), not Caspar layer 110 PLAY
-- **blueprints:** removed ILU PLAY on layer 110; `expectedPackages` targets template layer only
-- **Operator:** transcode `headline1.webm` alongside MP4 on Caspar ingest; rebuild + deploy
+- **Layer contract (LED channel):**
+  - `110` (`CasparCGClipPlayer1`) — LED background loop / VT fullscreen only; **never** apply MIXER FILL here
+  - `115` (`CasparCGIluPlayer`) — headline ILU MEDIA with FILL `0.08 / 0.15 / 0.62 / 0.73` (matches HTML `#ilu-slide`)
+  - `121` — HTML graphics templates (`gfx/headline`, etc.)
+- **Bug (2026-07-15):** FILL landed on `1-110` and scaled the bg loop. Fix branch:
+  `tojemoc/sofie-demo-blueprints` → `cursor/ilu-fill-dedicated-layer-09c3`
+  (compare: https://github.com/tojemoc/sofie-demo-blueprints/compare/develop...cursor/ilu-fill-dedicated-layer-09c3)
+- **demo-assets:** preferred path is ILU `<video>` via WebM sibling in template; Caspar MEDIA+FILL is the fallback path (`iluFallback` / media-layer mode)
+- **Operator:** after uploading the new blueprint bundle, **re-apply studio config** so mapping `casparcg_ilu_player` → layer 115 exists
 
 ---
 
@@ -207,7 +215,14 @@ segment end). Compare: https://github.com/tojemoc/unopus/compare/main...cursor/q
 
 - No code changes for new template names
 - Upload new blueprint bundle → apply studio config → verify Playout Gateway + Caspar subdevice
-- `packageContainers.casparcg0.folderPath` hardcoded `c:/casparcg/media` — fix or symlink on Linux demo host
+- Package Manager connects to Core at `coreHost:corePort` (look for `Core Connected!` / `studioId`)
+
+### Package Manager misconfig (not a Core disconnect)
+
+Symptoms that look like “PM cannot connect” but Core is up:
+
+1. Nested Sofie `mediaPackages` object **does not persist in Settings** (edits vanish). Fixed by flattening to top-level fields on `cursor/pm-accessor-type-ingest-09c3`. After uploading that bundle + refresh: edit **Ingest media folder** as a normal string (no nested “Media package containers” object), use `c:/casparcg/sofie-demo-media`, then Apply Configuration. Until then, you cannot save that nested field in the UI — upload the new blueprints first.
+2. `getAccessorStaticHandle: Accessor type is undefined` — ExpectedPackage source accessors lacked `type`; also on `cursor/pm-accessor-type-ingest-09c3`. After upload, re-apply studio config and re-ingest/reset the rundown so packages regenerate.
 
 ---
 
@@ -218,7 +233,8 @@ segment end). Compare: https://github.com/tojemoc/unopus/compare/main...cursor/q
 [ ] Copy zip to Caspar; AMCP: CG <ch> ADD 0 "<clipName>" 1
 [ ] CG <ch> UPDATE 0 "<clipName>" "{\"headline\":\"test\"}"
 [ ] Blueprints dist bundle uploaded to Core
-[ ] Studio config applied; mappings show expected layers
+[ ] Studio config applied; mappings include ClipPlayer=110, IluPlayer=115, LowerThird=121
+[ ] Headline with ILU: AMCP shows MIXER FILL on 1-115 only; loop keeps PLAY on 1-110
 [ ] RE rundown ingested; take fires correct template + data
 [ ] logo-bug survives across parts until rundown end
 ```
