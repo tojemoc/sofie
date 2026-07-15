@@ -201,15 +201,15 @@ segment end). Compare: https://github.com/tojemoc/unopus/compare/main...cursor/q
 
 ### ILU architecture (cross-repo)
 
-- **Layer contract (LED channel):**
-  - `110` (`CasparCGClipPlayer1`) — LED background loop / VT fullscreen only; **never** apply MIXER FILL here
-  - `115` (`CasparCGIluPlayer`) — headline ILU MEDIA with FILL `0.08 / 0.15 / 0.62 / 0.73` (matches HTML `#ilu-slide`)
-  - `121` — HTML graphics templates (`gfx/headline`, etc.)
+- **Layer contract (LED channel):** Softie studio mapping id (= `CasparCGLayers` enum value) → Caspar layer. Parenthetical names are `LedChannelLayers` shorthand only.
+  - `casparcg_clip_player1` (`CasparCGClipPlayer1`) → layer **110** (alias `ClipPlayer`) — LED background loop / VT fullscreen only; **never** apply MIXER FILL here
+  - `casparcg_ilu_player` (`CasparCGIluPlayer`) → layer **115** (alias `IluPlayer`) — headline ILU MEDIA with FILL `0.08 / 0.15 / 0.62 / 0.73` (matches HTML `#ilu-slide`)
+  - `casparcg_graphics_l3d` (`CasparCGGraphicsLowerThird`) → layer **121** (alias `GraphicsLowerThird` / “LowerThird”) — HTML graphics templates (`gfx/headline`, etc.)
 - **Bug (2026-07-15):** FILL landed on `1-110` and scaled the bg loop. Fix branch:
   `tojemoc/sofie-demo-blueprints` → `cursor/ilu-fill-dedicated-layer-09c3`
   (compare: https://github.com/tojemoc/sofie-demo-blueprints/compare/develop...cursor/ilu-fill-dedicated-layer-09c3)
 - **demo-assets:** preferred path is ILU `<video>` via WebM sibling in template; Caspar MEDIA+FILL is the fallback path (`iluFallback` / media-layer mode)
-- **Operator:** after uploading the new blueprint bundle, **re-apply studio config** so mapping `casparcg_ilu_player` → Caspar layer **115** exists (ILU MEDIA + FILL `0.08 / 0.15 / 0.62 / 0.73`)
+- **Operator:** after uploading the new blueprint bundle, **re-apply studio config** so Softie mapping `casparcg_ilu_player` (`CasparCGIluPlayer`) → Caspar layer **115** exists (ILU MEDIA + FILL `0.08 / 0.15 / 0.62 / 0.73`)
 
 ---
 
@@ -223,7 +223,7 @@ segment end). Compare: https://github.com/tojemoc/unopus/compare/main...cursor/q
 
 Symptoms that look like “PM cannot connect” but Core is up:
 
-1. Nested Sofie `mediaPackages` object **does not persist in Settings** (edits vanish). Fixed by flattening to top-level fields on `cursor/pm-accessor-type-ingest-09c3`. After uploading that bundle + refresh: edit **Ingest media folder** as a normal string (no nested “Media package containers” object), use `c:/casparcg/sofie-demo-media`, then Apply Configuration. Until then, you cannot save that nested field in the UI — upload the new blueprints first.
+1. Nested Sofie `mediaPackages` object **does not persist in Settings** (edits vanish). Fixed by flattening to top-level fields on `cursor/pm-accessor-type-ingest-09c3`. After uploading that bundle + refresh: edit **Ingest media folder** (and **CasparCG media folder** if separate) as plain strings — do **not** use the nested “Media package containers” object. **Source of truth** is the shared media tree both Package Manager and Rundown Editor read: Softie studio `ingestMediaFolder` must match RE `INGEST_MEDIA_ROOT` / Settings → Ingest media root (clips live under `<root>/spravy/<rundownId>/clips/`). Examples: Windows `c:/casparcg/sofie-demo-media`; Docker-mounted `/app/ingest`. Then Apply Configuration. Until the new blueprints are uploaded, you cannot save that nested field in the UI.
 2. `getAccessorStaticHandle: Accessor type is undefined` — ExpectedPackage source accessors lacked `type`; also on `cursor/pm-accessor-type-ingest-09c3`. After upload, re-apply studio config and re-ingest/reset the rundown so packages regenerate.
 
 ### Rundown Editor ingest scan vs Softie VID pieces (2026-07-15)
@@ -247,8 +247,8 @@ Ops: mount media at the configured ingest root so both RE readiness and Softie P
 [ ] Copy zip to Caspar; AMCP: CG <ch> ADD 0 "<clipName>" 1
 [ ] CG <ch> UPDATE 0 "<clipName>" "{\"headline\":\"test\"}"
 [ ] Blueprints dist bundle uploaded to Core
-[ ] Studio config applied; mappings include casparcg_clip_player1→110, casparcg_ilu_player→115, casparcg_graphics_l3d→121
-[ ] Headline with ILU: AMCP shows MIXER FILL 0.08 / 0.15 / 0.62 / 0.73 on 1-115 (casparcg_ilu_player) only; loop keeps PLAY on 1-110
+[ ] Studio config applied; Softie mappings: casparcg_clip_player1 (CasparCGClipPlayer1)→110, casparcg_ilu_player (CasparCGIluPlayer)→115, casparcg_graphics_l3d (CasparCGGraphicsLowerThird)→121
+[ ] Headline with ILU: AMCP shows MIXER FILL 0.08 / 0.15 / 0.62 / 0.73 on 1-115 (casparcg_ilu_player) only; loop keeps PLAY on 1-110 (casparcg_clip_player1)
 [ ] RE rundown ingested; take fires correct template + data
 [ ] logo-bug survives across parts until rundown end
 ```
