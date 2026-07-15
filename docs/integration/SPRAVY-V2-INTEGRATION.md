@@ -221,7 +221,7 @@ segment end). Compare: https://github.com/tojemoc/unopus/compare/main...cursor/q
 
 Symptoms that look like “PM cannot connect” but Core is up:
 
-1. `ENOENT … sofie-demo-media-ingest` — create `c:\casparcg\sofie-demo-media-ingest` (or set studio `mediaPackages.ingestMediaFolder` to an existing path; for demo you can point it at `sofie-demo-media` if files already live there)
+1. `ENOENT … sofie-demo-media-ingest` — create that folder, **or** leave the field empty / use `c:/casparcg/sofie-demo-media` (forward slashes). Softie’s config UI **eats backslashes** (`c:\…` will vanish on save); always type `c:/…`. Newer blueprints default ingest to the Caspar media folder so a plain **Apply Configuration** works without editing this field.
 2. `getAccessorStaticHandle: Accessor type is undefined` — ExpectedPackage source accessors lacked `type`; fixed on `cursor/pm-accessor-type-ingest-09c3` (compare: https://github.com/tojemoc/sofie-demo-blueprints/compare/develop...cursor/pm-accessor-type-ingest-09c3). After upload, re-apply studio config and re-ingest/reset the rundown so packages regenerate.
 
 ---
