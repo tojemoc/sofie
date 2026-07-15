@@ -209,7 +209,7 @@ segment end). Compare: https://github.com/tojemoc/unopus/compare/main...cursor/q
   `tojemoc/sofie-demo-blueprints` → `cursor/ilu-fill-dedicated-layer-09c3`
   (compare: https://github.com/tojemoc/sofie-demo-blueprints/compare/develop...cursor/ilu-fill-dedicated-layer-09c3)
 - **demo-assets:** preferred path is ILU `<video>` via WebM sibling in template; Caspar MEDIA+FILL is the fallback path (`iluFallback` / media-layer mode)
-- **Operator:** after uploading the new blueprint bundle, **re-apply studio config** so mapping `casparcg_ilu_player` → layer 115 exists
+- **Operator:** after uploading the new blueprint bundle, **re-apply studio config** so mapping `casparcg_ilu_player` → Caspar layer **115** exists (ILU MEDIA + FILL `0.08 / 0.15 / 0.62 / 0.73`)
 
 ---
 
