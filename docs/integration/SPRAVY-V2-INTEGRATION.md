@@ -3,7 +3,7 @@
 Living document for agents working across the Sofie megarepo. Update this file when
 demo-assets, blueprints, rundown-editor, or core integration status changes.
 
-**Last updated:** 2026-07-15
+**Last updated:** 2026-07-17
 
 ---
 
@@ -172,6 +172,8 @@ Defer: `weather`, `l3d-sport`, `headline`+ILU pair, hypercomposed multi-channel,
 - CH1 LED vs CH2 PGM mappings
 - Wipe template + segment transitions
 - Full 10-template coverage
+- **RE readiness from Core (ADR 0001):** `peripheralDevice.packageManager.getContentStatusForRundown` +
+  hybrid fs fallback in Rundown Editor — see `docs/adr/0001-re-readiness-from-core-package-manager.md`
 
 ---
 
