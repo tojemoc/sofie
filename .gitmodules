@@ -1,7 +1,7 @@
 [submodule "blueprints"]
   path = blueprints
   url = https://github.com/tojemoc/sofie-demo-blueprints.git
-  branch = main
+  branch = develop
 
 [submodule "core"]
   path = core

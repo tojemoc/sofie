@@ -1,8 +1,8 @@
 # Sofie megarepo (`tojemoc/sofie`)
 
-A **superproject** that aggregates the forks and assets used for the **SPRÁVY / 360 sekúnd** Sofie TV-automation demo stack. It is the coordination layer for local Cursor Cloud development: submodule pointers, agent instructions (`AGENTS.md`), and cross-repo integration docs.
+A **superproject** that aggregates the forks and assets used for the **SPRÁVY / 360 sekúnd** Sofie TV-automation demo stack. It is the coordination layer for local Cursor Cloud development: submodule metadata (`.gitmodules`), agent instructions (`AGENTS.md`), and cross-repo integration docs.
 
-Application code lives in the four component repositories below. This repo itself tracks documentation and `.gitmodules` — not application gitlinks (see [Workspace layout](#workspace-layout)).
+Application code lives in the four component repositories below. This repo itself tracks documentation and configuration (including `.gitmodules`) — not committed application gitlinks (see [Workspace layout](#workspace-layout)).
 
 ## What’s in the stack
 
@@ -68,7 +68,7 @@ Fork of [Sofie-Automation/sofie-core](https://github.com/Sofie-Automation/sofie-
 
 ### Demo blueprints — [tojemoc/sofie-demo-blueprints](https://github.com/tojemoc/sofie-demo-blueprints)
 
-Fork of [SuperFlyTV/sofie-demo-blueprints](https://github.com/SuperFlyTV/sofie-demo-blueprints). Active default branch: `develop` (SPRÁVY / Caspar work). Earlier line of work landed on `vmix-demo-blueprints` and briefly on `main` (some of those `main` PRs were reverted).
+Fork of [SuperFlyTV/sofie-demo-blueprints](https://github.com/SuperFlyTV/sofie-demo-blueprints). Intended branch: `develop` (GitHub default and `.gitmodules` tracking branch; SPRÁVY / Caspar work). Earlier line of work landed on `vmix-demo-blueprints` and briefly on `main` (some of those `main` PRs were reverted).
 
 #### `develop` — SPRÁVY / CasparCG
 
