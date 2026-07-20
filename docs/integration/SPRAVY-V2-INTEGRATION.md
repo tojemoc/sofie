@@ -44,9 +44,13 @@ Operators need **absolute control** over two different Caspar layers:
 
 **Baseline:** `loops/360_loop` remains on ClipPlayer1 at priority 0 as a safety net. A `bg-loop` piece plays the same (or alternate) file at priority 1 with `OutOnRundownEnd` so operators can see/control it.
 
-### Headline L3Ds
+### Headline L3Ds (why only `l3d-syn` seemed to work)
 
-ILU part presets already include `l3d-headline` (fields `headline` / `subline`). Blueprints map those to Caspar `title` / `subtitle`. Smoke rundown now ships L3D pieces on each ILU part. If Softie still shows no L3D: ensure the piece exists on the part, re-upload blueprints, and re-ingest.
+- **Field mapping** is fine: RE `headline`/`subline` → Caspar `title`/`subtitle` (and templates also accept the RE names).
+- **Bug:** `l3d-headline` was routed to Caspar **channel 2 (PGM)** while `l3d-syn` / `l3d-tema` / `l3d-mod` play on **channel 1 (LED)**. Watching LED made headline L3Ds look “missing”. Fixed: all L3Ds use LED lower-third (layer 121) until hypercomposed LED≠PGM is live.
+- **demo-assets:** you need the v2 HTML set on Caspar (`gfx/l3d-tema.html`, `gfx/l3d-mod.html`, `gfx/l3d-headline.html`, `gfx/l3d-syn.html`, …). If only `l3d-syn` was copied, rebuild/deploy demo-assets: `yarn build` → copy `deploy/template-path` to Caspar `<template-path>`.
+
+Smoke rundown restores operator intro clips (`introMichal.mov` on Intro + Intro 2nd attempt) and the custom ILU-1 L3D (`fico v bruseli?`).
 
 ---
 
