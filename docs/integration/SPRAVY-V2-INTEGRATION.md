@@ -268,6 +268,8 @@ Ops: mount media at the configured ingest root so both RE readiness and Softie P
 [ ] CG <ch> UPDATE 0 "<clipName>" "{\"headline\":\"test\"}"
 [ ] Blueprints dist bundle uploaded to Core
 [ ] Studio config applied; Softie mappings: casparcg_clip_player1 (CasparCGClipPlayer1)→110, casparcg_ilu_player (CasparCGIluPlayer)→115, casparcg_graphics_l3d (CasparCGGraphicsLowerThird)→121
+[ ] Softie mappings: casparcg_graphics_pgm_l3d (CasparCGGraphicsPgmLowerThird) → channel 2, layer 121
+[ ] Take ILU / GFX with l3d-headline: AMCP shows CG/TEMPLATE on 2-121 (casparcg_graphics_pgm_l3d), not on LED 1-121
 [ ] Headline with ILU: AMCP shows MIXER FILL 0.08 / 0.15 / 0.62 / 0.73 on 1-115 (casparcg_ilu_player) only; loop keeps PLAY on 1-110 (casparcg_clip_player1)
 [ ] RE rundown ingested; take fires correct template + data
 [ ] logo-bug survives across parts until rundown end
