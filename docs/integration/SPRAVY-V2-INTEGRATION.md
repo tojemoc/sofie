@@ -51,6 +51,7 @@ Operators need **absolute control** over two different Caspar layers:
 - **How to look at PGM:** open the Caspar **channel 2** consumer (screen / NDI / SDI for ch2), not channel 1. Studio mapping id `casparcg_graphics_pgm_l3d` → ch2 layer 121. Confirm with AMCP e.g. `INFO 2` or a second Screen consumer bound to `<channel-index>2</channel-index>`.
 - **demo-assets:** v2 HTML must exist on Caspar (`gfx/l3d-headline.html`, etc.). Rebuild with `yarn build` and copy `deploy/template-path` if needed.
 
+<<<<<<< HEAD
 ## Muster smoke rundown (2026-07-20)
 
 `assets/spravy-v3-smoke-rundown.json` (blueprints + rundown-editor) mirrors the
@@ -68,6 +69,9 @@ production muster spine:
 
 Clip paths are placeholders under `spravy/spravy-v3-smoke/clips/`. Camera letters:
 **A→1**, **P→2**, **M→3**.
+=======
+Smoke rundown keeps operator intro clips (`introMichal.mov` on Intro + Intro 2nd attempt) and the custom ILU-1 L3D (`fico v bruseli?`).
+>>>>>>> origin/main
 
 ---
 
