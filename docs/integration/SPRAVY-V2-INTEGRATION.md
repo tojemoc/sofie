@@ -44,13 +44,14 @@ Operators need **absolute control** over two different Caspar layers:
 
 **Baseline:** `loops/360_loop` remains on ClipPlayer1 at priority 0 as a safety net. A `bg-loop` piece plays the same (or alternate) file at priority 1 with `OutOnRundownEnd` so operators can see/control it.
 
-### Headline L3Ds (why only `l3d-syn` seemed to work)
+### Headline L3Ds (LED vs PGM)
 
-- **Field mapping** is fine: RE `headline`/`subline` → Caspar `title`/`subtitle` (and templates also accept the RE names).
-- **Bug:** `l3d-headline` was routed to Caspar **channel 2 (PGM)** while `l3d-syn` / `l3d-tema` / `l3d-mod` play on **channel 1 (LED)**. Watching LED made headline L3Ds look “missing”. Fixed: all L3Ds use LED lower-third (layer 121) until hypercomposed LED≠PGM is live.
-- **demo-assets:** you need the v2 HTML set on Caspar (`gfx/l3d-tema.html`, `gfx/l3d-mod.html`, `gfx/l3d-headline.html`, `gfx/l3d-syn.html`, …). If only `l3d-syn` was copied, rebuild/deploy demo-assets: `yarn build` → copy `deploy/template-path` to Caspar `<template-path>`.
+- **Field mapping** is fine: RE `headline`/`subline` → Caspar `title`/`subtitle` (templates also accept the RE names).
+- **`l3d-headline` is on PGM (Caspar channel 2)** by design; `l3d-syn` / `l3d-tema` / `l3d-mod` / ILU stay on **LED (channel 1)**. If you only watch the LED consumer, headline L3Ds look “missing”.
+- **How to look at PGM:** open the Caspar **channel 2** consumer (screen / NDI / SDI for ch2), not channel 1. Studio mapping id `casparcg_graphics_pgm_l3d` → ch2 layer 121. Confirm with AMCP e.g. `INFO 2` or a second Screen consumer bound to `<channel-index>2</channel-index>`.
+- **demo-assets:** v2 HTML must exist on Caspar (`gfx/l3d-headline.html`, etc.). Rebuild with `yarn build` and copy `deploy/template-path` if needed.
 
-Smoke rundown restores operator intro clips (`introMichal.mov` on Intro + Intro 2nd attempt) and the custom ILU-1 L3D (`fico v bruseli?`).
+Smoke rundown keeps operator intro clips (`introMichal.mov` on Intro + Intro 2nd attempt) and the custom ILU-1 L3D (`fico v bruseli?`).
 
 ---
 
