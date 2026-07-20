@@ -3,7 +3,7 @@
 Living document for agents working across the Sofie megarepo. Update this file when
 demo-assets, blueprints, rundown-editor, or core integration status changes.
 
-**Last updated:** 2026-07-17
+**Last updated:** 2026-07-20
 
 ---
 
@@ -23,17 +23,30 @@ imported H.264 clips. Full hypercomposed (LED≠PGM, wipes, all 10 templates) is
 |------|-------------|--------|
 | `tojemoc/sofie-demo-assets` | `main` @ `85c706b` | **PR #3 merged** — 10 v2 HTML templates + `assemble-caspar.mjs` |
 | `tojemoc/sofie-demo-assets` | [PR #4](https://github.com/tojemoc/sofie-demo-assets/pull/4) | **Open** — CI/CD, pre-releases (`sofie-demo-assets-pre-<sha>.zip`), Docker image |
-| `tojemoc/sofie-demo-blueprints` | `main` | **Not wired** — still v1 piece types (`l3d`, `strap`, `ticker`, `head`, `fullscreen`) |
-| `tojemoc/sofie-demo-blueprints` | `vmix-demo-blueprints` | vMix registry work; **no v2 Caspar template wiring** |
-| `tojemoc/unopus` (Rundown Editor) | `main` @ `6e1f08a` | **PR #32 merged** — readiness badges, Octopus story list, dark/light theme |
-| `tojemoc/unopus` (Rundown Editor) | `cursor/quick-story-toolbar-cc55` | **Open** — fix quick-add button overlap; toolbar in blue timing bar |
-| `tojemoc/sofie-demo-assets` | `cursor/fix-headline-ilu-play-layer-715a` | **Open** — ILU WebM in template `<video>`, no layer-110 PLAY |
-| `tojemoc/sofie-demo-blueprints` | `cursor/fix-headline-ilu-play-layer-715a` | **Open** — remove `getIluMediaTimelineObject()`; template-layer only |
-| `tojemoc/sofie-demo-blueprints` | `cursor/ilu-fill-dedicated-layer-09c3` | **Pushed** — ILU MIXER FILL on dedicated layer **115** (not 110); open PR manually (token cannot create PRs) |
-| `tojemoc/sofie-demo-blueprints` | `cursor/pm-accessor-type-ingest-09c3` | **Pushed** — ExpectedPackage ingest accessors need `type: LOCAL_FOLDER` (fixes PM `Accessor type is undefined`) |
-| `tojemoc/sofie-demo-blueprints` | `cursor/vid-clip-props-harden-09c3` | **Pushed** — VID/video clip props: missing `fileName` → Invalid (no Softie crash); no double duration ms; VT fallback for video parts |
-| `tojemoc/unopus` (Rundown Editor) | `cursor/media-picker-freetext-09c3` | **Pushed** — mediaPick free-text paths; absolute scan path; Create scan folder under ingest root |
+| `tojemoc/sofie-demo-blueprints` | `develop` | v2 Caspar templates wired (`gfx/l3d-*`, headline ILU, logo-bug baseline) |
+| `tojemoc/sofie-demo-blueprints` | `cursor/intro-overlay-bg-loop-4790` | **Open** — Intro overlay (EffectsPlayer 200) + controllable `bg-loop` piece; ILU smoke L3Ds |
+| `tojemoc/unopus` (Rundown Editor) | `main` | Readiness, media picker, ILU/GFX presets |
+| `tojemoc/unopus` (Rundown Editor) | `cursor/intro-overlay-bg-loop-4790` | **Open** — Intro / BG-loop part+piece types in toolbar manifests |
 | `tojemoc/sofie-core` | — | No template-specific code; Playout Gateway is transport only |
+
+---
+
+## Intro overlay vs BG loop (2026-07-20)
+
+Operators need **absolute control** over two different Caspar layers:
+
+| Item | RE part / piece | Caspar layer | Role |
+|------|-----------------|--------------|------|
+| **Intro overlay** | Part `Intro` + piece `intro` | EffectsPlayer **200** | Alpha/video that plays **on top of** headlines, camera, L3Ds |
+| **Background loop** | Piece `bg-loop` (optional on Intro; addable elsewhere) | ClipPlayer1 **110** | LED `loops/360_loop` behind camera — visible in Softie, not only baseline |
+
+**Why GFX + video failed:** GFX parts require a graphic object. A video-only GFX part produced Softie Invalid **"No graphic object"**. Use the **Intro** toolbar button instead (or add an `intro` piece). Blueprints also recover video-only GFX parts as Intro overlays so existing smoke attempts keep working after bundle upload.
+
+**Baseline:** `loops/360_loop` remains on ClipPlayer1 at priority 0 as a safety net. A `bg-loop` piece plays the same (or alternate) file at priority 1 with `OutOnRundownEnd` so operators can see/control it.
+
+### Headline L3Ds
+
+ILU part presets already include `l3d-headline` (fields `headline` / `subline`). Blueprints map those to Caspar `title` / `subtitle`. Smoke rundown now ships L3D pieces on each ILU part. If Softie still shows no L3D: ensure the piece exists on the part, re-upload blueprints, and re-ingest.
 
 ---
 
