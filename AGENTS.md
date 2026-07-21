@@ -23,6 +23,22 @@ working inside that submodule.
 > update one, `cd` into it and use normal git. Do not `git add` these directories into the
 > superproject.
 
+### Shared type manifests & smoke rundown (`assets/`)
+
+**Canonical home** for Rundown Editor piece / part / segment type JSON and the SPRÁVY smoke
+rundown is this megarepo:
+
+| Path | Purpose |
+|------|---------|
+| `assets/sofie-rundown-editor-piece-types.json` | Piece types + GFX preview templates |
+| `assets/sofie-rundown-editor-part-types.json` | Part presets |
+| `assets/sofie-rundown-editor-segment-types.json` | Segment presets |
+| `assets/spravy-v3-smoke-rundown.json` | Smoke rundown fixture (`spravy-v3-smoke`) |
+
+Do **not** keep or revive copies under `blueprints/assets/` or `rundown-editor/assets/`.
+Edit here; blueprints tests and the Rundown Editor resolve these files when nested in the
+megarepo (see those repos' `AGENTS.md`).
+
 ### Toolchain (already provisioned)
 
 - **Node.js 22.22.0** via nvm. The VM's default `/exec-daemon/node` (v22.14.0) is too old and is
@@ -82,7 +98,7 @@ a Cursor agent session on `sofie-demo-blueprints`.
 |------|---------------------|
 | `demo-assets` | **PR #3 merged** — 10 v2 templates + `assemble-caspar.mjs`; **PR #4 open** — CI pre-releases |
 | `blueprints` | **Not wired** — still v1 `gfx/l3d` etc.; critical path for Friday demo |
-| `rundown-editor` | Import piece types from blueprints after wiring; minimal changes for demo |
+| `rundown-editor` | Loads type manifests from megarepo `assets/`; minimal UI changes for demo |
 | `core` / playout-gateway | No template code; upload blueprint bundle + apply studio config |
 
 v2 Caspar `clipName` convention: `gfx/<template-folder>` (e.g. `gfx/l3d-tema`). Built layout:
