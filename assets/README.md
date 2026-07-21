@@ -10,6 +10,9 @@ in the `tojemoc/sofie` megarepo — not in `sofie-demo-blueprints` or `unopus`.
 | `sofie-rundown-editor-segment-types.json` | Segment presets (Headlines, Opening, …) |
 | `spravy-v3-smoke-rundown.json` | End-to-end smoke rundown (`spravy-v3-smoke`) |
 
+Wipes: piece type `wipe` → Caspar PGM layer 200 (`wipes/360_wipe`). See
+`docs/integration/DOUBLEBOX-PGM.md` for DoubleBox PGM + UVC camera.
+
 ### Consumers
 
 - **Rundown Editor (`rundown-editor/` / unopus)** loads the three type JSON files at

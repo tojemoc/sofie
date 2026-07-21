@@ -15,6 +15,10 @@ v2 HTML templates from `tojemoc/sofie-demo-assets`.
 **Near-term demo target (Friday):** one Caspar, single-channel LED stack, 3–4 templates,
 imported H.264 clips. Full hypercomposed (LED≠PGM, wipes, all 10 templates) is **post-demo**.
 
+**DoubleBox PGM + UVC camera + wipes:** see
+[`docs/integration/DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md) — LED = `360_loop` only; PGM
+composes ILU + CAM (OBS Virtual Camera / UVC) + tema/bug; same wipe file on PGM layer 200.
+
 ---
 
 ## Repo status snapshot
@@ -68,6 +72,10 @@ production muster spine:
 
 Clip paths are placeholders under `spravy/spravy-v3-smoke/clips/`. Camera letters:
 **A→1**, **P→2**, **M→3**.
+
+Wipes: piece type `wipe`, file `wipes/360_wipe`, play on **PGM** (see DOUBLEBOX-PGM.md).
+Smoke rundown includes one wipe piece per take with a `transition` label
+(`ILU TO SYN`, `Double Box`, …).
 
 ---
 

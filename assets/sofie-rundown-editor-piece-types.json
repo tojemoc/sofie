@@ -72,6 +72,29 @@
 		]
 	},
 	{
+		"id": "wipe",
+		"entityType": "piece",
+		"name": "PGM wipe",
+		"shortName": "WIPE",
+		"colour": "#343a40",
+		"includeTypeInName": true,
+		"payload": [
+			{
+				"id": "fileName",
+				"label": "Wipe clip",
+				"type": "mediaPick",
+				"subdir": "wipes",
+				"includeInName": true
+			},
+			{
+				"id": "transition",
+				"label": "Transition label",
+				"type": "string",
+				"includeInName": true
+			}
+		]
+	},
+	{
 		"id": "remote",
 		"entityType": "piece",
 		"name": "Remote",
