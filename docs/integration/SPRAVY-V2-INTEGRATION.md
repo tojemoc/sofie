@@ -53,7 +53,7 @@ Operators need **absolute control** over two different Caspar layers:
 
 ## Muster smoke rundown (2026-07-20)
 
-`assets/spravy-v3-smoke-rundown.json` (blueprints + rundown-editor) mirrors the
+`assets/spravy-v3-smoke-rundown.json` (sofie megarepo `assets/`) mirrors the
 production muster spine:
 
 | Segment | Parts |
@@ -175,7 +175,7 @@ See **`docs/integration/handoffs/blueprints-v2-wiring.md`** for the copy-paste a
 
 | File | Change |
 |------|--------|
-| `assets/sofie-rundown-editor-piece-types.json` | Add v2 piece types + payload schemas |
+| **Megarepo** `assets/sofie-rundown-editor-piece-types.json` | Add v2 piece types + payload schemas (canonical) |
 | `packages/blueprints/src/base/showstyle/sofie-editor-parsers/index.ts` | Extend `graphicTypes`; map RE payload → template `data` |
 | `packages/blueprints/src/base/showstyle/helpers/graphics.ts` | Route `clipName` → Caspar layer; pass full `attributes` as `data` |
 | `packages/blueprints/src/base/studio/layers.ts` | Possibly new layer enums |
@@ -214,8 +214,8 @@ Defer: `weather`, `l3d-sport`, `headline`+ILU pair, hypercomposed multi-channel,
 ## Rundown Editor (`tojemoc/unopus`)
 
 - No template rendering; stores `pieceType` + payload only
-- Import piece types from blueprints JSON after blueprints PR lands
-- Built-in `l3d` manifest uses `name`+`title`; blueprints JSON uses `name`+`description` — **align on import**
+- Type manifests load from megarepo `assets/` (not from this repo)
+- Built-in `l3d` manifest uses `name`+`title`; megarepo JSON uses `name`+`description` — **align on import**
 
 ### Merged (PR #32, `6e1f08a`)
 
