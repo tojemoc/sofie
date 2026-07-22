@@ -100,11 +100,22 @@ Smoke rundown pieces use piece type `wipe` with `fileName: wipes/360_wipe` and
 | `casparcg_ilu_player` | PGM 2* | 115 | ILU in left window (*move off LED when LED is loop-only) |
 | `casparcg_pgm_camera` | PGM 2 | 116 | UVC / CAM1 |
 | `casparcg_graphics_pgm_l3d` | PGM 2 | 121 | `l3d-tema` / headline bars |
+| `casparcg_graphics_logo` | PGM 2 | 123 | `gfx/logo-bug` (360° sekúnd bug) — **not** on LED |
 | `casparcg_effects_player_pgm` | PGM 2 | 200 | Wipes |
 
 \*Today ILU still maps to LED in demo blueprints for the older “LED carries gfx”
 mode. DoubleBox PGM requires remapping ILU (+ tema) onto channel 2 — tracked with
-the wipe/camera work in blueprints.
+the wipe/camera work in blueprints. The **logo-bug is already PGM-only**.
+
+### `bg-loop` folder structure
+
+```text
+<casparcgMediaFolder>/loops/360_loop.<ext>
+```
+
+Piece payload: `{ "fileName": "loops/360_loop" }` (Caspar PLAY omits extension).
+RE piece type `bg-loop` uses `mediaPick` subdir `loops` so the picker opens that
+folder; the stored path still includes `loops/…`.
 
 ## Smoke checklist
 

@@ -155,9 +155,9 @@ The bridge accepts JSON objects and XML-wrapped JSON from Caspar.
 
 ```text
 <media-path>/
-  loops/     # e.g. 360_loop.mp4
+  loops/     # e.g. 360_loop.mp4 — bg-loop / baseline LED loop
   clips/     # ILU, VT, VO (e.g. clips/premiera.mp4)
-  wipes/     # alpha wipe media (not wired in blueprints yet)
+  wipes/     # alpha wipe media (piece type `wipe` → PGM layer 200)
   assets/    # pip-frame.png, etc.
 ```
 
