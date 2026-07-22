@@ -90,40 +90,5 @@
 			{ "pieceType": "intro" },
 			{ "pieceType": "bg-loop", "optional": true, "payload": { "fileName": "loops/360_loop" } }
 		]
-	},
-	{
-		"id": "remi",
-		"entityType": "part",
-		"name": "REMI",
-		"shortName": "REMI",
-		"buttonLabel": "REMI",
-		"ingestType": "REMI",
-		"colour": "#e80064",
-		"showInToolbar": true,
-		"payload": [],
-		"defaultPieces": [{ "pieceType": "remote" }]
-	},
-	{
-		"id": "dve",
-		"entityType": "part",
-		"name": "DVE",
-		"shortName": "DVE",
-		"buttonLabel": "DVE",
-		"ingestType": "DVE",
-		"colour": "#d62728",
-		"showInToolbar": true,
-		"payload": [],
-		"defaultPieces": [{ "pieceType": "split" }]
-	},
-	{
-		"id": "guest-part",
-		"entityType": "part",
-		"name": "Guest",
-		"shortName": "Guest",
-		"ingestType": "Guest",
-		"colour": "#2ca02c",
-		"showInToolbar": false,
-		"payload": [],
-		"defaultPieces": [{ "pieceType": "guest" }]
 	}
 ]
