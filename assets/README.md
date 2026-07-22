@@ -10,7 +10,7 @@ in the `tojemoc/sofie` megarepo — not in `sofie-demo-blueprints` or `unopus`.
 | `sofie-rundown-editor-segment-types.json` | Segment presets (Headlines, Opening, …) |
 | `spravy-v3-smoke-rundown.json` | End-to-end smoke rundown (`spravy-v3-smoke`) |
 
-Piece types are kept in sync with the smoke rundown. Softie **Intro** parts need
+Piece types are kept in sync with the smoke rundown. Sofie **Intro** parts need
 piece type **`intro`** (“Intro overlay” — alpha clip on EffectsPlayer 200), not a
 plain `video`. Also keep `bg-loop` and `wipe`. Legacy demo pieces `remote` /
 `split` / `guest` (and part presets REMI / DVE / Guest) were removed.
