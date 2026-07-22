@@ -223,6 +223,8 @@ Defer: `weather`, `l3d-sport`, `headline`+ILU pair, hypercomposed multi-channel,
 
 - No template rendering; stores `pieceType` + payload only
 - Type manifests load from megarepo `assets/` (not from this repo)
+- Standalone CI/Docker fetch pins sofie commit SHA + SHA-256 checksums — see
+  [`MEGAREPO-ASSETS-FETCH.md`](MEGAREPO-ASSETS-FETCH.md) / [unopus #45](https://github.com/tojemoc/unopus/pull/45)
 - Built-in `l3d` manifest uses `name`+`title`; megarepo JSON uses `name`+`description` — **align on import**
 
 ### Merged (PR #32, `6e1f08a`)

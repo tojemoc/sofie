@@ -42,6 +42,10 @@ Do **not** keep or revive copies under `blueprints/assets/` or `rundown-editor/a
 Edit here; blueprints tests and the Rundown Editor resolve these files when nested in the
 megarepo (see those repos' `AGENTS.md`).
 
+Standalone CI/Docker in consumer repos pins an immutable sofie commit SHA and verifies
+per-file SHA-256 (not mutable `main` / `cursor/…` refs). Contract:
+[`docs/integration/MEGAREPO-ASSETS-FETCH.md`](docs/integration/MEGAREPO-ASSETS-FETCH.md).
+After changing `assets/`, bump consumer pins + checksums together.
 ### Toolchain (already provisioned)
 
 - **Node.js 22.22.0** via nvm. The VM's default `/exec-daemon/node` (v22.14.0) is too old and is
