@@ -23,3 +23,14 @@ Wipes: piece type `wipe` → Caspar PGM layer 200 (`wipes/360_wipe`). See
 
 Do not reintroduce copies under `blueprints/assets/` or `rundown-editor/assets/`.
 Edit these files in PRs against `tojemoc/sofie`.
+
+### Standalone CI / Docker (pin + checksums)
+
+Standalone clones must **not** download from mutable refs (`main`, `cursor/…`).
+Fetch scripts pin an **immutable sofie commit SHA** and verify each file’s **SHA-256**
+before exporting `SOFIE_MEGAREPO_ASSETS`. See
+[`docs/integration/MEGAREPO-ASSETS-FETCH.md`](../docs/integration/MEGAREPO-ASSETS-FETCH.md)
+and [unopus PR #45](https://github.com/tojemoc/unopus/pull/45).
+
+When you change files here, bump the consumer pin **and** checksums in the same follow-up
+PR(s) — otherwise CI will fail closed on mismatch.
