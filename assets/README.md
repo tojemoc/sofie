@@ -13,6 +13,26 @@ in the `tojemoc/sofie` megarepo — not in `sofie-demo-blueprints` or `unopus`.
 Wipes: piece type `wipe` → Caspar PGM layer 200 (`wipes/360_wipe`). See
 `docs/integration/DOUBLEBOX-PGM.md` for DoubleBox PGM + UVC camera.
 
+### Media folder layout (`bg-loop`, wipe, clips)
+
+Paths in piece payloads are **Caspar PLAY paths** (no extension), relative to the
+studio **CasparCG media folder** (Softie: `casparcgMediaFolder`, often
+`c:/casparcg/sofie-demo-media`):
+
+```text
+<casparcgMediaFolder>/
+  loops/360_loop.mp4          ← piece type `bg-loop`, fileName `loops/360_loop`
+  wipes/360_wipe.mov          ← piece type `wipe`,    fileName `wipes/360_wipe`
+  clips/premiera.mp4          ← shared demo clips
+  spravy/<rundownId>/clips/…  ← per-rundown VT / ILU (Package Manager ingest)
+```
+
+- Rundown Editor `mediaPick.subdir` (`loops` / `wipes` / `clips`) only scopes the
+  picker UI under the ingest root — the saved `fileName` must include the subdir.
+- `bg-loop` plays on LED ClipPlayer1 (layer 110). Baseline also loops
+  `loops/360_loop` at priority 0; a `bg-loop` piece overrides at priority 1.
+- Do **not** put loops under `spravy/<id>/clips/` — those are editorial clips.
+
 ### Consumers
 
 - **Rundown Editor (`rundown-editor/` / unopus)** loads the three type JSON files at
