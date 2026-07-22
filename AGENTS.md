@@ -30,10 +30,13 @@ rundown is this megarepo:
 
 | Path | Purpose |
 |------|---------|
-| `assets/sofie-rundown-editor-piece-types.json` | Piece types + GFX preview templates |
+| `assets/sofie-rundown-editor-piece-types.json` | Piece types + GFX preview templates (includes `wipe`) |
 | `assets/sofie-rundown-editor-part-types.json` | Part presets |
 | `assets/sofie-rundown-editor-segment-types.json` | Segment presets |
 | `assets/spravy-v3-smoke-rundown.json` | Smoke rundown fixture (`spravy-v3-smoke`) |
+
+DoubleBox PGM / UVC camera / wipe topology:
+[`docs/integration/DOUBLEBOX-PGM.md`](docs/integration/DOUBLEBOX-PGM.md).
 
 Do **not** keep or revive copies under `blueprints/assets/` or `rundown-editor/assets/`.
 Edit here; blueprints tests and the Rundown Editor resolve these files when nested in the

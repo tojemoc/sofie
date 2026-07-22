@@ -2290,6 +2290,614 @@
 			"pieceType": "outro",
 			"payload": {},
 			"start": 0
+		},
+		{
+			"id": "wipe-01-part-hl-1",
+			"partId": "part-hl-1",
+			"segmentId": "seg-headlines",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · Headline 1",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "Headline 1"
+			}
+		},
+		{
+			"id": "wipe-02-part-hl-2",
+			"partId": "part-hl-2",
+			"segmentId": "seg-headlines",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · Headline 2",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "Headline 2"
+			}
+		},
+		{
+			"id": "wipe-03-part-hl-3",
+			"partId": "part-hl-3",
+			"segmentId": "seg-headlines",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · Headline 3",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "Headline 3"
+			}
+		},
+		{
+			"id": "wipe-04-part-intro",
+			"partId": "part-intro",
+			"segmentId": "seg-intro",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · Intro",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "Intro"
+			}
+		},
+		{
+			"id": "wipe-05-part-ilu-1",
+			"partId": "part-ilu-1",
+			"segmentId": "seg-tema-1",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · Double Box",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "Double Box"
+			}
+		},
+		{
+			"id": "wipe-06-part-syn-1",
+			"partId": "part-syn-1",
+			"segmentId": "seg-tema-1",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · ILU TO SYN CLUSTER",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "ILU TO SYN CLUSTER"
+			}
+		},
+		{
+			"id": "wipe-07-part-syn-2",
+			"partId": "part-syn-2",
+			"segmentId": "seg-tema-1",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · SYN TO SYN",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "SYN TO SYN"
+			}
+		},
+		{
+			"id": "wipe-08-part-ilu-2",
+			"partId": "part-ilu-2",
+			"segmentId": "seg-tema-1",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · SYN TO ILU TEMA",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "SYN TO ILU TEMA"
+			}
+		},
+		{
+			"id": "wipe-09-part-ilu-3",
+			"partId": "part-ilu-3",
+			"segmentId": "seg-tema-1",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · ILU TO ILU TEMA",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "ILU TO ILU TEMA"
+			}
+		},
+		{
+			"id": "wipe-10-part-syn-3",
+			"partId": "part-syn-3",
+			"segmentId": "seg-tema-1",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · ILU TO SYN",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "ILU TO SYN"
+			}
+		},
+		{
+			"id": "wipe-11-part-ilu-4",
+			"partId": "part-ilu-4",
+			"segmentId": "seg-tema-2",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · Double Box",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "Double Box"
+			}
+		},
+		{
+			"id": "wipe-12-part-ilu-5",
+			"partId": "part-ilu-5",
+			"segmentId": "seg-tema-2",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · ILU TO ILU TEMA",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "ILU TO ILU TEMA"
+			}
+		},
+		{
+			"id": "wipe-13-part-ilu-6",
+			"partId": "part-ilu-6",
+			"segmentId": "seg-tema-3",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · Double Box",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "Double Box"
+			}
+		},
+		{
+			"id": "wipe-14-part-syn-4",
+			"partId": "part-syn-4",
+			"segmentId": "seg-tema-3",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · ILU TO SYN",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "ILU TO SYN"
+			}
+		},
+		{
+			"id": "wipe-15-part-ilu-7",
+			"partId": "part-ilu-7",
+			"segmentId": "seg-tema-3",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · SYN TO ILU",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "SYN TO ILU"
+			}
+		},
+		{
+			"id": "wipe-16-part-ilu-8",
+			"partId": "part-ilu-8",
+			"segmentId": "seg-tema-3",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · ILU TO ILU TEMA",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "ILU TO ILU TEMA"
+			}
+		},
+		{
+			"id": "wipe-17-part-syn-5",
+			"partId": "part-syn-5",
+			"segmentId": "seg-tema-3",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · ILU TO SYN",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "ILU TO SYN"
+			}
+		},
+		{
+			"id": "wipe-18-part-ilu-9",
+			"partId": "part-ilu-9",
+			"segmentId": "seg-tema-4",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · Double Box",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "Double Box"
+			}
+		},
+		{
+			"id": "wipe-19-part-syn-6",
+			"partId": "part-syn-6",
+			"segmentId": "seg-tema-4",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · ILU TO SYN",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "ILU TO SYN"
+			}
+		},
+		{
+			"id": "wipe-20-part-ilu-10",
+			"partId": "part-ilu-10",
+			"segmentId": "seg-tema-4",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · Double Box",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "Double Box"
+			}
+		},
+		{
+			"id": "wipe-21-part-syn-7",
+			"partId": "part-syn-7",
+			"segmentId": "seg-tema-4",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · ILU TO SYN",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "ILU TO SYN"
+			}
+		},
+		{
+			"id": "wipe-22-part-ilu-11",
+			"partId": "part-ilu-11",
+			"segmentId": "seg-tema-4",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · SYN TO ILU",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "SYN TO ILU"
+			}
+		},
+		{
+			"id": "wipe-23-part-ilu-12",
+			"partId": "part-ilu-12",
+			"segmentId": "seg-tema-4",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · ILU TO ILU TEMA",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "ILU TO ILU TEMA"
+			}
+		},
+		{
+			"id": "wipe-24-part-syn-8",
+			"partId": "part-syn-8",
+			"segmentId": "seg-tema-4",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · ILU TO SYN",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "ILU TO SYN"
+			}
+		},
+		{
+			"id": "wipe-25-part-sjv-gfx",
+			"partId": "part-sjv-gfx",
+			"segmentId": "seg-sjv",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · Spravy JV",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "Spravy JV"
+			}
+		},
+		{
+			"id": "wipe-26-part-ilu-13",
+			"partId": "part-ilu-13",
+			"segmentId": "seg-sjv",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · Spravy JV NEXT",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "Spravy JV NEXT"
+			}
+		},
+		{
+			"id": "wipe-27-part-ilu-14",
+			"partId": "part-ilu-14",
+			"segmentId": "seg-sjv",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · Spravy JV NEXT",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "Spravy JV NEXT"
+			}
+		},
+		{
+			"id": "wipe-28-part-ilu-15",
+			"partId": "part-ilu-15",
+			"segmentId": "seg-sjv",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · Spravy JV NEXT",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "Spravy JV NEXT"
+			}
+		},
+		{
+			"id": "wipe-29-part-ilu-16",
+			"partId": "part-ilu-16",
+			"segmentId": "seg-sjv",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · Spravy JV NEXT",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "Spravy JV NEXT"
+			}
+		},
+		{
+			"id": "wipe-30-part-sport-gfx",
+			"partId": "part-sport-gfx",
+			"segmentId": "seg-sport",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · Sport",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "Sport"
+			}
+		},
+		{
+			"id": "wipe-31-part-ilu-17",
+			"partId": "part-ilu-17",
+			"segmentId": "seg-sport",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · Sport NEXT",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "Sport NEXT"
+			}
+		},
+		{
+			"id": "wipe-32-part-ilu-18",
+			"partId": "part-ilu-18",
+			"segmentId": "seg-sport",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · Sport NEXT",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "Sport NEXT"
+			}
+		},
+		{
+			"id": "wipe-33-part-ilu-19",
+			"partId": "part-ilu-19",
+			"segmentId": "seg-sport",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · Sport NEXT",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "Sport NEXT"
+			}
+		},
+		{
+			"id": "wipe-34-part-weather",
+			"partId": "part-weather",
+			"segmentId": "seg-weather",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · Pocasie",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "Pocasie"
+			}
+		},
+		{
+			"id": "wipe-35-part-ilu-20",
+			"partId": "part-ilu-20",
+			"segmentId": "seg-outro",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · Zaver",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "Zaver"
+			}
+		},
+		{
+			"id": "wipe-36-part-syn-9",
+			"partId": "part-syn-9",
+			"segmentId": "seg-outro",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · ILU TO SYN",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "ILU TO SYN"
+			}
+		},
+		{
+			"id": "wipe-37-part-ilu-21",
+			"partId": "part-ilu-21",
+			"segmentId": "seg-outro",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · SYN TO ILU TEMA",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "SYN TO ILU TEMA"
+			}
+		},
+		{
+			"id": "wipe-38-part-outro-gfx",
+			"partId": "part-outro-gfx",
+			"segmentId": "seg-outro",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Wipe · OUTRO",
+			"pieceType": "wipe",
+			"rank": 1,
+			"start": 0,
+			"duration": 0,
+			"payload": {
+				"fileName": "wipes/360_wipe",
+				"transition": "OUTRO"
+			}
 		}
 	]
 }
