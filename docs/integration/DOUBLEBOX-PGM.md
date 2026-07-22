@@ -16,8 +16,11 @@ production still (ILU left / CAM right / tema+bug bar / `360_loop` behind):
 └────────────────────────────────────────────────────────────┘
 ```
 
-**LED (Caspar channel 1)** for this look: **`loops/360_loop` only** — no ILU, no L3Ds,
-no camera. The wall is the abstract background; PGM carries the editorial compose.
+**LED (Caspar channel 1)** production rule: **headlines + `loops/360_loop` only**.
+No intro / znelka on LED. For the thematic DoubleBox look the wall may be loop-only
+(no ILU / L3Ds / camera); PGM carries the editorial compose. Intro overlay plays on
+**PGM layer 210** (above wipe 200) — see
+[`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md).
 
 ## Getting CAM into Caspar (OBS Virtual Camera → UVC)
 
@@ -61,7 +64,8 @@ checks.
 | ILU | 115 | `0.04 0.08 0.55 0.72` |
 | CAM1 UVC | 116 | `0.62 0.08 0.34 0.72` |
 | `l3d-tema` + bug | 121 / 123 | HTML templates (bottom bar) |
-| Wipe | 200 | full frame, on top |
+| Wipe | 200 | full frame alpha wipe |
+| Intro / znelka | 210 | full frame — above wipe + compose; **PGM only** |
 
 Tune FILL against the real HTML chrome; values above match the attached still
 approximately.
@@ -95,9 +99,10 @@ Smoke rundown pieces use piece type `wipe` with `fileName: wipes/360_wipe` and
 
 | Sofie mapping id | Channel | Layer | Role |
 |------------------|---------|-------|------|
-| `casparcg_clip_player1` | LED 1 | 110 | LED `360_loop` only (for this look) |
+| `casparcg_clip_player1` | LED 1 | 110 | LED `360_loop` |
 | `casparcg_clip_player2` | PGM 2 | 110 | PGM bg loop (or omit if UVC carries bg) |
-| `casparcg_ilu_player` | PGM 2* | 115 | ILU in left window (*move off LED when LED is loop-only) |
+| `casparcg_ilu_player` | LED 1 / PGM 2* | 115 | Headline ILU today on LED; DoubleBox left window on PGM when remapped |
+| `casparcg_intro_player_pgm` | PGM 2 | 210 | Intro / znelka — **never LED** (handoff; may still be LED 200 until remapped) |
 | `casparcg_pgm_camera` | PGM 2 | 116 | UVC / CAM1 |
 | `casparcg_graphics_pgm_l3d` | PGM 2 | 121 | `l3d-tema` / headline bars |
 | `casparcg_graphics_logo` | PGM 2 | 123 | `gfx/logo-bug` (360° sekúnd bug) — **not** on LED |

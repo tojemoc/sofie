@@ -11,12 +11,14 @@ in the `tojemoc/sofie` megarepo — not in `sofie-demo-blueprints` or `unopus`.
 | `spravy-v3-smoke-rundown.json` | End-to-end smoke rundown (`spravy-v3-smoke`) |
 
 Piece types are kept in sync with the smoke rundown. Sofie **Intro** parts need
-piece type **`intro`** (“Intro overlay” — alpha clip on EffectsPlayer 200), not a
-plain `video`. Also keep `bg-loop` and `wipe`. Legacy demo pieces `remote` /
-`split` / `guest` (and part presets REMI / DVE / Guest) were removed.
+piece type **`intro`** (“Intro overlay” — alpha/znelka on **PGM layer 210**, never
+LED), not a plain `video`. Also keep `bg-loop` and `wipe`. Legacy demo pieces
+`remote` / `split` / `guest` (and part presets REMI / DVE / Guest) were removed.
 
+Smoke Intro uses `wipes/360s_ZNELKA.mov` (12s). LED stays **headlines + loop** only.
 Wipes: piece type `wipe` → Caspar PGM layer 200 (`wipes/360_wipe`). See
-`docs/integration/DOUBLEBOX-PGM.md` for DoubleBox PGM + UVC camera.
+`docs/integration/DOUBLEBOX-PGM.md` and
+`docs/integration/handoffs/blueprints-intro-pgm-layer.md`.
 
 ### Media folder layout (`bg-loop`, wipe, clips)
 
@@ -28,6 +30,7 @@ studio **CasparCG media folder** (Softie: `casparcgMediaFolder`, often
 <casparcgMediaFolder>/
   loops/360_loop.mp4          ← piece type `bg-loop`, fileName `loops/360_loop`
   wipes/360_wipe.mov          ← piece type `wipe`,    fileName `wipes/360_wipe`
+  wipes/360s_ZNELKA.mov       ← piece type `intro`,   fileName `wipes/360s_ZNELKA.mov`
   clips/premiera.mp4          ← shared demo clips
   spravy/<rundownId>/clips/…  ← per-rundown VT / ILU (Package Manager ingest)
 ```
@@ -36,6 +39,9 @@ studio **CasparCG media folder** (Softie: `casparcgMediaFolder`, often
   picker UI under the ingest root — the saved `fileName` must include the subdir.
 - `bg-loop` plays on LED ClipPlayer1 (layer 110). Baseline also loops
   `loops/360_loop` at priority 0; a `bg-loop` piece overrides at priority 1.
+- `intro` must PLAY on **PGM** (target layer 210). A `404` on
+  `PLAY … "spravy/…/clips/headlineN"` means the MP4 is missing from the Caspar
+  media folder — ingest/copy it; the rundown path is already correct.
 - Do **not** put loops under `spravy/<id>/clips/` — those are editorial clips.
 
 ### Consumers

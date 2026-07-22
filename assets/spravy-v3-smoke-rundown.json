@@ -3,7 +3,7 @@
 		"id": "spravy-v3-smoke",
 		"name": "Správy muster smoke",
 		"playlistId": null,
-		"sync": false,
+		"sync": true,
 		"isTemplate": false,
 		"payload": {}
 	},
@@ -207,7 +207,7 @@
 			"rank": 0,
 			"float": false,
 			"partType": "intro",
-			"duration": 10,
+			"duration": 12,
 			"fromPreset": true,
 			"payload": {
 				"type": "Intro"
@@ -863,7 +863,7 @@
 			"name": "L3D Headline",
 			"pieceType": "l3d-headline",
 			"payload": {
-				"headline": "Headline horný riadok",
+				"headline": "Headline L3D horny riadok",
 				"subline": "Headline dolný riadok"
 			},
 			"start": 0
@@ -907,7 +907,7 @@
 			"name": "L3D Headline",
 			"pieceType": "l3d-headline",
 			"payload": {
-				"headline": "Headline horný riadok",
+				"headline": "Headline L3D horný riadok",
 				"subline": "Headline dolný riadok"
 			},
 			"start": 0
@@ -951,7 +951,7 @@
 			"name": "L3D Headline",
 			"pieceType": "l3d-headline",
 			"payload": {
-				"headline": "Headline horný riadok",
+				"headline": "Headline L3D horný riadok",
 				"subline": "Headline dolný riadok"
 			},
 			"start": 0
@@ -970,7 +970,7 @@
 			"start": 0
 		},
 		{
-			"id": "piece-intro-overlay",
+			"id": "8a6d76cf-fc2a-4c73-b662-a28e41fdec97",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"segmentId": "seg-intro",
@@ -978,22 +978,10 @@
 			"name": "Intro overlay",
 			"pieceType": "intro",
 			"payload": {
-				"fileName": "spravy/spravy-v3-smoke/clips/introMichal.mov"
+				"fileName": "wipes/360s_ZNELKA.mov"
 			},
-			"start": 0
-		},
-		{
-			"id": "piece-intro-bg",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-intro",
-			"partId": "part-intro",
-			"name": "Background loop",
-			"pieceType": "bg-loop",
-			"payload": {
-				"fileName": "loops/360_loop"
-			},
-			"start": 0
+			"start": 0,
+			"duration": 12
 		},
 		{
 			"id": "piece-intro-mod",
@@ -2290,70 +2278,6 @@
 			"pieceType": "outro",
 			"payload": {},
 			"start": 0
-		},
-		{
-			"id": "wipe-01-part-hl-1",
-			"partId": "part-hl-1",
-			"segmentId": "seg-headlines",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · Headline 1",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/360_wipe",
-				"transition": "Headline 1"
-			}
-		},
-		{
-			"id": "wipe-02-part-hl-2",
-			"partId": "part-hl-2",
-			"segmentId": "seg-headlines",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · Headline 2",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/360_wipe",
-				"transition": "Headline 2"
-			}
-		},
-		{
-			"id": "wipe-03-part-hl-3",
-			"partId": "part-hl-3",
-			"segmentId": "seg-headlines",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · Headline 3",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/360_wipe",
-				"transition": "Headline 3"
-			}
-		},
-		{
-			"id": "wipe-04-part-intro",
-			"partId": "part-intro",
-			"segmentId": "seg-intro",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · Intro",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/360_wipe",
-				"transition": "Intro"
-			}
 		},
 		{
 			"id": "wipe-05-part-ilu-1",

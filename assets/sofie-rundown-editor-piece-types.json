@@ -47,9 +47,9 @@
 		"payload": [
 			{
 				"id": "fileName",
-				"label": "Overlay clip",
+				"label": "Overlay clip (PGM only — e.g. wipes/360s_ZNELKA.mov)",
 				"type": "mediaPick",
-				"subdir": "clips",
+				"subdir": "wipes",
 				"includeInName": true
 			}
 		]
