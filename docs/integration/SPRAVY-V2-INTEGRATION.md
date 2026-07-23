@@ -181,8 +181,7 @@ The bridge accepts JSON objects and XML-wrapped JSON from Caspar.
 ```
 
 **Production media still missing** — demo must import/transcode clips. Use H.264 MP4 for
-reliability. Dev autoplay on `headline` uses `iluFile: 'clips/premiera.mp4'`. CEF maps
-`.mp4`/`.mov` → `.webm` sibling at runtime; **both files must exist on ingest**.
+reliability. Dev autoplay on `headline` uses `iluFile: 'clips/premiera.mp4'`. ILU plays via Caspar MEDIA (not CEF `<video>`); place the `.mp4`/`.mov` master on the Caspar media disk — **no WebM sibling required**.
 
 ### Still open on demo-assets side (not blocking blueprint spec)
 
@@ -248,8 +247,9 @@ Defer: `weather`, `l3d-sport`, `headline`+ILU pair, hypercomposed multi-channel,
 
 ### Merged (PR #32, `6e1f08a`)
 
-- **Media readiness:** `GET /api/rundowns/:id/readiness` — evaluates `mediaPick` fields + WebM
-  sibling for `iluFile`; polls every 10s via `RundownReadinessProvider`
+- **Media readiness:** `GET /api/rundowns/:id/readiness` — evaluates `mediaPick` fields (no WebM
+  sibling); polls every 10s via `RundownReadinessProvider`. Media picker probes clip duration via
+  ffprobe and pulls it into piece/part duration on save.
 - **Story sidebar:** columnar list (Status | Type | Story | Dur) with READY/NOT READY badges
 - **Theming:** dark default + light option; semantic `--re-*` tokens; ThemeToggle in navbar/login
 - **Rebrand:** Unopus (navbar breadcrumb)
@@ -273,8 +273,11 @@ segment end). Compare: https://github.com/tojemoc/unopus/compare/main...cursor/q
 - **Bug (2026-07-15):** FILL landed on `1-110` and scaled the bg loop. Fix branch:
   `tojemoc/sofie-demo-blueprints` → `cursor/ilu-fill-dedicated-layer-09c3`
   (compare: https://github.com/tojemoc/sofie-demo-blueprints/compare/develop...cursor/ilu-fill-dedicated-layer-09c3)
-- **demo-assets:** preferred path is ILU `<video>` via WebM sibling in template; Caspar MEDIA+FILL is the fallback path (`iluFallback` / media-layer mode)
-- **Operator:** after uploading the new blueprint bundle, **re-apply studio config** so Softie mapping `casparcg_ilu_player` (`CasparCGIluPlayer`) → Caspar layer **115** exists (ILU MEDIA + FILL `0.08 / 0.15 / 0.62 / 0.73`)
+- **demo-assets:** HTML headline templates are overlay-only (no WebM/`<video>`). ILU always plays via Caspar MEDIA on layer 115.
+- **ILU prerendered/bypass** (`iluPrerendered`; legacy `iluFallback` = ON):
+  - **OFF** — full-frame 16:9 `.mp4` with MIXER CROP (cover) + FILL `0.08 / 0.15 / 0.62 / 0.73` + `gfx/headline-fallback` chrome
+  - **ON** — pre-rendered alpha `.mov`, FILL `0 0 1 1`, no HTML chrome
+- **Operator:** after uploading the new blueprint bundle, **re-apply studio config** so Softie mapping `casparcg_ilu_player` (`CasparCGIluPlayer`) → Caspar layer **115** exists
 
 ---
 
@@ -315,7 +318,8 @@ Ops: mount media at the configured ingest root so both RE readiness and Softie P
 [ ] Studio config applied; Softie mappings: casparcg_clip_player1 (CasparCGClipPlayer1)→110, casparcg_ilu_player (CasparCGIluPlayer)→115, casparcg_graphics_l3d (CasparCGGraphicsLowerThird)→121
 [ ] Softie mappings: casparcg_graphics_pgm_l3d (CasparCGGraphicsPgmLowerThird) → channel 2, layer 121
 [ ] Take ILU / GFX with l3d-headline: AMCP shows CG/TEMPLATE on 2-121 (casparcg_graphics_pgm_l3d), not on LED 1-121
-[ ] Headline with ILU: AMCP shows MIXER FILL 0.08 / 0.15 / 0.62 / 0.73 on 1-115 (casparcg_ilu_player) only; loop keeps PLAY on 1-110 (casparcg_clip_player1)
+[ ] Headline ILU (bypass OFF): AMCP shows PLAY + MIXER CROP/FILL on 1-115 (casparcg_ilu_player) + CG headline-fallback; loop keeps PLAY on 1-110
+[ ] Headline ILU (bypass ON): AMCP shows PLAY + FILL 0 0 1 1 on 1-115 only (no HTML chrome)
 [ ] RE rundown ingested; take fires correct template + data
 [ ] logo-bug survives across parts until rundown end
 ```

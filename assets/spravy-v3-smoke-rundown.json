@@ -848,9 +848,9 @@
 			"payload": {
 				"text": "Headline horný riadok",
 				"iluFile": "spravy/spravy-v3-smoke/clips/headline1.mp4",
-				"iluFallback": true,
 				"sourceEnabled": false,
-				"source": ""
+				"source": "",
+				"iluPrerendered": false
 			},
 			"start": 0
 		},
@@ -892,9 +892,9 @@
 			"payload": {
 				"text": "Headline horný riadok",
 				"iluFile": "spravy/spravy-v3-smoke/clips/headline2.mp4",
-				"iluFallback": true,
 				"sourceEnabled": false,
-				"source": ""
+				"source": "",
+				"iluPrerendered": false
 			},
 			"start": 0
 		},
@@ -936,9 +936,9 @@
 			"payload": {
 				"text": "Headline horný riadok",
 				"iluFile": "spravy/spravy-v3-smoke/clips/headline3.mp4",
-				"iluFallback": true,
 				"sourceEnabled": false,
-				"source": ""
+				"source": "",
+				"iluPrerendered": false
 			},
 			"start": 0
 		},
@@ -1033,9 +1033,9 @@
 			"payload": {
 				"text": "Tematický titulok",
 				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-1.mp4",
-				"iluFallback": true,
 				"sourceEnabled": false,
-				"source": ""
+				"source": "",
+				"iluPrerendered": false
 			},
 			"start": 0
 		},
@@ -1130,9 +1130,9 @@
 			"payload": {
 				"text": "Tematický titulok",
 				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-2.mp4",
-				"iluFallback": true,
 				"sourceEnabled": false,
-				"source": ""
+				"source": "",
+				"iluPrerendered": false
 			},
 			"start": 0
 		},
@@ -1173,9 +1173,9 @@
 			"payload": {
 				"text": "Tematický titulok",
 				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-3.mp4",
-				"iluFallback": true,
 				"sourceEnabled": false,
-				"source": ""
+				"source": "",
+				"iluPrerendered": false
 			},
 			"start": 0
 		},
@@ -1257,9 +1257,9 @@
 			"payload": {
 				"text": "Tematický titulok",
 				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-4.mp4",
-				"iluFallback": true,
 				"sourceEnabled": false,
-				"source": ""
+				"source": "",
+				"iluPrerendered": false
 			},
 			"start": 0
 		},
@@ -1300,9 +1300,9 @@
 			"payload": {
 				"text": "Tematický titulok",
 				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-5.mp4",
-				"iluFallback": true,
 				"sourceEnabled": false,
-				"source": ""
+				"source": "",
+				"iluPrerendered": false
 			},
 			"start": 0
 		},
@@ -1357,9 +1357,9 @@
 			"payload": {
 				"text": "Tematický titulok",
 				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-6.mp4",
-				"iluFallback": true,
 				"sourceEnabled": false,
-				"source": ""
+				"source": "",
+				"iluPrerendered": false
 			},
 			"start": 0
 		},
@@ -1427,9 +1427,9 @@
 			"payload": {
 				"text": "Titulok",
 				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-7.mp4",
-				"iluFallback": true,
 				"sourceEnabled": false,
-				"source": ""
+				"source": "",
+				"iluPrerendered": false
 			},
 			"start": 0
 		},
@@ -1471,9 +1471,9 @@
 			"payload": {
 				"text": "Tematický titulok",
 				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-8.mp4",
-				"iluFallback": true,
 				"sourceEnabled": false,
-				"source": ""
+				"source": "",
+				"iluPrerendered": false
 			},
 			"start": 0
 		},
@@ -1556,9 +1556,9 @@
 			"payload": {
 				"text": "Tematický titulok",
 				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-9.mp4",
-				"iluFallback": true,
 				"sourceEnabled": false,
-				"source": ""
+				"source": "",
+				"iluPrerendered": false
 			},
 			"start": 0
 		},
@@ -1640,9 +1640,9 @@
 			"payload": {
 				"text": "Téma",
 				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-10.mp4",
-				"iluFallback": true,
 				"sourceEnabled": false,
-				"source": ""
+				"source": "",
+				"iluPrerendered": false
 			},
 			"start": 0
 		},
@@ -1710,9 +1710,9 @@
 			"payload": {
 				"text": "Titulok",
 				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-11.mp4",
-				"iluFallback": true,
 				"sourceEnabled": false,
-				"source": ""
+				"source": "",
+				"iluPrerendered": false
 			},
 			"start": 0
 		},
@@ -1754,9 +1754,9 @@
 			"payload": {
 				"text": "ILU názov",
 				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-12.mp4",
-				"iluFallback": true,
 				"sourceEnabled": false,
-				"source": ""
+				"source": "",
+				"iluPrerendered": false
 			},
 			"start": 0
 		},
@@ -1838,9 +1838,9 @@
 			"payload": {
 				"text": "Tematický titulok",
 				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-13.mp4",
-				"iluFallback": true,
 				"sourceEnabled": true,
-				"source": "Citácia"
+				"source": "Citácia",
+				"iluPrerendered": false
 			},
 			"start": 0
 		},
@@ -1881,9 +1881,9 @@
 			"payload": {
 				"text": "Tematický titulok",
 				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-14.mp4",
-				"iluFallback": true,
 				"sourceEnabled": true,
-				"source": "Citácia"
+				"source": "Citácia",
+				"iluPrerendered": false
 			},
 			"start": 0
 		},
@@ -1924,9 +1924,9 @@
 			"payload": {
 				"text": "Tematický titulok",
 				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-15.mp4",
-				"iluFallback": true,
 				"sourceEnabled": true,
-				"source": "Citácia"
+				"source": "Citácia",
+				"iluPrerendered": false
 			},
 			"start": 0
 		},
@@ -1967,9 +1967,9 @@
 			"payload": {
 				"text": "Tematický titulok",
 				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-16.mp4",
-				"iluFallback": true,
 				"sourceEnabled": true,
-				"source": "Citácia"
+				"source": "Citácia",
+				"iluPrerendered": false
 			},
 			"start": 0
 		},
@@ -2024,9 +2024,9 @@
 			"payload": {
 				"text": "Tematický titulok",
 				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-17.mp4",
-				"iluFallback": true,
 				"sourceEnabled": true,
-				"source": "Citácia"
+				"source": "Citácia",
+				"iluPrerendered": false
 			},
 			"start": 0
 		},
@@ -2067,9 +2067,9 @@
 			"payload": {
 				"text": "Tematický titulok",
 				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-18.mp4",
-				"iluFallback": true,
 				"sourceEnabled": true,
-				"source": "Citácia"
+				"source": "Citácia",
+				"iluPrerendered": false
 			},
 			"start": 0
 		},
@@ -2110,9 +2110,9 @@
 			"payload": {
 				"text": "Tematický titulok",
 				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-19.mp4",
-				"iluFallback": true,
 				"sourceEnabled": true,
-				"source": "Citácia"
+				"source": "Citácia",
+				"iluPrerendered": false
 			},
 			"start": 0
 		},
@@ -2166,9 +2166,9 @@
 			"payload": {
 				"text": "Sledujte na www.360tka.sk",
 				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-20.mp4",
-				"iluFallback": true,
 				"sourceEnabled": true,
-				"source": "Avízo"
+				"source": "Avízo",
+				"iluPrerendered": false
 			},
 			"start": 0
 		},
@@ -2236,9 +2236,9 @@
 			"payload": {
 				"text": "Sledujte na www.360tka.sk",
 				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-21.mp4",
-				"iluFallback": true,
 				"sourceEnabled": true,
-				"source": "nájdete na 360tka.sk"
+				"source": "nájdete na 360tka.sk",
+				"iluPrerendered": false
 			},
 			"start": 0
 		},

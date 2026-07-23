@@ -253,8 +253,8 @@
 				"subdir": "clips"
 			},
 			{
-				"id": "iluFallback",
-				"label": "Use Caspar media fallback",
+				"id": "iluPrerendered",
+				"label": "ILU prerendered/bypass",
 				"type": "boolean"
 			},
 			{
