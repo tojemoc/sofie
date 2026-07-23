@@ -3,7 +3,7 @@
 Living document for agents working across the Sofie megarepo. Update this file when
 demo-assets, blueprints, rundown-editor, or core integration status changes.
 
-**Last updated:** 2026-07-20
+**Last updated:** 2026-07-22
 
 ---
 
@@ -16,8 +16,8 @@ v2 HTML templates from `tojemoc/sofie-demo-assets`.
 imported H.264 clips. Full hypercomposed (LED≠PGM, wipes, all 10 templates) is **post-demo**.
 
 **DoubleBox PGM + UVC camera + wipes:** see
-[`docs/integration/DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md) — LED = `360_loop` only; PGM
-composes ILU + CAM (OBS Virtual Camera / UVC) + tema/bug; same wipe file on PGM layer 200.
+[`docs/integration/DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md) — LED = headlines +
+`360_loop`; Intro on **PGM 210**; wipe on PGM 200; PGM composes ILU + CAM + tema/bug.
 
 ---
 
@@ -27,26 +27,46 @@ composes ILU + CAM (OBS Virtual Camera / UVC) + tema/bug; same wipe file on PGM 
 |------|-------------|--------|
 | `tojemoc/sofie-demo-assets` | `main` @ `85c706b` | **PR #3 merged** — 10 v2 HTML templates + `assemble-caspar.mjs` |
 | `tojemoc/sofie-demo-assets` | [PR #4](https://github.com/tojemoc/sofie-demo-assets/pull/4) | **Open** — CI/CD, pre-releases (`sofie-demo-assets-pre-<sha>.zip`), Docker image |
-| `tojemoc/sofie-demo-blueprints` | `develop` | v2 Caspar templates wired (`gfx/l3d-*`, headline ILU, logo-bug baseline) |
-| `tojemoc/sofie-demo-blueprints` | `cursor/intro-overlay-bg-loop-4790` | **Open** — Intro overlay (EffectsPlayer 200) + controllable `bg-loop` piece; ILU smoke L3Ds |
-| `tojemoc/unopus` (Rundown Editor) | `main` | Readiness, media picker, ILU/GFX presets |
-| `tojemoc/unopus` (Rundown Editor) | `cursor/intro-overlay-bg-loop-4790` | **Open** — Intro / BG-loop part+piece types in toolbar manifests |
+| `tojemoc/sofie-demo-blueprints` | `develop` | v2 templates + Intro on **LED** EffectsPlayer 200 (needs remap) |
+| `tojemoc/sofie-demo-blueprints` | handoff [`blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md) | **Todo** — Intro → PGM layer 210; never LED |
+| `tojemoc/unopus` (Rundown Editor) | `main` | Readiness, media picker, ILU/GFX presets; type manifests from megarepo `assets/` |
 | `tojemoc/sofie-core` | — | No template-specific code; Playout Gateway is transport only |
 
 ---
 
-## Intro overlay vs BG loop (2026-07-20)
+## Intro overlay vs BG loop (2026-07-22)
 
-Operators need **absolute control** over two different Caspar layers:
+Operators need **absolute control** over two different Caspar layers / channels:
 
-| Item | RE part / piece | Caspar layer | Role |
-|------|-----------------|--------------|------|
-| **Intro overlay** | Part `Intro` + piece `intro` | EffectsPlayer **200** | Alpha/video that plays **on top of** headlines, camera, L3Ds |
-| **Background loop** | Piece `bg-loop` (optional on Intro; addable elsewhere) | ClipPlayer1 **110** | LED `loops/360_loop` behind camera — visible in Softie, not only baseline |
+| Item | RE part / piece | Caspar target | Role |
+|------|-----------------|---------------|------|
+| **Intro overlay** | Part `Intro` + piece `intro` | **PGM** IntroOverlay **210** (above wipe 200) | Full-frame znelka / alpha — **never on LED** |
+| **Background loop** | Piece `bg-loop` (optional) + baseline | LED ClipPlayer1 **110** | LED `loops/360_loop` |
+
+**LED allow-list (channel 1):** **headlines** (ILU + headline CG), the **loop**, and
+**Presenter MOD** (`l3d-mod` — smoke Intro routes Gabriela Kajtárová here).
+**Intro / znelka must not appear on LED.** See handoff
+[`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md)
+(current blueprints still map `playLayer: 'effects'` → LED layer 200 — remapping required).
 
 **Why GFX + video failed:** GFX parts require a graphic object. A video-only GFX part produced Softie Invalid **"No graphic object"**. Use the **Intro** toolbar button instead (or add an `intro` piece). Blueprints also recover video-only GFX parts as Intro overlays so existing smoke attempts keep working after bundle upload.
 
-**Baseline:** `loops/360_loop` remains on ClipPlayer1 at priority 0 as a safety net. A `bg-loop` piece plays the same (or alternate) file at priority 1 with `OutOnRundownEnd` so operators can see/control it.
+**Baseline:** `loops/360_loop` remains on ClipPlayer1 at priority 0 as a safety net. A `bg-loop` piece plays the same (or alternate) file at priority 1 with `OutOnRundownEnd` so operators can see/control it. Smoke Intro no longer carries an explicit `bg-loop` piece.
+
+### Headline ILU `404 PLAY FAILED`
+
+Caspar log pattern:
+
+```text
+CG 1-121 ADD 1 "gfx/headline-fallback" …   → 202 CG OK
+PLAY 1-115 "spravy/spravy-v3-smoke/clips/headline1" … → 404 PLAY FAILED
+```
+
+Path convention is correct (`spravy/<rundownId>/clips/<name>` without extension for PLAY).
+**404 means the file is not on the Caspar media disk** under
+`<casparcgMediaFolder>/spravy/spravy-v3-smoke/clips/headline1.mp4` (Package Manager
+copy / ingest). Place or ingest the MP4s; Softie cannot invent media. CG OK only means
+the HTML template loaded — the companion ILU PLAY still needs the file.
 
 ### Headline L3Ds (LED vs PGM)
 
@@ -55,15 +75,15 @@ Operators need **absolute control** over two different Caspar layers:
 - **How to look at PGM:** open the Caspar **channel 2** consumer (screen / NDI / SDI for ch2), not channel 1. Studio mapping id `casparcg_graphics_pgm_l3d` → ch2 layer 121. Confirm with AMCP e.g. `INFO 2` or a second Screen consumer bound to `<channel-index>2</channel-index>`.
 - **demo-assets:** v2 HTML must exist on Caspar (`gfx/l3d-headline.html`, etc.). Rebuild with `yarn build` and copy `deploy/template-path` if needed.
 
-## Muster smoke rundown (2026-07-20)
+## Muster smoke rundown (2026-07-22)
 
 `assets/spravy-v3-smoke-rundown.json` (sofie megarepo `assets/`) mirrors the
 production muster spine:
 
 | Segment | Parts |
 |---------|--------|
-| HEADLINES | HEADLINE1–3 (ILU + L3D horný/dolný + cam A) |
-| INTRO | Intro overlay (+ bg-loop), Mod L3D Gabriela Kajtárová, logo-bug |
+| HEADLINES | HEADLINE1–3 (ILU + L3D horný/dolný + cam A); **no** wipe pieces |
+| INTRO | Intro overlay (`wipes/360s_ZNELKA`, 12s; disk `….mov`) on **PGM**; Mod L3D Gabriela Kajtárová (LED) + logo-bug (PGM); **no** bg-loop piece, **no** wipe |
 | Téma 1–4 | Téma GFX + ILU/SYN patterns (cams A/P/M); named ILUs use PGM `l3d-headline` |
 | SPRÁVY JEDNOU VETOU | `l3d-sjv` + 4× ILU with citácia |
 | ŠPORT | `l3d-sport` + 3× ILU with citácia |
@@ -74,9 +94,8 @@ Clip paths are placeholders under `spravy/spravy-v3-smoke/clips/`. Camera letter
 **A→1**, **P→2**, **M→3**.
 
 Wipes: piece type `wipe`, file `wipes/360_wipe`, play on **PGM** (see DOUBLEBOX-PGM.md).
-Smoke rundown includes one wipe piece per take with a `transition` label
-(`ILU TO SYN`, `Double Box`, …).
-
+Smoke rundown includes story-block wipe pieces with a `transition` label
+(`ILU TO SYN`, `Double Box`, …) — not on HEADLINES / Intro.
 ---
 
 ## Demo-assets contract (source of truth for blueprints)
