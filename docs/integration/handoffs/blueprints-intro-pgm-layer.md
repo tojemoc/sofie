@@ -15,15 +15,15 @@ cloud agent could push but not create the PR).
 
 1. **Intro plays on LED today.** `playLayer: 'effects'` maps to
    `CasparCGLayers.CasparCGEffectsPlayer` → **LED channel, layer 200**.
-   Production rule: **Intro must never play on LED.** LED is reserved for
-   **headlines + `loops/360_loop` only**.
+   Production rule: **Intro must never play on LED.** LED allow-list:
+   **headlines + loop + Presenter MOD (`l3d-mod`)**.
 2. **Intro must sit above everything on PGM** (camera, ILU when remapped, L3Ds,
    logo-bug, and story-block wipes). Wipe already uses PGM layer **200**
    (`CasparCGPgmEffectsPlayer`). Intro needs a **higher** PGM layer (**210**).
 
 Smoke fixture (sofie megarepo `assets/spravy-v3-smoke-rundown.json`) now uses:
 
-- piece type `intro`, `fileName: "wipes/360s_ZNELKA.mov"`, duration 12s
+- piece type `intro`, `fileName: "wipes/360s_ZNELKA"` (disk: `wipes/360s_ZNELKA.mov`), duration 12s
 - **no** `bg-loop` piece on the Intro part (baseline loop still covers LED)
 - **no** wipe on HEADLINE / Intro parts (story-block wipes unchanged)
 

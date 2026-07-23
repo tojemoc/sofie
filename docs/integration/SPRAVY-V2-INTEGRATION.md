@@ -43,8 +43,9 @@ Operators need **absolute control** over two different Caspar layers / channels:
 | **Intro overlay** | Part `Intro` + piece `intro` | **PGM** IntroOverlay **210** (above wipe 200) | Full-frame znelka / alpha — **never on LED** |
 | **Background loop** | Piece `bg-loop` (optional) + baseline | LED ClipPlayer1 **110** | LED `loops/360_loop` |
 
-**LED rule:** channel 1 is reserved for **headlines** (ILU + headline CG) **and the loop**.
-Intro must not appear on LED. See handoff
+**LED allow-list (channel 1):** **headlines** (ILU + headline CG), the **loop**, and
+**Presenter MOD** (`l3d-mod` — smoke Intro routes Gabriela Kajtárová here).
+**Intro / znelka must not appear on LED.** See handoff
 [`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md)
 (current blueprints still map `playLayer: 'effects'` → LED layer 200 — remapping required).
 
@@ -82,7 +83,7 @@ production muster spine:
 | Segment | Parts |
 |---------|--------|
 | HEADLINES | HEADLINE1–3 (ILU + L3D horný/dolný + cam A); **no** wipe pieces |
-| INTRO | Intro overlay (`wipes/360s_ZNELKA.mov`, 12s) on **PGM**; Mod L3D Gabriela Kajtárová + logo-bug; **no** bg-loop piece, **no** wipe |
+| INTRO | Intro overlay (`wipes/360s_ZNELKA`, 12s; disk `….mov`) on **PGM**; Mod L3D Gabriela Kajtárová (LED) + logo-bug (PGM); **no** bg-loop piece, **no** wipe |
 | Téma 1–4 | Téma GFX + ILU/SYN patterns (cams A/P/M); named ILUs use PGM `l3d-headline` |
 | SPRÁVY JEDNOU VETOU | `l3d-sjv` + 4× ILU with citácia |
 | ŠPORT | `l3d-sport` + 3× ILU with citácia |

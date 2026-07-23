@@ -863,7 +863,7 @@
 			"name": "L3D Headline",
 			"pieceType": "l3d-headline",
 			"payload": {
-				"headline": "Headline L3D horny riadok",
+				"headline": "Headline L3D horný riadok",
 				"subline": "Headline dolný riadok"
 			},
 			"start": 0
@@ -978,7 +978,7 @@
 			"name": "Intro overlay",
 			"pieceType": "intro",
 			"payload": {
-				"fileName": "wipes/360s_ZNELKA.mov"
+				"fileName": "wipes/360s_ZNELKA"
 			},
 			"start": 0,
 			"duration": 12
