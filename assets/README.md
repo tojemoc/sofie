@@ -3,6 +3,10 @@
 Piece / part / segment type manifests and the SPRÁVY smoke rundown live **here** —
 in the `tojemoc/sofie` megarepo — not in `sofie-demo-blueprints` or `unopus`.
 
+```
+PLAY 2-116 "dshow://video=OBS Virtual Camera"
+```
+
 | File | Purpose |
 |------|---------|
 | `sofie-rundown-editor-piece-types.json` | Piece type definitions and GFX preview templates |
