@@ -11,7 +11,7 @@ cloud agent could push but not create the PR).
 
 ---
 
-## Problem (from Caspar / Softie)
+## Problem (from Caspar / Sofie)
 
 1. **Intro plays on LED today.** `playLayer: 'effects'` maps to
    `CasparCGLayers.CasparCGEffectsPlayer` → **LED channel, layer 200**.
@@ -44,13 +44,13 @@ yarn test:blueprints && yarn lint
 cd packages/blueprints && yarn dist
 ```
 
-Upload bundle → Softie → **Apply config** → re-ingest smoke.
+Upload bundle → Sofie → **Apply config** → re-ingest smoke.
 
 **AMCP on Intro take:** `PLAY <pgm>-210 "wipes/360s_ZNELKA" …`  
 **Must not** play intro on LED (`PLAY 1-200 …`).
 
 ## Out of scope
 
-Headline `404 PLAY FAILED` for `spravy/…/clips/headline1` — path is correct; the
+Headline `404 PLAY FAILED` for `clips/headline1` — path is correct; the
 file is missing from the Caspar media folder. See
 `docs/integration/SPRAVY-V2-INTEGRATION.md`.

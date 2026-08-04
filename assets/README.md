@@ -28,7 +28,7 @@ Wipes: piece type `wipe` → Caspar PGM layer 200 (`wipes/360_wipe`). See
 ### Media folder layout (`bg-loop`, wipe, clips)
 
 Paths in piece payloads are **Caspar PLAY paths** (no extension), relative to the
-studio **CasparCG media folder** (Softie: `casparcgMediaFolder`, often
+studio **CasparCG media folder** (Sofie: `casparcgMediaFolder`, often
 `c:/casparcg/sofie-demo-media`):
 
 ```text
@@ -36,18 +36,18 @@ studio **CasparCG media folder** (Softie: `casparcgMediaFolder`, often
   loops/360_loop.mp4          ← piece type `bg-loop`, fileName `loops/360_loop`
   wipes/360_wipe.mov          ← piece type `wipe`,    fileName `wipes/360_wipe`
   wipes/360s_ZNELKA.mov       ← piece type `intro`,   fileName `wipes/360s_ZNELKA`
-  clips/premiera.mp4          ← shared demo clips
-  spravy/<rundownId>/clips/…  ← per-rundown VT / ILU (Package Manager ingest)
+  clips/headline1.mp4         ← VT / ILU / SYN (Package Manager ingest)
 ```
 
+- Two levels only: `<subdir>/<file>` — no `spravy/<rundownId>/…` nesting.
 - Rundown Editor `mediaPick.subdir` (`loops` / `wipes` / `clips`) only scopes the
   picker UI under the ingest root — the saved `fileName` must include the subdir.
 - `bg-loop` plays on LED ClipPlayer1 (layer 110). Baseline also loops
   `loops/360_loop` at priority 0; a `bg-loop` piece overrides at priority 1.
 - `intro` must PLAY on **PGM** (target layer 210). A `404` on
-  `PLAY … "spravy/…/clips/headlineN"` means the MP4 is missing from the Caspar
+  `PLAY … "clips/headlineN"` means the MP4 is missing from the Caspar
   media folder — ingest/copy it; the rundown path is already correct.
-- Do **not** put loops under `spravy/<id>/clips/` — those are editorial clips.
+- Do **not** put loops under `clips/` — those are editorial clips.
 
 ### Consumers
 

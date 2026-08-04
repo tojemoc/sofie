@@ -847,12 +847,13 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Headline horný riadok",
-				"iluFile": "spravy/spravy-v3-smoke/clips/headline1.mp4",
+				"iluFile": "clips/headline1.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-hl-1-l3d",
@@ -866,7 +867,8 @@
 				"headline": "Headline L3D horný riadok",
 				"subline": "Headline dolný riadok"
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-hl-1-cam",
@@ -891,12 +893,13 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Headline horný riadok",
-				"iluFile": "spravy/spravy-v3-smoke/clips/headline2.mp4",
+				"iluFile": "clips/headline2.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-hl-2-l3d",
@@ -910,7 +913,8 @@
 				"headline": "Headline L3D horný riadok",
 				"subline": "Headline dolný riadok"
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-hl-2-cam",
@@ -935,12 +939,13 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Headline horný riadok",
-				"iluFile": "spravy/spravy-v3-smoke/clips/headline3.mp4",
+				"iluFile": "clips/headline3.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-hl-3-l3d",
@@ -954,7 +959,8 @@
 				"headline": "Headline L3D horný riadok",
 				"subline": "Headline dolný riadok"
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-hl-3-cam",
@@ -1032,7 +1038,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-1.mp4",
+				"iluFile": "clips/ilu-1.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
@@ -1088,7 +1094,7 @@
 			"name": "SOT",
 			"pieceType": "video",
 			"payload": {
-				"fileName": "spravy/spravy-v3-smoke/clips/syn-1.mp4"
+				"fileName": "clips/syn-1.mp4"
 			},
 			"start": 0
 		},
@@ -1115,7 +1121,7 @@
 			"name": "SOT",
 			"pieceType": "video",
 			"payload": {
-				"fileName": "spravy/spravy-v3-smoke/clips/syn-2.mp4"
+				"fileName": "clips/syn-2.mp4"
 			},
 			"start": 0
 		},
@@ -1129,7 +1135,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-2.mp4",
+				"iluFile": "clips/ilu-2.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
@@ -1172,7 +1178,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-3.mp4",
+				"iluFile": "clips/ilu-3.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
@@ -1228,7 +1234,7 @@
 			"name": "SOT",
 			"pieceType": "video",
 			"payload": {
-				"fileName": "spravy/spravy-v3-smoke/clips/syn-3.mp4"
+				"fileName": "clips/syn-3.mp4"
 			},
 			"start": 0
 		},
@@ -1256,7 +1262,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-4.mp4",
+				"iluFile": "clips/ilu-4.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
@@ -1299,7 +1305,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-5.mp4",
+				"iluFile": "clips/ilu-5.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
@@ -1356,7 +1362,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-6.mp4",
+				"iluFile": "clips/ilu-6.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
@@ -1412,7 +1418,7 @@
 			"name": "SOT",
 			"pieceType": "video",
 			"payload": {
-				"fileName": "spravy/spravy-v3-smoke/clips/syn-4.mp4"
+				"fileName": "clips/syn-4.mp4"
 			},
 			"start": 0
 		},
@@ -1426,12 +1432,13 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Titulok",
-				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-7.mp4",
+				"iluFile": "clips/ilu-7.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-part-ilu-7-l3d",
@@ -1445,7 +1452,8 @@
 				"headline": "Titulok",
 				"subline": ""
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-part-ilu-7-cam",
@@ -1470,12 +1478,13 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-8.mp4",
+				"iluFile": "clips/ilu-8.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-part-ilu-8-l3d",
@@ -1489,7 +1498,8 @@
 				"headline": "Tematický titulok",
 				"subline": ""
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-part-ilu-8-cam",
@@ -1527,7 +1537,7 @@
 			"name": "SOT",
 			"pieceType": "video",
 			"payload": {
-				"fileName": "spravy/spravy-v3-smoke/clips/syn-5.mp4"
+				"fileName": "clips/syn-5.mp4"
 			},
 			"start": 0
 		},
@@ -1555,7 +1565,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-9.mp4",
+				"iluFile": "clips/ilu-9.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
@@ -1611,7 +1621,7 @@
 			"name": "SOT",
 			"pieceType": "video",
 			"payload": {
-				"fileName": "spravy/spravy-v3-smoke/clips/syn-6.mp4"
+				"fileName": "clips/syn-6.mp4"
 			},
 			"start": 0
 		},
@@ -1639,7 +1649,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Téma",
-				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-10.mp4",
+				"iluFile": "clips/ilu-10.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
@@ -1695,7 +1705,7 @@
 			"name": "SOT",
 			"pieceType": "video",
 			"payload": {
-				"fileName": "spravy/spravy-v3-smoke/clips/syn-7.mp4"
+				"fileName": "clips/syn-7.mp4"
 			},
 			"start": 0
 		},
@@ -1709,12 +1719,13 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Titulok",
-				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-11.mp4",
+				"iluFile": "clips/ilu-11.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-part-ilu-11-l3d",
@@ -1728,7 +1739,8 @@
 				"headline": "Titulok",
 				"subline": ""
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-part-ilu-11-cam",
@@ -1753,12 +1765,13 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "ILU názov",
-				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-12.mp4",
+				"iluFile": "clips/ilu-12.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-part-ilu-12-l3d",
@@ -1772,7 +1785,8 @@
 				"headline": "ILU názov",
 				"subline": ""
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-part-ilu-12-cam",
@@ -1810,7 +1824,7 @@
 			"name": "SOT",
 			"pieceType": "video",
 			"payload": {
-				"fileName": "spravy/spravy-v3-smoke/clips/syn-8.mp4"
+				"fileName": "clips/syn-8.mp4"
 			},
 			"start": 0
 		},
@@ -1837,7 +1851,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-13.mp4",
+				"iluFile": "clips/ilu-13.mp4",
 				"sourceEnabled": true,
 				"source": "Citácia",
 				"iluPrerendered": false
@@ -1880,7 +1894,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-14.mp4",
+				"iluFile": "clips/ilu-14.mp4",
 				"sourceEnabled": true,
 				"source": "Citácia",
 				"iluPrerendered": false
@@ -1923,7 +1937,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-15.mp4",
+				"iluFile": "clips/ilu-15.mp4",
 				"sourceEnabled": true,
 				"source": "Citácia",
 				"iluPrerendered": false
@@ -1966,7 +1980,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-16.mp4",
+				"iluFile": "clips/ilu-16.mp4",
 				"sourceEnabled": true,
 				"source": "Citácia",
 				"iluPrerendered": false
@@ -2023,7 +2037,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-17.mp4",
+				"iluFile": "clips/ilu-17.mp4",
 				"sourceEnabled": true,
 				"source": "Citácia",
 				"iluPrerendered": false
@@ -2066,7 +2080,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-18.mp4",
+				"iluFile": "clips/ilu-18.mp4",
 				"sourceEnabled": true,
 				"source": "Citácia",
 				"iluPrerendered": false
@@ -2109,7 +2123,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-19.mp4",
+				"iluFile": "clips/ilu-19.mp4",
 				"sourceEnabled": true,
 				"source": "Citácia",
 				"iluPrerendered": false
@@ -2165,7 +2179,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Sledujte na www.360tka.sk",
-				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-20.mp4",
+				"iluFile": "clips/ilu-20.mp4",
 				"sourceEnabled": true,
 				"source": "Avízo",
 				"iluPrerendered": false
@@ -2221,7 +2235,7 @@
 			"name": "SOT",
 			"pieceType": "video",
 			"payload": {
-				"fileName": "spravy/spravy-v3-smoke/clips/syn-9.mp4"
+				"fileName": "clips/syn-9.mp4"
 			},
 			"start": 0
 		},
@@ -2235,7 +2249,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Sledujte na www.360tka.sk",
-				"iluFile": "spravy/spravy-v3-smoke/clips/ilu-21.mp4",
+				"iluFile": "clips/ilu-21.mp4",
 				"sourceEnabled": true,
 				"source": "nájdete na 360tka.sk",
 				"iluPrerendered": false

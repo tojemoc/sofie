@@ -49,7 +49,7 @@ Operators need **absolute control** over two different Caspar layers / channels:
 [`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md)
 (current blueprints still map `playLayer: 'effects'` → LED layer 200 — remapping required).
 
-**Why GFX + video failed:** GFX parts require a graphic object. A video-only GFX part produced Softie Invalid **"No graphic object"**. Use the **Intro** toolbar button instead (or add an `intro` piece). Blueprints also recover video-only GFX parts as Intro overlays so existing smoke attempts keep working after bundle upload.
+**Why GFX + video failed:** GFX parts require a graphic object. A video-only GFX part produced Sofie Invalid **"No graphic object"**. Use the **Intro** toolbar button instead (or add an `intro` piece). Blueprints also recover video-only GFX parts as Intro overlays so existing smoke attempts keep working after bundle upload.
 
 **Baseline:** `loops/360_loop` remains on ClipPlayer1 at priority 0 as a safety net. A `bg-loop` piece plays the same (or alternate) file at priority 1 with `OutOnRundownEnd` so operators can see/control it. Smoke Intro no longer carries an explicit `bg-loop` piece.
 
@@ -59,21 +59,22 @@ Caspar log pattern:
 
 ```text
 CG 1-121 ADD 1 "gfx/headline-fallback" …   → 202 CG OK
-PLAY 1-115 "spravy/spravy-v3-smoke/clips/headline1" … → 404 PLAY FAILED
+PLAY 1-115 "clips/headline1" … → 404 PLAY FAILED
 ```
 
-Path convention is correct (`spravy/<rundownId>/clips/<name>` without extension for PLAY).
+Path convention is correct (`clips/<name>` without extension for PLAY).
 **404 means the file is not on the Caspar media disk** under
-`<casparcgMediaFolder>/spravy/spravy-v3-smoke/clips/headline1.mp4` (Package Manager
-copy / ingest). Place or ingest the MP4s; Softie cannot invent media. CG OK only means
+`<casparcgMediaFolder>/clips/headline1.mp4` (Package Manager
+copy / ingest). Place or ingest the MP4s; Sofie cannot invent media. CG OK only means
 the HTML template loaded — the companion ILU PLAY still needs the file.
 
 ### Headline L3Ds (LED vs PGM)
 
-- **Field mapping** is fine: RE `headline`/`subline` → Caspar `title`/`subtitle` (templates also accept the RE names). ILU presets include `l3d-headline`; re-upload blueprints and re-ingest if Softie still omits them.
+- **Field mapping** is fine: RE `headline`/`subline` → Caspar `title`/`subtitle` (templates also accept the RE names). ILU presets include `l3d-headline`; re-upload blueprints and re-ingest if Sofie still omits them.
 - **`l3d-headline` is on PGM (Caspar channel 2)** by design; `l3d-syn` / `l3d-tema` / `l3d-mod` / ILU stay on **LED (channel 1)**. If you only watch the LED consumer, headline L3Ds look “missing”.
 - **How to look at PGM:** open the Caspar **channel 2** consumer (screen / NDI / SDI for ch2), not channel 1. Studio mapping id `casparcg_graphics_pgm_l3d` → ch2 layer 121. Confirm with AMCP e.g. `INFO 2` or a second Screen consumer bound to `<channel-index>2</channel-index>`.
 - **demo-assets:** v2 HTML must exist on Caspar (`gfx/l3d-headline.html`, etc.). Rebuild with `yarn build` and copy `deploy/template-path` if needed.
+- **Timing (not AUTO):** set the same **Duration (seconds)** on the part, the `headline` (ILU) piece, and the `l3d-headline` piece. Sofie then shows that length as `expectedDuration` for a manual **Take** to the next part/segment. Sofie **AUTO** only appears when blueprints set `autoNext` (VT / Intro / non-ILU GFX). ILU parts (with or without camera) do **not** autoNext — leave Start at `0` so they begin on Take.
 
 ## Muster smoke rundown (2026-07-22)
 
@@ -90,7 +91,7 @@ production muster spine:
 | POČASIE | `weather` fullscreen |
 | ZÁVER + AVIZO | ILU avízo, SYN, closing ILU, `outro` |
 
-Clip paths are placeholders under `spravy/spravy-v3-smoke/clips/`. Camera letters:
+Clip paths are placeholders under `clips/`. Camera letters:
 **A→1**, **P→2**, **M→3**.
 
 Wipes: piece type `wipe`, file `wipes/360_wipe`, play on **PGM** (see DOUBLEBOX-PGM.md).
@@ -266,7 +267,7 @@ segment end). Compare: https://github.com/tojemoc/unopus/compare/main...cursor/q
 
 ### ILU architecture (cross-repo)
 
-- **Layer contract (LED channel):** Softie studio mapping id (= `CasparCGLayers` enum value) → Caspar layer. Parenthetical names are `LedChannelLayers` shorthand only.
+- **Layer contract (LED channel):** Sofie studio mapping id (= `CasparCGLayers` enum value) → Caspar layer. Parenthetical names are `LedChannelLayers` shorthand only.
   - `casparcg_clip_player1` (`CasparCGClipPlayer1`) → layer **110** (alias `ClipPlayer`) — LED background loop / VT fullscreen only; **never** apply MIXER FILL here
   - `casparcg_ilu_player` (`CasparCGIluPlayer`) → layer **115** (alias `IluPlayer`) — headline ILU MEDIA with FILL `0.08 / 0.15 / 0.62 / 0.73` (matches HTML `#ilu-slide`)
   - `casparcg_graphics_l3d` (`CasparCGGraphicsLowerThird`) → layer **121** (alias `GraphicsLowerThird` / “LowerThird”) — HTML graphics templates (`gfx/headline`, etc.)
@@ -277,7 +278,7 @@ segment end). Compare: https://github.com/tojemoc/unopus/compare/main...cursor/q
 - **ILU prerendered/bypass** (`iluPrerendered`; legacy `iluFallback` = ON):
   - **OFF** — full-frame 16:9 `.mp4` with MIXER CROP (cover) + FILL `0.08 / 0.15 / 0.62 / 0.73` + `gfx/headline-fallback` chrome
   - **ON** — pre-rendered alpha `.mov`, FILL `0 0 1 1`, no HTML chrome
-- **Operator:** after uploading the new blueprint bundle, **re-apply studio config** so Softie mapping `casparcg_ilu_player` (`CasparCGIluPlayer`) → Caspar layer **115** exists
+- **Operator:** after uploading the new blueprint bundle, **re-apply studio config** so Sofie mapping `casparcg_ilu_player` (`CasparCGIluPlayer`) → Caspar layer **115** exists
 
 ---
 
@@ -291,20 +292,20 @@ segment end). Compare: https://github.com/tojemoc/unopus/compare/main...cursor/q
 
 Symptoms that look like “PM cannot connect” but Core is up:
 
-1. Nested Sofie `mediaPackages` object **does not persist in Settings** (edits vanish). Fixed by flattening to top-level fields on `cursor/pm-accessor-type-ingest-09c3`. After uploading that bundle + refresh: edit **Ingest media folder** (and **CasparCG media folder** if separate) as plain strings — do **not** use the nested “Media package containers” object. **Source of truth** is the shared media tree both Package Manager and Rundown Editor read: Softie studio `ingestMediaFolder` must match RE `INGEST_MEDIA_ROOT` / Settings → Ingest media root (clips live under `<root>/spravy/<rundownId>/clips/`). Examples: Windows `c:/casparcg/sofie-demo-media`; Docker-mounted `/app/ingest`. Then Apply Configuration. Until the new blueprints are uploaded, you cannot save that nested field in the UI.
+1. Nested Sofie `mediaPackages` object **does not persist in Settings** (edits vanish). Fixed by flattening to top-level fields on `cursor/pm-accessor-type-ingest-09c3`. After uploading that bundle + refresh: edit **Ingest media folder** (and **CasparCG media folder** if separate) as plain strings — do **not** use the nested “Media package containers” object. **Source of truth** is the shared media tree both Package Manager and Rundown Editor read: Sofie studio `ingestMediaFolder` must match RE `INGEST_MEDIA_ROOT` / Settings → Ingest media root (clips live under `<root>/clips/`). Examples: Windows `c:/casparcg/sofie-demo-media`; Docker-mounted `/app/ingest`. Then Apply Configuration. Until the new blueprints are uploaded, you cannot save that nested field in the UI.
 2. `getAccessorStaticHandle: Accessor type is undefined` — ExpectedPackage source accessors lacked `type`; also on `cursor/pm-accessor-type-ingest-09c3`. After upload, re-apply studio config and re-ingest/reset the rundown so packages regenerate.
 
-### Rundown Editor ingest scan vs Softie VID pieces (2026-07-15)
+### Rundown Editor ingest scan vs Sofie VID pieces (2026-07-15)
 
 Symptoms:
-- Softie fails regenerating VO/VT/SYN parts with a `video` (VID) piece when **File name** is empty — blueprints called `stripExtension(undefined)` and threw.
-- RE mediaPick was **select-only**; with missing `spravy/<rundownId>/clips/` under `INGEST_MEDIA_ROOT` (often `/app/ingest` in Docker) you could not type a Caspar/PM-relative path. The warning showed only the relative folder next to “Ingest root: …” which looked nonsensical.
+- Sofie fails regenerating VO/VT/SYN parts with a `video` (VID) piece when **File name** is empty — blueprints called `stripExtension(undefined)` and threw.
+- RE mediaPick was **select-only**; with missing `clips/` under `INGEST_MEDIA_ROOT` (often `/app/ingest` in Docker) you could not type a Caspar/PM-relative path. The warning showed only the relative folder next to “Ingest root: …” which looked nonsensical.
 
 Fixes:
 - Blueprints `cursor/vid-clip-props-harden-09c3`: require a non-empty path; Invalid “Video clip is missing file name”; treat duration as already ms after editor convert; content fallback to VT for video pieces.
 - RE `cursor/media-picker-freetext-09c3`: free-text path (+ datalist/scan picker), show **absolute** scan folder, **Create scan folder** button.
 
-Ops: mount media at the configured ingest root so both RE readiness and Softie Package Manager see `spravy/<id>/clips/*.mp4`, or type any path relative to that same media tree.
+Ops: mount media at the configured ingest root so both RE readiness and Sofie Package Manager see `clips/*.mp4`, or type any path relative to that same media tree.
 
 ---
 
@@ -315,8 +316,8 @@ Ops: mount media at the configured ingest root so both RE readiness and Softie P
 [ ] Copy zip to Caspar; AMCP: CG <ch> ADD 0 "<clipName>" 1
 [ ] CG <ch> UPDATE 0 "<clipName>" "{\"headline\":\"test\"}"
 [ ] Blueprints dist bundle uploaded to Core
-[ ] Studio config applied; Softie mappings: casparcg_clip_player1 (CasparCGClipPlayer1)→110, casparcg_ilu_player (CasparCGIluPlayer)→115, casparcg_graphics_l3d (CasparCGGraphicsLowerThird)→121
-[ ] Softie mappings: casparcg_graphics_pgm_l3d (CasparCGGraphicsPgmLowerThird) → channel 2, layer 121
+[ ] Studio config applied; Sofie mappings: casparcg_clip_player1 (CasparCGClipPlayer1)→110, casparcg_ilu_player (CasparCGIluPlayer)→115, casparcg_graphics_l3d (CasparCGGraphicsLowerThird)→121
+[ ] Sofie mappings: casparcg_graphics_pgm_l3d (CasparCGGraphicsPgmLowerThird) → channel 2, layer 121
 [ ] Take ILU / GFX with l3d-headline: AMCP shows CG/TEMPLATE on 2-121 (casparcg_graphics_pgm_l3d), not on LED 1-121
 [ ] Headline ILU (bypass OFF): AMCP shows PLAY + MIXER CROP/FILL on 1-115 (casparcg_ilu_player) + CG headline-fallback; loop keeps PLAY on 1-110
 [ ] Headline ILU (bypass ON): AMCP shows PLAY + FILL 0 0 1 1 on 1-115 only (no HTML chrome)

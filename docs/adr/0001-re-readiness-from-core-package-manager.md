@@ -11,7 +11,7 @@
 
 Rundown Editor's READY/NOT READY badges (`backend/src/background/mediaReadiness.ts`) currently
 compute readiness by polling the Linux filesystem directly: `fs.stat()` against
-`<ingestMediaRoot>/spravy/<rundownId>/clips/<file>`, plus a WebM-sibling check for `iluFile`
+`<ingestMediaRoot>/clips/<file>`, plus a WebM-sibling check for `iluFile`
 fields. This is fully independent of Sofie — it does not consult Core, Playout Gateway, or
 Package Manager in any way.
 
