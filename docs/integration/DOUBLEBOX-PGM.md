@@ -70,11 +70,23 @@ checks.
 Tune FILL against the real HTML chrome; values above match the attached still
 approximately.
 
+**Cutouts / DoubleBox frame media:** you do **not** need a black/white matte. Soft
+compose is loop full-bleed on PGM 110 + MIXER FILL for ILU/CAM windows. If design needs
+a branded frame (borders/shadows between windows), use a **full-frame PNG or ProRes/Hap
+alpha `.mov`** with transparent holes — not a luma mask (this stack is not wired for
+luma key). Put that chrome on a layer between 110 and 115/116, or bake it into HTML.
+
 ## Wipes (same media, different semantics)
 
 All story-block transitions use the **same alpha wipe** file under Caspar media, e.g.
 `wipes/360_wipe` (place the production ProRes/H.264+alpha under
-`sofie-demo-media/wipes/`). Sofie plays it on **PGM layer 200**.
+`sofie-demo-media/wipes/`). Sofie plays it on **PGM layer 200** as a short overlay on
+**Take into that part** (not a vision-mixer cut). Empty/0 RE duration defaults to ~2.5s so
+layer 200 does not cover the rest of the part after the wipe finishes.
+
+**If wipes never appear:** (1) watch **Caspar channel 2**, not LED; (2) confirm
+`PLAY 2-200 "wipes/360_wipe"` on Take (else `404` → file missing on disk); (3) re-upload
+blueprints + Apply studio config so `casparcg_effects_player_pgm` exists.
 
 The wipe does not change; the **label** records direction:
 
@@ -108,9 +120,10 @@ Smoke rundown pieces use piece type `wipe` with `fileName: wipes/360_wipe` and
 | `casparcg_graphics_logo` | PGM 2 | 123 | `gfx/logo-bug` (360° sekúnd bug) — **not** on LED |
 | `casparcg_effects_player_pgm` | PGM 2 | 200 | Wipes |
 
-\*Today ILU still maps to LED in demo blueprints for the older “LED carries gfx”
-mode. DoubleBox PGM requires remapping ILU (+ tema) onto channel 2 — tracked with
-the wipe/camera work in blueprints. The **logo-bug is already PGM-only**.
+\*Headline ILU still maps to LED by default for the wall. Thematic DoubleBox on PGM
+uses PGM camera FILL + PGM `l3d-tema` + PGM baseline loop (`casparcg_clip_player2`).
+Routing story ILU media onto PGM channel 2 layer 115 is still a follow-up if the LED
+mapping stays on channel 1. The **logo-bug is already PGM-only**.
 
 ### `bg-loop` folder structure
 
@@ -130,7 +143,7 @@ folder; the stored path still includes `loops/…`.
 3. Import megarepo `assets/spravy-v3-smoke-rundown.json` (includes story-block `wipe` pieces)
 4. Watch **Caspar channel 2** for wipes + DoubleBox + Intro
 5. **Intro on PGM 210 only (pending until companion blueprints remap is deployed):**
-   after uploading the `casparcg_intro_player_pgm` bundle and Softie Apply config,
+   after uploading the `casparcg_intro_player_pgm` bundle and Sofie Apply config,
    Intro take must show `PLAY <pgm>-210 "wipes/360s_ZNELKA"` and **must not** play
    Intro on LED (`1-200`). Until that branch lands, treat this check as **pending** —
    do not mark smoke Intro routing complete on LED EffectsPlayer 200.
