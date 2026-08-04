@@ -74,6 +74,7 @@ the HTML template loaded — the companion ILU PLAY still needs the file.
 - **`l3d-headline` is on PGM (Caspar channel 2)** by design; `l3d-syn` / `l3d-tema` / `l3d-mod` / ILU stay on **LED (channel 1)**. If you only watch the LED consumer, headline L3Ds look “missing”.
 - **How to look at PGM:** open the Caspar **channel 2** consumer (screen / NDI / SDI for ch2), not channel 1. Studio mapping id `casparcg_graphics_pgm_l3d` → ch2 layer 121. Confirm with AMCP e.g. `INFO 2` or a second Screen consumer bound to `<channel-index>2</channel-index>`.
 - **demo-assets:** v2 HTML must exist on Caspar (`gfx/l3d-headline.html`, etc.). Rebuild with `yarn build` and copy `deploy/template-path` if needed.
+- **Timing (not AUTO):** set the same **Duration (seconds)** on the part, the `headline` (ILU) piece, and the `l3d-headline` piece. Softie then shows that length as `expectedDuration` for a manual **Take** to the next part/segment. Softie **AUTO** only appears when blueprints set `autoNext` (VT / Intro / non-ILU GFX). ILU parts (with or without camera) do **not** autoNext — leave Start at `0` so they begin on Take.
 
 ## Muster smoke rundown (2026-07-22)
 

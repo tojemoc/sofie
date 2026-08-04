@@ -852,7 +852,8 @@
 				"source": "",
 				"iluPrerendered": false
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-hl-1-l3d",
@@ -866,7 +867,8 @@
 				"headline": "Headline L3D horný riadok",
 				"subline": "Headline dolný riadok"
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-hl-1-cam",
@@ -896,7 +898,8 @@
 				"source": "",
 				"iluPrerendered": false
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-hl-2-l3d",
@@ -910,7 +913,8 @@
 				"headline": "Headline L3D horný riadok",
 				"subline": "Headline dolný riadok"
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-hl-2-cam",
@@ -940,7 +944,8 @@
 				"source": "",
 				"iluPrerendered": false
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-hl-3-l3d",
@@ -954,7 +959,8 @@
 				"headline": "Headline L3D horný riadok",
 				"subline": "Headline dolný riadok"
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-hl-3-cam",
@@ -1431,7 +1437,8 @@
 				"source": "",
 				"iluPrerendered": false
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-part-ilu-7-l3d",
@@ -1445,7 +1452,8 @@
 				"headline": "Titulok",
 				"subline": ""
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-part-ilu-7-cam",
@@ -1475,7 +1483,8 @@
 				"source": "",
 				"iluPrerendered": false
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-part-ilu-8-l3d",
@@ -1489,7 +1498,8 @@
 				"headline": "Tematický titulok",
 				"subline": ""
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-part-ilu-8-cam",
@@ -1714,7 +1724,8 @@
 				"source": "",
 				"iluPrerendered": false
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-part-ilu-11-l3d",
@@ -1728,7 +1739,8 @@
 				"headline": "Titulok",
 				"subline": ""
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-part-ilu-11-cam",
@@ -1758,7 +1770,8 @@
 				"source": "",
 				"iluPrerendered": false
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-part-ilu-12-l3d",
@@ -1772,7 +1785,8 @@
 				"headline": "ILU názov",
 				"subline": ""
 			},
-			"start": 0
+			"start": 0,
+			"duration": 8
 		},
 		{
 			"id": "piece-part-ilu-12-cam",
