@@ -33,6 +33,10 @@ Do **not** fetch from `…/sofie/main/assets/…` or `…/sofie/cursor/…/asset
 | Env override | `SOFIE_ASSETS_REF` (unopus script) — override only together with matching checksums |
 | Smoke SHA-256 | `12de0d2d830d9645fddac90863fe27b9aa7504c0fb5ee331275d267479c55e9b` (`spravy-v3-smoke-rundown.json`) |
 
+> After the `l3d-syn` PGM + smoke bump PR merges, recompute the smoke checksum
+> (`c1b790be80b218cd09d11d08d82d5aa6aa1bdc9dd0c50f771cd7f83c40d016fd` on this branch)
+> and bump consumer pins to that merge commit.
+
 Checksums are owned by the consumer script (they must match that commit’s `assets/*.json`).
 Recompute with:
 

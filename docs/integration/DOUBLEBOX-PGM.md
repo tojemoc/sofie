@@ -116,7 +116,7 @@ Smoke rundown pieces use piece type `wipe` with `fileName: wipes/360_wipe` and
 | `casparcg_ilu_player` | LED 1 / PGM 2* | 115 | Headline ILU today on LED; DoubleBox left window on PGM when remapped |
 | `casparcg_intro_player_pgm` | PGM 2 | 210 | Intro / znelka — **never LED** (handoff; may still be LED 200 until remapped) |
 | `casparcg_pgm_camera` | PGM 2 | 116 | UVC / CAM1 |
-| `casparcg_graphics_pgm_l3d` | PGM 2 | 121 | `l3d-tema` / headline bars |
+| `casparcg_graphics_pgm_l3d` | PGM 2 | 121 | `l3d-tema` / `l3d-syn` / headline bars |
 | `casparcg_graphics_logo` | PGM 2 | 123 | `gfx/logo-bug` (360° sekúnd bug) — **not** on LED |
 | `casparcg_effects_player_pgm` | PGM 2 | 200 | Wipes |
 
