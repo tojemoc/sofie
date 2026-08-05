@@ -329,9 +329,40 @@ Ops: mount media at the configured ingest root so both RE readiness and Sofie Pa
 
 ---
 
+## Rundown Editor: readiness/duration diagnostics + daily template workflow (2026-08-05)
+
+Follow-up planning session on
+[`RE-READINESS-AND-PLAYOUT-UX.md`](RE-READINESS-AND-PLAYOUT-UX.md). Key finding: ADR
+0001 (`docs/adr/0001-re-readiness-from-core-package-manager.md`) is **already
+code-complete** on both `sofie-core` main
+(`peripheralDevice.packageManager.getContentStatusForRundown`) and `unopus` main
+(`backend/src/background/coreContentStatus.ts` hybrid consumer), and the piece
+`externalId` contract between RE and blueprints checks out correctly end-to-end. The
+operator-reported "readiness/duration doesn't work across the Windows Caspar/PM box →
+Alpine LXC" problem is therefore most likely a **silent-failure/observability gap**,
+not a missing feature — every failure mode (Core disconnected, RE peripheral device
+not attached to a studio, Package Manager down/misconfigured) collapses into the same
+unlabeled local-fs fallback today.
+
+Separately, the "editor experience" ask (clone the canonical template — blueprints +
+piece/part/segment types + `assets/spravy-v3-smoke-rundown.json` + demo-assets —
+automatically every day, then bulk-edit only prompter text / L3D names / ILU-SYN
+filenames) turns out to be **mostly already built** in `unopus` main
+(`Rundown.isTemplate`, `mutations.createRundownCopy`, `ImportSegmentModal`) — just
+manual, with no scheduling and no bulk-edit surface. The abandoned `unopus` `backup`
+branch (Google Sheets adapters) and archived `duopus` repo (Sheets + Bitfocus
+Companion, vMix-era) are explicitly **not** reusable — spreadsheet-as-source-of-truth
+fights the current Sofie-centric (Core-as-sync-target) architecture.
+
+See the two handoffs below for the concrete, file-level plan.
+
+---
+
 ## Agent handoffs
 
 | Handoff | Path |
 |---------|------|
 | Blueprints v2 wiring | `docs/integration/handoffs/blueprints-v2-wiring.md` |
+| RE readiness/duration diagnostics | `docs/integration/handoffs/re-readiness-diagnostics.md` |
+| RE daily template workflow (clone + bulk rewrite + readiness-aware picker) | `docs/integration/handoffs/re-daily-template-workflow.md` |
 | This log | `docs/integration/SPRAVY-V2-INTEGRATION.md` |
