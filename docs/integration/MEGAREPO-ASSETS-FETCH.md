@@ -25,12 +25,13 @@ Reference implementation: [unopus PR #45](https://github.com/tojemoc/unopus/pull
 
 Do **not** fetch from `…/sofie/main/assets/…` or `…/sofie/cursor/…/assets/…` in CI or Docker.
 
-## Current pin (as of sofie #13)
+## Current pin (as of sofie #20)
 
 | Item | Value |
 |------|--------|
-| Sofie commit | `cdc2d3b66407e920159a1f5772c616d0056ca990` (DoubleBox / wipe assets on `main`) |
+| Sofie commit | `df2411f1df014591da381c5d3bd8cc0b347b6ab0` (flat clips/loops/wipes media paths on `main`) |
 | Env override | `SOFIE_ASSETS_REF` (unopus script) — override only together with matching checksums |
+| Smoke SHA-256 | `12de0d2d830d9645fddac90863fe27b9aa7504c0fb5ee331275d267479c55e9b` (`spravy-v3-smoke-rundown.json`) |
 
 Checksums are owned by the consumer script (they must match that commit’s `assets/*.json`).
 Recompute with:
