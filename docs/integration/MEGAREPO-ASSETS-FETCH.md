@@ -34,7 +34,7 @@ Do **not** fetch from `…/sofie/main/assets/…` or `…/sofie/cursor/…/asset
 | Smoke SHA-256 | `12de0d2d830d9645fddac90863fe27b9aa7504c0fb5ee331275d267479c55e9b` (`spravy-v3-smoke-rundown.json`) |
 
 > After the `l3d-syn` PGM + smoke bump PR merges, recompute the smoke checksum
-> (`c1b790be80b218cd09d11d08d82d5aa6aa1bdc9dd0c50f771cd7f83c40d016fd` on this branch)
+> (`69d8f2d22ea0e89877d7b5619be096fbc8e2a13d585d9e3cdfb92ebe683ae259` on this branch)
 > and bump consumer pins to that merge commit.
 
 Checksums are owned by the consumer script (they must match that commit’s `assets/*.json`).
