@@ -984,7 +984,7 @@
 			"name": "Intro overlay",
 			"pieceType": "intro",
 			"payload": {
-				"fileName": "assets/360s_ZNELKA-skratena_introALPHA.mov"
+				"fileName": "assets/360s_ZNELKA-skratena_introALPHA"
 			},
 			"start": 0,
 			"duration": 12
@@ -2305,7 +2305,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/WIPE_SHORT-new_v3.mov",
+				"fileName": "wipes/WIPE_SHORT-new_v3",
 				"transition": "Double Box"
 			}
 		},
@@ -2321,7 +2321,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/WIPE_SHORT-new_v3.mov",
+				"fileName": "wipes/WIPE_SHORT-new_v3",
 				"transition": "ILU TO SYN CLUSTER"
 			}
 		},
@@ -2337,7 +2337,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/WIPE_SHORT-new_v3.mov",
+				"fileName": "wipes/WIPE_SHORT-new_v3",
 				"transition": "SYN TO SYN"
 			}
 		},

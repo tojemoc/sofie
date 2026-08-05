@@ -71,7 +71,7 @@ the HTML template loaded — the companion ILU PLAY still needs the file.
 ### Headline L3Ds (LED vs PGM)
 
 - **Field mapping** is fine: RE `headline`/`subline` → Caspar `title`/`subtitle` (templates also accept the RE names). ILU presets include `l3d-headline`; re-upload blueprints and re-ingest if Sofie still omits them.
-- **`l3d-headline` / `l3d-tema` / `l3d-syn` are on PGM (Caspar channel 2)** by design. LED allow-list stays **headlines (ILU) + `360_loop` only** — if you only watch the LED consumer, those L3Ds look “missing”.
+- **`l3d-headline` / `l3d-tema` / `l3d-syn` are on PGM (Caspar channel 2)** by design. LED allow-list is **headlines (ILU) + `360_loop`**, plus **`l3d-mod` only for Presenter MOD during Intro** — if you only watch the LED consumer, the PGM L3Ds look “missing”.
 - **How to look at PGM:** open the Caspar **channel 2** consumer (screen / NDI / SDI for ch2), not channel 1. Studio mapping id `casparcg_graphics_pgm_l3d` → ch2 layer 121. Confirm with AMCP e.g. `INFO 2` or a second Screen consumer bound to `<channel-index>2</channel-index>`.
 - **demo-assets:** v2 HTML must exist on Caspar (`gfx/l3d-headline.html`, etc.). Rebuild with `yarn build` and copy `deploy/template-path` if needed.
 - **Timing (not AUTO):** set the same **Duration (seconds)** on the part, the `headline` (ILU) piece, and the `l3d-headline` piece. Sofie then shows that length as `expectedDuration` for a manual **Take** to the next part/segment. Sofie **AUTO** only appears when blueprints set `autoNext` (VT / Intro / non-ILU GFX). ILU parts (with or without camera) do **not** autoNext — leave Start at `0` so they begin on Take.
