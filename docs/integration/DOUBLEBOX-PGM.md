@@ -16,11 +16,18 @@ production still (ILU left / CAM right / tema+bug bar / `360_loop` behind):
 └────────────────────────────────────────────────────────────┘
 ```
 
-**LED (Caspar channel 1)** production rule: **headlines + `loops/360_loop` only**.
-No intro / znelka on LED. For the thematic DoubleBox look the wall may be loop-only
-(no ILU / L3Ds / camera); PGM carries the editorial compose. Intro overlay plays on
+**LED (Caspar channel 1)** production rule: **headline ILU + `loops/360_loop` only**.
+The loop is blueprint **baseline** on layer 110 (not a RE piece) and must never be
+displaced by VT/VO/SYN — those play on **PGM ClipPlayer2**. `l3d-mod` / tema / syn /
+headline bars are **PGM**. No intro / znelka on LED. Intro overlay plays on
 **PGM layer 210** (above wipe 200) — see
 [`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md).
+
+**Camera / UVC:** studio `casparcg.hypercomposed.pgmCameraProducer` (demo default
+`dshow://video=OBS Virtual Camera`) is played on **PGM 2-116** when a part with a
+`camera` piece (`camNo: 1` = Camera A) is Taken. Remove the camera piece to keep
+DoubleBox without the CAM window. See
+[`RE-READINESS-AND-PLAYOUT-UX.md`](./RE-READINESS-AND-PLAYOUT-UX.md) for wipe/order/NR planning.
 
 ## Getting CAM into Caspar (OBS Virtual Camera → UVC)
 

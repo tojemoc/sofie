@@ -20,8 +20,10 @@ LED), not a plain `video`. Also keep `bg-loop` and `wipe`. Legacy demo pieces
 `remote` / `split` / `guest` (and part presets REMI / DVE / Guest) were removed.
 
 Smoke Intro uses `assets/360s_ZNELKA-skratena_introALPHA` (12s; disk
-`assets/360s_ZNELKA-skratena_introALPHA.mov`). LED allow-list is **headlines +
-loop**, plus **Presenter MOD (`l3d-mod`) during Intro** — see integration log.
+`assets/360s_ZNELKA-skratena_introALPHA.mov`). LED allow-list is **headline ILU +
+loop only** (baseline `360_loop` — not listed as a RE piece). Presenter MOD and
+other L3Ds are **PGM**. See integration log and
+`docs/integration/RE-READINESS-AND-PLAYOUT-UX.md`.
 Wipes: piece type `wipe` → Caspar PGM layer 200 (`wipes/360_wipe`; smoke also uses
 `wipes/WIPE_SHORT-new_v3` on early Téma 1 transitions). See
 `docs/integration/DOUBLEBOX-PGM.md` and
