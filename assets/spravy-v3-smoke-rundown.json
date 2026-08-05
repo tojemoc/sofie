@@ -984,7 +984,7 @@
 			"name": "Intro overlay",
 			"pieceType": "intro",
 			"payload": {
-				"fileName": "wipes/360s_ZNELKA"
+				"fileName": "assets/360s_ZNELKA-skratena_introALPHA"
 			},
 			"start": 0,
 			"duration": 12
@@ -1234,7 +1234,7 @@
 			"name": "SOT",
 			"pieceType": "video",
 			"payload": {
-				"fileName": "clips/syn-3.mp4"
+				"fileName": "clips/SYN bednar.mp4"
 			},
 			"start": 0
 		},
@@ -2305,7 +2305,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/WIPE_SHORT-new_v3",
 				"transition": "Double Box"
 			}
 		},
@@ -2321,7 +2321,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/WIPE_SHORT-new_v3",
 				"transition": "ILU TO SYN CLUSTER"
 			}
 		},
@@ -2337,7 +2337,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/WIPE_SHORT-new_v3",
 				"transition": "SYN TO SYN"
 			}
 		},

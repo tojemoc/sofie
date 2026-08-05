@@ -19,9 +19,11 @@ piece type **`intro`** (“Intro overlay” — alpha/znelka on **PGM layer 210*
 LED), not a plain `video`. Also keep `bg-loop` and `wipe`. Legacy demo pieces
 `remote` / `split` / `guest` (and part presets REMI / DVE / Guest) were removed.
 
-Smoke Intro uses `wipes/360s_ZNELKA` (12s; disk file `wipes/360s_ZNELKA.mov`). LED stays
-**headlines + loop** only (plus Presenter MOD during Intro — see integration log).
-Wipes: piece type `wipe` → Caspar PGM layer 200 (`wipes/360_wipe`). See
+Smoke Intro uses `assets/360s_ZNELKA-skratena_introALPHA` (12s; disk
+`assets/360s_ZNELKA-skratena_introALPHA.mov`). LED allow-list is **headlines +
+loop**, plus **Presenter MOD (`l3d-mod`) during Intro** — see integration log.
+Wipes: piece type `wipe` → Caspar PGM layer 200 (`wipes/360_wipe`; smoke also uses
+`wipes/WIPE_SHORT-new_v3` on early Téma 1 transitions). See
 `docs/integration/DOUBLEBOX-PGM.md` and
 `docs/integration/handoffs/blueprints-intro-pgm-layer.md`.
 
@@ -35,7 +37,8 @@ studio **CasparCG media folder** (Sofie: `casparcgMediaFolder`, often
 <casparcgMediaFolder>/
   loops/360_loop.mp4          ← piece type `bg-loop`, fileName `loops/360_loop`
   wipes/360_wipe.mov          ← piece type `wipe`,    fileName `wipes/360_wipe`
-  wipes/360s_ZNELKA.mov       ← piece type `intro`,   fileName `wipes/360s_ZNELKA`
+  assets/360s_ZNELKA-skratena_introALPHA.mov
+                              ← piece type `intro`,   fileName `assets/360s_ZNELKA-skratena_introALPHA`
   clips/headline1.mp4         ← VT / ILU / SYN (Package Manager ingest)
 ```
 

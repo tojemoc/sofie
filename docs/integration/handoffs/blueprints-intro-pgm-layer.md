@@ -23,7 +23,7 @@ cloud agent could push but not create the PR).
 
 Smoke fixture (sofie megarepo `assets/spravy-v3-smoke-rundown.json`) now uses:
 
-- piece type `intro`, `fileName: "wipes/360s_ZNELKA"` (disk: `wipes/360s_ZNELKA.mov`), duration 12s
+- piece type `intro`, `fileName: "assets/360s_ZNELKA-skratena_introALPHA"` (disk: `assets/360s_ZNELKA-skratena_introALPHA.mov`), duration 12s
 - **no** `bg-loop` piece on the Intro part (baseline loop still covers LED)
 - **no** wipe on HEADLINE / Intro parts (story-block wipes unchanged)
 
@@ -46,7 +46,7 @@ cd packages/blueprints && yarn dist
 
 Upload bundle → Sofie → **Apply config** → re-ingest smoke.
 
-**AMCP on Intro take:** `PLAY <pgm>-210 "wipes/360s_ZNELKA" …`  
+**AMCP on Intro take:** `PLAY <pgm>-210 "assets/360s_ZNELKA-skratena_introALPHA" …`  
 **Must not** play intro on LED (`PLAY 1-200 …`).
 
 ## Out of scope
