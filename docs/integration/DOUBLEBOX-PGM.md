@@ -137,13 +137,15 @@ folder; the stored path still includes `loops/…`.
 
 ## Smoke checklist
 
-1. Put wipe file at `sofie-demo-media/wipes/360_wipe.*` and Intro disk asset at
-   `sofie-demo-media/wipes/360s_ZNELKA.mov` (PLAY path `wipes/360s_ZNELKA`)
+1. Put wipe file at `sofie-demo-media/wipes/360_wipe.*` (and short wipe
+   `wipes/WIPE_SHORT-new_v3.*` for early Téma 1 transitions) and Intro disk asset at
+   `sofie-demo-media/assets/360s_ZNELKA-skratena_introALPHA.mov`
+   (PLAY path `assets/360s_ZNELKA-skratena_introALPHA`)
 2. Confirm OBS Virtual Camera name; test `PLAY 2-116 "dshow://…"` by hand
 3. Import megarepo `assets/spravy-v3-smoke-rundown.json` (includes story-block `wipe` pieces)
 4. Watch **Caspar channel 2** for wipes + DoubleBox + Intro
 5. **Intro on PGM 210 only (pending until companion blueprints remap is deployed):**
    after uploading the `casparcg_intro_player_pgm` bundle and Sofie Apply config,
-   Intro take must show `PLAY <pgm>-210 "wipes/360s_ZNELKA"` and **must not** play
+   Intro take must show `PLAY <pgm>-210 "assets/360s_ZNELKA-skratena_introALPHA"` and **must not** play
    Intro on LED (`1-200`). Until that branch lands, treat this check as **pending** —
    do not mark smoke Intro routing complete on LED EffectsPlayer 200.

@@ -46,7 +46,7 @@ cd packages/blueprints && yarn dist
 
 Upload bundle → Sofie → **Apply config** → re-ingest smoke.
 
-**AMCP on Intro take:** `PLAY <pgm>-210 "wipes/360s_ZNELKA" …`  
+**AMCP on Intro take:** `PLAY <pgm>-210 "assets/360s_ZNELKA-skratena_introALPHA" …`  
 **Must not** play intro on LED (`PLAY 1-200 …`).
 
 ## Out of scope
