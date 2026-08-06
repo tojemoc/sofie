@@ -105,14 +105,15 @@ New file: `backend/src/background/dailyTemplateScheduler.ts`, started from
       sourceTemplateId TEXT NOT NULL,
       generatedDate TEXT NOT NULL,  -- YYYY-MM-DD in generatingTimezone
       generatingTimezone TEXT NOT NULL,  -- IANA zone when this marker was written
-      attemptId TEXT NOT NULL,  -- lease / attempt identifier (UUID per reservation)
-      idempotencyKey TEXT NOT NULL UNIQUE,  -- durable key; see recovery below
+      attemptId TEXT NOT NULL,  -- lease / attempt identifier (UUID per attempt)
+      idempotencyKey TEXT NOT NULL UNIQUE,  -- durable key stamped on the cloned rundown
+      leaseExpiresAt TEXT NOT NULL,  -- ISO-8601 instant; restart-safe lease expiry
       rundownId TEXT,  -- NULL iff status IN ('in_progress','failed'); NOT NULL iff completed
       status TEXT NOT NULL CHECK(status IN ('in_progress', 'completed', 'failed')),
       -- Enforce combinations in app code (SQLite CHECK cannot easily express iff):
       --   in_progress => rundownId IS NULL
       --   completed   => rundownId IS NOT NULL
-      --   failed      => rundownId IS NULL (clone never finished; safe to retry)
+      --   failed      => rundownId IS NULL (clone never finished or reconcile found none)
       PRIMARY KEY (sourceTemplateId, generatedDate, generatingTimezone)
   );
   ```
@@ -144,10 +145,10 @@ New file: `backend/src/background/dailyTemplateScheduler.ts`, started from
       `dailyCloneTimezone` settings change (and at scheduler start if a zone
       mismatch is detected): for each old-zone `in_progress` row, run the same
       reconcile-by-`idempotencyKey` path as restart recovery; if no rundown was
-      created, set `status = 'failed'` (or delete) so the reservation cannot
-      complete under the old zone afterward. Only then may the new zone insert
-      its own reservation. Unit-test: zone change near midnight with an
-      old-zone `in_progress` row — it is canceled/reconciled first; old-zone
+      created, set `status = 'failed'` so the reservation cannot complete under
+      the old zone afterward. Only then may the new zone insert its own
+      reservation. Unit-test: zone change near midnight with an old-zone
+      `in_progress` row — it is canceled/reconciled first; old-zone
       **completed** markers still neither block nor satisfy the new zone.
 
   Write a single wrapper (e.g. `generateDailyRundownIfNeeded(templateId)` in a new
@@ -156,37 +157,54 @@ New file: `backend/src/background/dailyTemplateScheduler.ts`, started from
   `createRundownCopy` for the daily-template case. **Eliminate the crash window
   between clone and marker:** do **not** `createRundownCopy` first then hope the
   marker lands. Instead:
-  1. Mint `attemptId` (UUID) and a durable `idempotencyKey` (e.g.
-     `sha256(sourceTemplateId + '|' + generatedDate + '|' + generatingTimezone + '|' + attemptId)`
-     or a stable key without attempt if you prefer one logical day-key — but then
-     retries must reuse that same key). `INSERT` a row with
-     `status = 'in_progress'`, `rundownId = NULL`, those ids set. Primary-key
-     conflict on an existing `completed` → return that `rundownId`. Conflict on
-     live `in_progress` → join that attempt (do not insert a second clone).
-  2. Call `createRundownCopy` (pass or record `idempotencyKey` / `attemptId` in
-     logs; if you can stamp the new rundown payload with `idempotencyKey`, do so
-     so restart reconcile can find it).
-  3. On success: transition `in_progress` → `completed` and set `rundownId`
-     (only valid transition that attaches a rundown). On clone failure: transition
-     `in_progress` → `failed` with `rundownId` still NULL (this is why `failed`
-     is in the status CHECK — use it; do not delete-without-reconcile as the
-     only path).
-  4. **Before clearing or retrying any `in_progress`:** reconcile using
-     `idempotencyKey` / `attemptId` (find a rundown created for that key). If
-     found → complete the marker. If not found and the lease expired → set
-     `failed` (or delete only after reconcile proves no rundown), then allow a
-     **new** attempt with a new `attemptId` / key. Never create a second rundown
-     for the same logical `(template, date, timezone)` while a prior attempt's
-     clone might still exist. Preserve valid status transitions only:
-     `in_progress→completed`, `in_progress→failed`; no `completed→in_progress`.
-     Unit-test failure between clone success and marker completion, restart
-     recovery without duplicates, and "clear in_progress without reconcile"
-     must be impossible by design.
+  1. Mint `attemptId` (UUID) and a durable `idempotencyKey` (stable for the attempt;
+     e.g. `sha256(sourceTemplateId + '|' + generatedDate + '|' + generatingTimezone + '|' + attemptId)`).
+     Set `leaseExpiresAt` to now + a fixed lease (e.g. 5–15 minutes) — durable in
+     the row, not only in memory. `INSERT` with `status = 'in_progress'`,
+     `rundownId = NULL`. Primary-key conflict on `completed` → return that
+     `rundownId`. Conflict on live `in_progress` whose lease has **not** expired →
+     join/wait on that attempt (do not start a second clone). Conflict on
+     `failed` → take the explicit retry transition in step 5 (do not INSERT a
+     second PK row — the PK already holds the day).
+  2. Call `createRundownCopy`, then **require** both `idempotencyKey` and
+     `attemptId` to be persisted on the created rundown (extend
+     `createRundownCopy` / post-create `update` to write them on the Rundown —
+     e.g. top-level fields or `payload.dailyGeneration = { idempotencyKey,
+     attemptId }`). Optional stamping is not enough for restart-safe reconcile.
+     Every log line for this attempt must include `attemptId`, `idempotencyKey`,
+     and (once known) `rundownId` so clone↔reservation association survives in
+     server logs.
+  3. On definite clone success: transition `in_progress` → `completed` and set
+     `rundownId`. On definite clone failure (thrown error before a rundown id
+     exists): only after reconcile finds **no** rundown for this
+     `idempotencyKey`, transition `in_progress` → `failed` (`rundownId` stays
+     NULL).
+  4. **Timeout / unknown clone outcome** (process crash, hung call, unclear
+     whether copy committed): **must reconcile before** any transition to
+     `failed` or any retry. Look up rundowns by stamped `idempotencyKey` /
+     `attemptId`. If found → `in_progress` → `completed` with that `rundownId`.
+     If not found and `leaseExpiresAt` is still in the future → leave
+     `in_progress` (do not fail yet). If not found and the lease has expired →
+     `in_progress` → `failed`, then retry via step 5. Never fail or retry on an
+     unknown outcome without that reconcile.
+  5. **Retry of a retained `failed` row:** the PK
+     `(sourceTemplateId, generatedDate, generatingTimezone)` prevents inserting a
+     replacement row, so define an explicit transition **`failed` → `in_progress`**
+     on the **same** row: mint a new `attemptId` + `idempotencyKey`, reset
+     `leaseExpiresAt`, keep `rundownId = NULL`, set `status = 'in_progress'`, then
+     repeat from step 2. Do not delete-and-reinsert as the happy path. Valid
+     transitions: `in_progress→completed`, `in_progress→failed`,
+     `failed→in_progress`; never `completed→in_progress` /
+     `completed→failed`. Unit-test: failure between clone success and marker
+     completion; restart with unexpired vs expired lease; timeout/unknown
+     requires reconcile; `failed→in_progress` retry without duplicate rundowns;
+     "clear in_progress without reconcile" must be impossible by design.
 
-  This table (with reservation + idempotency key) is the atomicity guarantee — a
-  `sourceTemplateId`/`generatedDate` pair stored only as free-form JSON fields on the
-  `Rundown` document (with no DB-level constraint) cannot enforce uniqueness by
-  itself, no matter how carefully the check-then-act read is written.
+  This table (with reservation + idempotency key + durable lease) is the atomicity
+  guarantee — a `sourceTemplateId`/`generatedDate` pair stored only as free-form
+  JSON fields on the `Rundown` document (with no DB-level constraint) cannot
+  enforce uniqueness by itself, no matter how carefully the check-then-act read is
+  written.
 - **Per-tick error handling:** wrap each scheduler tick's call to
   `generateDailyRundownIfNeeded` in its own try/catch so a single failure (Core
   unreachable, DB error, bad template id) cannot kill the interval and silently stop
