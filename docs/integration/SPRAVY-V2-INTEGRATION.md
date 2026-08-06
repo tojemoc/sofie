@@ -43,8 +43,8 @@ Operators need **absolute control** over two different Caspar layers / channels:
 | **Intro overlay** | Part `Intro` + piece `intro` | **PGM** IntroOverlay **210** (above wipe 200) | Full-frame znelka / alpha — **never on LED** |
 | **Background loop** | Piece `bg-loop` (optional) + baseline | LED ClipPlayer1 **110** | LED `loops/360_loop` |
 
-**LED allow-list (channel 1):** **headlines** (ILU + headline CG), the **loop**, and
-**Presenter MOD** (`l3d-mod` — smoke Intro routes Gabriela Kajtárová here).
+**LED allow-list (channel 1):** **headline ILU** + **`360_loop` only**.
+`l3d-mod` (Presenter MOD) and other L3Ds are **PGM** — see Headline L3Ds below.
 **Intro / znelka must not appear on LED.** See handoff
 [`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md)
 (current blueprints still map `playLayer: 'effects'` → LED layer 200 — remapping required).
@@ -71,10 +71,12 @@ the HTML template loaded — the companion ILU PLAY still needs the file.
 ### Headline L3Ds (LED vs PGM)
 
 - **Field mapping** is fine: RE `headline`/`subline` → Caspar `title`/`subtitle` (templates also accept the RE names). ILU presets include `l3d-headline`; re-upload blueprints and re-ingest if Sofie still omits them.
-- **`l3d-headline` / `l3d-tema` / `l3d-syn` are on PGM (Caspar channel 2)** by design. LED allow-list is **headlines (ILU) + `360_loop`**, plus **`l3d-mod` only for Presenter MOD during Intro** — if you only watch the LED consumer, the PGM L3Ds look “missing”.
+- **`l3d-headline` / `l3d-tema` / `l3d-syn` / `l3d-mod` are on PGM (Caspar channel 2)** by design. LED allow-list is **headline ILU + `360_loop` only** — if you only watch the LED consumer, those L3Ds look “missing”.
 - **How to look at PGM:** open the Caspar **channel 2** consumer (screen / NDI / SDI for ch2), not channel 1. Studio mapping id `casparcg_graphics_pgm_l3d` → ch2 layer 121. Confirm with AMCP e.g. `INFO 2` or a second Screen consumer bound to `<channel-index>2</channel-index>`.
 - **demo-assets:** v2 HTML must exist on Caspar (`gfx/l3d-headline.html`, etc.). Rebuild with `yarn build` and copy `deploy/template-path` if needed.
 - **Timing (not AUTO):** set the same **Duration (seconds)** on the part, the `headline` (ILU) piece, and the `l3d-headline` piece. Sofie then shows that length as `expectedDuration` for a manual **Take** to the next part/segment. Sofie **AUTO** only appears when blueprints set `autoNext` (VT / Intro / non-ILU GFX). ILU parts (with or without camera) do **not** autoNext — leave Start at `0` so they begin on Take.
+- **RE Ready/NR, DUR, wipe timing, piece order:** planning notes in
+  [`RE-READINESS-AND-PLAYOUT-UX.md`](./RE-READINESS-AND-PLAYOUT-UX.md) (ADR 0001 for Core PM readiness).
 
 ## Muster smoke rundown (2026-07-22)
 
@@ -84,7 +86,7 @@ production muster spine:
 | Segment | Parts |
 |---------|--------|
 | HEADLINES | HEADLINE1–3 (ILU + L3D horný/dolný + cam A); **no** wipe pieces |
-| INTRO | Intro overlay (`assets/360s_ZNELKA-skratena_introALPHA`, 12s; disk `….mov`) on **PGM**; Mod L3D Gabriela Kajtárová (LED) + logo-bug (PGM); **no** bg-loop piece, **no** wipe |
+| INTRO | Intro overlay (`assets/360s_ZNELKA-skratena_introALPHA`, 12s; disk `….mov`) on **PGM**; Mod L3D Gabriela Kajtárová (**PGM**) + logo-bug (PGM); **no** bg-loop piece, **no** wipe |
 | Téma 1–4 | Téma GFX + ILU/SYN patterns (cams A/P/M); named ILUs use PGM `l3d-headline` |
 | SPRÁVY JEDNOU VETOU | `l3d-sjv` + 4× ILU with citácia |
 | ŠPORT | `l3d-sport` + 3× ILU with citácia |
