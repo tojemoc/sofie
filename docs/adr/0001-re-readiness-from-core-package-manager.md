@@ -1,9 +1,28 @@
 # ADR 0001: Source Rundown Editor readiness from Core's Package Manager status
 
-**Status:** Proposed — deferred, target post-demo (PR2-style)
+**Status:** Implemented (see Implementation below)
 **Date:** 2026-07-17
 **Repos affected:** `tojemoc/sofie-core` (primary), `tojemoc/unopus` (secondary)
 **Owner:** Jakub
+
+## Implementation
+
+- `sofie-core`: [PR #6](https://github.com/tojemoc/sofie-core/pull/6) (merge
+  `dfc25cc`) added `peripheralDevice.packageManager.getContentStatusForRundown`;
+  [PR #7](https://github.com/tojemoc/sofie-core/pull/7) (merge `581076c`) fixed
+  `sourceLayers` resolution in that method.
+- `unopus`: [PR #40](https://github.com/tojemoc/unopus/pull/40) (merge `40b5d0b`)
+  added `backend/src/background/coreContentStatus.ts` and made
+  `mediaReadiness.ts` prefer Core-reported status with local `fs.stat` fallback.
+- Of the Rollout plan below: step 1 (near-term `ingestMediaFolder`/SMB fix) and the
+  hybrid-mode consumption in step 3 still need field verification against the real
+  Windows Caspar/PM box; step 4 (remove the fs-based path) hasn't been done and isn't
+  currently planned.
+- Known gap (not yet addressed): every failure mode on the RE side — Core
+  disconnected, this device not attached to a studio, the method call throwing,
+  Package Manager itself down/misconfigured — currently collapses into the same
+  silent fs-fallback with no operator-visible reason. See handoff
+  [`docs/integration/handoffs/re-readiness-diagnostics.md`](../integration/handoffs/re-readiness-diagnostics.md).
 
 ---
 

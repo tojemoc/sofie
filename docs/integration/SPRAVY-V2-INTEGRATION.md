@@ -362,7 +362,7 @@ See the two handoffs below for the concrete, file-level plan.
 
 | Handoff | Path |
 |---------|------|
-| Blueprints v2 wiring | `docs/integration/handoffs/blueprints-v2-wiring.md` |
-| RE readiness/duration diagnostics | `docs/integration/handoffs/re-readiness-diagnostics.md` |
-| RE daily template workflow (clone + bulk rewrite + readiness-aware picker) | `docs/integration/handoffs/re-daily-template-workflow.md` |
-| This log | `docs/integration/SPRAVY-V2-INTEGRATION.md` |
+| Blueprints v2 wiring | [`docs/integration/handoffs/blueprints-v2-wiring.md`](handoffs/blueprints-v2-wiring.md) |
+| RE readiness/duration diagnostics | [`docs/integration/handoffs/re-readiness-diagnostics.md`](handoffs/re-readiness-diagnostics.md) |
+| RE daily template workflow (clone + bulk rewrite + readiness-aware picker) | [`docs/integration/handoffs/re-daily-template-workflow.md`](handoffs/re-daily-template-workflow.md) |
+| This log | [`docs/integration/SPRAVY-V2-INTEGRATION.md`](SPRAVY-V2-INTEGRATION.md) |

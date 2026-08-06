@@ -65,14 +65,42 @@ New file: `backend/src/background/dailyTemplateScheduler.ts`, started from
   unset.
 - On trigger: call the **existing** `mutations.createRundownCopy({ id:
   dailyTemplateRundownId, preserveTemplate: false })` — do not reimplement cloning.
-- **Idempotency:** add `sourceTemplateId: string | undefined` and `generatedDate:
-  string | undefined` (`YYYY-MM-DD`, local) to the `Rundown` shape in `interfaces.ts`
-  and set them on the cloned rundown inside `createRundownCopy` (or a thin wrapper
-  around it used only by the scheduler) so a restart or a missed tick can't produce a
-  second rundown for the same day — check for an existing rundown with the same
-  `sourceTemplateId` + `generatedDate` before cloning.
-- Log clearly (`console.info`) on both success and failure — this runs unattended
-  overnight/early morning, the log is the only evidence it ran until someone opens RE.
+- **Idempotency must be atomic at insertion time, not a check-then-act read.** A plain
+  "does a rundown with this `sourceTemplateId` + `generatedDate` already exist?" read
+  followed by a separate create is a race: the scheduler tick and a manual "Generate
+  now" click (see #2) could both pass the check before either has inserted, producing
+  two rundowns for the same day. Add a dedicated table that owns the uniqueness
+  constraint, e.g. in `backend/src/background/db.ts`:
+
+  ```sql
+  CREATE TABLE IF NOT EXISTS dailyGenerations (
+      sourceTemplateId TEXT NOT NULL,
+      generatedDate TEXT NOT NULL,
+      rundownId TEXT NOT NULL,
+      PRIMARY KEY (sourceTemplateId, generatedDate)
+  );
+  ```
+
+  Write a single wrapper (e.g. `generateDailyRundownIfNeeded(templateId)` in a new
+  `backend/src/background/api/dailyGeneration.ts`) used by **both** the scheduler and
+  the manual "Generate now" button — no other path should call
+  `createRundownCopy` for the daily-template case. Inside it: run the clone, then
+  `INSERT INTO dailyGenerations (...) VALUES (...)` in the same transaction (or
+  immediately after, wrapped so a duplicate-key failure rolls back / discards the
+  just-created rundown copy); on a primary-key conflict, treat it as "already
+  generated today" and return the existing row's `rundownId` instead of creating
+  another rundown. This table is what provides the atomicity guarantee — a
+  `sourceTemplateId`/`generatedDate` pair stored only as free-form JSON fields on the
+  `Rundown` document (with no DB-level constraint) cannot enforce uniqueness by
+  itself, no matter how carefully the check-then-act read is written.
+- **Per-tick error handling:** wrap each scheduler tick's call to
+  `generateDailyRundownIfNeeded` in its own try/catch so a single failure (Core
+  unreachable, DB error, bad template id) cannot kill the interval and silently stop
+  all future days' generation. On failure, `console.error` including the
+  `dailyTemplateRundownId`, the `generatedDate` being attempted, and the thrown
+  error's message/stack. On success, `console.info` with the same identifying fields
+  plus the resulting `rundownId` — this runs unattended overnight/early morning, the
+  log is the only evidence it ran until someone opens RE.
 
 ### 2. Frontend: visibility + manual override
 
@@ -80,12 +108,17 @@ File: `frontend/src/components/rundownList/rundownListItem.tsx` (or the template
 specifically) and wherever the rundown list is rendered.
 
 - On a template rundown's row, show whether it already generated today's rundown
-  (`Generated today · <link to the generated rundown>`) or not yet, using the new
-  `sourceTemplateId`/`generatedDate` fields.
-- Add a "Generate now" button next to it that calls the same clone path on demand —
-  this is the manual escape hatch for when the schedule is misconfigured or the
-  service restarted past the trigger time; don't make the daily workflow depend on the
-  scheduler being perfectly reliable on day one.
+  (`Generated today · <link to the generated rundown>`) or not yet, by looking up
+  today's `dailyGenerations` row for that template (new small read endpoint, or
+  include it in the existing rundown-list payload).
+- Add a "Generate now" button next to it that calls a new route wrapping the **same**
+  `generateDailyRundownIfNeeded` function the scheduler uses (not a second copy of the
+  clone-then-check logic) — this is the manual escape hatch for when the schedule is
+  misconfigured or the service restarted past the trigger time. Because uniqueness is
+  enforced by the `dailyGenerations` primary key (see #1), clicking it after the
+  scheduler already ran today safely returns the existing rundown instead of creating
+  a duplicate — don't make the daily workflow depend on the scheduler being perfectly
+  reliable on day one.
 
 ### 3. Frontend: bulk field-rewrite view
 
@@ -104,11 +137,37 @@ lands).
   view render exactly those fields for whatever piece types are present in the cloned
   rundown. This means adding new daily-editable piece types later doesn't require
   touching this view's code.
+  - **This edit does not take effect in `unopus` on its own — follow the megarepo
+    asset handoff, in order:** (1) land the `dailyEditable` field addition in
+    `tojemoc/sofie` (megarepo) `assets/sofie-rundown-editor-piece-types.json`; (2) in
+    `unopus`, bump the pinned commit SHA and recompute the SHA-256 checksum(s) that
+    `scripts/fetch-sofie-megarepo-assets.sh` verifies — pin + checksum **in the same
+    commit**, per
+    [`docs/integration/MEGAREPO-ASSETS-FETCH.md`](../MEGAREPO-ASSETS-FETCH.md) in the
+    megarepo; (3) re-run the fetch script (or restart the dev container) so
+    `SOFIE_MEGAREPO_ASSETS` points at a tree containing the new field; (4) in the
+    running RE instance, use Settings' existing "reload manifests" action
+    (`reloadManifestsFromAssets` in `backend/src/background/api/settings.ts`) to
+    re-import `typeManifests` from the refreshed JSON — the manifest is loaded once at
+    process start (`backend/src/background/manifest.ts`) and cached into the
+    `typeManifests` table, so editing the megarepo file alone does not update an
+    already-running instance.
 - Media fields in this view should use the same `MediaPickerField` component (see #4)
   so readiness/duration feedback is present here too, not just in the regular piece
   forms.
-- Saving writes back through the existing per-piece `mutations.update` — no new sync
-  path, no new API surface beyond what already exists for editing a piece.
+- Saving writes back through the existing per-piece `mutations.update`, one call per
+  edited piece — no new sync path, no new API surface beyond what already exists for
+  editing a piece. Track and show per-piece success/failure in the view (e.g. a
+  per-row saved/error indicator) rather than a single all-or-nothing "Saved" toast, and
+  offer a retry action for any piece whose update call failed, since a partial failure
+  partway through a multi-piece save is the normal failure mode here — only reach for
+  an atomic multi-piece transaction if a future requirement genuinely needs all-or-
+  nothing semantics (not needed for the daily-rewrite use case as scoped here).
+- **Verify:** after step (4) above, open the rewrite view on a rundown containing a
+  piece type whose manifest has a `dailyEditable: true` field and confirm that field
+  (and only that field, plus the others explicitly flagged) appears as an editable row
+  — this is the concrete check that the manifest → RE handoff actually worked end to
+  end, not just that the JSON was edited in the megarepo.
 
 ### 4. Frontend: readiness-aware file picker
 
@@ -121,14 +180,30 @@ local scan) with no notion of "is this actually confirmed on the Caspar playout
 machine." Once the diagnostics handoff (`re-readiness-diagnostics.md`) lands and
 per-piece Core-sourced readiness is reliable and observable:
 
-- Extend `MediaFileEntry` with an optional `ready: boolean` / `reason?: string`,
-  populated by cross-referencing the scanned filename against whatever Core/Package
-  Manager status data is available for files already in use, or at minimum against the
-  same local ingest-root check `mediaReadiness.ts` already does for that exact path.
-- Render a small colored dot + tooltip per option in both the `<datalist>` and the
-  `<Form.Select>` scanned-folder list, so picking a file for tomorrow's rundown shows
-  at a glance whether it's already staged/confirmed, not just "a file with this name
-  exists somewhere RE can see."
+- Extend `MediaFileEntry` with a tri-state `readiness: 'confirmed' | 'not-confirmed' |
+  'unknown'` (plus `reason?: string`) — **not** a plain `ready: boolean`. Reserve
+  `'confirmed'`/`'not-confirmed'` exclusively for a real Core/Package Manager answer
+  (the file is in use by some piece Core has status for, per the diagnostics handoff's
+  per-piece `source: 'core'` data). When there's no Core-sourced status for that exact
+  file — e.g. it exists on the scanned folder but isn't referenced by any piece Core
+  has evaluated yet — return `'unknown'` with a `reason` like "not yet confirmed by
+  Package Manager", never silently reuse the local `fs.stat` existence check
+  (`mediaReadiness.ts`'s local path) as a stand-in for `ready: true`/`false`. A file
+  merely existing in RE's scanned folder is not the same claim as Package Manager
+  having confirmed it on the Caspar media disk, and collapsing the two back into a
+  boolean recreates the exact "which source produced this verdict" ambiguity the
+  diagnostics handoff (`re-readiness-diagnostics.md`) is trying to eliminate.
+- Surface readiness as part of each option's **visible text and accessible name**, not
+  only a colored dot — e.g. `clip.mp4 (confirmed)` / `clip.mp4 (not confirmed: <reason>)`
+  / `clip.mp4 (not yet confirmed)`. Plain `<option>` elements inside a native
+  `<datalist>`/`<select>` cannot carry a separate tooltip or icon that assistive tech
+  or keyboard-only users can perceive, so the status must be in the text itself (or in
+  the `label` attribute, which browsers also expose as the accessible name) — a dot
+  next to the text is not sufficient and untestable with a keyboard alone. If you want
+  a richer visual treatment (colored indicator, richer tooltip) build a small custom
+  combobox/listbox instead of trying to decorate native `<option>`s, and verify it
+  with keyboard-only navigation (arrow keys + Enter, no mouse) and a screen reader
+  pass, not just a visual check.
 - This is explicitly the "WIP file-picker" referenced in
   `docs/integration/RE-READINESS-AND-PLAYOUT-UX.md` — it was correctly identified as
   blocked on readiness being trustworthy first. Do this step after, not in parallel
@@ -156,9 +231,15 @@ per-piece Core-sourced readiness is reliable and observable:
 4. Manual: open the bulk rewrite view on a freshly generated rundown, change a
    prompter line + an L3D `headline` + an ILU `fileName`, save, then confirm those
    same values show correctly in the normal per-piece form and (once synced) in Sofie's
-   own rundown view.
-5. Manual: in the picker, confirm a file that's missing on the Caspar box (per Package
-   Manager) is visually distinguishable from one that's confirmed staged.
+   own rundown view. Also verify one piece's save failing (e.g. temporarily stop the
+   backend mid-save) leaves the other rows' saved state intact and offers a retry for
+   just that row.
+5. Manual: in the picker, confirm a file Package Manager has confirmed shows
+   `confirmed` and one it reports missing shows `not confirmed: <reason>` in the
+   option text itself (not just a color), and that a file with no Core-sourced status
+   yet shows `unknown`/`not yet confirmed` rather than being guessed from the local
+   scan. Tab/arrow through the control with no mouse to confirm the status is reachable
+   without relying on a tooltip.
 
 ## Out of scope
 

@@ -60,17 +60,24 @@ Change `fetchCoreContentStatusForRundown` to return a discriminated result inste
 
 ```ts
 export type CoreContentStatusResult =
-	| { source: 'core'; statuses: Map<string, CorePieceContentStatus> }
+	| { source: 'core'; statuses: Map<string, CorePieceContentStatus> } // may be empty
 	| { source: 'core-disconnected' }
 	| { source: 'core-error'; error: string }
-	| { source: 'core-empty' } // Core reachable, rundown not found there yet
 ```
 
 Keep the existing `CoreConnectionStatus.CONNECTED` short-circuit and the
-`callMethodRaw` try/catch, just don't discard the reason. Distinguish "rundown not
-found on Core" (empty `pieces` array — likely not synced/ingested yet) from an actual
-thrown error (bad device/studio config, DDP hiccup) — those need different operator
-messaging.
+`callMethodRaw` try/catch, just don't discard the reason. **Do not add a distinct
+`core-empty` source.** Today's `getContentStatusForRundown`
+(`rundownContentStatus.ts`) returns `{ rundownExternalId, pieces: [] }` both when the
+rundown isn't found on Core (not synced yet) *and* when the rundown exists but every
+piece was filtered out for lacking a resolvable `sourceLayer` — these are very
+different problems (one is "wait for sync," the other is a real showstyle/sourceLayer
+misconfiguration) and the current method response can't tell them apart. Model this
+honestly: `source: 'core'` with an empty `statuses` map just means "Core answered with
+zero piece statuses," nothing more. Don't label it as "not synced" in any UI copy —
+if you want a real distinction, note it as an open follow-up (a lightweight
+rundown-existence signal would need a small Core-side addition, not a client-side
+guess) rather than asserting a meaning the current API can't back up.
 
 ### 2. Backend: thread the result through readiness evaluation
 
@@ -90,8 +97,9 @@ Files: `backend/src/background/mediaReadiness.ts`, `backend/src/routes/readiness
   summary: { ... },       // unchanged
   diagnostics: {
     coreConnectionStatus: coreHandler.connectionInfo.status,
-    coreCallSource: result.source,             // 'core' | 'core-disconnected' | 'core-error' | 'core-empty'
+    coreCallSource: result.source,             // 'core' | 'core-disconnected' | 'core-error'
     coreCallError: result.source === 'core-error' ? result.error : undefined,
+    corePieceStatusCount: result.source === 'core' ? result.statuses.size : 0, // 0 is ambiguous, see above — don't over-interpret it
     piecesFromCore: number,
     piecesFromFsFallback: number,
     checkedAt: new Date().toISOString(),
@@ -118,6 +126,17 @@ for auth).
   device hasn't been assigned to a studio in Core's Settings UI, which is a very easy
   state to end up in and looks identical to "Core is just down" today.
 
+  **Be precise about what this probe proves and what it doesn't.** A successful
+  (non-throwing) call only proves: RE's device credentials are valid, the device is
+  attached to a studio, and Core's method endpoint responded. It does **not** prove
+  Package Manager itself is connected or actively reporting fresh statuses — PM could
+  be completely offline and this same call would still succeed, just describing
+  content as not-ready (or, per the `core-empty`-ambiguity note above, returning zero
+  piece statuses). Don't label this probe's success as "Package Manager connected" —
+  call it what it is: Core's rundown-content-status API is reachable and this device
+  is correctly configured. If you want a real Package-Manager-liveness signal, that's
+  the optional Core-side extension in step 5, not something this probe can give you.
+
 ### 4. Frontend: show provenance, not just the badge
 
 Files: `frontend/src/components/rundown/readinessBadge.tsx`,
@@ -130,10 +149,12 @@ exact current filenames, PR #32 in `SPRAVY-V2-INTEGRATION.md` lists these).
   has no studio`.
 - Add a small, persistent status chip somewhere always-visible (rundown header or a new
   Settings → Diagnostics page) driven by `/api/core/diagnostics`, polled on the same
-  ~10s cadence as readiness. Traffic-light style: green "Package Manager connected",
-  yellow "Core connected, PM status unavailable — showing local scan only", red "Core
-  disconnected" — with the raw error text visible on click/hover for whoever is
-  debugging.
+  ~10s cadence as readiness. Traffic-light style, labeled for what the probe actually
+  proves (see the note in step 3 — don't claim Package Manager's own connection state
+  from this call): green "Core reachable, device configured", yellow "Core reachable,
+  content-status call failed — showing local scan only" (with the raw error text),
+  red "Core disconnected". If step 5's optional Core-side extension lands, add a
+  genuinely PM-sourced fourth state instead of inferring it from this probe.
 
 ### 5. Only if you actually hit it: Core-side diagnostics extension
 
@@ -167,7 +188,8 @@ in ms from ffprobe, part `duration`) and operators conflate them. Concretely:
 ## Verify
 
 1. `yarn test` (extend `mediaReadiness.test.ts` with cases for each new `source` value
-   — `core`, `core-disconnected`, `core-error`, `core-empty`).
+   — `core` with a populated map, `core` with an empty map, `core-disconnected`,
+   `core-error`).
 2. `yarn lint`.
 3. Manual: with Core stopped, confirm the diagnostics chip shows red + the readiness
    API's `diagnostics.coreCallSource === 'core-disconnected'`.
