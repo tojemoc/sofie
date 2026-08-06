@@ -56,10 +56,12 @@ New file: `backend/src/background/dailyTemplateScheduler.ts`, started from
 - No new dependency needed — a `setInterval` (~1 minute) that evaluates
   "should we generate?" is enough; don't require an exact `HH:mm` equality match
   (a delayed or skipped tick would miss the day). On each wake: compute today's
-  `generatedDate` and current local `HH:mm` in `dailyCloneTimezone`; **trigger when
+  `generatedDate` and current local `HH:mm` in `dailyCloneTimezone`; trigger when
   configured `dailyCloneTime` has already passed today and no
-  `dailyGenerations` row exists for `(templateId, generatedDate)`**. The absence of
-  the day's marker is the idempotency gate — not "did this exact minute fire."
+  `dailyGenerations` row exists for `(templateId, generatedDate,
+  generatingTimezone)` with `status = 'completed'` (or a live
+  `in_progress` reservation — see below). The absence of the day's marker for
+  the **current** zone is the idempotency gate — not "did this exact minute fire."
   (If you'd rather have real cron syntax for future multi-schedule needs,
   `node-cron` is fine — still use the same "time passed + marker absent" rule.)
 - **DST:** interpret wall-clock times with `Intl` / Temporal in
@@ -80,10 +82,15 @@ New file: `backend/src/background/dailyTemplateScheduler.ts`, started from
   `create`/`update`/`read` — today those paths do not validate new fields): reject
   `dailyCloneTime` unless it matches `^([01]\d|2[0-3]):[0-5]\d$`; reject
   `dailyCloneTimezone` unless `Intl.supportedValuesOf('timeZone')` includes it (or
-  equivalent try/catch around `Intl.DateTimeFormat(..., { timeZone })`). On
-  rejection return a clear error and do not persist. Keep the documented
-  `Europe/Bratislava` default when timezone is omitted; keep inert behavior when
-  template id or clone time is unset (do not invent a default clone time).
+  equivalent try/catch around `Intl.DateTimeFormat(..., { timeZone })`). When
+  `dailyTemplateRundownId` is set (non-empty), load that rundown via the existing
+  rundown read API and **reject** unless it exists **and** `isTemplate === true`
+  (deleted ids and non-template rundowns must not persist). On rejection return a
+  clear error and do not persist. Keep the documented `Europe/Bratislava` default
+  when timezone is omitted; keep inert behavior when template id or clone time is
+  unset (do not invent a default clone time). Re-run the same template-id check
+  inside `generateDailyRundownIfNeeded` / the scheduler before cloning so a rundown
+  deleted or un-templated after settings were saved cannot generate.
 - On trigger: call the **existing** `mutations.createRundownCopy({ id:
   dailyTemplateRundownId, preserveTemplate: false })` — do not reimplement cloning.
 - **Idempotency must be atomic at insertion time, not a check-then-act read.** A plain
@@ -96,9 +103,11 @@ New file: `backend/src/background/dailyTemplateScheduler.ts`, started from
   ```sql
   CREATE TABLE IF NOT EXISTS dailyGenerations (
       sourceTemplateId TEXT NOT NULL,
-      generatedDate TEXT NOT NULL,  -- YYYY-MM-DD in dailyCloneTimezone (see below)
-      rundownId TEXT NOT NULL,
-      PRIMARY KEY (sourceTemplateId, generatedDate)
+      generatedDate TEXT NOT NULL,  -- YYYY-MM-DD in generatingTimezone (see below)
+      generatingTimezone TEXT NOT NULL,  -- IANA zone used when this marker was written
+      rundownId TEXT,  -- NULL while status = 'in_progress'; set on success
+      status TEXT NOT NULL CHECK(status IN ('in_progress', 'completed')),
+      PRIMARY KEY (sourceTemplateId, generatedDate, generatingTimezone)
   );
   ```
 
@@ -118,16 +127,42 @@ New file: `backend/src/background/dailyTemplateScheduler.ts`, started from
     route, the "Generated today?" status lookup, and unit tests (pass a fixed
     `now` / mock the helper). `dailyCloneTime` (`HH:mm`) is interpreted in the
     **same** `dailyCloneTimezone`.
+  - **Timezone changes:** persist `generatingTimezone` (= the
+    `dailyCloneTimezone` in effect when the marker was written) on every row.
+    Scheduler, manual generation, and "Generated today?" lookups may **reuse** a
+    marker only when `(sourceTemplateId, generatedDate, generatingTimezone)`
+    matches the **current** settings zone (and `status = 'completed'`). An old
+    marker from a previous zone must not block or satisfy today's run in the new
+    zone — near midnight a zone change can move the calendar date; treat
+    other-zone rows as unrelated. Optional: on settings save when
+    `dailyCloneTimezone` changes, invalidate or leave orphan `in_progress` rows
+    for the old zone (do not auto-migrate dates). Unit-test: change zone near
+    midnight so old-zone marker for date D cannot prevent or count as generation
+    for the new zone's date D' (or same D in a different zone).
 
   Write a single wrapper (e.g. `generateDailyRundownIfNeeded(templateId)` in a new
   `backend/src/background/api/dailyGeneration.ts`) used by **both** the scheduler and
   the manual "Generate now" button — no other path should call
-  `createRundownCopy` for the daily-template case. Inside it: run the clone, then
-  `INSERT INTO dailyGenerations (...) VALUES (...)` in the same transaction (or
-  immediately after, wrapped so a duplicate-key failure rolls back / discards the
-  just-created rundown copy); on a primary-key conflict, treat it as "already
-  generated today" and return the existing row's `rundownId` instead of creating
-  another rundown. This table is what provides the atomicity guarantee — a
+  `createRundownCopy` for the daily-template case. **Eliminate the crash window
+  between clone and marker:** do **not** `createRundownCopy` first then hope the
+  `INSERT` lands. Instead:
+  1. `INSERT` a row with `status = 'in_progress'`, `rundownId = NULL` for
+     `(sourceTemplateId, generatedDate, generatingTimezone)` (primary-key conflict
+     on an existing `completed` or live `in_progress` → treat as already
+     generating / already done and return that row's `rundownId` if present).
+  2. Call `createRundownCopy`.
+  3. On success, update the same row to `status = 'completed'` and set
+     `rundownId`. On clone failure, delete the `in_progress` reservation (or mark
+     failed and clear) so a later tick can retry.
+  4. **On restart:** if an `in_progress` row exists with no `rundownId`, do not
+     blindly clone again — either reconcile (if a rundown was created but the
+     update never committed, find it by naming convention / recent copy from that
+     template and complete the marker) or clear the reservation after a short
+     lease and allow one retry. Never create a second rundown for the same
+     `(template, date, timezone)` key. Unit-test failure between clone success and
+     marker completion, plus restart recovery without duplicates.
+
+  This table (with the reservation) is the atomicity guarantee — a
   `sourceTemplateId`/`generatedDate` pair stored only as free-form JSON fields on the
   `Rundown` document (with no DB-level constraint) cannot enforce uniqueness by
   itself, no matter how carefully the check-then-act read is written.
@@ -147,8 +182,10 @@ specifically) and wherever the rundown list is rendered.
 
 - On a template rundown's row, show whether it already generated today's rundown
   (`Generated today · <link to the generated rundown>`) or not yet, by looking up
-  today's `dailyGenerations` row for that template (new small read endpoint, or
-  include it in the existing rundown-list payload).
+  today's `dailyGenerations` row for that template **in the current
+  `dailyCloneTimezone`** with `status = 'completed'` (new small read endpoint, or
+  include it in the existing rundown-list payload). Do not treat an old-zone marker
+  as "Generated today."
 - Add a "Generate now" button next to it that calls a new route wrapping the **same**
   `generateDailyRundownIfNeeded` function the scheduler uses (not a second copy of the
   clone-then-check logic) — this is the manual escape hatch for when the schedule is
@@ -235,17 +272,24 @@ per-piece Core-sourced readiness is reliable and observable:
   within one piece) reference the same path:**
 
   **Canonical match key** (one shared helper, used for both listing join and tests):
-  take each media requirement path and each scanned `MediaFileEntry.path`, then
-  normalize to a posix-relative key under the ingest root — strip leading `/`,
-  replace `\` with `/`, collapse duplicate `/`, drop trailing `/`, lower-case the
-  whole string (Windows Caspar/PM paths are case-insensitive), strip a leading
-  drive letter (`c:/…` → relative remainder only if it is under the configured
-  ingest root; otherwise leave unmatched), and reject/`unknown` anything that
-  looks like a UNC (`//server/…`) or device URL (`dshow://…`) rather than
-  inventing a fake relative key. Align with the existing
-  `resolveMediaAbsolutePath` slash-normalization in `media.ts` /
-  `mediaReadiness.ts`, but do **not** treat absolute resolution alone as enough —
-  the join key is the normalized relative form above.
+  1. **Reject first** (return unmatched / `unknown` — do **not** strip or collapse
+     separators on these): UNC paths (`//…` or `\\…`) and device/protocol URLs
+     (`dshow://…`, `http(s)://…`, etc.). Collapsing `\\` before this check would
+     corrupt UNC into a fake relative path.
+  2. For remaining paths: replace `\` with `/` only after the reject step; collapse
+     duplicate `/`; drop trailing `/`; lower-case (Windows Caspar/PM paths are
+     case-insensitive).
+  3. **Drive letters:** if the path matches `^[a-z]:/…`, normalize the configured
+     ingest root the same way and compare the **full drive-qualified** path as a
+     prefix of that root (or equality). Only when it is confirmed under that root,
+     strip the shared root prefix to get the relative key. If the drive-qualified
+     path is not under the ingest root, leave unmatched — do **not** strip `c:`
+     first and hope the remainder matches.
+  4. Otherwise (already relative): strip a single leading `/` if present; the
+     result is the relative key under the ingest root.
+  Align with the existing slash-normalization in `resolveMediaAbsolutePath`
+  (`media.ts` / `mediaReadiness.ts`), but do **not** treat absolute resolution
+  alone as enough — the join key is the normalized relative form above.
 
   **Scope:** only aggregate Core verdicts from the **current** RE peripheral
   device's studio response for the **active rundown** whose media listing is being
@@ -266,8 +310,14 @@ per-piece Core-sourced readiness is reliable and observable:
 
   One-way map into `MediaFileEntry.readiness` after collecting all in-scope
   verdicts for the entry's match key (deterministic, no "first match wins"):
-  1. If **any** verdict has `ready === false` → `readiness: 'not-confirmed'`
-     (prefer the first non-empty `reason`, or concatenate distinct reasons).
+  1. If **any** verdict has `ready === false` → `readiness: 'not-confirmed'`.
+     For `reason`: take only those not-ready verdicts, **sort by a stable key**
+     (e.g. `pieceExternalId` then field id / requirement path, ascending), then
+     either pick the first non-empty `reason` in that order, **or** concatenate
+     distinct non-empty reasons in that same order (choose one approach and stick
+     to it — do not depend on `Map`/`Set` iteration order). If every not-ready
+     verdict has an empty/missing `reason`, leave `reason` undefined/empty
+     (preserve existing empty-reason behavior).
   2. Else if **at least one** verdict has `ready === true` (and none are false) →
      `readiness: 'confirmed'`.
   3. Else (zero in-scope Core verdicts for that key) → `readiness: 'unknown'`.
@@ -276,8 +326,10 @@ per-piece Core-sourced readiness is reliable and observable:
   (or two pieces sharing one clip) must follow the same rule — one
   `ready === false` requirement blocks a confirmed aggregate. Unit-test: conflict
   (piece A `ready: true` + piece B `ready: false` for the same key →
-  `not-confirmed`); Windows path variants (`clips\\a.mp4` vs `clips/a.mp4` vs
-  `Clips/A.MP4`); and isolation (verdict from another rundown / another device
+  `not-confirmed`); stable reason ordering when two not-ready verdicts disagree;
+  Windows path variants (`clips\\a.mp4` vs `clips/a.mp4` vs `Clips/A.MP4`); UNC /
+  `dshow://` stay unmatched; drive-letter path under ingest root joins, outside
+  root does not; and isolation (verdict from another rundown / another device
   must not affect this listing).
 - Surface readiness as part of each option's **visible text and accessible name**, not
   only a colored dot — e.g. `clip.mp4 (confirmed)` / `clip.mp4 (not confirmed: <reason>)`
@@ -316,7 +368,11 @@ per-piece Core-sourced readiness is reliable and observable:
    Scheduler: delayed tick after `dailyCloneTime` still generates when the marker is
    absent; restart after trigger time does not duplicate; spring-forward gap and
    fall-back fold each produce exactly one generation for that `generatedDate`.
-   Settings: invalid `dailyCloneTime` / `dailyCloneTimezone` rejected on save.
+   Settings: invalid `dailyCloneTime` / `dailyCloneTimezone` rejected on save;
+   `dailyTemplateRundownId` rejected when missing or `isTemplate !== true` (settings
+   save and pre-generate). Timezone change near midnight: old-zone marker must not
+   block/satisfy new-zone run. Reservation: failure between clone and marker
+   complete + restart must not duplicate.
 2. `yarn lint`.
 3. Manual: set `dailyCloneTime` a few minutes in the future, confirm a new dated
    rundown appears after that time even if the interval wakes late; restart the
