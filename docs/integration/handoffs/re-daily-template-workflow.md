@@ -103,10 +103,16 @@ New file: `backend/src/background/dailyTemplateScheduler.ts`, started from
   ```sql
   CREATE TABLE IF NOT EXISTS dailyGenerations (
       sourceTemplateId TEXT NOT NULL,
-      generatedDate TEXT NOT NULL,  -- YYYY-MM-DD in generatingTimezone (see below)
-      generatingTimezone TEXT NOT NULL,  -- IANA zone used when this marker was written
-      rundownId TEXT,  -- NULL while status = 'in_progress'; set on success
-      status TEXT NOT NULL CHECK(status IN ('in_progress', 'completed')),
+      generatedDate TEXT NOT NULL,  -- YYYY-MM-DD in generatingTimezone
+      generatingTimezone TEXT NOT NULL,  -- IANA zone when this marker was written
+      attemptId TEXT NOT NULL,  -- lease / attempt identifier (UUID per reservation)
+      idempotencyKey TEXT NOT NULL UNIQUE,  -- durable key; see recovery below
+      rundownId TEXT,  -- NULL iff status IN ('in_progress','failed'); NOT NULL iff completed
+      status TEXT NOT NULL CHECK(status IN ('in_progress', 'completed', 'failed')),
+      -- Enforce combinations in app code (SQLite CHECK cannot easily express iff):
+      --   in_progress => rundownId IS NULL
+      --   completed   => rundownId IS NOT NULL
+      --   failed      => rundownId IS NULL (clone never finished; safe to retry)
       PRIMARY KEY (sourceTemplateId, generatedDate, generatingTimezone)
   );
   ```
@@ -127,42 +133,57 @@ New file: `backend/src/background/dailyTemplateScheduler.ts`, started from
     route, the "Generated today?" status lookup, and unit tests (pass a fixed
     `now` / mock the helper). `dailyCloneTime` (`HH:mm`) is interpreted in the
     **same** `dailyCloneTimezone`.
-  - **Timezone changes:** persist `generatingTimezone` (= the
-    `dailyCloneTimezone` in effect when the marker was written) on every row.
-    Scheduler, manual generation, and "Generated today?" lookups may **reuse** a
-    marker only when `(sourceTemplateId, generatedDate, generatingTimezone)`
-    matches the **current** settings zone (and `status = 'completed'`). An old
-    marker from a previous zone must not block or satisfy today's run in the new
-    zone — near midnight a zone change can move the calendar date; treat
-    other-zone rows as unrelated. Optional: on settings save when
-    `dailyCloneTimezone` changes, invalidate or leave orphan `in_progress` rows
-    for the old zone (do not auto-migrate dates). Unit-test: change zone near
-    midnight so old-zone marker for date D cannot prevent or count as generation
-    for the new zone's date D' (or same D in a different zone).
+  - **Timezone changes:** persist `generatingTimezone` on every row.
+    - **Completed** markers from a previous zone: ignore for the new zone's
+      "already generated?" / block decisions (keep `generatingTimezone`-based
+      matching — do not migrate dates).
+    - **`in_progress` (and `failed`) rows from the previous zone:** must be
+      **reconciled or canceled before** the new zone starts generation — do not
+      leave them as ignored orphans that could still finish later and attach a
+      rundown under the old zone while the new zone also clones. On
+      `dailyCloneTimezone` settings change (and at scheduler start if a zone
+      mismatch is detected): for each old-zone `in_progress` row, run the same
+      reconcile-by-`idempotencyKey` path as restart recovery; if no rundown was
+      created, set `status = 'failed'` (or delete) so the reservation cannot
+      complete under the old zone afterward. Only then may the new zone insert
+      its own reservation. Unit-test: zone change near midnight with an
+      old-zone `in_progress` row — it is canceled/reconciled first; old-zone
+      **completed** markers still neither block nor satisfy the new zone.
 
   Write a single wrapper (e.g. `generateDailyRundownIfNeeded(templateId)` in a new
   `backend/src/background/api/dailyGeneration.ts`) used by **both** the scheduler and
   the manual "Generate now" button — no other path should call
   `createRundownCopy` for the daily-template case. **Eliminate the crash window
   between clone and marker:** do **not** `createRundownCopy` first then hope the
-  `INSERT` lands. Instead:
-  1. `INSERT` a row with `status = 'in_progress'`, `rundownId = NULL` for
-     `(sourceTemplateId, generatedDate, generatingTimezone)` (primary-key conflict
-     on an existing `completed` or live `in_progress` → treat as already
-     generating / already done and return that row's `rundownId` if present).
-  2. Call `createRundownCopy`.
-  3. On success, update the same row to `status = 'completed'` and set
-     `rundownId`. On clone failure, delete the `in_progress` reservation (or mark
-     failed and clear) so a later tick can retry.
-  4. **On restart:** if an `in_progress` row exists with no `rundownId`, do not
-     blindly clone again — either reconcile (if a rundown was created but the
-     update never committed, find it by naming convention / recent copy from that
-     template and complete the marker) or clear the reservation after a short
-     lease and allow one retry. Never create a second rundown for the same
-     `(template, date, timezone)` key. Unit-test failure between clone success and
-     marker completion, plus restart recovery without duplicates.
+  marker lands. Instead:
+  1. Mint `attemptId` (UUID) and a durable `idempotencyKey` (e.g.
+     `sha256(sourceTemplateId + '|' + generatedDate + '|' + generatingTimezone + '|' + attemptId)`
+     or a stable key without attempt if you prefer one logical day-key — but then
+     retries must reuse that same key). `INSERT` a row with
+     `status = 'in_progress'`, `rundownId = NULL`, those ids set. Primary-key
+     conflict on an existing `completed` → return that `rundownId`. Conflict on
+     live `in_progress` → join that attempt (do not insert a second clone).
+  2. Call `createRundownCopy` (pass or record `idempotencyKey` / `attemptId` in
+     logs; if you can stamp the new rundown payload with `idempotencyKey`, do so
+     so restart reconcile can find it).
+  3. On success: transition `in_progress` → `completed` and set `rundownId`
+     (only valid transition that attaches a rundown). On clone failure: transition
+     `in_progress` → `failed` with `rundownId` still NULL (this is why `failed`
+     is in the status CHECK — use it; do not delete-without-reconcile as the
+     only path).
+  4. **Before clearing or retrying any `in_progress`:** reconcile using
+     `idempotencyKey` / `attemptId` (find a rundown created for that key). If
+     found → complete the marker. If not found and the lease expired → set
+     `failed` (or delete only after reconcile proves no rundown), then allow a
+     **new** attempt with a new `attemptId` / key. Never create a second rundown
+     for the same logical `(template, date, timezone)` while a prior attempt's
+     clone might still exist. Preserve valid status transitions only:
+     `in_progress→completed`, `in_progress→failed`; no `completed→in_progress`.
+     Unit-test failure between clone success and marker completion, restart
+     recovery without duplicates, and "clear in_progress without reconcile"
+     must be impossible by design.
 
-  This table (with the reservation) is the atomicity guarantee — a
+  This table (with reservation + idempotency key) is the atomicity guarantee — a
   `sourceTemplateId`/`generatedDate` pair stored only as free-form JSON fields on the
   `Rundown` document (with no DB-level constraint) cannot enforce uniqueness by
   itself, no matter how carefully the check-then-act read is written.
@@ -279,12 +300,13 @@ per-piece Core-sourced readiness is reliable and observable:
   2. For remaining paths: replace `\` with `/` only after the reject step; collapse
      duplicate `/`; drop trailing `/`; lower-case (Windows Caspar/PM paths are
      case-insensitive).
-  3. **Drive letters:** if the path matches `^[a-z]:/…`, normalize the configured
-     ingest root the same way and compare the **full drive-qualified** path as a
-     prefix of that root (or equality). Only when it is confirmed under that root,
-     strip the shared root prefix to get the relative key. If the drive-qualified
-     path is not under the ingest root, leave unmatched — do **not** strip `c:`
-     first and hope the remainder matches.
+  3. **Drive letters:** if the path matches `^[a-z]:/…`, normalize both the path
+     and the configured ingest root the same way (trailing `/` stripped). Require
+     `path === root` **or** `path.startsWith(root + '/')` before stripping the
+     shared root prefix to get the relative key. Paths outside the root stay
+     unmatched. Do **not** test whether the full path is a prefix of the ingest
+     root (that comparison is backwards and can false-match). Do **not** strip
+     `c:` first and hope the remainder matches.
   4. Otherwise (already relative): strip a single leading `/` if present; the
      result is the relative key under the ingest root.
   Align with the existing slash-normalization in `resolveMediaAbsolutePath`
@@ -368,11 +390,13 @@ per-piece Core-sourced readiness is reliable and observable:
    Scheduler: delayed tick after `dailyCloneTime` still generates when the marker is
    absent; restart after trigger time does not duplicate; spring-forward gap and
    fall-back fold each produce exactly one generation for that `generatedDate`.
-   Settings: invalid `dailyCloneTime` / `dailyCloneTimezone` rejected on save;
-   `dailyTemplateRundownId` rejected when missing or `isTemplate !== true` (settings
-   save and pre-generate). Timezone change near midnight: old-zone marker must not
-   block/satisfy new-zone run. Reservation: failure between clone and marker
-   complete + restart must not duplicate.
+   Settings: invalid `dailyCloneTime` / `dailyCloneTimezone` rejected on **save and
+   load**; `dailyTemplateRundownId` rejected when missing, deleted, or
+   `isTemplate !== true` on save, load, and pre-generate. Timezone change: old-zone
+   `in_progress` reconciled/canceled before new-zone generation; old-zone
+   `completed` ignored for block/satisfy. Reservation: `idempotencyKey` reconcile
+   before clear/retry; failure between clone and marker complete + restart must not
+   duplicate.
 2. `yarn lint`.
 3. Manual: set `dailyCloneTime` a few minutes in the future, confirm a new dated
    rundown appears after that time even if the interval wakes late; restart the
