@@ -23,10 +23,13 @@ Status as of 2026-08-05 after DoubleBox / flat-media / PGM L3D work.
 Canonical design: [`docs/adr/0001-re-readiness-from-core-package-manager.md`](../adr/0001-re-readiness-from-core-package-manager.md).
 
 - **Authoritative source:** Sofie Core Package Manager statuses (`PieceStatusCode`), same signal Sofie WebUI uses.
-- **RE role:** Peripheral device reads Core via a device-scoped API (proposed
-  `peripheralDevice.packageManager.getContentStatusForRundown`), maps to badges.
+- **RE role:** Peripheral device reads Core via a device-scoped API
+  (`peripheralDevice.packageManager.getContentStatusForRundown`), maps to badges.
 - **Fallback:** Keep local `fs.stat` when Core/PM is down (hybrid mode).
-- **Status of ADR:** Proposed — deferred post-demo. Core surgery + RE CoreHandler changes.
+- **Status of ADR:** **Implemented** (sofie-core `dfc25cc`/`581076c`, unopus
+  `40b5d0b` — see the ADR's Implementation section for PR links). What's still
+  open is operator-visible diagnostics when the hybrid path silently falls back
+  — see [`handoffs/re-readiness-diagnostics.md`](handoffs/re-readiness-diagnostics.md).
 
 ### What ships today (unopus)
 
@@ -43,8 +46,12 @@ Canonical design: [`docs/adr/0001-re-readiness-from-core-package-manager.md`](..
    (`ingestMediaRoot` mismatch, missing SMB, or path with/without `clips/`).
 2. Wipe / ILU files may exist for Caspar under `sofie-demo-media/` but not under the
    path RE is configured to scan.
-3. Core PM status is preferred when the hybrid path is live, but ADR 0001 API is not
-   fully landed — disagreement between Sofie UI and RE badges is expected until then.
+3. Core PM status is preferred when the hybrid path is live (ADR 0001 is
+   implemented — see above), but RE has no visible way today to tell whether a
+   given badge came from Core PM or the local fs fallback, or why the Core call
+   failed if it did — disagreement between Sofie UI and RE badges can still
+   happen and is currently silent. See
+   [`handoffs/re-readiness-diagnostics.md`](handoffs/re-readiness-diagnostics.md).
 
 **WebM sibling check** for ILU was removed (prerendered/bypass ILU work); readiness no
 longer requires a `.webm` next to the MP4.
