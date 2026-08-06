@@ -23,6 +23,12 @@ headline bars are **PGM**. No intro / znelka on LED. Intro overlay plays on
 **PGM layer 210** (above wipe 200) — see
 [`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md).
 
+**Story ILU on PGM 115 (pending):** DoubleBox’s left ILU window is intended on
+**PGM channel 2 layer 115**. Today `casparcg_ilu_player` still maps to **LED**
+channel 1 layer 115 until the companion blueprint remap is deployed and Sofie
+Apply config is run. Treat PGM-115 ILU as **pending** — do not mark smoke
+DoubleBox ILU complete on LED `1-115` alone.
+
 **Camera / UVC:** studio `casparcg.hypercomposed.pgmCameraProducer` (demo default
 `dshow://video=OBS Virtual Camera`) is played on **PGM 2-116** when a part with a
 `camera` piece (`camNo: 1` = Camera A) is Taken. Remove the camera piece to keep
@@ -120,17 +126,18 @@ Smoke rundown pieces use piece type `wipe` with `fileName: wipes/360_wipe` and
 |------------------|---------|-------|------|
 | `casparcg_clip_player1` | LED 1 | 110 | LED `360_loop` |
 | `casparcg_clip_player2` | PGM 2 | 110 | PGM bg loop (or omit if UVC carries bg) |
-| `casparcg_ilu_player` | LED 1 / PGM 2* | 115 | Headline ILU today on LED; DoubleBox left window on PGM when remapped |
+| `casparcg_ilu_player` | LED 1 (**PGM 2 pending**\*) | 115 | Headline / story ILU MEDIA; DoubleBox left window on PGM when remapped |
 | `casparcg_intro_player_pgm` | PGM 2 | 210 | Intro / znelka — **never LED** (handoff; may still be LED 200 until remapped) |
 | `casparcg_pgm_camera` | PGM 2 | 116 | UVC / CAM1 |
 | `casparcg_graphics_pgm_l3d` | PGM 2 | 121 | `l3d-tema` / `l3d-syn` / headline bars |
 | `casparcg_graphics_logo` | PGM 2 | 123 | `gfx/logo-bug` (360° sekúnd bug) — **not** on LED |
 | `casparcg_effects_player_pgm` | PGM 2 | 200 | Wipes |
 
-\*Headline ILU still maps to LED by default for the wall. Thematic DoubleBox on PGM
-uses PGM camera FILL + PGM `l3d-tema` + PGM baseline loop (`casparcg_clip_player2`).
-Routing story ILU media onto PGM channel 2 layer 115 is still a follow-up if the LED
-mapping stays on channel 1. The **logo-bug is already PGM-only**.
+\*Headline / story ILU still maps to **LED** by default for the wall. Thematic
+DoubleBox on PGM uses PGM camera FILL + PGM `l3d-tema` + PGM baseline loop
+(`casparcg_clip_player2`). Routing story ILU media onto **PGM channel 2 layer 115**
+is a **pending** companion-blueprint follow-up while the LED mapping stays on
+channel 1. The **logo-bug is already PGM-only**.
 
 ### `bg-loop` folder structure
 
@@ -156,3 +163,7 @@ folder; the stored path still includes `loops/…`.
    Intro take must show `PLAY <pgm>-210 "assets/360s_ZNELKA-skratena_introALPHA"` and **must not** play
    Intro on LED (`1-200`). Until that branch lands, treat this check as **pending** —
    do not mark smoke Intro routing complete on LED EffectsPlayer 200.
+6. **Story ILU on PGM 115 (pending until companion blueprints remap `casparcg_ilu_player` to PGM):**
+   after that remap + Sofie Apply config, an ILU/DoubleBox Take must show
+   `PLAY <pgm>-115 "clips/…"` (and FILL) on **channel 2**, not only LED `1-115`.
+   Until then, treat PGM-115 ILU as **pending** — LED `1-115` remains the live path.

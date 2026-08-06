@@ -43,8 +43,8 @@ Operators need **absolute control** over two different Caspar layers / channels:
 | **Intro overlay** | Part `Intro` + piece `intro` | **PGM** IntroOverlay **210** (above wipe 200) | Full-frame znelka / alpha — **never on LED** |
 | **Background loop** | Piece `bg-loop` (optional) + baseline | LED ClipPlayer1 **110** | LED `loops/360_loop` |
 
-**LED allow-list (channel 1):** **headlines** (ILU + headline CG), the **loop**, and
-**Presenter MOD** (`l3d-mod` — smoke Intro routes Gabriela Kajtárová here).
+**LED allow-list (channel 1):** **headline ILU** + **`360_loop` only**.
+`l3d-mod` (Presenter MOD) and other L3Ds are **PGM** — see Headline L3Ds below.
 **Intro / znelka must not appear on LED.** See handoff
 [`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md)
 (current blueprints still map `playLayer: 'effects'` → LED layer 200 — remapping required).

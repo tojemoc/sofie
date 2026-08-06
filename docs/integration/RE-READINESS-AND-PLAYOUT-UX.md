@@ -10,7 +10,7 @@ Status as of 2026-08-05 after DoubleBox / flat-media / PGM L3D work.
 | RE piece list **NR** badge | Local ingest-root `fs.stat` (and Core PM when available) says a media field is missing |
 | RE piece **DUR** | Editorial on-air length (seconds) on the piece — **not** always source-file length |
 | Sofie WebUI piece status | Package Manager / `PieceStatusCode` from Core |
-| LED `360_loop` | Baseline on Caspar **1-110** — not a RE piece unless you add `bg-loop` |
+| LED `360_loop` | Baseline on Caspar **1-110**. An optional RE `bg-loop` piece plays the same (or alternate) file at **priority 1** and **overrides** the baseline — operators should keep only one active loop on LED, not two simultaneous loops |
 | Camera A (`camNo: 1`) | Vision-mixer cut + optional Caspar **2-116** UVC when `pgmCameraProducer` is set |
 | Wipe row | PGM **2-200** overlay; `start`/`duration` drive enable, list order does not |
 
@@ -37,9 +37,9 @@ Canonical design: [`docs/adr/0001-re-readiness-from-core-package-manager.md`](..
 | UI | `readinessBadge.tsx` → compact **NR** / full **NOT READY**; tooltips from requirement messages |
 | Scope | Per media *field* (e.g. `payload.fileName`, `payload.iluFile`), rolled up to piece → part → sidebar |
 
-**Why NR appears on ILU / wipe in the screenshot even when playout works:**
+**Why NR appears on ILU / wipe pieces even when Caspar playout works:**
 
-1. RE container may not see the same tree as Windows Caspar / Package Manager
+1. RE may not see the same tree as Windows Caspar / Package Manager
    (`ingestMediaRoot` mismatch, missing SMB, or path with/without `clips/`).
 2. Wipe / ILU files may exist for Caspar under `sofie-demo-media/` but not under the
    path RE is configured to scan.
@@ -72,7 +72,7 @@ Three different durations exist; conflating them caused operator confusion.
 piece duration (seconds) **and** `sourceDuration` (ms). Operators can still override
 Duration for editorial timing (e.g. headline ILU = 8s while source is longer).
 
-**Not shown today:** source length as a separate DUR column; Softie’s hoverscrub /
+**Not shown today:** source length as a separate DUR column; Sofie’s hoverscrub /
 Package Manager media info in RE.
 
 ### Planning questions
@@ -89,8 +89,10 @@ Package Manager media info in RE.
 ### Playout contract (blueprints)
 
 - Piece type `wipe` → Caspar PGM layer **200** (`casparcg_effects_player_pgm`).
-- Timeline enable: `start = piece.start` (seconds→ms), `duration = piece.duration` or
-  **2500 ms** if empty/0 (`DEFAULT_WIPE_DURATION_MS`).
+- Timeline enable after ingest (`convertIngestData` scales RE seconds → ms):
+  - `start = piece.start * 1000` (seconds → ms; missing start → `0`)
+  - `duration = piece.duration * 1000` when `piece.duration > 0`
+  - `duration = DEFAULT_WIPE_DURATION_MS` (**2500**) when duration is empty/`0`
 - Lifespan: WithinPart — fires on Take into that part.
 - File: `payload.fileName` (Caspar path, no extension), default `wipes/360_wipe`.
 
@@ -100,7 +102,7 @@ Package Manager media info in RE.
 |---------|-------|
 | Which part gets a wipe | Add wipe piece on that part (smoke does this on story Takes) |
 | When within the part | Piece **Start** (offset from Take) — UI exposes it; often left at `00:00` |
-| How long | Piece **Duration**; `00:00` → blueprint 2.5s fallback (not visible as 2.5 in RE) |
+| How long | Piece **Duration** (seconds). Non-zero → timeline `duration = piece.duration * 1000` ms. Empty/`00:00` → blueprint `DEFAULT_WIPE_DURATION_MS` (**2500**), not shown as 2.5s in RE |
 | Transition label | `payload.transition` (operator label only; same file plays) |
 | List order vs other pieces | **Rank / list order ≠ timeline priority** for same start; all start at 0 play together |
 
