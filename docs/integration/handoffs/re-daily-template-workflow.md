@@ -54,15 +54,17 @@ New file: `backend/src/background/dailyTemplateScheduler.ts`, started from
 `backend/src/background/index.ts` (`ControlAPI.init`) alongside `coreHandler.init()`.
 
 - No new dependency needed — a `setInterval` that wakes up once a minute, compares
-  local wall-clock time against a configured `HH:mm`, and only fires once per
-  calendar day is simpler to reason about than a cron library for a single daily job.
-  (If you'd rather have real cron syntax for future multi-schedule needs, `node-cron`
-  is a fine addition — just don't over-engineer a single daily trigger.)
+  current `HH:mm` in `dailyCloneTimezone` against the configured `dailyCloneTime`, and
+  only fires once per `generatedDate` is simpler to reason about than a cron library
+  for a single daily job. (If you'd rather have real cron syntax for future
+  multi-schedule needs, `node-cron` is a fine addition — just don't over-engineer a
+  single daily trigger.)
 - Settings (extend `ApplicationSettings` in `interfaces.ts` + the settings form under
   `frontend/src/components/settings/`): `dailyTemplateRundownId` (which rundown is
-  "today's template" — dropdown of rundowns where `isTemplate === true`) and
-  `dailyCloneTime` (`HH:mm`, local server time). Leave the feature inert if either is
-  unset.
+  "today's template" — dropdown of rundowns where `isTemplate === true`),
+  `dailyCloneTime` (`HH:mm` in `dailyCloneTimezone`), and `dailyCloneTimezone`
+  (IANA, default `Europe/Bratislava`). Leave the feature inert if template id or
+  clone time is unset.
 - On trigger: call the **existing** `mutations.createRundownCopy({ id:
   dailyTemplateRundownId, preserveTemplate: false })` — do not reimplement cloning.
 - **Idempotency must be atomic at insertion time, not a check-then-act read.** A plain
@@ -75,11 +77,28 @@ New file: `backend/src/background/dailyTemplateScheduler.ts`, started from
   ```sql
   CREATE TABLE IF NOT EXISTS dailyGenerations (
       sourceTemplateId TEXT NOT NULL,
-      generatedDate TEXT NOT NULL,
+      generatedDate TEXT NOT NULL,  -- YYYY-MM-DD in dailyCloneTimezone (see below)
       rundownId TEXT NOT NULL,
       PRIMARY KEY (sourceTemplateId, generatedDate)
   );
   ```
+
+  **`generatedDate` format and timezone (canonical, shared everywhere):**
+  - Format: `YYYY-MM-DD` (calendar date only — no time component).
+  - Timezone: a single configured IANA zone on the **server** (extend
+    `ApplicationSettings` with e.g. `dailyCloneTimezone`, default
+    `Europe/Bratislava` for this show). Derive the date with one shared helper
+    (e.g. `getDailyGeneratedDate(now = new Date()): string` using
+    `Intl.DateTimeFormat('en-CA', { timeZone: dailyCloneTimezone, year: 'numeric',
+    month: '2-digit', day: '2-digit' }).format(now)` — `en-CA` yields
+    `YYYY-MM-DD`). Do **not** use `Date#toISOString().slice(0, 10)` (that is
+    always UTC), do **not** use `getFullYear()`/`getMonth()`/`getDate()` (those
+    are the process's local TZ and drift if the container TZ changes), and do
+    **not** let the browser compute "today" for status lookups.
+  - Call that same helper from: the scheduler tick, the manual "Generate now"
+    route, the "Generated today?" status lookup, and unit tests (pass a fixed
+    `now` / mock the helper). `dailyCloneTime` (`HH:mm`) is interpreted in the
+    **same** `dailyCloneTimezone`.
 
   Write a single wrapper (e.g. `generateDailyRundownIfNeeded(templateId)` in a new
   `backend/src/background/api/dailyGeneration.ts`) used by **both** the scheduler and
@@ -193,6 +212,21 @@ per-piece Core-sourced readiness is reliable and observable:
   having confirmed it on the Caspar media disk, and collapsing the two back into a
   boolean recreates the exact "which source produced this verdict" ambiguity the
   diagnostics handoff (`re-readiness-diagnostics.md`) is trying to eliminate.
+- **Aggregation when several Core-evaluated pieces (or several media requirements
+  within one piece) reference the same path:** collect every Core-sourced verdict
+  whose media requirement path normalizes to that scanned file, then apply this
+  precedence (deterministic, no "first match wins"):
+  1. If **any** verdict is not-ready → `readiness: 'not-confirmed'` (use the first
+     non-empty Core `reason`, or concatenate distinct reasons if you want richer
+     tooltips).
+  2. Else if **at least one** verdict is ready and none are not-ready →
+     `readiness: 'confirmed'`.
+  3. Else (zero Core-sourced verdicts for that path) → `readiness: 'unknown'`.
+  A single piece with two `mediaPick` fields that both point at the same file (or
+  two pieces sharing one clip) must follow the same rule — one not-confirmed
+  requirement blocks a confirmed aggregate. Unit-test the conflict case
+  (piece A confirmed + piece B not-confirmed for the same path → `not-confirmed`),
+  not only "one confirmed file" and "one missing file" in isolation.
 - Surface readiness as part of each option's **visible text and accessible name**, not
   only a colored dot — e.g. `clip.mp4 (confirmed)` / `clip.mp4 (not confirmed: <reason>)`
   / `clip.mp4 (not yet confirmed)`. Plain `<option>` elements inside a native
@@ -223,7 +257,10 @@ per-piece Core-sourced readiness is reliable and observable:
 ## Verify
 
 1. `yarn test` / add coverage for the idempotency check (same template + same day
-   should not produce two rundowns; different day should).
+   should not produce two rundowns; different day should). Also cover
+   `getDailyGeneratedDate`: fixed `now` in `Europe/Bratislava` vs UTC midnight edge
+   (e.g. 23:30 UTC on day D must still yield Bratislava's calendar date when that
+   zone is ahead), and confirm scheduler + manual + status lookup all use the helper.
 2. `yarn lint`.
 3. Manual: set `dailyCloneTime` a minute in the future, confirm a new dated rundown
    appears automatically without touching the UI; restart the backend mid-day and
@@ -238,8 +275,10 @@ per-piece Core-sourced readiness is reliable and observable:
    `confirmed` and one it reports missing shows `not confirmed: <reason>` in the
    option text itself (not just a color), and that a file with no Core-sourced status
    yet shows `unknown`/`not yet confirmed` rather than being guessed from the local
-   scan. Tab/arrow through the control with no mouse to confirm the status is reachable
-   without relying on a tooltip.
+   scan. Also verify a conflict: the same path referenced by one ready piece and one
+   not-ready piece (or two requirements on one piece) aggregates to `not-confirmed`,
+   not `confirmed`. Tab/arrow through the control with no mouse to confirm the status
+   is reachable without relying on a tooltip.
 
 ## Out of scope
 

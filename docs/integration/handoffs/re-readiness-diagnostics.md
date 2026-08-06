@@ -120,22 +120,37 @@ for auth).
 - Whether a `deviceId`/`deviceToken` is configured (vs. the `unsecureToken` default —
   see `getCoreConnectionOptions` in `coreHandler.ts`).
 - A live probe: call `getContentStatusForRundown` with a deliberately bogus
-  `rundownExternalId` (e.g. `__diagnostics_probe__`) and report the raw error message
-  verbatim if it throws. This surfaces exactly the failure class described in ADR
-  0001 — e.g. `Meteor.Error(400, 'Device "..." has no studio')` when the RE peripheral
-  device hasn't been assigned to a studio in Core's Settings UI, which is a very easy
-  state to end up in and looks identical to "Core is just down" today.
+  `rundownExternalId` (e.g. `__diagnostics_probe__`). On throw: log the **full**
+  Core error (message + stack) only in protected server logs (`console.warn` /
+  structured logging already used by `coreContentStatus.ts`). Return a **safe
+  operator-facing** summary to the client — e.g. map known stable Meteor reason
+  patterns to short labels (`Device has no studio`, `Core method unavailable`,
+  `Unauthorized`), otherwise a generic `Core content-status call failed`. Do **not**
+  put the raw Core error string into the JSON response or the UI chip by default;
+  allow verbatim exposure only if/when Core's error contract for this method is
+  explicitly documented as operator-safe (today it is not — messages can include
+  device ids and internal paths). This still surfaces the failure class described
+  in ADR 0001 (e.g. device not assigned to a studio looking identical to "Core is
+  just down") without leaking internals to every browser session.
 
   **Be precise about what this probe proves and what it doesn't.** A successful
   (non-throwing) call only proves: RE's device credentials are valid, the device is
   attached to a studio, and Core's method endpoint responded. It does **not** prove
   Package Manager itself is connected or actively reporting fresh statuses — PM could
   be completely offline and this same call would still succeed, just describing
-  content as not-ready (or, per the `core-empty`-ambiguity note above, returning zero
+  content as not-ready (or, per the empty-pieces ambiguity note above, returning zero
   piece statuses). Don't label this probe's success as "Package Manager connected" —
   call it what it is: Core's rundown-content-status API is reachable and this device
   is correctly configured. If you want a real Package-Manager-liveness signal, that's
   the optional Core-side extension in step 5, not something this probe can give you.
+
+  **Coalesce concurrent polls:** cache the last probe result (and its `checkedAt`)
+  in-process with a short TTL (e.g. 5–10s, matching the UI poll cadence). Concurrent
+  browser requests within the TTL share one Core method call and the same
+  `checkedAt` / traffic-light payload instead of each issuing a fresh probe. On TTL
+  expiry, one in-flight probe refreshes the cache; others wait on that promise rather
+  than stampeding Core. Preserve the existing traffic-light states; only the number
+  of Core round-trips changes.
 
 ### 4. Frontend: show provenance, not just the badge
 
@@ -145,16 +160,19 @@ Files: `frontend/src/components/rundown/readinessBadge.tsx`,
 exact current filenames, PR #32 in `SPRAVY-V2-INTEGRATION.md` lists these).
 
 - Extend `getPieceReadinessTooltip` to append a line noting the source, e.g. `via
-  Package Manager` vs `via local scan (Core unreachable)` vs `Core error: Device "..."
-  has no studio`.
+  Package Manager` vs `via local scan (Core unreachable)` vs `Core: Device has no
+  studio` (use the same safe operator-facing labels as the diagnostics probe — never
+  the raw Core exception text).
 - Add a small, persistent status chip somewhere always-visible (rundown header or a new
   Settings → Diagnostics page) driven by `/api/core/diagnostics`, polled on the same
   ~10s cadence as readiness. Traffic-light style, labeled for what the probe actually
   proves (see the note in step 3 — don't claim Package Manager's own connection state
   from this call): green "Core reachable, device configured", yellow "Core reachable,
-  content-status call failed — showing local scan only" (with the raw error text),
-  red "Core disconnected". If step 5's optional Core-side extension lands, add a
-  genuinely PM-sourced fourth state instead of inferring it from this probe.
+  content-status call failed — showing local scan only" (with the **safe** operator
+  label, not the raw Core string), red "Core disconnected". If step 5's optional
+  Core-side extension lands, add a genuinely PM-sourced fourth state instead of
+  inferring it from this probe. Backend coalescing (step 3) means N open browsers
+  should still produce ~1 Core probe per TTL window.
 
 ### 5. Only if you actually hit it: Core-side diagnostics extension
 
@@ -194,9 +212,13 @@ in ms from ffprobe, part `duration`) and operators conflate them. Concretely:
 3. Manual: with Core stopped, confirm the diagnostics chip shows red + the readiness
    API's `diagnostics.coreCallSource === 'core-disconnected'`.
 4. Manual: with Core up but the RE peripheral device **not** assigned to a studio in
-   Core Settings, confirm the diagnostics probe surfaces the "has no studio" error
-   verbatim instead of looking identical to "Core disconnected".
-5. Manual, on the real deployment (Windows Caspar/PM box + Alpine LXC): use the new
+   Core Settings, confirm the diagnostics chip/API shows a safe operator label (e.g.
+   "Device has no studio") and that the **server log** still carries the full Core
+   error — the browser response must not echo the raw exception string.
+5. Manual: open the diagnostics page in two browsers at once; confirm both receive the
+   same `checkedAt` within one TTL window and that Core only sees ~one probe call per
+   window (log or network), not one per client.
+6. Manual, on the real deployment (Windows Caspar/PM box + Alpine LXC): use the new
    `/api/core/diagnostics` + per-badge tooltips to walk the actual chain end-to-end and
    confirm you can now tell, from the RE UI alone, whether a NOT READY badge means
    "Package Manager says the file is missing" vs "RE can't reach Core at all" vs
