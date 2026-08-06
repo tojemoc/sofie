@@ -53,18 +53,37 @@ directly, don't diff against `backup`.
 New file: `backend/src/background/dailyTemplateScheduler.ts`, started from
 `backend/src/background/index.ts` (`ControlAPI.init`) alongside `coreHandler.init()`.
 
-- No new dependency needed — a `setInterval` that wakes up once a minute, compares
-  current `HH:mm` in `dailyCloneTimezone` against the configured `dailyCloneTime`, and
-  only fires once per `generatedDate` is simpler to reason about than a cron library
-  for a single daily job. (If you'd rather have real cron syntax for future
-  multi-schedule needs, `node-cron` is a fine addition — just don't over-engineer a
-  single daily trigger.)
+- No new dependency needed — a `setInterval` (~1 minute) that evaluates
+  "should we generate?" is enough; don't require an exact `HH:mm` equality match
+  (a delayed or skipped tick would miss the day). On each wake: compute today's
+  `generatedDate` and current local `HH:mm` in `dailyCloneTimezone`; **trigger when
+  configured `dailyCloneTime` has already passed today and no
+  `dailyGenerations` row exists for `(templateId, generatedDate)`**. The absence of
+  the day's marker is the idempotency gate — not "did this exact minute fire."
+  (If you'd rather have real cron syntax for future multi-schedule needs,
+  `node-cron` is fine — still use the same "time passed + marker absent" rule.)
+- **DST:** interpret wall-clock times with `Intl` / Temporal in
+  `dailyCloneTimezone`. Nonexistent spring-forward gap (e.g. `02:30` on a day that
+  jumps `02:00→03:00`): treat the trigger as already passed once local time is at
+  or after the first valid instant after the gap (run after the gap, same
+  `generatedDate`). Repeated fall-back fold (e.g. `02:30` occurs twice): fire at
+  most once — the first wall-clock occurrence that satisfies "time has passed"
+  for that `generatedDate`; the `dailyGenerations` primary key prevents a second
+  run on the repeated hour.
 - Settings (extend `ApplicationSettings` in `interfaces.ts` + the settings form under
   `frontend/src/components/settings/`): `dailyTemplateRundownId` (which rundown is
   "today's template" — dropdown of rundowns where `isTemplate === true`),
   `dailyCloneTime` (`HH:mm` in `dailyCloneTimezone`), and `dailyCloneTimezone`
   (IANA, default `Europe/Bratislava`). Leave the feature inert if template id or
   clone time is unset.
+- **Validate on settings save and load** (in `backend/src/background/api/settings.ts`
+  `create`/`update`/`read` — today those paths do not validate new fields): reject
+  `dailyCloneTime` unless it matches `^([01]\d|2[0-3]):[0-5]\d$`; reject
+  `dailyCloneTimezone` unless `Intl.supportedValuesOf('timeZone')` includes it (or
+  equivalent try/catch around `Intl.DateTimeFormat(..., { timeZone })`). On
+  rejection return a clear error and do not persist. Keep the documented
+  `Europe/Bratislava` default when timezone is omitted; keep inert behavior when
+  template id or clone time is unset (do not invent a default clone time).
 - On trigger: call the **existing** `mutations.createRundownCopy({ id:
   dailyTemplateRundownId, preserveTemplate: false })` — do not reimplement cloning.
 - **Idempotency must be atomic at insertion time, not a check-then-act read.** A plain
@@ -213,20 +232,53 @@ per-piece Core-sourced readiness is reliable and observable:
   boolean recreates the exact "which source produced this verdict" ambiguity the
   diagnostics handoff (`re-readiness-diagnostics.md`) is trying to eliminate.
 - **Aggregation when several Core-evaluated pieces (or several media requirements
-  within one piece) reference the same path:** collect every Core-sourced verdict
-  whose media requirement path normalizes to that scanned file, then apply this
-  precedence (deterministic, no "first match wins"):
-  1. If **any** verdict is not-ready → `readiness: 'not-confirmed'` (use the first
-     non-empty Core `reason`, or concatenate distinct reasons if you want richer
-     tooltips).
-  2. Else if **at least one** verdict is ready and none are not-ready →
+  within one piece) reference the same path:**
+
+  **Canonical match key** (one shared helper, used for both listing join and tests):
+  take each media requirement path and each scanned `MediaFileEntry.path`, then
+  normalize to a posix-relative key under the ingest root — strip leading `/`,
+  replace `\` with `/`, collapse duplicate `/`, drop trailing `/`, lower-case the
+  whole string (Windows Caspar/PM paths are case-insensitive), strip a leading
+  drive letter (`c:/…` → relative remainder only if it is under the configured
+  ingest root; otherwise leave unmatched), and reject/`unknown` anything that
+  looks like a UNC (`//server/…`) or device URL (`dshow://…`) rather than
+  inventing a fake relative key. Align with the existing
+  `resolveMediaAbsolutePath` slash-normalization in `media.ts` /
+  `mediaReadiness.ts`, but do **not** treat absolute resolution alone as enough —
+  the join key is the normalized relative form above.
+
+  **Scope:** only aggregate Core verdicts from the **current** RE peripheral
+  device's studio response for the **active rundown** whose media listing is being
+  built (the rundown id passed into `fetchRundownMedia` / readiness). Do not merge
+  statuses from other rundowns, other studios, or stale caches keyed only on
+  filename. Piece-level: include every media requirement on pieces in that rundown
+  whose normalized path equals the entry's key.
+
+  **Core → MediaFileEntry mapping** (name the fields — don't invent synonyms):
+  each Core verdict is a `CorePieceContentStatus` from
+  `backend/src/background/coreContentStatus.ts` with:
+  - `ready: boolean` — authoritative ready/not-ready flag from Core
+    (`true` when Core `statusCode === PieceStatusCode.OK` / `CORE_PIECE_STATUS_OK`
+    which is `0`; otherwise `false`)
+  - `statusCode: number` — Sofie `PieceStatusCode` (numeric; do not hardcode the
+    full enum in RE beyond OK=`0` unless you import the shared type)
+  - `reason?: string` — optional operator-facing reason when not ready
+
+  One-way map into `MediaFileEntry.readiness` after collecting all in-scope
+  verdicts for the entry's match key (deterministic, no "first match wins"):
+  1. If **any** verdict has `ready === false` → `readiness: 'not-confirmed'`
+     (prefer the first non-empty `reason`, or concatenate distinct reasons).
+  2. Else if **at least one** verdict has `ready === true` (and none are false) →
      `readiness: 'confirmed'`.
-  3. Else (zero Core-sourced verdicts for that path) → `readiness: 'unknown'`.
-  A single piece with two `mediaPick` fields that both point at the same file (or
-  two pieces sharing one clip) must follow the same rule — one not-confirmed
-  requirement blocks a confirmed aggregate. Unit-test the conflict case
-  (piece A confirmed + piece B not-confirmed for the same path → `not-confirmed`),
-  not only "one confirmed file" and "one missing file" in isolation.
+  3. Else (zero in-scope Core verdicts for that key) → `readiness: 'unknown'`.
+
+  A single piece with two `mediaPick` fields that both normalize to the same key
+  (or two pieces sharing one clip) must follow the same rule — one
+  `ready === false` requirement blocks a confirmed aggregate. Unit-test: conflict
+  (piece A `ready: true` + piece B `ready: false` for the same key →
+  `not-confirmed`); Windows path variants (`clips\\a.mp4` vs `clips/a.mp4` vs
+  `Clips/A.MP4`); and isolation (verdict from another rundown / another device
+  must not affect this listing).
 - Surface readiness as part of each option's **visible text and accessible name**, not
   only a colored dot — e.g. `clip.mp4 (confirmed)` / `clip.mp4 (not confirmed: <reason>)`
   / `clip.mp4 (not yet confirmed)`. Plain `<option>` elements inside a native
@@ -261,10 +313,16 @@ per-piece Core-sourced readiness is reliable and observable:
    `getDailyGeneratedDate`: fixed `now` in `Europe/Bratislava` vs UTC midnight edge
    (e.g. 23:30 UTC on day D must still yield Bratislava's calendar date when that
    zone is ahead), and confirm scheduler + manual + status lookup all use the helper.
+   Scheduler: delayed tick after `dailyCloneTime` still generates when the marker is
+   absent; restart after trigger time does not duplicate; spring-forward gap and
+   fall-back fold each produce exactly one generation for that `generatedDate`.
+   Settings: invalid `dailyCloneTime` / `dailyCloneTimezone` rejected on save.
 2. `yarn lint`.
-3. Manual: set `dailyCloneTime` a minute in the future, confirm a new dated rundown
-   appears automatically without touching the UI; restart the backend mid-day and
-   confirm it does **not** duplicate the day's rundown.
+3. Manual: set `dailyCloneTime` a few minutes in the future, confirm a new dated
+   rundown appears after that time even if the interval wakes late; restart the
+   backend mid-day and confirm it does **not** duplicate the day's rundown; if
+   practical, also check behavior across a DST transition weekend in a test harness
+   with a frozen clock rather than waiting for real DST.
 4. Manual: open the bulk rewrite view on a freshly generated rundown, change a
    prompter line + an L3D `headline` + an ILU `fileName`, save, then confirm those
    same values show correctly in the normal per-piece form and (once synced) in Sofie's
@@ -275,10 +333,12 @@ per-piece Core-sourced readiness is reliable and observable:
    `confirmed` and one it reports missing shows `not confirmed: <reason>` in the
    option text itself (not just a color), and that a file with no Core-sourced status
    yet shows `unknown`/`not yet confirmed` rather than being guessed from the local
-   scan. Also verify a conflict: the same path referenced by one ready piece and one
-   not-ready piece (or two requirements on one piece) aggregates to `not-confirmed`,
-   not `confirmed`. Tab/arrow through the control with no mouse to confirm the status
-   is reachable without relying on a tooltip.
+   scan. Also verify a conflict: the same normalized key referenced by one piece with
+   `ready: true` and one with `ready: false` (or two requirements on one piece)
+   aggregates to `not-confirmed`, not `confirmed`. Confirm path variants
+   (`clips\x.mp4` vs `clips/x.mp4`) join, and that another rundown's Core status for
+   the same filename does not leak in. Tab/arrow through the control with no mouse to
+   confirm the status is reachable without relying on a tooltip.
 
 ## Out of scope
 
