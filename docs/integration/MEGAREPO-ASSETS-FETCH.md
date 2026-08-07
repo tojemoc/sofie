@@ -55,23 +55,19 @@ git -C /path/to/sofie show <sha>:assets/<file>.json | sha256sum
 ```
 
 **unopus:** set `PINNED_SOFIE_ASSETS_REF` and every `EXPECTED_SHA256[…]` in the **same**
-commit. **sofie-demo-blueprints:** prepend the Sofie commit to `REFS=(…)` in the same
-bump (baseline `loops/bg_loop` already landed in
-[blueprints#58](https://github.com/tojemoc/sofie-demo-blueprints/pull/58)).
+commit. **sofie-demo-blueprints:** set the single `PINNED_SOFIE_ASSETS_REF` in
+`scripts/fetch-sofie-megarepo-assets.sh` in the same bump (no older-SHA fallback —
+fail closed if that revision cannot be fetched).
 
 ## Bumping when megarepo assets change
 
 1. Land the asset change in `tojemoc/sofie` (merge to `main` or note the commit SHA).
 2. In each consumer (`unopus`, `sofie-demo-blueprints`):
    - Set the pin to that commit SHA.
-   - Update every entry in the expected SHA-256 map (or equivalent).
+   - Update every entry in the expected SHA-256 map (or equivalent; blueprints pin only).
    - Run the fetch script once; confirm exit 0.
-   - Intentionally break one checksum and confirm exit 1 + cleaned dest.
+   - Intentionally break one checksum (or the pin) and confirm exit 1 + cleaned dest.
 3. Ship consumer PRs that bump **pin + checksums in the same commit**.
-
-Blueprints may keep a short **fallback SHA list** for resilience, but each ref must still be
-an immutable commit — never a branch — and preferred path is the same pin + checksum
-model as unopus.
 
 ## Runtime env
 

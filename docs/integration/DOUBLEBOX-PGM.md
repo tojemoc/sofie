@@ -30,8 +30,11 @@ is documented and implemented on sofie-demo-blueprints
 `cursor/doublebox-ilu-cam-crop-3109` / PR
 [#59](https://github.com/tojemoc/sofie-demo-blueprints/pull/59). Headline ILU remains
 on LED `casparcg_ilu_player` (1-115). **Do not treat end-to-end PGM-115 validation
-as complete** until that companion branch has **passing Test + Typecheck/Lint CI**
-and a **deployed commit** uploaded to Sofie with **Apply config**. Resume the
+as complete** until that companion branch has **passing Test + Typecheck/Lint CI**,
+a **deployed commit** uploaded to Sofie with **Apply config**, and the Rundown
+Editor has **reloaded type manifests** from megarepo `assets/` (Settings →
+Connection → Reload type manifests from assets — or equivalent) so `doublebox` /
+`doublebox-ilu` definitions are loaded before any DoubleBox Take. Resume the
 `PLAY <pgm>-115` smoke check only after those prerequisites.
 
 **Camera / UVC:** studio `casparcg.hypercomposed.pgmCameraProducer` (demo default
@@ -181,8 +184,10 @@ same basename (see [`handoffs/blueprints-baseline-bg-loop.md`](./handoffs/bluepr
    do not mark smoke Intro routing complete on LED EffectsPlayer 200.
 6. **Story ILU on PGM 115 (pending until companion blueprints CI is green + deployed):**
    mapping `casparcg_pgm_ilu_player` → channel 2 layer 115 is specified above. After
-   sofie-demo-blueprints PR #59 (or successor) has **passing Test and Typecheck/Lint**
-   and the bundle is uploaded + Sofie **Apply config**, a DoubleBox Take must show
-   `PLAY <pgm>-115 "clips/…"` (with FILL + CROP) on **channel 2**. Headline parts
-   still use LED `1-115`. Until those prerequisites land, keep this checklist item
+   sofie-demo-blueprints PR #59 (or successor) has **passing Test and Typecheck/Lint**,
+   the bundle is uploaded + Sofie **Apply config**, **and** RE has **reloaded type
+   manifests** from megarepo `assets/` (so `doublebox` / `doublebox-ilu` are loaded),
+   a DoubleBox Take must show `PLAY <pgm>-115 "clips/…"` (with FILL + CROP) on
+   **channel 2**. Headline parts still use LED `1-115`. Do **not** Take until those
+   definitions are loaded. Until the prerequisites land, keep this checklist item
    **pending**.
