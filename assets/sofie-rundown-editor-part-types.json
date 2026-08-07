@@ -88,7 +88,7 @@
 		"payload": [],
 		"defaultPieces": [
 			{ "pieceType": "intro" },
-			{ "pieceType": "bg-loop", "optional": true, "payload": { "fileName": "loops/360_loop" } }
+			{ "pieceType": "bg-loop", "optional": true, "payload": { "fileName": "loops/bg_loop" } }
 		]
 	}
 ]

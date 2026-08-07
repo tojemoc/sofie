@@ -23,8 +23,8 @@ cloud agent could push but not create the PR).
 
 Smoke fixture (sofie megarepo `assets/spravy-v3-smoke-rundown.json`) now uses:
 
-- piece type `intro`, `fileName: "assets/360s_ZNELKA-skratena_introALPHA"` (disk: `assets/360s_ZNELKA-skratena_introALPHA.mov`), duration 12s
-- **no** `bg-loop` piece on the Intro part (baseline loop still covers LED)
+- piece type `intro`, `fileName: "assets/intro_michal"` (disk: `assets/intro_michal.mov`)
+- **no** `bg-loop` piece on the Intro part (baseline loop still covers LED — basename `loops/bg_loop`)
 - **no** wipe on HEADLINE / Intro parts (story-block wipes unchanged)
 
 ## Code on `cursor/intro-pgm-layer-5448`
@@ -46,11 +46,10 @@ cd packages/blueprints && yarn dist
 
 Upload bundle → Sofie → **Apply config** → re-ingest smoke.
 
-**AMCP on Intro take:** `PLAY <pgm>-210 "assets/360s_ZNELKA-skratena_introALPHA" …`  
+**AMCP on Intro take:** `PLAY <pgm>-210 "assets/intro_michal" …`  
 **Must not** play intro on LED (`PLAY 1-200 …`).
 
 ## Out of scope
 
-Headline `404 PLAY FAILED` for `clips/headline1` — path is correct; the
-file is missing from the Caspar media folder. See
-`docs/integration/SPRAVY-V2-INTEGRATION.md`.
+Headline `404 PLAY FAILED` for missing clips — path must match a file on the
+Caspar media folder. See `docs/integration/SPRAVY-V2-INTEGRATION.md`.
