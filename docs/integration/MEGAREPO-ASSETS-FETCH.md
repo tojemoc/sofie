@@ -29,9 +29,9 @@ Do **not** fetch from `…/sofie/main/assets/…` or `…/sofie/cursor/…/asset
 
 | Item | Value |
 |------|--------|
-| Sofie commit | `df2411f1df014591da381c5d3bd8cc0b347b6ab0` (flat clips/loops/wipes media paths on `main`) |
+| Sofie commit | *(set after this rename PR merges)* |
 | Env override | `SOFIE_ASSETS_REF` (unopus script) — override only together with matching checksums |
-| Smoke SHA-256 | `12de0d2d830d9645fddac90863fe27b9aa7504c0fb5ee331275d267479c55e9b` (`spravy-v3-smoke-rundown.json`) |
+| Smoke SHA-256 | `39db9c74f952848e0da989bfee79c6d6a9df9ca88a0bde2b6b1f20c338272de3` (`spravy-v3-smoke-rundown.json` on `cursor/smoke-media-rename-3ed7`) |
 
 > After the `l3d-syn` PGM + smoke bump PR merges, recompute the smoke checksum
 > (`69d8f2d22ea0e89877d7b5619be096fbc8e2a13d585d9e3cdfb92ebe683ae259` on this branch)
