@@ -24,10 +24,15 @@ headline bars are **PGM**. No intro / znelka on LED. Intro overlay plays on
 [`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md)
 and [`handoffs/blueprints-baseline-bg-loop.md`](./handoffs/blueprints-baseline-bg-loop.md).
 
-**Story ILU on PGM 115:** DoubleBox’s left ILU window uses mapping
-`casparcg_pgm_ilu_player` → **PGM channel 2 layer 115** (piece type `doublebox-ilu`).
-Headline ILU remains on LED `casparcg_ilu_player` (1-115). After uploading blueprints,
-run Sofie **Apply config** so the new PGM ILU mapping exists.
+**Story ILU on PGM 115 (pending companion CI/deploy):** mapping
+`casparcg_pgm_ilu_player` → **PGM channel 2 layer 115** (piece type `doublebox-ilu`)
+is documented and implemented on sofie-demo-blueprints
+`cursor/doublebox-ilu-cam-crop-3109` / PR
+[#59](https://github.com/tojemoc/sofie-demo-blueprints/pull/59). Headline ILU remains
+on LED `casparcg_ilu_player` (1-115). **Do not treat end-to-end PGM-115 validation
+as complete** until that companion branch has **passing Test + Typecheck/Lint CI**
+and a **deployed commit** uploaded to Sofie with **Apply config**. Resume the
+`PLAY <pgm>-115` smoke check only after those prerequisites.
 
 **Camera / UVC:** studio `casparcg.hypercomposed.pgmCameraProducer` (demo default
 `dshow://video=OBS Virtual Camera`) is played on **PGM 2-116** when a part with a
@@ -174,7 +179,10 @@ same basename (see [`handoffs/blueprints-baseline-bg-loop.md`](./handoffs/bluepr
    Intro take must show `PLAY <pgm>-210 "assets/intro_michal"` and **must not** play
    Intro on LED (`1-200`). Until that branch lands, treat this check as **pending** —
    do not mark smoke Intro routing complete on LED EffectsPlayer 200.
-6. **Story ILU on PGM 115:** after uploading a bundle that includes
-   `casparcg_pgm_ilu_player` and Sofie Apply config, a DoubleBox Take must show
+6. **Story ILU on PGM 115 (pending until companion blueprints CI is green + deployed):**
+   mapping `casparcg_pgm_ilu_player` → channel 2 layer 115 is specified above. After
+   sofie-demo-blueprints PR #59 (or successor) has **passing Test and Typecheck/Lint**
+   and the bundle is uploaded + Sofie **Apply config**, a DoubleBox Take must show
    `PLAY <pgm>-115 "clips/…"` (with FILL + CROP) on **channel 2**. Headline parts
-   still use LED `1-115`.
+   still use LED `1-115`. Until those prerequisites land, keep this checklist item
+   **pending**.
