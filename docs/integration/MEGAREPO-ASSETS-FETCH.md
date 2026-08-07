@@ -35,7 +35,7 @@ the PR tip SHA below (same `assets/` tree).
 
 | Item | Value |
 |------|--------|
-| Sofie commit | `PIN_PLACEHOLDER` |
+| Sofie commit | `4e50c3d7a8af669572b199983ecf8c2d0e86af45` |
 | Env override | `SOFIE_ASSETS_REF` (unopus) — full 40-char SHA only; bump with checksums |
 
 ### Per-file SHA-256 (`assets/` at that commit)
