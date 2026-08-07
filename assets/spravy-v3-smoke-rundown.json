@@ -847,7 +847,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Headline horný riadok",
-				"iluFile": "clips/headline1.mp4",
+				"iluFile": "clips/HEADLINE1.mov",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
@@ -893,7 +893,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Headline horný riadok",
-				"iluFile": "clips/headline2.mp4",
+				"iluFile": "clips/HEADLINE2.mov",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
@@ -939,7 +939,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Headline horný riadok",
-				"iluFile": "clips/headline3.mp4",
+				"iluFile": "clips/HEADLINE3.mov",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
@@ -984,7 +984,7 @@
 			"name": "Intro overlay",
 			"pieceType": "intro",
 			"payload": {
-				"fileName": "assets/360s_ZNELKA-skratena_introALPHA"
+				"fileName": "assets/intro_michal"
 			},
 			"start": 0,
 			"duration": 12
@@ -1038,7 +1038,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "clips/ilu-1.mp4",
+				"iluFile": "clips/ILU bednar.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
@@ -1094,7 +1094,7 @@
 			"name": "SOT",
 			"pieceType": "video",
 			"payload": {
-				"fileName": "clips/syn-1.mp4"
+				"fileName": "clips/SYN CLUSTER rutte trump.mp4"
 			},
 			"start": 0
 		},
@@ -1121,7 +1121,7 @@
 			"name": "SOT",
 			"pieceType": "video",
 			"payload": {
-				"fileName": "clips/syn-2.mp4"
+				"fileName": "clips/SYN CLUSTER fico tusk.mp4"
 			},
 			"start": 0
 		},
@@ -1135,7 +1135,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "clips/ilu-2.mp4",
+				"iluFile": "clips/ILU bednar2.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
@@ -1178,7 +1178,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "clips/ilu-3.mp4",
+				"iluFile": "clips/ILU bosna.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
@@ -1234,7 +1234,7 @@
 			"name": "SOT",
 			"pieceType": "video",
 			"payload": {
-				"fileName": "clips/SYN bednar.mp4"
+				"fileName": "clips/SYN bednar ok.mp4"
 			},
 			"start": 0
 		},
@@ -1262,7 +1262,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "clips/ilu-4.mp4",
+				"iluFile": "clips/ILU fico.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
@@ -1305,7 +1305,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "clips/ilu-5.mp4",
+				"iluFile": "clips/ILU fotbal.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
@@ -1362,7 +1362,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "clips/ilu-6.mp4",
+				"iluFile": "clips/ILU maskarova.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
@@ -1418,7 +1418,7 @@
 			"name": "SOT",
 			"pieceType": "video",
 			"payload": {
-				"fileName": "clips/syn-4.mp4"
+				"fileName": "clips/SYN kamen.mp4"
 			},
 			"start": 0
 		},
@@ -1432,7 +1432,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Titulok",
-				"iluFile": "clips/ilu-7.mp4",
+				"iluFile": "clips/ILU oecd.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
@@ -1478,7 +1478,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "clips/ilu-8.mp4",
+				"iluFile": "clips/ILU oecd2.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
@@ -1537,7 +1537,7 @@
 			"name": "SOT",
 			"pieceType": "video",
 			"payload": {
-				"fileName": "clips/syn-5.mp4"
+				"fileName": "clips/SYN oecd.mp4"
 			},
 			"start": 0
 		},
@@ -1565,7 +1565,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "clips/ilu-9.mp4",
+				"iluFile": "clips/ILU pavel.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
@@ -1621,7 +1621,7 @@
 			"name": "SOT",
 			"pieceType": "video",
 			"payload": {
-				"fileName": "clips/syn-6.mp4"
+				"fileName": "clips/SYN RUCH letisko.mp4"
 			},
 			"start": 0
 		},
@@ -1649,7 +1649,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Téma",
-				"iluFile": "clips/ilu-10.mp4",
+				"iluFile": "clips/ILU ps.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
@@ -1705,7 +1705,7 @@
 			"name": "SOT",
 			"pieceType": "video",
 			"payload": {
-				"fileName": "clips/syn-7.mp4"
+				"fileName": "clips/SYN RUCH letisko ok.mp4"
 			},
 			"start": 0
 		},
@@ -1719,7 +1719,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Titulok",
-				"iluFile": "clips/ilu-11.mp4",
+				"iluFile": "clips/ILU rutte trump.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
@@ -1765,7 +1765,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "ILU názov",
-				"iluFile": "clips/ilu-12.mp4",
+				"iluFile": "clips/ILU strnad.mp4",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
@@ -1824,7 +1824,7 @@
 			"name": "SOT",
 			"pieceType": "video",
 			"payload": {
-				"fileName": "clips/syn-8.mp4"
+				"fileName": "clips/SYN ursula.mp4"
 			},
 			"start": 0
 		},
@@ -1851,7 +1851,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "clips/ilu-13.mp4",
+				"iluFile": "clips/ILU takac.mp4",
 				"sourceEnabled": true,
 				"source": "Citácia",
 				"iluPrerendered": false
@@ -1894,7 +1894,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "clips/ilu-14.mp4",
+				"iluFile": "clips/ILU uhlerova.mp4",
 				"sourceEnabled": true,
 				"source": "Citácia",
 				"iluPrerendered": false
@@ -1937,7 +1937,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "clips/ilu-15.mp4",
+				"iluFile": "clips/ILU ursula zelensky.mp4",
 				"sourceEnabled": true,
 				"source": "Citácia",
 				"iluPrerendered": false
@@ -1980,7 +1980,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "clips/ilu-16.mp4",
+				"iluFile": "clips/ILU ursula.mp4",
 				"sourceEnabled": true,
 				"source": "Citácia",
 				"iluPrerendered": false
@@ -2037,7 +2037,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "clips/ilu-17.mp4",
+				"iluFile": "clips/ILU zemetrasenie.mp4",
 				"sourceEnabled": true,
 				"source": "Citácia",
 				"iluPrerendered": false
@@ -2080,7 +2080,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "clips/ilu-18.mp4",
+				"iluFile": "clips/ILU zemetrasenie2.mp4",
 				"sourceEnabled": true,
 				"source": "Citácia",
 				"iluPrerendered": false
@@ -2123,7 +2123,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "clips/ilu-19.mp4",
+				"iluFile": "clips/venezuela.mp4",
 				"sourceEnabled": true,
 				"source": "Citácia",
 				"iluPrerendered": false
@@ -2179,7 +2179,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Sledujte na www.360tka.sk",
-				"iluFile": "clips/ilu-20.mp4",
+				"iluFile": "clips/venezuela3.mp4",
 				"sourceEnabled": true,
 				"source": "Avízo",
 				"iluPrerendered": false
@@ -2235,7 +2235,7 @@
 			"name": "SOT",
 			"pieceType": "video",
 			"payload": {
-				"fileName": "clips/syn-9.mp4"
+				"fileName": "clips/reel FIN.mp4"
 			},
 			"start": 0
 		},
@@ -2249,7 +2249,7 @@
 			"pieceType": "headline",
 			"payload": {
 				"text": "Sledujte na www.360tka.sk",
-				"iluFile": "clips/ilu-21.mp4",
+				"iluFile": "clips/ps.mp4",
 				"sourceEnabled": true,
 				"source": "nájdete na 360tka.sk",
 				"iluPrerendered": false
@@ -2305,7 +2305,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/WIPE_SHORT-new_v3",
+				"fileName": "wipes/wipe",
 				"transition": "Double Box"
 			}
 		},
@@ -2321,7 +2321,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/WIPE_SHORT-new_v3",
+				"fileName": "wipes/wipe",
 				"transition": "ILU TO SYN CLUSTER"
 			}
 		},
@@ -2337,7 +2337,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/WIPE_SHORT-new_v3",
+				"fileName": "wipes/wipe",
 				"transition": "SYN TO SYN"
 			}
 		},
@@ -2353,7 +2353,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe",
 				"transition": "SYN TO ILU TEMA"
 			}
 		},
@@ -2369,7 +2369,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe",
 				"transition": "ILU TO ILU TEMA"
 			}
 		},
@@ -2385,7 +2385,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe",
 				"transition": "ILU TO SYN"
 			}
 		},
@@ -2401,7 +2401,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe",
 				"transition": "Double Box"
 			}
 		},
@@ -2417,7 +2417,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe",
 				"transition": "ILU TO ILU TEMA"
 			}
 		},
@@ -2433,7 +2433,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe",
 				"transition": "Double Box"
 			}
 		},
@@ -2449,7 +2449,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe",
 				"transition": "ILU TO SYN"
 			}
 		},
@@ -2465,7 +2465,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe",
 				"transition": "SYN TO ILU"
 			}
 		},
@@ -2481,7 +2481,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe",
 				"transition": "ILU TO ILU TEMA"
 			}
 		},
@@ -2497,7 +2497,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe",
 				"transition": "ILU TO SYN"
 			}
 		},
@@ -2513,7 +2513,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe",
 				"transition": "Double Box"
 			}
 		},
@@ -2529,7 +2529,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe",
 				"transition": "ILU TO SYN"
 			}
 		},
@@ -2545,7 +2545,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe",
 				"transition": "Double Box"
 			}
 		},
@@ -2561,7 +2561,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe",
 				"transition": "ILU TO SYN"
 			}
 		},
@@ -2577,7 +2577,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe",
 				"transition": "SYN TO ILU"
 			}
 		},
@@ -2593,7 +2593,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe",
 				"transition": "ILU TO ILU TEMA"
 			}
 		},
@@ -2609,7 +2609,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe",
 				"transition": "ILU TO SYN"
 			}
 		},
@@ -2625,7 +2625,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe_sjv",
 				"transition": "Spravy JV"
 			}
 		},
@@ -2641,7 +2641,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe_sjv",
 				"transition": "Spravy JV NEXT"
 			}
 		},
@@ -2657,7 +2657,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe_sjv",
 				"transition": "Spravy JV NEXT"
 			}
 		},
@@ -2673,7 +2673,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe_sjv",
 				"transition": "Spravy JV NEXT"
 			}
 		},
@@ -2689,7 +2689,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe_sjv",
 				"transition": "Spravy JV NEXT"
 			}
 		},
@@ -2705,7 +2705,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe_sport",
 				"transition": "Sport"
 			}
 		},
@@ -2721,7 +2721,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe_sport",
 				"transition": "Sport NEXT"
 			}
 		},
@@ -2737,7 +2737,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe_sport",
 				"transition": "Sport NEXT"
 			}
 		},
@@ -2753,7 +2753,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe_sport",
 				"transition": "Sport NEXT"
 			}
 		},
@@ -2769,7 +2769,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe_pocasie",
 				"transition": "Pocasie"
 			}
 		},
@@ -2785,7 +2785,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe",
 				"transition": "Zaver"
 			}
 		},
@@ -2801,7 +2801,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe",
 				"transition": "ILU TO SYN"
 			}
 		},
@@ -2817,7 +2817,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe",
 				"transition": "SYN TO ILU TEMA"
 			}
 		},
@@ -2833,7 +2833,7 @@
 			"start": 0,
 			"duration": 0,
 			"payload": {
-				"fileName": "wipes/360_wipe",
+				"fileName": "wipes/wipe",
 				"transition": "OUTRO"
 			}
 		}

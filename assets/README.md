@@ -19,42 +19,48 @@ piece type **`intro`** (“Intro overlay” — alpha/znelka on **PGM layer 210*
 LED), not a plain `video`. Also keep `bg-loop` and `wipe`. Legacy demo pieces
 `remote` / `split` / `guest` (and part presets REMI / DVE / Guest) were removed.
 
-Smoke Intro uses `assets/360s_ZNELKA-skratena_introALPHA` (12s; disk
-`assets/360s_ZNELKA-skratena_introALPHA.mov`). LED allow-list is **headline ILU +
-loop only** (baseline `360_loop` — not listed as a RE piece). Presenter MOD and
-other L3Ds are **PGM**. See integration log and
+Smoke Intro uses `assets/intro_michal` (disk `assets/intro_michal.mov`). LED
+allow-list is **headline ILU + loop only** (blueprints **baseline**
+`loops/bg_loop` — not listed as a RE piece). Presenter MOD and other L3Ds are
+**PGM**. See integration log and
 `docs/integration/RE-READINESS-AND-PLAYOUT-UX.md`.
-Wipes: piece type `wipe` → Caspar PGM layer 200 (`wipes/360_wipe`; smoke also uses
-`wipes/WIPE_SHORT-new_v3` on early Téma 1 transitions). See
+Wipes: piece type `wipe` → Caspar PGM layer 200 (`wipes/wipe`; story blocks may
+use `wipes/wipe_sjv`, `wipes/wipe_sport`, `wipes/wipe_pocasie`). See
 `docs/integration/DOUBLEBOX-PGM.md` and
-`docs/integration/handoffs/blueprints-intro-pgm-layer.md`.
+`docs/integration/handoffs/blueprints-baseline-bg-loop.md`.
 
-### Media folder layout (`bg-loop`, wipe, clips)
+## Media folder layout (`bg-loop`, wipe, clips, assets)
 
-Paths in piece payloads are **Caspar PLAY paths** (no extension), relative to the
-studio **CasparCG media folder** (Sofie: `casparcgMediaFolder`, often
-`c:/casparcg/sofie-demo-media`):
+Paths in piece payloads are **Caspar PLAY paths** (clips often keep the real
+extension for Package Manager; wipes/intro/loops omit extension), relative to the
+studio **CasparCG media folder** (Sofie: `casparcgMediaFolder`, e.g.
+`c:/casparcg/sofie-demo-media` or `Y:/360-ingest/sofie-demo-media`):
 
 ```text
 <casparcgMediaFolder>/
-  loops/360_loop.mp4          ← piece type `bg-loop`, fileName `loops/360_loop`
-  wipes/360_wipe.mov          ← piece type `wipe`,    fileName `wipes/360_wipe`
-  assets/360s_ZNELKA-skratena_introALPHA.mov
-                              ← piece type `intro`,   fileName `assets/360s_ZNELKA-skratena_introALPHA`
-  clips/headline1.mp4         ← VT / ILU / SYN (Package Manager ingest)
+  loops/bg_loop.mov           ← blueprints baseline + optional bg-loop piece (`loops/bg_loop`)
+  wipes/wipe.mov              ← default wipe (`wipes/wipe`); also wipe_sjv / wipe_sport / wipe_pocasie
+  assets/intro_michal.mov     ← piece type `intro`, fileName `assets/intro_michal`
+  clips/HEADLINE1.mov         ← VT / ILU / SYN (Package Manager ingest)
+  clips/ILU ….mp4
+  clips/SYN ….mp4
 ```
 
 - Two levels only: `<subdir>/<file>` — no `spravy/<rundownId>/…` nesting.
-- Rundown Editor `mediaPick.subdir` (`loops` / `wipes` / `clips`) only scopes the
-  picker UI under the ingest root — the saved `fileName` must include the subdir.
+- Rundown Editor `mediaPick.subdir` (`loops` / `wipes` / `clips` / `assets`) only
+  scopes the picker UI under the ingest root — the saved `fileName` must include
+  the subdir.
 - `bg-loop` plays on LED ClipPlayer1 (layer 110). Baseline also loops
-  `loops/360_loop` at priority 0; a `bg-loop` piece overrides at priority 1.
+  `loops/bg_loop` at priority 0; a `bg-loop` piece overrides at priority 1.
+  Blueprints baseline uses the same basename
+  ([sofie-demo-blueprints#58](https://github.com/tojemoc/sofie-demo-blueprints/pull/58)).
+  Smoke does not carry a `bg-loop` piece on Intro.
 - `intro` must PLAY on **PGM** (target layer 210). A `404` on
-  `PLAY … "clips/headlineN"` means the MP4 is missing from the Caspar
+  `PLAY … "clips/HEADLINE1"` means the file is missing from the Caspar
   media folder — ingest/copy it; the rundown path is already correct.
 - Do **not** put loops under `clips/` — those are editorial clips.
 
-### Consumers
+## Consumers
 
 - **Rundown Editor (`rundown-editor/` / unopus)** loads the three type JSON files at
   startup and via **Settings → Connection → Reload type manifests from assets**.
@@ -65,7 +71,7 @@ studio **CasparCG media folder** (Sofie: `casparcgMediaFolder`, often
 Do not reintroduce copies under `blueprints/assets/` or `rundown-editor/assets/`.
 Edit these files in PRs against `tojemoc/sofie`.
 
-### Standalone CI / Docker (pin + checksums)
+## Standalone CI / Docker (pin + checksums)
 
 Standalone clones must **not** download from mutable refs (`main`, `cursor/…`).
 Fetch scripts pin an **immutable sofie commit SHA** and verify each file’s **SHA-256**

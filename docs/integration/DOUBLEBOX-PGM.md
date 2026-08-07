@@ -1,11 +1,11 @@
 # DoubleBox PGM + LED loop + UVC camera
 
 Target look for **thematic DoubleBox** on PGM (Caspar channel 2), matching the
-production still (ILU left / CAM right / tema+bug bar / `360_loop` behind):
+production still (ILU left / CAM right / tema+bug bar / `bg_loop` behind):
 
 ```text
 ┌────────────────────────────────────────────────────────────┐
-│  360_loop (full-bleed background)                          │
+│  bg_loop (full-bleed background)                           │
 │   ┌──────────────────────────┐  ┌────────────┐             │
 │   │  ILU 16:9                │  │  CAM1      │             │
 │   │  (clip / headline ILU)   │  │  (UVC/mod) │             │
@@ -16,12 +16,13 @@ production still (ILU left / CAM right / tema+bug bar / `360_loop` behind):
 └────────────────────────────────────────────────────────────┘
 ```
 
-**LED (Caspar channel 1)** production rule: **headline ILU + `loops/360_loop` only**.
+**LED (Caspar channel 1)** production rule: **headline ILU + `loops/bg_loop` only**.
 The loop is blueprint **baseline** on layer 110 (not a RE piece) and must never be
 displaced by VT/VO/SYN — those play on **PGM ClipPlayer2**. `l3d-mod` / tema / syn /
 headline bars are **PGM**. No intro / znelka on LED. Intro overlay plays on
 **PGM layer 210** (above wipe 200) — see
-[`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md).
+[`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md)
+and [`handoffs/blueprints-baseline-bg-loop.md`](./handoffs/blueprints-baseline-bg-loop.md).
 
 **Story ILU on PGM 115 (pending):** DoubleBox’s left ILU window is intended on
 **PGM channel 2 layer 115**. Today `casparcg_ilu_player` still maps to **LED**
@@ -61,7 +62,7 @@ rundowns.
 
 If you want a quick preview before Sofie owns the full compose:
 
-1. Caspar ch1 Screen/NDI → OBS (LED = `360_loop`).
+1. Caspar ch1 Screen/NDI → OBS (LED = `bg_loop`).
 2. OBS stacks mod footage on top → **Start Virtual Camera**.
 3. Caspar ch2 PLAYs that UVC as a **base** layer; Sofie still overlays PGM wipe /
    tema / ILU as they land.
@@ -91,17 +92,17 @@ luma key). Put that chrome on a layer between 110 and 115/116, or bake it into H
 
 ## Wipes (same media, different semantics)
 
-All story-block transitions use the **same alpha wipe** file under Caspar media, e.g.
-`wipes/360_wipe` (place the production ProRes/H.264+alpha under
-`sofie-demo-media/wipes/`). Sofie plays it on **PGM layer 200** as a short overlay on
-**Take into that part** (not a vision-mixer cut). Empty/0 RE duration defaults to ~2.5s so
-layer 200 does not cover the rest of the part after the wipe finishes.
+Story-block transitions use alpha wipe files under Caspar media, default
+`wipes/wipe` (plus `wipe_sjv` / `wipe_sport` / `wipe_pocasie` where labelled). Sofie
+plays them on **PGM layer 200** as a short overlay on **Take into that part** (not a
+vision-mixer cut). Empty/0 RE duration defaults to ~2.5s so layer 200 does not cover
+the rest of the part after the wipe finishes.
 
 **If wipes never appear:** (1) watch **Caspar channel 2**, not LED; (2) confirm
-`PLAY 2-200 "wipes/360_wipe"` on Take (else `404` → file missing on disk); (3) re-upload
+`PLAY 2-200 "wipes/wipe"` on Take (else `404` → file missing on disk); (3) re-upload
 blueprints + Apply studio config so `casparcg_effects_player_pgm` exists.
 
-The wipe does not change; the **label** records direction:
+The **label** records direction (file may still be the default wipe):
 
 | Label | Meaning |
 |-------|---------|
@@ -117,14 +118,14 @@ The wipe does not change; the **label** records direction:
 | `Sport` / `Sport NEXT` | Šport block |
 | `Pocasie` / `Zaver` / `OUTRO` | Closing sequence |
 
-Smoke rundown pieces use piece type `wipe` with `fileName: wipes/360_wipe` and
-`transition: <label>` for operators; playout always uses the same file on PGM.
+Smoke rundown pieces use piece type `wipe` with `fileName: wipes/wipe` (or a
+labelled variant) and `transition: <label>` for operators.
 
 ## Blueprint / mapping notes
 
 | Sofie mapping id | Channel | Layer | Role |
 |------------------|---------|-------|------|
-| `casparcg_clip_player1` | LED 1 | 110 | LED `360_loop` |
+| `casparcg_clip_player1` | LED 1 | 110 | LED `bg_loop` |
 | `casparcg_clip_player2` | PGM 2 | 110 | PGM bg loop (or omit if UVC carries bg) |
 | `casparcg_ilu_player` | LED 1 (**PGM 2 pending**\*) | 115 | Headline / story ILU MEDIA; DoubleBox left window on PGM when remapped |
 | `casparcg_intro_player_pgm` | PGM 2 | 210 | Intro / znelka — **never LED** (handoff; may still be LED 200 until remapped) |
@@ -142,25 +143,26 @@ channel 1. The **logo-bug is already PGM-only**.
 ### `bg-loop` folder structure
 
 ```text
-<casparcgMediaFolder>/loops/360_loop.<ext>
+<casparcgMediaFolder>/loops/bg_loop.<ext>
 ```
 
-Piece payload: `{ "fileName": "loops/360_loop" }` (Caspar PLAY omits extension).
+Piece payload: `{ "fileName": "loops/bg_loop" }` (Caspar PLAY omits extension).
 RE piece type `bg-loop` uses `mediaPick` subdir `loops` so the picker opens that
-folder; the stored path still includes `loops/…`.
+folder; the stored path still includes `loops/…`. Blueprints baseline must use the
+same basename (see [`handoffs/blueprints-baseline-bg-loop.md`](./handoffs/blueprints-baseline-bg-loop.md)).
 
 ## Smoke checklist
 
-1. Put wipe file at `sofie-demo-media/wipes/360_wipe.*` (and short wipe
-   `wipes/WIPE_SHORT-new_v3.*` for early Téma 1 transitions) and Intro disk asset at
-   `sofie-demo-media/assets/360s_ZNELKA-skratena_introALPHA.mov`
-   (PLAY path `assets/360s_ZNELKA-skratena_introALPHA`)
+1. Put wipe file at `sofie-demo-media/wipes/wipe.*` (and optional
+   `wipe_sjv` / `wipe_sport` / `wipe_pocasie`) and Intro disk asset at
+   `sofie-demo-media/assets/intro_michal.mov`
+   (PLAY path `assets/intro_michal`)
 2. Confirm OBS Virtual Camera name; test `PLAY 2-116 "dshow://…"` by hand
 3. Import megarepo `assets/spravy-v3-smoke-rundown.json` (includes story-block `wipe` pieces)
 4. Watch **Caspar channel 2** for wipes + DoubleBox + Intro
 5. **Intro on PGM 210 only (pending until companion blueprints remap is deployed):**
    after uploading the `casparcg_intro_player_pgm` bundle and Sofie Apply config,
-   Intro take must show `PLAY <pgm>-210 "assets/360s_ZNELKA-skratena_introALPHA"` and **must not** play
+   Intro take must show `PLAY <pgm>-210 "assets/intro_michal"` and **must not** play
    Intro on LED (`1-200`). Until that branch lands, treat this check as **pending** —
    do not mark smoke Intro routing complete on LED EffectsPlayer 200.
 6. **Story ILU on PGM 115 (pending until companion blueprints remap `casparcg_ilu_player` to PGM):**
