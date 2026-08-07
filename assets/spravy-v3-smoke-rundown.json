@@ -248,10 +248,10 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"segmentId": "seg-tema-1",
-			"name": "ILU",
+			"name": "DoubleBox",
 			"rank": 1,
 			"float": false,
-			"partType": "ilu",
+			"partType": "doublebox",
 			"duration": 8,
 			"fromPreset": true,
 			"payload": {
@@ -356,10 +356,10 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"segmentId": "seg-tema-2",
-			"name": "ILU",
+			"name": "DoubleBox",
 			"rank": 1,
 			"float": false,
-			"partType": "ilu",
+			"partType": "doublebox",
 			"duration": 8,
 			"fromPreset": true,
 			"payload": {
@@ -403,10 +403,10 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"segmentId": "seg-tema-3",
-			"name": "ILU",
+			"name": "DoubleBox",
 			"rank": 1,
 			"float": false,
-			"partType": "ilu",
+			"partType": "doublebox",
 			"duration": 8,
 			"fromPreset": true,
 			"payload": {
@@ -496,10 +496,10 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"segmentId": "seg-tema-4",
-			"name": "ILU",
+			"name": "DoubleBox",
 			"rank": 1,
 			"float": false,
-			"partType": "ilu",
+			"partType": "doublebox",
 			"duration": 8,
 			"fromPreset": true,
 			"payload": {
@@ -542,10 +542,10 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"segmentId": "seg-tema-4",
-			"name": "ILU",
+			"name": "DoubleBox",
 			"rank": 4,
 			"float": false,
-			"partType": "ilu",
+			"partType": "doublebox",
 			"duration": 8,
 			"fromPreset": true,
 			"payload": {
@@ -1034,14 +1034,11 @@
 			"playlistId": null,
 			"segmentId": "seg-tema-1",
 			"partId": "part-ilu-1",
-			"name": "ILU Headline",
-			"pieceType": "headline",
+			"name": "ILU DoubleBox",
+			"pieceType": "doublebox-ilu",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "clips/ILU bednar.mp4",
-				"sourceEnabled": false,
-				"source": "",
-				"iluPrerendered": false
+				"iluFile": "clips/ILU bednar.mp4"
 			},
 			"start": 0
 		},
@@ -1258,14 +1255,11 @@
 			"playlistId": null,
 			"segmentId": "seg-tema-2",
 			"partId": "part-ilu-4",
-			"name": "ILU Headline",
-			"pieceType": "headline",
+			"name": "ILU DoubleBox",
+			"pieceType": "doublebox-ilu",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "clips/ILU fico.mp4",
-				"sourceEnabled": false,
-				"source": "",
-				"iluPrerendered": false
+				"iluFile": "clips/ILU fico.mp4"
 			},
 			"start": 0
 		},
@@ -1358,14 +1352,11 @@
 			"playlistId": null,
 			"segmentId": "seg-tema-3",
 			"partId": "part-ilu-6",
-			"name": "ILU Headline",
-			"pieceType": "headline",
+			"name": "ILU DoubleBox",
+			"pieceType": "doublebox-ilu",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "clips/ILU maskarova.mp4",
-				"sourceEnabled": false,
-				"source": "",
-				"iluPrerendered": false
+				"iluFile": "clips/ILU maskarova.mp4"
 			},
 			"start": 0
 		},
@@ -1561,14 +1552,11 @@
 			"playlistId": null,
 			"segmentId": "seg-tema-4",
 			"partId": "part-ilu-9",
-			"name": "ILU Headline",
-			"pieceType": "headline",
+			"name": "ILU DoubleBox",
+			"pieceType": "doublebox-ilu",
 			"payload": {
 				"text": "Tematický titulok",
-				"iluFile": "clips/ILU pavel.mp4",
-				"sourceEnabled": false,
-				"source": "",
-				"iluPrerendered": false
+				"iluFile": "clips/ILU pavel.mp4"
 			},
 			"start": 0
 		},
@@ -1645,14 +1633,11 @@
 			"playlistId": null,
 			"segmentId": "seg-tema-4",
 			"partId": "part-ilu-10",
-			"name": "ILU Headline",
-			"pieceType": "headline",
+			"name": "ILU DoubleBox",
+			"pieceType": "doublebox-ilu",
 			"payload": {
 				"text": "Téma",
-				"iluFile": "clips/ILU ps.mp4",
-				"sourceEnabled": false,
-				"source": "",
-				"iluPrerendered": false
+				"iluFile": "clips/ILU ps.mp4"
 			},
 			"start": 0
 		},

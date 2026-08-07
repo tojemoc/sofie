@@ -17,6 +17,27 @@
 		]
 	},
 	{
+		"id": "doublebox",
+		"entityType": "part",
+		"name": "DoubleBox",
+		"shortName": "DB",
+		"buttonLabel": "DoubleBox",
+		"ingestType": "DoubleBox",
+		"colour": "#6f42c1",
+		"showInToolbar": true,
+		"payload": [],
+		"defaultPieces": [
+			{ "pieceType": "doublebox-ilu" },
+			{ "pieceType": "l3d-tema" },
+			{ "pieceType": "camera", "payload": { "camNo": 1 } },
+			{
+				"pieceType": "wipe",
+				"optional": true,
+				"payload": { "fileName": "wipes/wipe", "transition": "Double Box" }
+			}
+		]
+	},
+	{
 		"id": "syn",
 		"entityType": "part",
 		"name": "SYN",
