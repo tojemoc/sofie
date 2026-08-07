@@ -25,17 +25,27 @@ Reference implementation: [unopus PR #45](https://github.com/tojemoc/unopus/pull
 
 Do **not** fetch from `…/sofie/main/assets/…` or `…/sofie/cursor/…/assets/…` in CI or Docker.
 
-## Current pin (as of sofie #20)
+## Current pin (production media rename)
+
+Pin is the immutable sofie commit that contains the renamed smoke/mediaPick assets
+(HEADLINEs, `wipes/wipe*`, `assets/intro_michal`, `loops/bg_loop`). After sofie
+[#25](https://github.com/tojemoc/sofie/pull/25) merges, if GitHub creates a different
+merge commit with the **same** `assets/` tree, either SHA is fine; prefer the merge
+commit on `main` once available and keep the checksums below.
 
 | Item | Value |
 |------|--------|
-| Sofie commit | *(set after this rename PR merges)* |
-| Env override | `SOFIE_ASSETS_REF` (unopus script) — override only together with matching checksums |
-| Smoke SHA-256 | `39db9c74f952848e0da989bfee79c6d6a9df9ca88a0bde2b6b1f20c338272de3` (`spravy-v3-smoke-rundown.json` on `cursor/smoke-media-rename-3ed7`) |
+| Sofie commit | `83234e65d118a4c7e0b5b57e35321d7b19852419` |
+| Env override | `SOFIE_ASSETS_REF` (unopus) — full 40-char SHA only; bump with checksums |
 
-> After the `l3d-syn` PGM + smoke bump PR merges, recompute the smoke checksum
-> (`69d8f2d22ea0e89877d7b5619be096fbc8e2a13d585d9e3cdfb92ebe683ae259` on this branch)
-> and bump consumer pins to that merge commit.
+### Per-file SHA-256 (`assets/` at that commit)
+
+| File | SHA-256 |
+|------|---------|
+| `spravy-v3-smoke-rundown.json` | `39db9c74f952848e0da989bfee79c6d6a9df9ca88a0bde2b6b1f20c338272de3` |
+| `sofie-rundown-editor-piece-types.json` | `69ab2a662488ea246d039185863d7c16fd282fe33ceda21caa233b8da9dc6f59` |
+| `sofie-rundown-editor-part-types.json` | `aa3c8c899b499ce1c4c431ec4c904e8475980b139bdf4dfefa54c7ee52167846` |
+| `sofie-rundown-editor-segment-types.json` | `56f68da340a1029f4c31a1f69b6594e5d440f1e7223528cd2ce9dbaa8c1aaf7b` |
 
 Checksums are owned by the consumer script (they must match that commit’s `assets/*.json`).
 Recompute with:
@@ -43,6 +53,11 @@ Recompute with:
 ```bash
 git -C /path/to/sofie show <sha>:assets/<file>.json | sha256sum
 ```
+
+**unopus:** set `PINNED_SOFIE_ASSETS_REF` and every `EXPECTED_SHA256[…]` in the **same**
+commit. **sofie-demo-blueprints:** prepend the Sofie commit to `REFS=(…)` in the same
+bump (baseline `loops/bg_loop` already landed in
+[blueprints#58](https://github.com/tojemoc/sofie-demo-blueprints/pull/58)).
 
 ## Bumping when megarepo assets change
 
