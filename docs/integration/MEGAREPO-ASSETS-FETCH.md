@@ -27,8 +27,8 @@ Do **not** fetch from `…/sofie/main/assets/…` or `…/sofie/cursor/…/asset
 
 ## Current pin (production media rename)
 
-Pin is the immutable sofie commit that contains the renamed smoke/mediaPick assets
-(HEADLINEs, `wipes/wipe*`, `assets/intro_michal`, `loops/bg_loop`). After sofie
+Pin is the immutable Sofie commit that contains the renamed smoke/mediaPick assets
+(HEADLINEs, `wipes/wipe*`, `assets/intro_michal`, `loops/bg_loop`). After Sofie
 [#25](https://github.com/tojemoc/sofie/pull/25) merges, if GitHub creates a different
 merge commit with the **same** `assets/` tree, either SHA is fine; prefer the merge
 commit on `main` once available and keep the checksums below.
