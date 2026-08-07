@@ -47,9 +47,9 @@
 		"payload": [
 			{
 				"id": "fileName",
-				"label": "Overlay clip (PGM only — e.g. wipes/wipe)",
+				"label": "Overlay clip (PGM only — e.g. assets/intro_michal)",
 				"type": "mediaPick",
-				"subdir": "wipes",
+				"subdir": "assets",
 				"includeInName": true
 			}
 		]

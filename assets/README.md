@@ -29,7 +29,7 @@ use `wipes/wipe_sjv`, `wipes/wipe_sport`, `wipes/wipe_pocasie`). See
 `docs/integration/DOUBLEBOX-PGM.md` and
 `docs/integration/handoffs/blueprints-baseline-bg-loop.md`.
 
-### Media folder layout (`bg-loop`, wipe, clips)
+## Media folder layout (`bg-loop`, wipe, clips, assets)
 
 Paths in piece payloads are **Caspar PLAY paths** (clips often keep the real
 extension for Package Manager; wipes/intro/loops omit extension), relative to the
@@ -47,18 +47,20 @@ studio **CasparCG media folder** (Sofie: `casparcgMediaFolder`, e.g.
 ```
 
 - Two levels only: `<subdir>/<file>` — no `spravy/<rundownId>/…` nesting.
-- Rundown Editor `mediaPick.subdir` (`loops` / `wipes` / `clips`) only scopes the
-  picker UI under the ingest root — the saved `fileName` must include the subdir.
+- Rundown Editor `mediaPick.subdir` (`loops` / `wipes` / `clips` / `assets`) only
+  scopes the picker UI under the ingest root — the saved `fileName` must include
+  the subdir.
 - `bg-loop` plays on LED ClipPlayer1 (layer 110). Baseline also loops
   `loops/bg_loop` at priority 0; a `bg-loop` piece overrides at priority 1.
-  **Blueprints must hard-code the same basename** — smoke does not carry a
-  `bg-loop` piece on Intro.
+  Blueprints baseline uses the same basename
+  ([sofie-demo-blueprints#58](https://github.com/tojemoc/sofie-demo-blueprints/pull/58)).
+  Smoke does not carry a `bg-loop` piece on Intro.
 - `intro` must PLAY on **PGM** (target layer 210). A `404` on
   `PLAY … "clips/HEADLINE1"` means the file is missing from the Caspar
   media folder — ingest/copy it; the rundown path is already correct.
 - Do **not** put loops under `clips/` — those are editorial clips.
 
-### Consumers
+## Consumers
 
 - **Rundown Editor (`rundown-editor/` / unopus)** loads the three type JSON files at
   startup and via **Settings → Connection → Reload type manifests from assets**.
@@ -69,7 +71,7 @@ studio **CasparCG media folder** (Sofie: `casparcgMediaFolder`, e.g.
 Do not reintroduce copies under `blueprints/assets/` or `rundown-editor/assets/`.
 Edit these files in PRs against `tojemoc/sofie`.
 
-### Standalone CI / Docker (pin + checksums)
+## Standalone CI / Docker (pin + checksums)
 
 Standalone clones must **not** download from mutable refs (`main`, `cursor/…`).
 Fetch scripts pin an **immutable sofie commit SHA** and verify each file’s **SHA-256**

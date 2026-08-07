@@ -1,37 +1,35 @@
 # Handoff: Blueprints — baseline LED loop → `loops/bg_loop`
 
-**Sofie companion:** megarepo branch `cursor/smoke-media-rename-3ed7` updates
-smoke + part-type defaults to production media names on the Win10 Caspar box.
+**Status:** blueprints side **done** —
+[sofie-demo-blueprints#58](https://github.com/tojemoc/sofie-demo-blueprints/pull/58)
+merged (`LED_BACKGROUND_LOOP_FILE` → `loops/bg_loop`).
 
-## Where `360_loop` lives today
+**Sofie companion:** this megarepo PR renames smoke + part-type defaults to the
+same production media names (`wipes/wipe`, `assets/intro_michal`, `HEADLINE*.mov`,
+etc.).
+
+## Layers
 
 | Layer | Path | Notes |
 |-------|------|--------|
-| **Blueprints baseline** (prio 0) | hard-coded `loops/360_loop` on `CasparCGClipPlayer1` / LED 1-110 | **Not** a smoke RE piece — always on when a rundown is active |
-| RE optional `bg-loop` piece (prio 1) | part-type default was `loops/360_loop` | Overrides baseline; smoke Intro has **no** `bg-loop` piece |
+| **Blueprints baseline** (prio 0) | `loops/bg_loop` on `CasparCGClipPlayer1` / LED 1-110 | Not a smoke RE piece |
+| RE optional `bg-loop` piece (prio 1) | part-type default `loops/bg_loop` | Overrides baseline; smoke Intro has **no** `bg-loop` piece |
 | Smoke fixture | no `bg-loop` media path | Loop comes from baseline only |
 
-Caspar / disk today: `loops/bg_loop.mov` (no `360_loop.*`).
+Disk: `loops/bg_loop.mov`.
 
-## Required blueprints change
+**AMCP:** `PLAY 1-110 "loops/bg_loop"` (extension omitted).
 
-In `sofie-demo-blueprints`, replace baseline clip name:
+## Consumer pin + checksums (same change)
 
-```text
-loops/360_loop  →  loops/bg_loop
-```
+Canonical pin and per-file SHA-256 map:
+[`docs/integration/MEGAREPO-ASSETS-FETCH.md`](../MEGAREPO-ASSETS-FETCH.md).
 
-Search for `360_loop` in studio baseline / hypercomposed LED clip player setup
-and tests. After change: `yarn test:blueprints` + `yarn dist`, upload bundle,
-**Apply Configuration**.
+Bump **in the same consumer commit**:
 
-**AMCP expectation:** idle/active LED shows `PLAY 1-110 "loops/bg_loop"` (extension
-omitted), not `360_loop`.
+1. **unopus** — `PINNED_SOFIE_ASSETS_REF` + every `EXPECTED_SHA256[…]` entry
+2. **sofie-demo-blueprints** — prepend that SHA to `REFS=(…)` in
+   `scripts/fetch-sofie-megarepo-assets.sh` (and any wipe/default constants still
+   on old names)
 
-## Already done in sofie megarepo
-
-- `assets/sofie-rundown-editor-part-types.json` — optional `bg-loop` default → `loops/bg_loop`
-- `assets/spravy-v3-smoke-rundown.json` — intro/wipes/clips renamed to on-disk names
-- Docs / `assets/README.md` — media layout updated
-
-Consumer pin/checksum bump (unopus / blueprints fetch scripts) after this merges.
+Do **not** leave consumer pins on mutable `main` / `cursor/…` refs.
