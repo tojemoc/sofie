@@ -36,7 +36,8 @@ the PR tip SHA below (same `assets/` tree).
 | Item | Value |
 |------|--------|
 | Sofie commit | `4e50c3d7a8af669572b199983ecf8c2d0e86af45` |
-| Env override | `SOFIE_ASSETS_REF` (unopus) — full 40-char SHA only; bump with checksums |
+| Unopus pin (committed) | `PINNED_SOFIE_ASSETS_REF` — bump with checksums |
+| Unopus override (optional) | `SOFIE_ASSETS_REF` — if set, must be a full 40-char lowercase SHA; otherwise defaults to `PINNED_SOFIE_ASSETS_REF` |
 
 ### Per-file SHA-256 (`assets/` at that commit)
 
@@ -71,7 +72,8 @@ fail closed if that revision cannot be fetched).
 
 ## Runtime env
 
-After a successful fetch, consumers set `SOFIE_MEGAREPO_ASSETS` to the download directory
-(CI via `$GITHUB_ENV`; local shells should `eval "$(bash scripts/fetch-sofie-megarepo-assets.sh)"`
-where the script prints an `export` line, or export manually). Nested megarepo layouts do
-not need the fetch script.
+After a successful fetch, consumers set `SOFIE_MEGAREPO_ASSETS` to the export path
+printed by the script (CI via `$GITHUB_ENV`; local shells should
+`eval "$(bash scripts/fetch-sofie-megarepo-assets.sh)"`). Blueprints exports the
+`…/current` generation pointer (atomic symlink), not a directory that is updated
+file-by-file. Nested megarepo layouts do not need the fetch script.
