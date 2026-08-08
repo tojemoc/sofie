@@ -10,13 +10,15 @@ PLAY 2-116 "dshow://video=OBS Virtual Camera"
 | File | Purpose |
 |------|---------|
 | `sofie-rundown-editor-piece-types.json` | Piece type definitions and GFX preview templates |
-| `sofie-rundown-editor-part-types.json` | Part presets (ILU, SYN, GFX, Intro, …) |
+| `sofie-rundown-editor-part-types.json` | Part presets (ILU, DoubleBox, SYN, GFX, Intro, …) |
 | `sofie-rundown-editor-segment-types.json` | Segment presets (Headlines, Opening, …) |
 | `spravy-v3-smoke-rundown.json` | End-to-end smoke rundown (`spravy-v3-smoke`) |
 
 Piece types are kept in sync with the smoke rundown. Sofie **Intro** parts need
 piece type **`intro`** (“Intro overlay” — alpha/znelka on **PGM layer 210**, never
-LED), not a plain `video`. Also keep `bg-loop` and `wipe`. Legacy demo pieces
+LED), not a plain `video`. Also keep `bg-loop` and `wipe`. Thematic DoubleBox
+parts use piece type **`doublebox-ilu`** (PGM left window) — not `headline` —
+plus `l3d-tema` + `camera`. Legacy demo pieces
 `remote` / `split` / `guest` (and part presets REMI / DVE / Guest) were removed.
 
 Smoke Intro uses `assets/intro_michal` (disk `assets/intro_michal.mov`). LED

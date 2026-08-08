@@ -270,6 +270,28 @@
 		]
 	},
 	{
+		"id": "doublebox-ilu",
+		"entityType": "piece",
+		"name": "ILU DoubleBox",
+		"shortName": "DBILU",
+		"colour": "#6f42c1",
+		"includeTypeInName": true,
+		"payload": [
+			{
+				"id": "text",
+				"label": "Label",
+				"type": "string",
+				"includeInName": true
+			},
+			{
+				"id": "iluFile",
+				"label": "ILU clip (PGM left window)",
+				"type": "mediaPick",
+				"subdir": "clips"
+			}
+		]
+	},
+	{
 		"id": "logo-bug",
 		"entityType": "piece",
 		"name": "Logo Bug",

@@ -24,17 +24,33 @@ headline bars are **PGM**. No intro / znelka on LED. Intro overlay plays on
 [`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md)
 and [`handoffs/blueprints-baseline-bg-loop.md`](./handoffs/blueprints-baseline-bg-loop.md).
 
-**Story ILU on PGM 115 (pending):** DoubleBox’s left ILU window is intended on
-**PGM channel 2 layer 115**. Today `casparcg_ilu_player` still maps to **LED**
-channel 1 layer 115 until the companion blueprint remap is deployed and Sofie
-Apply config is run. Treat PGM-115 ILU as **pending** — do not mark smoke
-DoubleBox ILU complete on LED `1-115` alone.
+**Story ILU on PGM 115 (pending companion CI/deploy):** mapping
+`casparcg_pgm_ilu_player` → **PGM channel 2 layer 115** (piece type `doublebox-ilu`)
+is documented and implemented on sofie-demo-blueprints
+`cursor/doublebox-ilu-cam-crop-3109` / PR
+[#59](https://github.com/tojemoc/sofie-demo-blueprints/pull/59). Headline ILU remains
+on LED `casparcg_ilu_player` (1-115). **Do not treat end-to-end PGM-115 validation
+as complete** until that companion branch has **passing Test + Typecheck/Lint CI**,
+a **deployed commit** uploaded to Sofie with **Apply config**, and the Rundown
+Editor has **reloaded type manifests** from megarepo `assets/` (Settings →
+Connection → Reload type manifests from assets — or equivalent) so `doublebox` /
+`doublebox-ilu` definitions are loaded before any DoubleBox Take. Resume the
+`PLAY <pgm>-115` smoke check only after those prerequisites.
 
 **Camera / UVC:** studio `casparcg.hypercomposed.pgmCameraProducer` (demo default
 `dshow://video=OBS Virtual Camera`) is played on **PGM 2-116** when a part with a
 `camera` piece (`camNo: 1` = Camera A) is Taken. Remove the camera piece to keep
 DoubleBox without the CAM window. See
 [`RE-READINESS-AND-PLAYOUT-UX.md`](./RE-READINESS-AND-PLAYOUT-UX.md) for wipe/order/NR planning.
+
+**CAM aspect (no squish):** before FILL, blueprints apply MIXER CROP that keeps 16:9
+and **cuts from the left** into the frame (right portion stays in the tall CAM box).
+Do not stretch CAM1 to the box.
+
+**Story ILU piece:** use piece type `doublebox-ilu` (part preset `doublebox`) — not
+`headline`. `doublebox-ilu` plays the clip on **PGM 2-115** with DoubleBox left FILL
++ center cover-crop and **no** `gfx/headline-fallback` chrome. Headline ILU stays on
+LED for the opening block only.
 
 ## Getting CAM into Caspar (OBS Virtual Camera → UVC)
 
@@ -127,18 +143,19 @@ labelled variant) and `transition: <label>` for operators.
 |------------------|---------|-------|------|
 | `casparcg_clip_player1` | LED 1 | 110 | LED `bg_loop` |
 | `casparcg_clip_player2` | PGM 2 | 110 | PGM bg loop (or omit if UVC carries bg) |
-| `casparcg_ilu_player` | LED 1 (**PGM 2 pending**\*) | 115 | Headline / story ILU MEDIA; DoubleBox left window on PGM when remapped |
+| `casparcg_ilu_player` | LED 1 | 115 | Headline ILU MEDIA (+ `gfx/headline-fallback`) |
+| `casparcg_pgm_ilu_player` | PGM 2 | 115 | Thematic DoubleBox left ILU (`doublebox-ilu`) |
 | `casparcg_intro_player_pgm` | PGM 2 | 210 | Intro / znelka — **never LED** (handoff; may still be LED 200 until remapped) |
-| `casparcg_pgm_camera` | PGM 2 | 116 | UVC / CAM1 |
+| `casparcg_pgm_camera` | PGM 2 | 116 | UVC / CAM1 (FILL + left cover-crop) |
 | `casparcg_graphics_pgm_l3d` | PGM 2 | 121 | `l3d-tema` / `l3d-syn` / headline bars |
 | `casparcg_graphics_logo` | PGM 2 | 123 | `gfx/logo-bug` (360° sekúnd bug) — **not** on LED |
 | `casparcg_effects_player_pgm` | PGM 2 | 200 | Wipes |
 
-\*Headline / story ILU still maps to **LED** by default for the wall. Thematic
-DoubleBox on PGM uses PGM camera FILL + PGM `l3d-tema` + PGM baseline loop
-(`casparcg_clip_player2`). Routing story ILU media onto **PGM channel 2 layer 115**
-is a **pending** companion-blueprint follow-up while the LED mapping stays on
-channel 1. The **logo-bug is already PGM-only**.
+Headline / story ILU on LED vs PGM: opening **headline** ILU stays on **LED**
+(`casparcg_ilu_player`). Thematic DoubleBox left-window media uses
+`casparcg_pgm_ilu_player` on **PGM channel 2 layer 115** via piece type
+`doublebox-ilu`. PGM also carries camera FILL + `l3d-tema` + baseline loop
+(`casparcg_clip_player2`). The **logo-bug is PGM-only**.
 
 ### `bg-loop` folder structure
 
@@ -165,7 +182,12 @@ same basename (see [`handoffs/blueprints-baseline-bg-loop.md`](./handoffs/bluepr
    Intro take must show `PLAY <pgm>-210 "assets/intro_michal"` and **must not** play
    Intro on LED (`1-200`). Until that branch lands, treat this check as **pending** —
    do not mark smoke Intro routing complete on LED EffectsPlayer 200.
-6. **Story ILU on PGM 115 (pending until companion blueprints remap `casparcg_ilu_player` to PGM):**
-   after that remap + Sofie Apply config, an ILU/DoubleBox Take must show
-   `PLAY <pgm>-115 "clips/…"` (and FILL) on **channel 2**, not only LED `1-115`.
-   Until then, treat PGM-115 ILU as **pending** — LED `1-115` remains the live path.
+6. **Story ILU on PGM 115 (pending until companion blueprints CI is green + deployed):**
+   mapping `casparcg_pgm_ilu_player` → channel 2 layer 115 is specified above. After
+   sofie-demo-blueprints PR #59 (or successor) has **passing Test and Typecheck/Lint**,
+   the bundle is uploaded + Sofie **Apply config**, **and** RE has **reloaded type
+   manifests** from megarepo `assets/` (so `doublebox` / `doublebox-ilu` are loaded),
+   a DoubleBox Take must show `PLAY <pgm>-115 "clips/…"` (with FILL + CROP) on
+   **channel 2**. Headline parts still use LED `1-115`. Do **not** Take until those
+   definitions are loaded. Until the prerequisites land, keep this checklist item
+   **pending**.

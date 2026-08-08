@@ -25,26 +25,27 @@ Reference implementation: [unopus PR #45](https://github.com/tojemoc/unopus/pull
 
 Do **not** fetch from `…/sofie/main/assets/…` or `…/sofie/cursor/…/assets/…` in CI or Docker.
 
-## Current pin (production media rename)
+## Current pin (DoubleBox ILU + production media names)
 
-Pin is the immutable Sofie commit that contains the renamed smoke/mediaPick assets
-(HEADLINEs, `wipes/wipe*`, `assets/intro_michal`, `loops/bg_loop`). After Sofie
-[#25](https://github.com/tojemoc/sofie/pull/25) merges, if GitHub creates a different
-merge commit with the **same** `assets/` tree, either SHA is fine; prefer the merge
-commit on `main` once available and keep the checksums below.
+Pin is the immutable Sofie commit that contains DoubleBox part/piece types, smoke
+`doublebox-ilu` parts, and the production media rename (HEADLINEs, `wipes/wipe*`,
+`assets/intro_michal`, `loops/bg_loop`). Prefer the merge commit on `main` once
+[#26](https://github.com/tojemoc/sofie/pull/26) lands; until then consumers may pin
+the PR tip SHA below (same `assets/` tree).
 
 | Item | Value |
 |------|--------|
-| Sofie commit | `83234e65d118a4c7e0b5b57e35321d7b19852419` |
-| Env override | `SOFIE_ASSETS_REF` (unopus) — full 40-char SHA only; bump with checksums |
+| Sofie commit | `4e50c3d7a8af669572b199983ecf8c2d0e86af45` |
+| Unopus pin (committed) | `PINNED_SOFIE_ASSETS_REF` — bump with checksums |
+| Unopus override (optional) | `SOFIE_ASSETS_REF` — if set, must be a full 40-char lowercase SHA; otherwise defaults to `PINNED_SOFIE_ASSETS_REF` |
 
 ### Per-file SHA-256 (`assets/` at that commit)
 
 | File | SHA-256 |
 |------|---------|
-| `spravy-v3-smoke-rundown.json` | `39db9c74f952848e0da989bfee79c6d6a9df9ca88a0bde2b6b1f20c338272de3` |
-| `sofie-rundown-editor-piece-types.json` | `69ab2a662488ea246d039185863d7c16fd282fe33ceda21caa233b8da9dc6f59` |
-| `sofie-rundown-editor-part-types.json` | `aa3c8c899b499ce1c4c431ec4c904e8475980b139bdf4dfefa54c7ee52167846` |
+| `spravy-v3-smoke-rundown.json` | `fb5604dbc2558044f4548da709fbd6bf86e394c376dad852a7ccf178ed8ca559` |
+| `sofie-rundown-editor-piece-types.json` | `35444ef08b60963e1f5a65db27a54cf5720281b576678e34d813df4c16c265e5` |
+| `sofie-rundown-editor-part-types.json` | `f61640d04e8c52f8d536db11259a97f1ff46ebb4edc5c92a84567489d814f819` |
 | `sofie-rundown-editor-segment-types.json` | `56f68da340a1029f4c31a1f69b6594e5d440f1e7223528cd2ce9dbaa8c1aaf7b` |
 
 Checksums are owned by the consumer script (they must match that commit’s `assets/*.json`).
@@ -55,27 +56,24 @@ git -C /path/to/sofie show <sha>:assets/<file>.json | sha256sum
 ```
 
 **unopus:** set `PINNED_SOFIE_ASSETS_REF` and every `EXPECTED_SHA256[…]` in the **same**
-commit. **sofie-demo-blueprints:** prepend the Sofie commit to `REFS=(…)` in the same
-bump (baseline `loops/bg_loop` already landed in
-[blueprints#58](https://github.com/tojemoc/sofie-demo-blueprints/pull/58)).
+commit. **sofie-demo-blueprints:** set the single `PINNED_SOFIE_ASSETS_REF` in
+`scripts/fetch-sofie-megarepo-assets.sh` in the same bump (no older-SHA fallback —
+fail closed if that revision cannot be fetched).
 
 ## Bumping when megarepo assets change
 
 1. Land the asset change in `tojemoc/sofie` (merge to `main` or note the commit SHA).
 2. In each consumer (`unopus`, `sofie-demo-blueprints`):
    - Set the pin to that commit SHA.
-   - Update every entry in the expected SHA-256 map (or equivalent).
+   - Update every entry in the expected SHA-256 map (or equivalent; blueprints pin only).
    - Run the fetch script once; confirm exit 0.
-   - Intentionally break one checksum and confirm exit 1 + cleaned dest.
+   - Intentionally break one checksum (or the pin) and confirm exit 1 + cleaned dest.
 3. Ship consumer PRs that bump **pin + checksums in the same commit**.
-
-Blueprints may keep a short **fallback SHA list** for resilience, but each ref must still be
-an immutable commit — never a branch — and preferred path is the same pin + checksum
-model as unopus.
 
 ## Runtime env
 
-After a successful fetch, consumers set `SOFIE_MEGAREPO_ASSETS` to the download directory
-(CI via `$GITHUB_ENV`; local shells should `eval "$(bash scripts/fetch-sofie-megarepo-assets.sh)"`
-where the script prints an `export` line, or export manually). Nested megarepo layouts do
-not need the fetch script.
+After a successful fetch, consumers set `SOFIE_MEGAREPO_ASSETS` to the export path
+printed by the script (CI via `$GITHUB_ENV`; local shells should
+`eval "$(bash scripts/fetch-sofie-megarepo-assets.sh)"`). Blueprints exports the
+`…/current` generation pointer (atomic symlink), not a directory that is updated
+file-by-file. Nested megarepo layouts do not need the fetch script.
