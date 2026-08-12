@@ -67,6 +67,7 @@ succeeded. Common false-positive causes:
 |------|-------|-------|-----|
 | Intro / wipe / loop path without extension (`assets/intro_michal`) | Caspar resolves `.mov` | Yes (`Titles` / effects layer) | PM looked up the extensionless path; blueprints now map those to `.mov` via `toPackageManagerPath` |
 | Headline ILU (`clips/HEADLINE1.mov`) + L3D HTML (`gfx/l3d-headline`) on one GFX track | Both can play | Usually only the **ILU** piece | Only ILU emits an ExpectedPackage; HTML templates are not media packages |
+| HEADLINE3 “won’t PLAY” while 1–2 do (Caspar never gets `PLAY … HEADLINE3`) | File exists | Sofie omitted ILU AMCP | **Bug (fixed in blueprints):** ILU + `l3d-headline` both used Sofie source layer `Lower Third` at start=0; Core `processAndPrune` keeps only one WithinPart piece per source layer (winner by piece `_id`). PGM L3Ds now use source layer `lower_third_pgm` |
 | PM down / wrong `casparcgMediaFolder` / no status row yet | Caspar already has files | All ExpectedPackage pieces | Same “can't be found on the playout system” string |
 
 Sofie output rows in the rundown view are **`GFX`** and **`PGM`** (plus Script/Aux).
