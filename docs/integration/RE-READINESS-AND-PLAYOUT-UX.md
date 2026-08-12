@@ -53,6 +53,27 @@ Canonical design: [`docs/adr/0001-re-readiness-from-core-package-manager.md`](..
    happen and is currently silent. See
    [`handoffs/re-readiness-diagnostics.md`](handoffs/re-readiness-diagnostics.md).
 
+**Why Sofie WebUI says “Titles / Lower Third can't be found…” while Take still plays:**
+
+The notification title is the **piece name** (e.g. `gfx/headline | …, clips/HEADLINE1.mov`
+or `Intro | assets/intro_michal`); the body uses the Sofie **source layer name**
+(`Titles`, `Lower Third`) — not a `gfx/` vs `pgm/` folder category.
+
+Status comes from Package Manager ExpectedPackage verify against the Caspar media
+folder (`LOCAL_FOLDER`), **not** from whether the last AMCP `PLAY`/`CG ADD`
+succeeded. Common false-positive causes:
+
+| Case | Plays | Warns | Why |
+|------|-------|-------|-----|
+| Intro / wipe / loop path without extension (`assets/intro_michal`) | Caspar resolves `.mov` | Yes (`Titles` / effects layer) | PM looked up the extensionless path; blueprints now map those to `.mov` via `toPackageManagerPath` |
+| Headline ILU (`clips/HEADLINE1.mov`) + L3D HTML (`gfx/l3d-headline`) on one GFX track | Both can play | Usually only the **ILU** piece | Only ILU emits an ExpectedPackage; HTML templates are not media packages |
+| HEADLINE3 “won’t PLAY” while 1–2 do (Caspar never gets `PLAY … HEADLINE3`) | File exists | Sofie omitted ILU AMCP | **Bug (fixed in blueprints):** ILU + `l3d-headline` both used Sofie source layer `Lower Third` at start=0; Core `processAndPrune` keeps only one WithinPart piece per source layer. Winner is `isCandidateBetterToBeContinued` → `isCandidateMoreImportant` (adlib / virtual / fromPrevious / absolute), else lexicographic `piece._id`. For two normal planned pieces that fallback decides. PGM L3Ds now use source layer `lower_third_pgm` |
+| PM down / wrong `casparcgMediaFolder` / no status row yet | Caspar already has files | All ExpectedPackage pieces | Same “can't be found on the playout system” string |
+
+Sofie output rows in the rundown view are **`GFX`** and **`PGM`** (plus Script/Aux).
+Many RE piece types (`ILU`, `L3DH`, `L3DT`, camera, wipe, intro, …) collapse onto
+those two tracks via source layers (Lower Third / Logo / Titles / Camera / VT / …).
+
 **WebM sibling check** for ILU was removed (prerendered/bypass ILU work); readiness no
 longer requires a `.webm` next to the MP4.
 
