@@ -33,10 +33,17 @@ use `wipes/wipe_sjv`, `wipes/wipe_sport`, `wipes/wipe_pocasie`). See
 
 ## Media folder layout (`bg-loop`, wipe, clips, assets)
 
-Paths in piece payloads are **Caspar PLAY paths** (clips often keep the real
-extension for Package Manager; wipes/intro/loops omit extension), relative to the
-studio **CasparCG media folder** (Sofie: `casparcgMediaFolder`, e.g.
-`c:/casparcg/sofie-demo-media` or `Y:/360-ingest/sofie-demo-media`):
+Paths in piece payloads are **Caspar PLAY paths** relative to the studio
+**CasparCG media folder** (Sofie: `casparcgMediaFolder`, e.g.
+`c:/casparcg/sofie-demo-media` or `Y:/360-ingest/sofie-demo-media`).
+
+**Package Manager vs Caspar:** Sofie Core readiness (“can't be found on the
+playout system”) checks ExpectedPackage paths with a `LOCAL_FOLDER` lookup —
+that needs the **real filename including extension**. Caspar `PLAY` / CLS
+**omit** the extension. Demo blueprints map extensionless `loops/` / `wipes/` /
+`assets/` paths to `.mov` when emitting ExpectedPackages (`toPackageManagerPath`);
+timeline `PLAY` still uses `toCasparPlayPath`. Prefer storing clips with their
+real extension (`clips/HEADLINE1.mov`) so PM does not have to guess.
 
 ```text
 <casparcgMediaFolder>/
@@ -61,6 +68,10 @@ studio **CasparCG media folder** (Sofie: `casparcgMediaFolder`, e.g.
   `PLAY … "clips/HEADLINE1"` means the file is missing from the Caspar
   media folder — ingest/copy it; the rundown path is already correct.
 - Do **not** put loops under `clips/` — those are editorial clips.
+- HTML templates (`gfx/l3d-headline`, `gfx/l3d-tema`, …) live under Caspar
+  **template-path**, not the media folder — they are **not** ExpectedPackages
+  and do not drive “can't be found on the playout system” (that warning names
+  the Sofie **source layer**, e.g. Lower Third / Titles, not `gfx/` vs `pgm/`).
 
 ## Consumers
 
