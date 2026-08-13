@@ -3,7 +3,7 @@
 Living document for agents working across the Sofie megarepo. Update this file when
 demo-assets, blueprints, rundown-editor, or core integration status changes.
 
-**Last updated:** 2026-07-22
+**Last updated:** 2026-08-13
 
 ---
 
@@ -15,9 +15,10 @@ v2 HTML templates from `tojemoc/sofie-demo-assets`.
 **Near-term demo target (Friday):** one Caspar, single-channel LED stack, 3–4 templates,
 imported H.264 clips. Full hypercomposed (LED≠PGM, wipes, all 10 templates) is **post-demo**.
 
-**DoubleBox PGM + UVC camera + wipes:** see
-[`docs/integration/DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md) — LED = headlines +
-`bg_loop`; Intro on **PGM 210**; wipe on PGM 200; PGM composes ILU + CAM + tema/bug.
+**LED vs PGM (canonical):** [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md) —
+LED = headline ILU + `bg_loop` only; L3Ds / intro / wipe / camera / logo-bug on
+**Caspar channel 2**. DoubleBox compose detail:
+[`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 
 ---
 
@@ -155,20 +156,20 @@ The bridge accepts JSON objects and XML-wrapped JSON from Caspar.
 
 | Spec | Folder | `clipName` | `update({ ... })` fields | Notes |
 |------|--------|------------|--------------------------|-------|
-| T01 | `headline` | `gfx/headline` | `iluFile`, `source` | ILU video block + source pill; **intended CH2 LED** |
-| T04b | `l3d-headline` | `gfx/l3d-headline` | `title`, `subtitle` | Text bars; **intended CH1 PGM overlay** |
-| T03 | `l3d-mod` | `gfx/l3d-mod` | `name` | Presenter MOD lower third |
-| T04 | `l3d-tema` | `gfx/l3d-tema` | `headline` | Thematic doublebox bar |
-| T05 | `l3d-syn` | `gfx/l3d-syn` | `name`, `role` | SYN name/role L3D |
-| T06 | `l3d-sjv` | `gfx/l3d-sjv` | `headline` | SJV segment bar (static badge text in template) |
-| T07 | `l3d-sport` | `gfx/l3d-sport` | `headline`, `source` | ŠPORT bar; JS timer logo↔counter at 100/200/300s |
-| T08 | `weather` | `gfx/weather` | `cities[]` (`name`, `temp`, `condition`) | Full-frame; `condition` = icon key |
-| T09 | `outro` | `gfx/outro` | _(none)_ | Hardcoded URL in template |
-| T10 | `logo-bug` | `gfx/logo-bug` | _(none)_ | Persistent bug; needs `OutOnRundownEnd` lifespan |
+| T01 | `headline` | `gfx/headline` | `iluFile`, `source` | ILU + source pill; **LED ch1** (media 115 + fallback chrome) |
+| T04b | `l3d-headline` | `gfx/l3d-headline` | `title`, `subtitle` | Text bars; **PGM ch2 layer 121** |
+| T03 | `l3d-mod` | `gfx/l3d-mod` | `name` | Presenter MOD; **PGM ch2** (not LED) |
+| T04 | `l3d-tema` | `gfx/l3d-tema` | `headline` | Thematic doublebox bar; **PGM ch2** |
+| T05 | `l3d-syn` | `gfx/l3d-syn` | `name`, `role` | SYN name/role L3D; **PGM ch2** |
+| T06 | `l3d-sjv` | `gfx/l3d-sjv` | `headline` | SJV segment bar; **PGM ch2** |
+| T07 | `l3d-sport` | `gfx/l3d-sport` | `headline`, `source` | ŠPORT bar; **PGM ch2**; JS timer logo↔counter at 100/200/300s |
+| T08 | `weather` | `gfx/weather` | `cities[]` (`name`, `temp`, `condition`) | Full-frame on **PGM**; `condition` = icon key |
+| T09 | `outro` | `gfx/outro` | _(none)_ | Hardcoded URL; **PGM** |
+| T10 | `logo-bug` | `gfx/logo-bug` | _(none)_ | Persistent bug on **PGM 123**; needs `OutOnRundownEnd` lifespan |
 
 ### v2 design decisions (already implemented in templates)
 
-- Frame 01 split: ILU on `headline` (CH2), text on `l3d-headline` (CH1) — **blueprints must coordinate**
+- Frame 01 split: ILU on `headline` (**LED ch1**), text on `l3d-headline` (**PGM ch2**) — see [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md)
 - Bar backgrounds: solid `rgba(8, 16, 40, 0.82)` — no `backdrop-filter`
 - SPORT counter: approach A (client-side timer on `play()`)
 - Placeholders: `public/assets/logo-360.svg`, weather icons in `public/icons/`
@@ -232,7 +233,7 @@ Defer: `weather`, `l3d-sport`, `headline`+ILU pair, hypercomposed multi-channel,
 
 ### Post-demo (PR2)
 
-- `hypercomposed` studio preset per `demo-assets/docs/OUTPUT_TOPOLOGY.md`
+- `hypercomposed` studio preset per [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md)
 - CH1 LED vs CH2 PGM mappings
 - Wipe template + segment transitions
 - Full 10-template coverage

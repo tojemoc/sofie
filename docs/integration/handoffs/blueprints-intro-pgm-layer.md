@@ -15,8 +15,9 @@ cloud agent could push but not create the PR).
 
 1. **Intro plays on LED today.** `playLayer: 'effects'` maps to
    `CasparCGLayers.CasparCGEffectsPlayer` → **LED channel, layer 200**.
-   Production rule: **Intro must never play on LED.** LED allow-list:
-   **headlines + loop + Presenter MOD (`l3d-mod`)**.
+   Production rule: **Intro must never play on LED.** LED allow-list is
+   **headline ILU + `bg_loop` only** — Presenter MOD (`l3d-mod`) and all other
+   L3Ds are **PGM**. See [`../OUTPUT_TOPOLOGY.md`](../OUTPUT_TOPOLOGY.md).
 2. **Intro must sit above everything on PGM** (camera, ILU when remapped, L3Ds,
    logo-bug, and story-block wipes). Wipe already uses PGM layer **200**
    (`CasparCGPgmEffectsPlayer`). Intro needs a **higher** PGM layer (**210**).
