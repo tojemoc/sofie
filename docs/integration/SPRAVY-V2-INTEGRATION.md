@@ -76,7 +76,12 @@ the HTML template loaded — the companion ILU PLAY still needs the file.
 - **Sofie source layers:** LED headline ILU stays on `Lower Third`. PGM L3Ds use `PGM L3D` (`lower_third_pgm`) — a **separate source layer** on the **GFX** output track (PGM output is `isFlattened` with Camera). Caspar still plays them on channel 2. They must not share one Sofie source layer — Core keeps only one WithinPart piece per layer at the same start (otherwise HEADLINE3 can lose `PLAY 1-115` while only `CG 2-121 gfx/l3d-headline` fires).
 - **How to look at PGM:** open the Caspar **channel 2** consumer (screen / NDI / SDI for ch2), not channel 1. Studio mapping id `casparcg_graphics_pgm_l3d` → ch2 layer 121. Confirm with AMCP e.g. `INFO 2` or a second Screen consumer bound to `<channel-index>2</channel-index>`.
 - **demo-assets:** v2 HTML must exist on Caspar (`gfx/l3d-headline.html`, etc.). Rebuild with `yarn build` and copy `deploy/template-path` if needed.
-- **Timing (not AUTO):** set the same **Duration (seconds)** on the part, the `headline` (ILU) piece, and the `l3d-headline` piece. Sofie then shows that length as `expectedDuration` for a manual **Take** to the next part/segment. Sofie **AUTO** only appears when blueprints set `autoNext` (VT / Intro / non-ILU GFX). ILU parts (with or without camera) do **not** autoNext — leave Start at `0` so they begin on Take.
+- **Timing (not AUTO):** three durations must not be conflated (see [`RE-READINESS-AND-PLAYOUT-UX.md`](./RE-READINESS-AND-PLAYOUT-UX.md)):
+  - **Part Duration** (seconds) — story-level expected length in the Rundown Editor.
+  - **Piece Duration** (seconds) — on-air enable length in the RE form / Dur column; unset PGM L3D piece duration **inherits Part Duration** (`l3d-mod`, `l3d-headline`, `l3d-tema`, …). An **explicitly set** piece Duration is left unchanged. RE shows the same resolved values in Dur and exports them to Sofie ingest; blueprints pass ingest durations through unchanged.
+  - **Sofie `expectedDuration`** (milliseconds after ingest conversion) — the on-air timeline enable length Sofie uses at playout.
+  - **`payload.sourceDuration`** (milliseconds) — separate from on-air timing; maps to VT/VO `content.sourceDuration` (media clip length from ffprobe, not the Dur column).
+  Sofie **AUTO** only appears when blueprints set `autoNext` (VT / Intro / non-ILU GFX). ILU parts (with or without camera) do **not** autoNext — leave Start at `0` so they begin on Take.
 - **RE Ready/NR, DUR, wipe timing, piece order:** planning notes in
   [`RE-READINESS-AND-PLAYOUT-UX.md`](./RE-READINESS-AND-PLAYOUT-UX.md) (ADR 0001 for Core PM readiness).
 
