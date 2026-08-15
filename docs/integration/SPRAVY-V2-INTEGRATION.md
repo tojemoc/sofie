@@ -12,12 +12,13 @@ demo-assets, blueprints, rundown-editor, or core integration status changes.
 End-to-end demo: **Rundown Editor → Sofie Core → Playout Gateway → CasparCG** driving
 v2 HTML templates from `tojemoc/sofie-demo-assets`.
 
-**Near-term demo target (Friday):** one Caspar, single-channel LED stack, 3–4 templates,
+**Near-term demo target (August 14, 2026):** one Caspar, single-channel LED stack, 3–4 templates,
 imported H.264 clips. Full hypercomposed (LED≠PGM, wipes, all 10 templates) is **post-demo**.
 
-**LED vs PGM (canonical):** [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md) —
-LED = headline ILU + `bg_loop` only; L3Ds / intro / wipe / camera / logo-bug on
-**Caspar channel 2**. DoubleBox compose detail:
+**LED vs PGM (canonical — planned / pending):** [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md) —
+target is LED = headline ILU + `bg_loop` only; L3Ds / intro / wipe / camera / logo-bug on
+**Caspar channel 2**. Two-channel CH1/CH2 mapping is **not yet deployed**; the August 14 demo
+remains single-channel. DoubleBox compose detail:
 [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 
 ---
