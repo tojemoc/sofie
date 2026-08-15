@@ -1,5 +1,9 @@
 # DoubleBox PGM + LED loop + UVC camera
 
+**Which source → which Caspar channel:** see the canonical
+[`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md) first. This page is the DoubleBox
+compose / FILL / wipe detail.
+
 Target look for **thematic DoubleBox** on PGM (Caspar channel 2), matching the
 production still (ILU left / CAM right / tema+bug bar / `bg_loop` behind):
 

@@ -35,7 +35,9 @@ rundown is this megarepo:
 | `assets/sofie-rundown-editor-segment-types.json` | Segment presets |
 | `assets/spravy-v3-smoke-rundown.json` | Smoke rundown fixture (`spravy-v3-smoke`) |
 
-DoubleBox PGM / UVC camera / wipe topology:
+**LED vs PGM (which source goes where):**
+[`docs/integration/OUTPUT_TOPOLOGY.md`](docs/integration/OUTPUT_TOPOLOGY.md).
+DoubleBox compose / UVC / wipes:
 [`docs/integration/DOUBLEBOX-PGM.md`](docs/integration/DOUBLEBOX-PGM.md).
 
 Do **not** keep or revive copies under `blueprints/assets/` or `rundown-editor/assets/`.
@@ -118,8 +120,8 @@ graphics, and alpha wipes — without vision-mixer program cuts. Blueprint suppo
 (`hypercomposed` studio preset); templates and media are built from `demo-assets/`.
 
 **LED ≠ PGM:** one Caspar can output **different content on different channels/consumers**
-(e.g. ch1 → LED, ch2 → PGM). A second Caspar server is not required. See
-`demo-assets/docs/OUTPUT_TOPOLOGY.md`.
+(e.g. ch1 → LED, ch2 → PGM). A second Caspar server is not required. Canonical map:
+[`docs/integration/OUTPUT_TOPOLOGY.md`](docs/integration/OUTPUT_TOPOLOGY.md).
 
 ### Gotchas
 

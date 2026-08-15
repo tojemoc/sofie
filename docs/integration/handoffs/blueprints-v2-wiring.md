@@ -102,8 +102,9 @@ You must:
 Files under `packages/blueprints/src/base/studio/applyConfig/mappings/`.
 
 Current hybrid demo uses ch3 for graphics. **Friday:** keep single-channel; **post-demo:**
-map `headline` → LED channel, `l3d-headline` → PGM channel per
-`demo-assets/docs/OUTPUT_TOPOLOGY.md`.
+map `headline` → LED channel, and all `gfx/l3d-*` templates →
+`casparcg_graphics_pgm_l3d` on PGM channel 2, layer 121, per
+[`../OUTPUT_TOPOLOGY.md`](../OUTPUT_TOPOLOGY.md).
 
 ### 5. Baseline / rundown start
 
