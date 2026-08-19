@@ -54,7 +54,9 @@ emitting ExpectedPackages (`toPackageManagerPath`); timeline `PLAY` still uses
 ```text
 <casparcgMediaFolder>/
   loops/bg_loop.mov           ← disk; PLAY / piece path often `loops/bg_loop`
-  wipes/wipe.mov              ← disk; PLAY / piece path often `wipes/wipe`
+  loops/bg_music_a.wav        ← A-block background music
+  loops/bg_music_c.wav        ← C-block background music (from Šport)
+  wipes/wipe.mov              ← disk; PLAY / piece path often `wipes/wipe` (SFX embedded)
   assets/intro_michal.mov     ← disk; intro piece `fileName` often `assets/intro_michal`
   clips/HEADLINE1.mov         ← disk filename (ILU / VT); PLAY → `clips/HEADLINE1`
   clips/ILU ….mp4
@@ -70,6 +72,14 @@ emitting ExpectedPackages (`toPackageManagerPath`); timeline `PLAY` still uses
   Blueprints baseline uses the same basename
   ([sofie-demo-blueprints#58](https://github.com/tojemoc/sofie-demo-blueprints/pull/58)).
   Smoke does not carry a `bg-loop` piece on Intro.
+- `bg-music` piece type plays background music on `CasparCGAudioBed` (LED ch1
+  layer 80). Blueprints baseline loops `loops/bg_music_a`; smoke includes a
+  `bg-music` piece on the first Téma part and a swap piece on Sport (`loops/bg_music_c`).
+  During Intro the bed is muted (blueprints `mixer.volume: 0` override).
+- Wipe default duration in blueprints is **760 ms** (38 frames @ 50 fps). RE shows
+  `0.76s` when the piece has no explicit duration. Wipe SFX is embedded in the
+  `.mov`; Sisyfos playback channels are force-muted for the wipe window so the
+  SFX is isolated.
 - `intro` must PLAY on **PGM** (target layer 210). A `404` on
   `PLAY … "clips/HEADLINE1"` means the file is missing from the Caspar
   media folder — ingest/copy it; the rundown path is already correct.

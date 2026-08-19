@@ -72,6 +72,23 @@
 		]
 	},
 	{
+		"id": "bg-music",
+		"entityType": "piece",
+		"name": "Background music",
+		"shortName": "BGM",
+		"colour": "#4a7568",
+		"includeTypeInName": true,
+		"payload": [
+			{
+				"id": "fileName",
+				"label": "Music file",
+				"type": "mediaPick",
+				"subdir": "loops",
+				"includeInName": true
+			}
+		]
+	},
+	{
 		"id": "wipe",
 		"entityType": "piece",
 		"name": "PGM wipe",

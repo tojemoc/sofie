@@ -2821,6 +2821,32 @@
 				"fileName": "wipes/wipe",
 				"transition": "OUTRO"
 			}
+		},
+		{
+			"id": "bgm-a-tema-gfx-1",
+			"partId": "part-tema-gfx-1",
+			"segmentId": "seg-tema-1",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "BG music A",
+			"pieceType": "bg-music",
+			"start": 0,
+			"payload": {
+				"fileName": "loops/bg_music_a"
+			}
+		},
+		{
+			"id": "bgm-c-sport-gfx",
+			"partId": "part-sport-gfx",
+			"segmentId": "seg-sport",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "BG music C (Šport)",
+			"pieceType": "bg-music",
+			"start": 0,
+			"payload": {
+				"fileName": "loops/bg_music_c"
+			}
 		}
 	]
 }
