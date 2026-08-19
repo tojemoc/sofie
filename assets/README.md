@@ -54,6 +54,7 @@ emitting ExpectedPackages (`toPackageManagerPath`); timeline `PLAY` still uses
 ```text
 <casparcgMediaFolder>/
   loops/bg_loop.mov           ← disk; PLAY / piece path often `loops/bg_loop`
+  loops/db_loop.mov           ← DoubleBox compositing frame (alpha, 32s, bg_loop baked in)
   loops/bg_music_a.wav        ← A-block background music
   loops/bg_music_c.wav        ← C-block background music (from Šport)
   wipes/wipe.mov              ← disk; PLAY / piece path often `wipes/wipe` (SFX embedded)
@@ -72,6 +73,13 @@ emitting ExpectedPackages (`toPackageManagerPath`); timeline `PLAY` still uses
   Blueprints baseline uses the same basename
   ([sofie-demo-blueprints#58](https://github.com/tojemoc/sofie-demo-blueprints/pull/58)).
   Smoke does not carry a `bg-loop` piece on Intro.
+- `db_loop.mov` is the **DoubleBox compositing frame** — a 32-second alpha loop
+  with `bg_loop` baked in plus the blue animated border with two cutouts (left =
+  ILU/content, right = camera). It plays on **PGM layer 118** (above ILU 115 /
+  camera 116, below L3D 121). Starts on Take into Intro
+  (`OutOnRundownEnd`) and persists for the rest of the show. `bg_loop` on PGM
+  baseline (layer 110) stays as fallback before intro fires; once `db_loop` is on
+  top it covers the full frame with its own baked-in bg_loop.
 - `bg-music` piece type plays background music on `CasparCGAudioBed` (LED ch1
   layer 80). Blueprints baseline loops `loops/bg_music_a`; smoke includes a
   `bg-music` piece on the first Téma part and a swap piece on Sport (`loops/bg_music_c`).
