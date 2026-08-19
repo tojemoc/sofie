@@ -76,10 +76,11 @@ emitting ExpectedPackages (`toPackageManagerPath`); timeline `PLAY` still uses
   layer 80). Blueprints baseline loops `loops/bg_music_a`; smoke includes a
   `bg-music` piece on the first Téma part and a swap piece on Sport (`loops/bg_music_c`).
   During Intro the bed is muted (blueprints `mixer.volume: 0` override).
-- Wipe default duration in blueprints is **760 ms** (38 frames @ 50 fps). RE shows
-  `0.76s` when the piece has no explicit duration. Wipe SFX is embedded in the
-  `.mov`; Sisyfos playback channels are force-muted for the wipe window so the
-  SFX is isolated.
+- Wipe default duration in blueprints is **2500 ms** (full stinger overlay). The
+  **cut point** — when the screen is fully covered and underlying content switches
+  — is at **760 ms** (38 frames @ 50 fps). Wipe SFX is embedded in the `.mov`;
+  Sisyfos playback channels are force-muted for the wipe window so the SFX is
+  isolated.
 - `intro` must PLAY on **PGM** (target layer 210). A `404` on
   `PLAY … "clips/HEADLINE1"` means the file is missing from the Caspar
   media folder — ingest/copy it; the rundown path is already correct.
