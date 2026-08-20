@@ -54,7 +54,10 @@ emitting ExpectedPackages (`toPackageManagerPath`); timeline `PLAY` still uses
 ```text
 <casparcgMediaFolder>/
   loops/bg_loop.mov           ← disk; PLAY / piece path often `loops/bg_loop`
-  wipes/wipe.mov              ← disk; PLAY / piece path often `wipes/wipe`
+  loops/db_loop.mov           ← DoubleBox compositing frame (alpha, 32s, bg_loop baked in)
+  loops/bg_music_a.wav        ← A-block background music
+  loops/bg_music_c.wav        ← C-block background music (from Šport)
+  wipes/wipe.mov              ← disk; PLAY / piece path often `wipes/wipe` (SFX embedded)
   assets/intro_michal.mov     ← disk; intro piece `fileName` often `assets/intro_michal`
   clips/HEADLINE1.mov         ← disk filename (ILU / VT); PLAY → `clips/HEADLINE1`
   clips/ILU ….mp4
@@ -70,6 +73,26 @@ emitting ExpectedPackages (`toPackageManagerPath`); timeline `PLAY` still uses
   Blueprints baseline uses the same basename
   ([sofie-demo-blueprints#58](https://github.com/tojemoc/sofie-demo-blueprints/pull/58)).
   Smoke does not carry a `bg-loop` piece on Intro.
+- `db_loop.mov` is the **DoubleBox compositing frame** — a 32-second alpha loop
+  with `bg_loop` baked in plus the blue animated border with two cutouts (left =
+  ILU/content, right = camera). It plays on **PGM layer 118** (above ILU 115 /
+  camera 116, below L3D 121). Starts on Take into Intro
+  (`OutOnRundownEnd`) and persists for the rest of the show. `bg_loop` on PGM
+  baseline (layer 110) stays as fallback before intro fires; once `db_loop` is on
+  top it covers the full frame with its own baked-in bg_loop.
+- `bg-music` piece type plays background music on `CasparCGAudioBed` (LED ch1
+  layer 80). Blueprints baseline Caspar PLAY uses extensionless `loops/bg_music_a`
+  / `loops/bg_music_c`; smoke stores disk paths `loops/bg_music_a.wav` /
+  `loops/bg_music_c.wav` in piece `fileName` so ExpectedPackage /
+  `LOCAL_FOLDER` match the real files (extensionless `loops/` paths are mapped
+  to `.mov` by `toPackageManagerPath`, which is wrong for `.wav`). Smoke includes
+  a `bg-music` piece on the first Téma part and a swap piece on Sport. During
+  Intro the bed is muted (blueprints `mixer.volume: 0` override).
+- Wipe default duration in blueprints is **2500 ms** (full stinger overlay). The
+  **cut point** — when the screen is fully covered and underlying content switches
+  — is at **760 ms** (38 frames @ 50 fps). Wipe SFX is embedded in the `.mov`;
+  Sisyfos playback channels are force-muted for the wipe window so the SFX is
+  isolated.
 - `intro` must PLAY on **PGM** (target layer 210). A `404` on
   `PLAY … "clips/HEADLINE1"` means the file is missing from the Caspar
   media folder — ingest/copy it; the rundown path is already correct.
