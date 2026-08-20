@@ -93,11 +93,25 @@
 			}
 		},
 		{
+			"id": "seg-tema-5",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"name": "Téma 5",
+			"rank": 6,
+			"float": false,
+			"isTemplate": false,
+			"segmentType": "story",
+			"payload": {
+				"type": "story",
+				"name": "Téma 5"
+			}
+		},
+		{
 			"id": "seg-sjv",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"name": "SPRÁVY JEDNOU VETOU",
-			"rank": 6,
+			"rank": 7,
 			"float": false,
 			"isTemplate": false,
 			"segmentType": "story",
@@ -111,7 +125,7 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"name": "ŠPORT",
-			"rank": 7,
+			"rank": 8,
 			"float": false,
 			"isTemplate": false,
 			"segmentType": "story",
@@ -125,7 +139,7 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"name": "POČASIE",
-			"rank": 8,
+			"rank": 9,
 			"float": false,
 			"isTemplate": false,
 			"segmentType": "story",
@@ -139,7 +153,7 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"name": "ZÁVER + AVIZO",
-			"rank": 9,
+			"rank": 10,
 			"float": false,
 			"isTemplate": false,
 			"segmentType": "story",
@@ -153,686 +167,529 @@
 		{
 			"id": "part-hl-1",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-headlines",
+			"playlistId": null,
 			"name": "HEADLINE1",
 			"rank": 0,
 			"float": false,
+			"isTemplate": false,
 			"partType": "ilu",
 			"duration": 8,
-			"fromPreset": true,
 			"payload": {
-				"type": "ILU"
-			},
-			"script": "Headline 1"
+				"type": "ilu",
+				"name": "HEADLINE1"
+			}
 		},
 		{
 			"id": "part-hl-2",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-headlines",
+			"playlistId": null,
 			"name": "HEADLINE2",
 			"rank": 1,
 			"float": false,
+			"isTemplate": false,
 			"partType": "ilu",
 			"duration": 8,
-			"fromPreset": true,
 			"payload": {
-				"type": "ILU"
-			},
-			"script": "Headline 2"
+				"type": "ilu",
+				"name": "HEADLINE2"
+			}
 		},
 		{
 			"id": "part-hl-3",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-headlines",
+			"playlistId": null,
 			"name": "HEADLINE3",
 			"rank": 2,
 			"float": false,
+			"isTemplate": false,
 			"partType": "ilu",
 			"duration": 8,
-			"fromPreset": true,
 			"payload": {
-				"type": "ILU"
-			},
-			"script": "Headline 3"
+				"type": "ilu",
+				"name": "HEADLINE3"
+			}
 		},
 		{
 			"id": "part-intro",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-intro",
+			"playlistId": null,
 			"name": "Intro",
 			"rank": 0,
 			"float": false,
+			"isTemplate": false,
 			"partType": "intro",
-			"duration": 12,
-			"fromPreset": true,
+			"duration": 25,
 			"payload": {
-				"type": "Intro"
+				"type": "intro",
+				"name": "Intro"
 			}
 		},
 		{
 			"id": "part-intro-mod",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-intro",
-			"name": "Gabriela Kajtárová",
+			"playlistId": null,
+			"name": "Michal Kovačič",
 			"rank": 1,
 			"float": false,
-			"partType": "gfx",
-			"duration": 6,
-			"fromPreset": true,
+			"isTemplate": false,
+			"partType": "cam",
+			"duration": 5,
 			"payload": {
-				"type": "GFX"
+				"type": "cam",
+				"name": "Michal Kovačič"
 			}
 		},
 		{
-			"id": "part-tema-gfx-1",
+			"id": "part-tema-1-db",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-tema-1",
-			"name": "Téma",
+			"playlistId": null,
+			"name": "DoubleBox",
 			"rank": 0,
 			"float": false,
-			"partType": "gfx",
-			"duration": 5,
-			"fromPreset": true,
+			"isTemplate": false,
+			"partType": "doublebox",
+			"duration": 10,
 			"payload": {
-				"type": "GFX"
+				"type": "doublebox",
+				"name": "DoubleBox"
 			}
 		},
 		{
-			"id": "part-ilu-1",
+			"id": "part-tema-1-syn-1",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-tema-1",
-			"name": "DoubleBox",
+			"playlistId": null,
+			"name": "SYN 1",
 			"rank": 1,
 			"float": false,
-			"partType": "doublebox",
-			"duration": 8,
-			"fromPreset": true,
-			"payload": {
-				"type": "DoubleBox"
-			},
-			"script": "Tematický titulok"
-		},
-		{
-			"id": "part-syn-1",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-1",
-			"name": "SYN",
-			"rank": 2,
-			"float": false,
+			"isTemplate": false,
 			"partType": "syn",
 			"duration": 12,
-			"fromPreset": true,
 			"payload": {
-				"type": "SYN"
+				"type": "syn",
+				"name": "SYN 1"
 			}
 		},
 		{
-			"id": "part-syn-2",
+			"id": "part-tema-1-syn-2",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-tema-1",
-			"name": "SYN",
+			"playlistId": null,
+			"name": "SYN 2",
+			"rank": 2,
+			"float": false,
+			"isTemplate": false,
+			"partType": "syn",
+			"duration": 12,
+			"payload": {
+				"type": "syn",
+				"name": "SYN 2"
+			}
+		},
+		{
+			"id": "part-tema-1-db2",
+			"rundownId": "spravy-v3-smoke",
+			"segmentId": "seg-tema-1",
+			"playlistId": null,
+			"name": "DoubleBox 2",
 			"rank": 3,
 			"float": false,
-			"partType": "syn",
-			"duration": 12,
-			"fromPreset": true,
+			"isTemplate": false,
+			"partType": "doublebox",
+			"duration": 8,
 			"payload": {
-				"type": "SYN"
+				"type": "doublebox",
+				"name": "DoubleBox 2"
 			}
 		},
 		{
-			"id": "part-ilu-2",
+			"id": "part-tema-2-db",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-1",
-			"name": "ILU",
-			"rank": 4,
-			"float": false,
-			"partType": "ilu",
-			"duration": 8,
-			"fromPreset": true,
-			"payload": {
-				"type": "ILU"
-			},
-			"script": "Tematický titulok"
-		},
-		{
-			"id": "part-ilu-3",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-1",
-			"name": "ILU",
-			"rank": 5,
-			"float": false,
-			"partType": "ilu",
-			"duration": 8,
-			"fromPreset": true,
-			"payload": {
-				"type": "ILU"
-			},
-			"script": "Tematický titulok"
-		},
-		{
-			"id": "part-syn-3",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-1",
-			"name": "SYN",
-			"rank": 6,
-			"float": false,
-			"partType": "syn",
-			"duration": 12,
-			"fromPreset": true,
-			"payload": {
-				"type": "SYN"
-			}
-		},
-		{
-			"id": "part-tema-gfx-2",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-tema-2",
-			"name": "Téma",
+			"playlistId": null,
+			"name": "DoubleBox",
 			"rank": 0,
 			"float": false,
-			"partType": "gfx",
-			"duration": 5,
-			"fromPreset": true,
+			"isTemplate": false,
+			"partType": "doublebox",
+			"duration": 10,
 			"payload": {
-				"type": "GFX"
+				"type": "doublebox",
+				"name": "DoubleBox"
 			}
 		},
 		{
-			"id": "part-ilu-4",
+			"id": "part-tema-2-syn-1",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-tema-2",
-			"name": "DoubleBox",
+			"playlistId": null,
+			"name": "SYN 1",
 			"rank": 1,
 			"float": false,
-			"partType": "doublebox",
-			"duration": 8,
-			"fromPreset": true,
+			"isTemplate": false,
+			"partType": "syn",
+			"duration": 12,
 			"payload": {
-				"type": "DoubleBox"
-			},
-			"script": "Tematický titulok"
+				"type": "syn",
+				"name": "SYN 1"
+			}
 		},
 		{
-			"id": "part-ilu-5",
+			"id": "part-tema-3-db",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-2",
-			"name": "ILU",
-			"rank": 2,
-			"float": false,
-			"partType": "ilu",
-			"duration": 8,
-			"fromPreset": true,
-			"payload": {
-				"type": "ILU"
-			},
-			"script": "Tematický titulok"
-		},
-		{
-			"id": "part-tema-gfx-3",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-tema-3",
-			"name": "Téma",
+			"playlistId": null,
+			"name": "DoubleBox",
 			"rank": 0,
 			"float": false,
-			"partType": "gfx",
-			"duration": 5,
-			"fromPreset": true,
+			"isTemplate": false,
+			"partType": "doublebox",
+			"duration": 10,
 			"payload": {
-				"type": "GFX"
+				"type": "doublebox",
+				"name": "DoubleBox"
 			}
 		},
 		{
-			"id": "part-ilu-6",
+			"id": "part-tema-3-syn-1",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-tema-3",
-			"name": "DoubleBox",
+			"playlistId": null,
+			"name": "SYN 1",
 			"rank": 1,
 			"float": false,
-			"partType": "doublebox",
-			"duration": 8,
-			"fromPreset": true,
+			"isTemplate": false,
+			"partType": "syn",
+			"duration": 12,
 			"payload": {
-				"type": "DoubleBox"
-			},
-			"script": "Tematický titulok"
+				"type": "syn",
+				"name": "SYN 1"
+			}
 		},
 		{
-			"id": "part-syn-4",
+			"id": "part-tema-3-syn-2",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-tema-3",
-			"name": "SYN",
+			"playlistId": null,
+			"name": "SYN 2",
 			"rank": 2,
 			"float": false,
+			"isTemplate": false,
 			"partType": "syn",
 			"duration": 12,
-			"fromPreset": true,
 			"payload": {
-				"type": "SYN"
+				"type": "syn",
+				"name": "SYN 2"
 			}
 		},
 		{
-			"id": "part-ilu-7",
+			"id": "part-tema-4-db",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-3",
-			"name": "ILU názov",
-			"rank": 3,
-			"float": false,
-			"partType": "ilu",
-			"duration": 8,
-			"fromPreset": true,
-			"payload": {
-				"type": "ILU"
-			},
-			"script": "Titulok"
-		},
-		{
-			"id": "part-ilu-8",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-3",
-			"name": "ILU názov",
-			"rank": 4,
-			"float": false,
-			"partType": "ilu",
-			"duration": 8,
-			"fromPreset": true,
-			"payload": {
-				"type": "ILU"
-			},
-			"script": "Tematický titulok"
-		},
-		{
-			"id": "part-syn-5",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-3",
-			"name": "SYN",
-			"rank": 5,
-			"float": false,
-			"partType": "syn",
-			"duration": 12,
-			"fromPreset": true,
-			"payload": {
-				"type": "SYN"
-			}
-		},
-		{
-			"id": "part-tema-gfx-4",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-tema-4",
-			"name": "Téma",
+			"playlistId": null,
+			"name": "DoubleBox",
 			"rank": 0,
 			"float": false,
-			"partType": "gfx",
-			"duration": 5,
-			"fromPreset": true,
+			"isTemplate": false,
+			"partType": "doublebox",
+			"duration": 10,
 			"payload": {
-				"type": "GFX"
+				"type": "doublebox",
+				"name": "DoubleBox"
 			}
 		},
 		{
-			"id": "part-ilu-9",
+			"id": "part-tema-4-syn-1",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-tema-4",
-			"name": "DoubleBox",
+			"playlistId": null,
+			"name": "SYN 1",
 			"rank": 1,
 			"float": false,
-			"partType": "doublebox",
-			"duration": 8,
-			"fromPreset": true,
+			"isTemplate": false,
+			"partType": "syn",
+			"duration": 12,
 			"payload": {
-				"type": "DoubleBox"
-			},
-			"script": "Tematický titulok"
+				"type": "syn",
+				"name": "SYN 1"
+			}
 		},
 		{
-			"id": "part-syn-6",
+			"id": "part-tema-5-db",
 			"rundownId": "spravy-v3-smoke",
+			"segmentId": "seg-tema-5",
 			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"name": "SYN",
+			"name": "DoubleBox",
+			"rank": 0,
+			"float": false,
+			"isTemplate": false,
+			"partType": "doublebox",
+			"duration": 10,
+			"payload": {
+				"type": "doublebox",
+				"name": "DoubleBox"
+			}
+		},
+		{
+			"id": "part-tema-5-syn-1",
+			"rundownId": "spravy-v3-smoke",
+			"segmentId": "seg-tema-5",
+			"playlistId": null,
+			"name": "SYN 1",
+			"rank": 1,
+			"float": false,
+			"isTemplate": false,
+			"partType": "syn",
+			"duration": 12,
+			"payload": {
+				"type": "syn",
+				"name": "SYN 1"
+			}
+		},
+		{
+			"id": "part-tema-5-syn-2",
+			"rundownId": "spravy-v3-smoke",
+			"segmentId": "seg-tema-5",
+			"playlistId": null,
+			"name": "SYN 2",
 			"rank": 2,
 			"float": false,
+			"isTemplate": false,
 			"partType": "syn",
 			"duration": 12,
-			"fromPreset": true,
 			"payload": {
-				"type": "SYN"
+				"type": "syn",
+				"name": "SYN 2"
 			}
 		},
 		{
-			"id": "part-tema-gfx-5",
+			"id": "part-sjv-open",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"name": "Téma",
-			"rank": 3,
-			"float": false,
-			"partType": "gfx",
-			"duration": 5,
-			"fromPreset": true,
-			"payload": {
-				"type": "GFX"
-			}
-		},
-		{
-			"id": "part-ilu-10",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"name": "DoubleBox",
-			"rank": 4,
-			"float": false,
-			"partType": "doublebox",
-			"duration": 8,
-			"fromPreset": true,
-			"payload": {
-				"type": "DoubleBox"
-			},
-			"script": "Téma"
-		},
-		{
-			"id": "part-syn-7",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"name": "SYN",
-			"rank": 5,
-			"float": false,
-			"partType": "syn",
-			"duration": 12,
-			"fromPreset": true,
-			"payload": {
-				"type": "SYN"
-			}
-		},
-		{
-			"id": "part-ilu-11",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"name": "ILU názov",
-			"rank": 6,
-			"float": false,
-			"partType": "ilu",
-			"duration": 8,
-			"fromPreset": true,
-			"payload": {
-				"type": "ILU"
-			},
-			"script": "Titulok"
-		},
-		{
-			"id": "part-ilu-12",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"name": "ILU názov",
-			"rank": 7,
-			"float": false,
-			"partType": "ilu",
-			"duration": 8,
-			"fromPreset": true,
-			"payload": {
-				"type": "ILU"
-			},
-			"script": "ILU názov"
-		},
-		{
-			"id": "part-syn-8",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"name": "SYN",
-			"rank": 8,
-			"float": false,
-			"partType": "syn",
-			"duration": 12,
-			"fromPreset": true,
-			"payload": {
-				"type": "SYN"
-			}
-		},
-		{
-			"id": "part-sjv-gfx",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-sjv",
+			"playlistId": null,
 			"name": "SJV",
 			"rank": 0,
 			"float": false,
+			"isTemplate": false,
 			"partType": "gfx",
-			"duration": 5,
-			"fromPreset": true,
+			"duration": 4,
 			"payload": {
-				"type": "GFX"
+				"type": "gfx",
+				"name": "SJV"
 			}
 		},
 		{
-			"id": "part-ilu-13",
+			"id": "part-sjv-syn-1",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-sjv",
-			"name": "ILU",
+			"playlistId": null,
+			"name": "SJV SYN 1",
 			"rank": 1,
 			"float": false,
-			"partType": "ilu",
+			"isTemplate": false,
+			"partType": "syn",
 			"duration": 8,
-			"fromPreset": true,
 			"payload": {
-				"type": "ILU"
-			},
-			"script": "Tematický titulok"
+				"type": "syn",
+				"name": "SJV SYN 1"
+			}
 		},
 		{
-			"id": "part-ilu-14",
+			"id": "part-sjv-syn-2",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-sjv",
-			"name": "ILU",
+			"playlistId": null,
+			"name": "SJV SYN 2",
 			"rank": 2,
 			"float": false,
-			"partType": "ilu",
+			"isTemplate": false,
+			"partType": "syn",
 			"duration": 8,
-			"fromPreset": true,
 			"payload": {
-				"type": "ILU"
-			},
-			"script": "Tematický titulok"
+				"type": "syn",
+				"name": "SJV SYN 2"
+			}
 		},
 		{
-			"id": "part-ilu-15",
+			"id": "part-sjv-syn-3",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-sjv",
-			"name": "ILU",
+			"playlistId": null,
+			"name": "SJV SYN 3",
 			"rank": 3,
 			"float": false,
-			"partType": "ilu",
+			"isTemplate": false,
+			"partType": "syn",
 			"duration": 8,
-			"fromPreset": true,
 			"payload": {
-				"type": "ILU"
-			},
-			"script": "Tematický titulok"
+				"type": "syn",
+				"name": "SJV SYN 3"
+			}
 		},
 		{
-			"id": "part-ilu-16",
+			"id": "part-sjv-syn-4",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-sjv",
-			"name": "ILU",
+			"playlistId": null,
+			"name": "SJV SYN 4",
 			"rank": 4,
 			"float": false,
-			"partType": "ilu",
+			"isTemplate": false,
+			"partType": "syn",
 			"duration": 8,
-			"fromPreset": true,
 			"payload": {
-				"type": "ILU"
-			},
-			"script": "Tematický titulok"
+				"type": "syn",
+				"name": "SJV SYN 4"
+			}
 		},
 		{
-			"id": "part-sport-gfx",
+			"id": "part-sport-open",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-sport",
+			"playlistId": null,
 			"name": "Šport",
 			"rank": 0,
 			"float": false,
+			"isTemplate": false,
 			"partType": "gfx",
-			"duration": 5,
-			"fromPreset": true,
+			"duration": 4,
 			"payload": {
-				"type": "GFX"
+				"type": "gfx",
+				"name": "Šport"
 			}
 		},
 		{
-			"id": "part-ilu-17",
+			"id": "part-sport-syn-1",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-sport",
-			"name": "ILU",
+			"playlistId": null,
+			"name": "Sport SYN 1",
 			"rank": 1,
 			"float": false,
-			"partType": "ilu",
-			"duration": 8,
-			"fromPreset": true,
+			"isTemplate": false,
+			"partType": "syn",
+			"duration": 10,
 			"payload": {
-				"type": "ILU"
-			},
-			"script": "Tematický titulok"
+				"type": "syn",
+				"name": "Sport SYN 1"
+			}
 		},
 		{
-			"id": "part-ilu-18",
+			"id": "part-sport-syn-2",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-sport",
-			"name": "ILU",
+			"playlistId": null,
+			"name": "Sport SYN 2",
 			"rank": 2,
 			"float": false,
-			"partType": "ilu",
-			"duration": 8,
-			"fromPreset": true,
+			"isTemplate": false,
+			"partType": "syn",
+			"duration": 10,
 			"payload": {
-				"type": "ILU"
-			},
-			"script": "Tematický titulok"
+				"type": "syn",
+				"name": "Sport SYN 2"
+			}
 		},
 		{
-			"id": "part-ilu-19",
+			"id": "part-sport-syn-3",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-sport",
-			"name": "ILU",
+			"playlistId": null,
+			"name": "Sport SYN 3",
 			"rank": 3,
 			"float": false,
-			"partType": "ilu",
-			"duration": 8,
-			"fromPreset": true,
+			"isTemplate": false,
+			"partType": "syn",
+			"duration": 10,
 			"payload": {
-				"type": "ILU"
-			},
-			"script": "Tematický titulok"
+				"type": "syn",
+				"name": "Sport SYN 3"
+			}
 		},
 		{
 			"id": "part-weather",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-weather",
+			"playlistId": null,
 			"name": "Počasie",
 			"rank": 0,
 			"float": false,
+			"isTemplate": false,
 			"partType": "gfx",
 			"duration": 20,
-			"fromPreset": true,
 			"payload": {
-				"type": "GFX"
-			},
-			"script": "Počasie bude"
-		},
-		{
-			"id": "part-ilu-20",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-outro",
-			"name": "ILU Avízo",
-			"rank": 0,
-			"float": false,
-			"partType": "ilu",
-			"duration": 8,
-			"fromPreset": true,
-			"payload": {
-				"type": "ILU"
-			},
-			"script": "Avízo"
-		},
-		{
-			"id": "part-syn-9",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-outro",
-			"name": "SYN",
-			"rank": 1,
-			"float": false,
-			"partType": "syn",
-			"duration": 12,
-			"fromPreset": true,
-			"payload": {
-				"type": "SYN"
+				"type": "gfx",
+				"name": "Počasie"
 			}
 		},
 		{
-			"id": "part-ilu-21",
+			"id": "part-avizo-db",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-outro",
-			"name": "ILU Záver",
-			"rank": 2,
+			"playlistId": null,
+			"name": "Odporúčanie",
+			"rank": 0,
 			"float": false,
-			"partType": "ilu",
-			"duration": 8,
-			"fromPreset": true,
+			"isTemplate": false,
+			"partType": "doublebox",
+			"duration": 10,
 			"payload": {
-				"type": "ILU"
-			},
-			"script": "nájdete na 360tka.sk. A to je na dnes všetko, dovidenia opäť zajtra."
+				"type": "doublebox",
+				"name": "Odporúčanie"
+			}
 		},
 		{
-			"id": "part-outro-gfx",
+			"id": "part-avizo-syn",
 			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-outro",
+			"playlistId": null,
+			"name": "Avízo SYN",
+			"rank": 1,
+			"float": false,
+			"isTemplate": false,
+			"partType": "syn",
+			"duration": 8,
+			"payload": {
+				"type": "syn",
+				"name": "Avízo SYN"
+			}
+		},
+		{
+			"id": "part-avizo-db2",
+			"rundownId": "spravy-v3-smoke",
+			"segmentId": "seg-outro",
+			"playlistId": null,
+			"name": "Odporúčanie 2",
+			"rank": 2,
+			"float": false,
+			"isTemplate": false,
+			"partType": "doublebox",
+			"duration": 6,
+			"payload": {
+				"type": "doublebox",
+				"name": "Odporúčanie 2"
+			}
+		},
+		{
+			"id": "part-outro",
+			"rundownId": "spravy-v3-smoke",
+			"segmentId": "seg-outro",
+			"playlistId": null,
 			"name": "Outro",
 			"rank": 3,
 			"float": false,
+			"isTemplate": false,
 			"partType": "gfx",
-			"duration": 8,
-			"fromPreset": true,
+			"duration": 30,
 			"payload": {
-				"type": "GFX"
+				"type": "gfx",
+				"name": "Outro"
 			}
 		}
 	],
@@ -843,17 +700,19 @@
 			"playlistId": null,
 			"segmentId": "seg-headlines",
 			"partId": "part-hl-1",
-			"name": "ILU Headline",
+			"name": "Headline",
+			"rank": 0,
+			"float": false,
 			"pieceType": "headline",
+			"start": 0,
+			"duration": 8,
 			"payload": {
 				"text": "Headline horný riadok",
 				"iluFile": "clips/HEADLINE1.mov",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
-			},
-			"start": 0,
-			"duration": 8
+			}
 		},
 		{
 			"id": "piece-hl-1-l3d",
@@ -861,14 +720,16 @@
 			"playlistId": null,
 			"segmentId": "seg-headlines",
 			"partId": "part-hl-1",
-			"name": "L3D Headline",
+			"name": "L3D",
+			"rank": 1,
+			"float": false,
 			"pieceType": "l3d-headline",
+			"start": 0,
+			"duration": 8,
 			"payload": {
 				"headline": "Headline L3D horný riadok",
 				"subline": "Headline dolný riadok"
-			},
-			"start": 0,
-			"duration": 8
+			}
 		},
 		{
 			"id": "piece-hl-1-cam",
@@ -876,12 +737,27 @@
 			"playlistId": null,
 			"segmentId": "seg-headlines",
 			"partId": "part-hl-1",
-			"name": "Camera A",
+			"name": "Cam",
+			"rank": 2,
+			"float": false,
 			"pieceType": "camera",
+			"start": 0,
 			"payload": {
 				"camNo": 1
-			},
-			"start": 0
+			}
+		},
+		{
+			"id": "piece-hl-1-logo",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"segmentId": "seg-headlines",
+			"partId": "part-hl-1",
+			"name": "Logo",
+			"rank": 3,
+			"float": false,
+			"pieceType": "logo-bug",
+			"start": 0,
+			"payload": {}
 		},
 		{
 			"id": "piece-hl-2-ilu",
@@ -889,17 +765,19 @@
 			"playlistId": null,
 			"segmentId": "seg-headlines",
 			"partId": "part-hl-2",
-			"name": "ILU Headline",
+			"name": "Headline",
+			"rank": 0,
+			"float": false,
 			"pieceType": "headline",
+			"start": 0,
+			"duration": 8,
 			"payload": {
 				"text": "Headline horný riadok",
 				"iluFile": "clips/HEADLINE2.mov",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
-			},
-			"start": 0,
-			"duration": 8
+			}
 		},
 		{
 			"id": "piece-hl-2-l3d",
@@ -907,14 +785,16 @@
 			"playlistId": null,
 			"segmentId": "seg-headlines",
 			"partId": "part-hl-2",
-			"name": "L3D Headline",
+			"name": "L3D",
+			"rank": 1,
+			"float": false,
 			"pieceType": "l3d-headline",
+			"start": 0,
+			"duration": 8,
 			"payload": {
 				"headline": "Headline L3D horný riadok",
 				"subline": "Headline dolný riadok"
-			},
-			"start": 0,
-			"duration": 8
+			}
 		},
 		{
 			"id": "piece-hl-2-cam",
@@ -922,12 +802,14 @@
 			"playlistId": null,
 			"segmentId": "seg-headlines",
 			"partId": "part-hl-2",
-			"name": "Camera A",
+			"name": "Cam",
+			"rank": 2,
+			"float": false,
 			"pieceType": "camera",
+			"start": 0,
 			"payload": {
 				"camNo": 1
-			},
-			"start": 0
+			}
 		},
 		{
 			"id": "piece-hl-3-ilu",
@@ -935,17 +817,19 @@
 			"playlistId": null,
 			"segmentId": "seg-headlines",
 			"partId": "part-hl-3",
-			"name": "ILU Headline",
+			"name": "Headline",
+			"rank": 0,
+			"float": false,
 			"pieceType": "headline",
+			"start": 0,
+			"duration": 8,
 			"payload": {
 				"text": "Headline horný riadok",
 				"iluFile": "clips/HEADLINE3.mov",
 				"sourceEnabled": false,
 				"source": "",
 				"iluPrerendered": false
-			},
-			"start": 0,
-			"duration": 8
+			}
 		},
 		{
 			"id": "piece-hl-3-l3d",
@@ -953,14 +837,16 @@
 			"playlistId": null,
 			"segmentId": "seg-headlines",
 			"partId": "part-hl-3",
-			"name": "L3D Headline",
+			"name": "L3D",
+			"rank": 1,
+			"float": false,
 			"pieceType": "l3d-headline",
+			"start": 0,
+			"duration": 8,
 			"payload": {
 				"headline": "Headline L3D horný riadok",
 				"subline": "Headline dolný riadok"
-			},
-			"start": 0,
-			"duration": 8
+			}
 		},
 		{
 			"id": "piece-hl-3-cam",
@@ -968,1885 +854,1205 @@
 			"playlistId": null,
 			"segmentId": "seg-headlines",
 			"partId": "part-hl-3",
-			"name": "Camera A",
+			"name": "Cam",
+			"rank": 2,
+			"float": false,
 			"pieceType": "camera",
+			"start": 0,
 			"payload": {
 				"camNo": 1
-			},
-			"start": 0
+			}
 		},
 		{
-			"id": "8a6d76cf-fc2a-4c73-b662-a28e41fdec97",
+			"id": "piece-part-intro",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-intro",
 			"partId": "part-intro",
-			"name": "Intro overlay",
+			"name": "Intro",
+			"rank": 0,
+			"float": false,
 			"pieceType": "intro",
 			"payload": {
 				"fileName": "assets/intro_michal"
 			},
-			"start": 0,
-			"duration": 12
-		},
-		{
-			"id": "piece-intro-mod",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-intro",
-			"partId": "part-intro-mod",
-			"name": "L3D Moderátor",
-			"pieceType": "l3d-mod",
-			"payload": {
-				"name": "Gabriela Kajtárová",
-				"title": "moderátorka"
-			},
 			"start": 0
 		},
 		{
-			"id": "piece-intro-logo",
+			"id": "piece-part-intro-mod-cam",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
+			"partId": "part-intro-mod",
+			"name": "Cam 1",
+			"rank": 0,
+			"float": false,
+			"pieceType": "camera",
+			"payload": {
+				"camNo": 1
+			},
 			"segmentId": "seg-intro",
+			"start": 0
+		},
+		{
+			"id": "piece-part-intro-mod-l3d",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
 			"partId": "part-intro-mod",
-			"name": "Logo Bug",
-			"pieceType": "logo-bug",
-			"payload": {},
-			"start": 0
-		},
-		{
-			"id": "piece-part-tema-gfx-1-l3d",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-1",
-			"partId": "part-tema-gfx-1",
-			"name": "L3D Téma",
-			"pieceType": "l3d-tema",
+			"name": "MOD",
+			"rank": 1,
+			"float": false,
+			"pieceType": "l3d-predstavovak",
 			"payload": {
-				"headline": "Téma",
-				"subline": "Rozpracované"
+				"name": "Michal Kovačič",
+				"title": "moderátor"
 			},
+			"segmentId": "seg-intro",
 			"start": 0
 		},
 		{
-			"id": "piece-part-ilu-1-ilu",
+			"id": "piece-part-tema-1-db-ilu",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-1",
-			"partId": "part-ilu-1",
-			"name": "ILU DoubleBox",
+			"partId": "part-tema-1-db",
+			"name": "Osobné údaje na OR SR",
+			"rank": 0,
+			"float": false,
 			"pieceType": "doublebox-ilu",
 			"payload": {
-				"text": "Tematický titulok",
+				"text": "Osobné údaje na OR SR",
 				"iluFile": "clips/ILU bednar.mp4"
 			},
+			"segmentId": "seg-tema-1",
 			"start": 0
 		},
 		{
-			"id": "piece-part-ilu-1-l3d",
+			"id": "piece-part-tema-1-db-l3d",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-1",
-			"partId": "part-ilu-1",
-			"name": "L3D Téma",
-			"pieceType": "l3d-tema",
+			"partId": "part-tema-1-db",
+			"name": "Osobné údaje na OR SR",
+			"rank": 1,
+			"float": false,
+			"pieceType": "l3d-predstavovak",
 			"payload": {
-				"headline": "Tematický titulok"
+				"name": "Osobné údaje na OR SR",
+				"title": ""
 			},
+			"segmentId": "seg-tema-1",
 			"start": 0
 		},
 		{
-			"id": "piece-part-ilu-1-cam",
+			"id": "piece-part-tema-1-db-cam",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-1",
-			"partId": "part-ilu-1",
-			"name": "Camera A",
+			"partId": "part-tema-1-db",
+			"name": "Cam 1",
+			"rank": 2,
+			"float": false,
 			"pieceType": "camera",
 			"payload": {
 				"camNo": 1
 			},
+			"segmentId": "seg-tema-1",
 			"start": 0
 		},
 		{
-			"id": "piece-part-syn-1-l3d",
+			"id": "wipe-part-tema-1-db",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
+			"partId": "part-tema-1-db",
+			"name": "Wipe",
+			"rank": 3,
+			"float": false,
+			"pieceType": "wipe",
+			"payload": {
+				"fileName": "wipes/wipe",
+				"transition": "Double Box"
+			},
+			"duration": 0,
 			"segmentId": "seg-tema-1",
-			"partId": "part-syn-1",
-			"name": "L3D SYN",
+			"start": 0
+		},
+		{
+			"id": "piece-part-tema-1-syn-1-vid",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-tema-1-syn-1",
+			"name": "SYN",
+			"rank": 0,
+			"float": false,
+			"pieceType": "video",
+			"payload": {
+				"fileName": "clips/SYN CLUSTER rutte trump.mp4",
+				"sourceDuration": 12000
+			},
+			"segmentId": "seg-tema-1",
+			"start": 0
+		},
+		{
+			"id": "piece-part-tema-1-syn-1-l3d",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-tema-1-syn-1",
+			"name": "Meno Priezvisko",
+			"rank": 1,
+			"float": false,
 			"pieceType": "l3d-syn",
 			"payload": {
 				"name": "Meno Priezvisko",
 				"role": "funkcia"
 			},
-			"start": 0
+			"duration": 6.0,
+			"start": 2.0,
+			"segmentId": "seg-tema-1"
 		},
 		{
-			"id": "piece-part-syn-1-vid",
+			"id": "piece-part-tema-1-syn-1-src",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-1",
-			"partId": "part-syn-1",
-			"name": "SOT",
+			"partId": "part-tema-1-syn-1",
+			"name": "Zdroj",
+			"rank": 2,
+			"float": false,
+			"pieceType": "l3d-syn",
+			"payload": {
+				"name": "Zdroj: Markíza",
+				"role": ""
+			},
+			"duration": 6.0,
+			"start": 2.0,
+			"segmentId": "seg-tema-1"
+		},
+		{
+			"id": "piece-part-tema-1-syn-2-vid",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-tema-1-syn-2",
+			"name": "SYN",
+			"rank": 0,
+			"float": false,
 			"pieceType": "video",
 			"payload": {
-				"fileName": "clips/SYN CLUSTER rutte trump.mp4"
+				"fileName": "clips/SYN CLUSTER fico tusk.mp4",
+				"sourceDuration": 12000
 			},
+			"segmentId": "seg-tema-1",
 			"start": 0
 		},
 		{
-			"id": "piece-part-syn-2-l3d",
+			"id": "piece-part-tema-1-syn-2-l3d",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-1",
-			"partId": "part-syn-2",
-			"name": "L3D SYN",
+			"partId": "part-tema-1-syn-2",
+			"name": "Meno Priezvisko",
+			"rank": 1,
+			"float": false,
 			"pieceType": "l3d-syn",
 			"payload": {
 				"name": "Meno Priezvisko",
 				"role": "funkcia"
 			},
-			"start": 0
+			"duration": 5.0,
+			"start": 1.5,
+			"segmentId": "seg-tema-1"
 		},
 		{
-			"id": "piece-part-syn-2-vid",
+			"id": "piece-part-tema-1-db2-ilu",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-1",
-			"partId": "part-syn-2",
-			"name": "SOT",
-			"pieceType": "video",
-			"payload": {
-				"fileName": "clips/SYN CLUSTER fico tusk.mp4"
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-2-ilu",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-1",
-			"partId": "part-ilu-2",
-			"name": "ILU Headline",
-			"pieceType": "headline",
-			"payload": {
-				"text": "Tematický titulok",
-				"iluFile": "clips/ILU bednar2.mp4",
-				"sourceEnabled": false,
-				"source": "",
-				"iluPrerendered": false
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-2-l3d",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-1",
-			"partId": "part-ilu-2",
-			"name": "L3D Téma",
-			"pieceType": "l3d-tema",
-			"payload": {
-				"headline": "Tematický titulok"
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-2-cam",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-1",
-			"partId": "part-ilu-2",
-			"name": "Camera A",
-			"pieceType": "camera",
-			"payload": {
-				"camNo": 1
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-3-ilu",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-1",
-			"partId": "part-ilu-3",
-			"name": "ILU Headline",
-			"pieceType": "headline",
-			"payload": {
-				"text": "Tematický titulok",
-				"iluFile": "clips/ILU bosna.mp4",
-				"sourceEnabled": false,
-				"source": "",
-				"iluPrerendered": false
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-3-l3d",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-1",
-			"partId": "part-ilu-3",
-			"name": "L3D Téma",
-			"pieceType": "l3d-tema",
-			"payload": {
-				"headline": "Tematický titulok"
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-3-cam",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-1",
-			"partId": "part-ilu-3",
-			"name": "Camera A",
-			"pieceType": "camera",
-			"payload": {
-				"camNo": 1
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-syn-3-l3d",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-1",
-			"partId": "part-syn-3",
-			"name": "L3D SYN",
-			"pieceType": "l3d-syn",
-			"payload": {
-				"name": "Meno Priezvisko",
-				"role": "funkcia"
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-syn-3-vid",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-1",
-			"partId": "part-syn-3",
-			"name": "SOT",
-			"pieceType": "video",
-			"payload": {
-				"fileName": "clips/SYN bednar ok.mp4"
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-tema-gfx-2-l3d",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-2",
-			"partId": "part-tema-gfx-2",
-			"name": "L3D Téma",
-			"pieceType": "l3d-tema",
-			"payload": {
-				"headline": "Téma",
-				"subline": "Rozpracované"
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-4-ilu",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-2",
-			"partId": "part-ilu-4",
-			"name": "ILU DoubleBox",
+			"partId": "part-tema-1-db2",
+			"name": "Osobné údaje na OR SR",
+			"rank": 0,
+			"float": false,
 			"pieceType": "doublebox-ilu",
 			"payload": {
-				"text": "Tematický titulok",
-				"iluFile": "clips/ILU fico.mp4"
+				"text": "Osobné údaje na OR SR",
+				"iluFile": "clips/ILU bednar2.mp4"
 			},
+			"segmentId": "seg-tema-1",
 			"start": 0
 		},
 		{
-			"id": "piece-part-ilu-4-l3d",
+			"id": "piece-part-tema-1-db2-l3d",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-2",
-			"partId": "part-ilu-4",
-			"name": "L3D Téma",
-			"pieceType": "l3d-tema",
+			"partId": "part-tema-1-db2",
+			"name": "Osobné údaje na OR SR",
+			"rank": 1,
+			"float": false,
+			"pieceType": "l3d-predstavovak",
 			"payload": {
-				"headline": "Tematický titulok"
+				"name": "Boris Susko",
+				"title": "minister spravodlivosti (SMER-SD)"
 			},
+			"segmentId": "seg-tema-1",
 			"start": 0
 		},
 		{
-			"id": "piece-part-ilu-4-cam",
+			"id": "piece-part-tema-1-db2-cam",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-2",
-			"partId": "part-ilu-4",
-			"name": "Camera A",
+			"partId": "part-tema-1-db2",
+			"name": "Cam 1",
+			"rank": 2,
+			"float": false,
 			"pieceType": "camera",
 			"payload": {
 				"camNo": 1
 			},
+			"segmentId": "seg-tema-1",
 			"start": 0
 		},
 		{
-			"id": "piece-part-ilu-5-ilu",
+			"id": "piece-part-tema-2-db-ilu",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-2",
-			"partId": "part-ilu-5",
-			"name": "ILU Headline",
-			"pieceType": "headline",
-			"payload": {
-				"text": "Tematický titulok",
-				"iluFile": "clips/ILU fotbal.mp4",
-				"sourceEnabled": false,
-				"source": "",
-				"iluPrerendered": false
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-5-l3d",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-2",
-			"partId": "part-ilu-5",
-			"name": "L3D Téma",
-			"pieceType": "l3d-tema",
-			"payload": {
-				"headline": "Tematický titulok"
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-5-cam",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-2",
-			"partId": "part-ilu-5",
-			"name": "Camera A",
-			"pieceType": "camera",
-			"payload": {
-				"camNo": 1
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-tema-gfx-3-l3d",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-3",
-			"partId": "part-tema-gfx-3",
-			"name": "L3D Téma",
-			"pieceType": "l3d-tema",
-			"payload": {
-				"headline": "Téma",
-				"subline": "Rozpracované"
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-6-ilu",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-3",
-			"partId": "part-ilu-6",
-			"name": "ILU DoubleBox",
+			"partId": "part-tema-2-db",
+			"name": "Rozpočet a konsolidácia",
+			"rank": 0,
+			"float": false,
 			"pieceType": "doublebox-ilu",
 			"payload": {
-				"text": "Tematický titulok",
-				"iluFile": "clips/ILU maskarova.mp4"
+				"text": "Rozpočet a konsolidácia",
+				"iluFile": "clips/ILU bednar2.mp4"
 			},
+			"segmentId": "seg-tema-2",
 			"start": 0
 		},
 		{
-			"id": "piece-part-ilu-6-l3d",
+			"id": "piece-part-tema-2-db-l3d",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-3",
-			"partId": "part-ilu-6",
-			"name": "L3D Téma",
-			"pieceType": "l3d-tema",
+			"partId": "part-tema-2-db",
+			"name": "Rozpočet a konsolidácia",
+			"rank": 1,
+			"float": false,
+			"pieceType": "l3d-predstavovak",
 			"payload": {
-				"headline": "Tematický titulok"
+				"name": "Rozpočet a konsolidácia",
+				"title": ""
 			},
+			"segmentId": "seg-tema-2",
 			"start": 0
 		},
 		{
-			"id": "piece-part-ilu-6-cam",
+			"id": "piece-part-tema-2-db-cam",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-3",
-			"partId": "part-ilu-6",
-			"name": "Camera A",
+			"partId": "part-tema-2-db",
+			"name": "Cam 1",
+			"rank": 2,
+			"float": false,
 			"pieceType": "camera",
 			"payload": {
 				"camNo": 1
 			},
+			"segmentId": "seg-tema-2",
 			"start": 0
 		},
 		{
-			"id": "piece-part-syn-4-l3d",
+			"id": "wipe-part-tema-2-db",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-3",
-			"partId": "part-syn-4",
-			"name": "L3D SYN",
-			"pieceType": "l3d-syn",
+			"partId": "part-tema-2-db",
+			"name": "Wipe",
+			"rank": 3,
+			"float": false,
+			"pieceType": "wipe",
 			"payload": {
-				"name": "Meno Priezvisko",
-				"role": "funkcia"
+				"fileName": "wipes/wipe",
+				"transition": "SYN TO ILU TEMA"
 			},
+			"duration": 0,
+			"segmentId": "seg-tema-2",
 			"start": 0
 		},
 		{
-			"id": "piece-part-syn-4-vid",
+			"id": "piece-part-tema-2-syn-1-vid",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-3",
-			"partId": "part-syn-4",
-			"name": "SOT",
+			"partId": "part-tema-2-syn-1",
+			"name": "SYN",
+			"rank": 0,
+			"float": false,
 			"pieceType": "video",
 			"payload": {
-				"fileName": "clips/SYN kamen.mp4"
+				"fileName": "clips/SYN bednar ok.mp4",
+				"sourceDuration": 12000
 			},
+			"segmentId": "seg-tema-2",
 			"start": 0
 		},
 		{
-			"id": "piece-part-ilu-7-ilu",
+			"id": "piece-part-tema-2-syn-1-l3d",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-3",
-			"partId": "part-ilu-7",
-			"name": "ILU Headline",
-			"pieceType": "headline",
-			"payload": {
-				"text": "Titulok",
-				"iluFile": "clips/ILU oecd.mp4",
-				"sourceEnabled": false,
-				"source": "",
-				"iluPrerendered": false
-			},
-			"start": 0,
-			"duration": 8
-		},
-		{
-			"id": "piece-part-ilu-7-l3d",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-3",
-			"partId": "part-ilu-7",
-			"name": "L3D Headline",
-			"pieceType": "l3d-headline",
-			"payload": {
-				"headline": "Titulok",
-				"subline": ""
-			},
-			"start": 0,
-			"duration": 8
-		},
-		{
-			"id": "piece-part-ilu-7-cam",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-3",
-			"partId": "part-ilu-7",
-			"name": "Camera P",
-			"pieceType": "camera",
-			"payload": {
-				"camNo": 2
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-8-ilu",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-3",
-			"partId": "part-ilu-8",
-			"name": "ILU Headline",
-			"pieceType": "headline",
-			"payload": {
-				"text": "Tematický titulok",
-				"iluFile": "clips/ILU oecd2.mp4",
-				"sourceEnabled": false,
-				"source": "",
-				"iluPrerendered": false
-			},
-			"start": 0,
-			"duration": 8
-		},
-		{
-			"id": "piece-part-ilu-8-l3d",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-3",
-			"partId": "part-ilu-8",
-			"name": "L3D Headline",
-			"pieceType": "l3d-headline",
-			"payload": {
-				"headline": "Tematický titulok",
-				"subline": ""
-			},
-			"start": 0,
-			"duration": 8
-		},
-		{
-			"id": "piece-part-ilu-8-cam",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-3",
-			"partId": "part-ilu-8",
-			"name": "Camera A",
-			"pieceType": "camera",
-			"payload": {
-				"camNo": 1
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-syn-5-l3d",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-3",
-			"partId": "part-syn-5",
-			"name": "L3D SYN",
+			"partId": "part-tema-2-syn-1",
+			"name": "Peter Pellegrini",
+			"rank": 1,
+			"float": false,
 			"pieceType": "l3d-syn",
 			"payload": {
-				"name": "Meno Priezvisko",
-				"role": "funkcia"
+				"name": "Peter Pellegrini",
+				"role": "Prezident SR"
 			},
-			"start": 0
+			"duration": 7.0,
+			"start": 1.0,
+			"segmentId": "seg-tema-2"
 		},
 		{
-			"id": "piece-part-syn-5-vid",
+			"id": "piece-part-tema-3-db-ilu",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-3",
-			"partId": "part-syn-5",
-			"name": "SOT",
-			"pieceType": "video",
-			"payload": {
-				"fileName": "clips/SYN oecd.mp4"
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-tema-gfx-4-l3d",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"partId": "part-tema-gfx-4",
-			"name": "L3D Téma",
-			"pieceType": "l3d-tema",
-			"payload": {
-				"headline": "Téma",
-				"subline": "Rozpracované"
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-9-ilu",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"partId": "part-ilu-9",
-			"name": "ILU DoubleBox",
+			"partId": "part-tema-3-db",
+			"name": "Bezpečnosť v Európe",
+			"rank": 0,
+			"float": false,
 			"pieceType": "doublebox-ilu",
 			"payload": {
-				"text": "Tematický titulok",
-				"iluFile": "clips/ILU pavel.mp4"
+				"text": "Bezpečnosť v Európe",
+				"iluFile": "clips/ILU bosna.mp4"
 			},
+			"segmentId": "seg-tema-3",
 			"start": 0
 		},
 		{
-			"id": "piece-part-ilu-9-l3d",
+			"id": "piece-part-tema-3-db-l3d",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"partId": "part-ilu-9",
-			"name": "L3D Téma",
-			"pieceType": "l3d-tema",
+			"partId": "part-tema-3-db",
+			"name": "Bezpečnosť v Európe",
+			"rank": 1,
+			"float": false,
+			"pieceType": "l3d-predstavovak",
 			"payload": {
-				"headline": "Tematický titulok"
+				"name": "Bezpečnosť v Európe",
+				"title": ""
 			},
+			"segmentId": "seg-tema-3",
 			"start": 0
 		},
 		{
-			"id": "piece-part-ilu-9-cam",
+			"id": "piece-part-tema-3-db-cam",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"partId": "part-ilu-9",
-			"name": "Camera A",
+			"partId": "part-tema-3-db",
+			"name": "Cam 1",
+			"rank": 2,
+			"float": false,
 			"pieceType": "camera",
 			"payload": {
 				"camNo": 1
 			},
+			"segmentId": "seg-tema-3",
 			"start": 0
 		},
 		{
-			"id": "piece-part-syn-6-l3d",
+			"id": "wipe-part-tema-3-db",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"partId": "part-syn-6",
-			"name": "L3D SYN",
-			"pieceType": "l3d-syn",
+			"partId": "part-tema-3-db",
+			"name": "Wipe",
+			"rank": 3,
+			"float": false,
+			"pieceType": "wipe",
 			"payload": {
-				"name": "Titulok",
-				"role": "titulok"
+				"fileName": "wipes/wipe",
+				"transition": "SYN TO ILU TEMA"
 			},
+			"duration": 0,
+			"segmentId": "seg-tema-3",
 			"start": 0
 		},
 		{
-			"id": "piece-part-syn-6-vid",
+			"id": "piece-part-tema-3-syn-1-vid",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"partId": "part-syn-6",
-			"name": "SOT",
+			"partId": "part-tema-3-syn-1",
+			"name": "SYN",
+			"rank": 0,
+			"float": false,
 			"pieceType": "video",
 			"payload": {
-				"fileName": "clips/SYN RUCH letisko.mp4"
+				"fileName": "clips/SYN CLUSTER rutte trump.mp4",
+				"sourceDuration": 12000
 			},
+			"segmentId": "seg-tema-3",
 			"start": 0
 		},
 		{
-			"id": "piece-part-tema-gfx-5-l3d",
+			"id": "piece-part-tema-3-syn-1-l3d",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"partId": "part-tema-gfx-5",
-			"name": "L3D Téma",
-			"pieceType": "l3d-tema",
+			"partId": "part-tema-3-syn-1",
+			"name": "Host",
+			"rank": 1,
+			"float": false,
+			"pieceType": "l3d-syn",
 			"payload": {
-				"headline": "Téma",
-				"subline": "Rozpracované"
+				"name": "Host",
+				"role": "analytik"
 			},
+			"duration": 5.0,
+			"start": 0.5,
+			"segmentId": "seg-tema-3"
+		},
+		{
+			"id": "piece-part-tema-3-syn-2-vid",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-tema-3-syn-2",
+			"name": "SYN",
+			"rank": 0,
+			"float": false,
+			"pieceType": "video",
+			"payload": {
+				"fileName": "clips/SYN CLUSTER fico tusk.mp4",
+				"sourceDuration": 12000
+			},
+			"segmentId": "seg-tema-3",
 			"start": 0
 		},
 		{
-			"id": "piece-part-ilu-10-ilu",
+			"id": "piece-part-tema-3-syn-2-l3d",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"partId": "part-ilu-10",
-			"name": "ILU DoubleBox",
+			"partId": "part-tema-3-syn-2",
+			"name": "Host",
+			"rank": 1,
+			"float": false,
+			"pieceType": "l3d-syn",
+			"payload": {
+				"name": "Host",
+				"role": "analytik"
+			},
+			"duration": 4.0,
+			"start": 1.0,
+			"segmentId": "seg-tema-3"
+		},
+		{
+			"id": "piece-part-tema-4-db-ilu",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-tema-4-db",
+			"name": "Energetika a ceny",
+			"rank": 0,
+			"float": false,
 			"pieceType": "doublebox-ilu",
 			"payload": {
-				"text": "Téma",
-				"iluFile": "clips/ILU ps.mp4"
+				"text": "Energetika a ceny",
+				"iluFile": "clips/ILU bednar.mp4"
 			},
+			"segmentId": "seg-tema-4",
 			"start": 0
 		},
 		{
-			"id": "piece-part-ilu-10-l3d",
+			"id": "piece-part-tema-4-db-l3d",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"partId": "part-ilu-10",
-			"name": "L3D Téma",
-			"pieceType": "l3d-tema",
+			"partId": "part-tema-4-db",
+			"name": "Energetika a ceny",
+			"rank": 1,
+			"float": false,
+			"pieceType": "l3d-predstavovak",
 			"payload": {
-				"headline": "Téma"
+				"name": "Energetika a ceny",
+				"title": ""
 			},
+			"segmentId": "seg-tema-4",
 			"start": 0
 		},
 		{
-			"id": "piece-part-ilu-10-cam",
+			"id": "piece-part-tema-4-db-cam",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"partId": "part-ilu-10",
-			"name": "Camera A",
+			"partId": "part-tema-4-db",
+			"name": "Cam 1",
+			"rank": 2,
+			"float": false,
 			"pieceType": "camera",
 			"payload": {
 				"camNo": 1
 			},
+			"segmentId": "seg-tema-4",
 			"start": 0
 		},
 		{
-			"id": "piece-part-syn-7-l3d",
+			"id": "wipe-part-tema-4-db",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"partId": "part-syn-7",
-			"name": "L3D SYN",
-			"pieceType": "l3d-syn",
+			"partId": "part-tema-4-db",
+			"name": "Wipe",
+			"rank": 3,
+			"float": false,
+			"pieceType": "wipe",
 			"payload": {
-				"name": "Titulok",
-				"role": "titulok"
+				"fileName": "wipes/wipe",
+				"transition": "SYN TO ILU TEMA"
 			},
+			"duration": 0,
+			"segmentId": "seg-tema-4",
 			"start": 0
 		},
 		{
-			"id": "piece-part-syn-7-vid",
+			"id": "piece-part-tema-4-syn-1-vid",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"partId": "part-syn-7",
-			"name": "SOT",
+			"partId": "part-tema-4-syn-1",
+			"name": "SYN",
+			"rank": 0,
+			"float": false,
 			"pieceType": "video",
 			"payload": {
-				"fileName": "clips/SYN RUCH letisko ok.mp4"
+				"fileName": "clips/SYN bednar ok.mp4",
+				"sourceDuration": 12000
 			},
+			"segmentId": "seg-tema-4",
 			"start": 0
 		},
 		{
-			"id": "piece-part-ilu-11-ilu",
+			"id": "piece-part-tema-4-syn-1-l3d",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"partId": "part-ilu-11",
-			"name": "ILU Headline",
-			"pieceType": "headline",
-			"payload": {
-				"text": "Titulok",
-				"iluFile": "clips/ILU rutte trump.mp4",
-				"sourceEnabled": false,
-				"source": "",
-				"iluPrerendered": false
-			},
-			"start": 0,
-			"duration": 8
-		},
-		{
-			"id": "piece-part-ilu-11-l3d",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"partId": "part-ilu-11",
-			"name": "L3D Headline",
-			"pieceType": "l3d-headline",
-			"payload": {
-				"headline": "Titulok",
-				"subline": ""
-			},
-			"start": 0,
-			"duration": 8
-		},
-		{
-			"id": "piece-part-ilu-11-cam",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"partId": "part-ilu-11",
-			"name": "Camera P",
-			"pieceType": "camera",
-			"payload": {
-				"camNo": 2
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-12-ilu",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"partId": "part-ilu-12",
-			"name": "ILU Headline",
-			"pieceType": "headline",
-			"payload": {
-				"text": "ILU názov",
-				"iluFile": "clips/ILU strnad.mp4",
-				"sourceEnabled": false,
-				"source": "",
-				"iluPrerendered": false
-			},
-			"start": 0,
-			"duration": 8
-		},
-		{
-			"id": "piece-part-ilu-12-l3d",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"partId": "part-ilu-12",
-			"name": "L3D Headline",
-			"pieceType": "l3d-headline",
-			"payload": {
-				"headline": "ILU názov",
-				"subline": ""
-			},
-			"start": 0,
-			"duration": 8
-		},
-		{
-			"id": "piece-part-ilu-12-cam",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"partId": "part-ilu-12",
-			"name": "Camera M",
-			"pieceType": "camera",
-			"payload": {
-				"camNo": 3
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-syn-8-l3d",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"partId": "part-syn-8",
-			"name": "L3D SYN",
+			"partId": "part-tema-4-syn-1",
+			"name": "Expert",
+			"rank": 1,
+			"float": false,
 			"pieceType": "l3d-syn",
 			"payload": {
-				"name": "Meno Priezvisko",
-				"role": "funkcia"
+				"name": "Expert",
+				"role": "ekonom"
 			},
+			"duration": 6.0,
+			"start": 2.0,
+			"segmentId": "seg-tema-4"
+		},
+		{
+			"id": "piece-part-tema-5-db-ilu",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-tema-5-db",
+			"name": "Vzdelávanie",
+			"rank": 0,
+			"float": false,
+			"pieceType": "doublebox-ilu",
+			"payload": {
+				"text": "Vzdelávanie",
+				"iluFile": "clips/ILU bednar2.mp4"
+			},
+			"segmentId": "seg-tema-5",
 			"start": 0
 		},
 		{
-			"id": "piece-part-syn-8-vid",
+			"id": "piece-part-tema-5-db-l3d",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-tema-4",
-			"partId": "part-syn-8",
-			"name": "SOT",
+			"partId": "part-tema-5-db",
+			"name": "Vzdelávanie",
+			"rank": 1,
+			"float": false,
+			"pieceType": "l3d-predstavovak",
+			"payload": {
+				"name": "Vzdelávanie",
+				"title": ""
+			},
+			"segmentId": "seg-tema-5",
+			"start": 0
+		},
+		{
+			"id": "piece-part-tema-5-db-cam",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-tema-5-db",
+			"name": "Cam 1",
+			"rank": 2,
+			"float": false,
+			"pieceType": "camera",
+			"payload": {
+				"camNo": 1
+			},
+			"segmentId": "seg-tema-5",
+			"start": 0
+		},
+		{
+			"id": "wipe-part-tema-5-db",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-tema-5-db",
+			"name": "Wipe",
+			"rank": 3,
+			"float": false,
+			"pieceType": "wipe",
+			"payload": {
+				"fileName": "wipes/wipe",
+				"transition": "SYN TO ILU TEMA"
+			},
+			"duration": 0,
+			"segmentId": "seg-tema-5",
+			"start": 0
+		},
+		{
+			"id": "piece-part-tema-5-syn-1-vid",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-tema-5-syn-1",
+			"name": "SYN",
+			"rank": 0,
+			"float": false,
 			"pieceType": "video",
 			"payload": {
-				"fileName": "clips/SYN ursula.mp4"
+				"fileName": "clips/SYN CLUSTER fico tusk.mp4",
+				"sourceDuration": 12000
 			},
+			"segmentId": "seg-tema-5",
 			"start": 0
 		},
 		{
-			"id": "piece-sjv-gfx",
+			"id": "piece-part-tema-5-syn-1-l3d",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
+			"partId": "part-tema-5-syn-1",
+			"name": "Učiteľ",
+			"rank": 1,
+			"float": false,
+			"pieceType": "l3d-syn",
+			"payload": {
+				"name": "Učiteľ",
+				"role": "pedagóg"
+			},
+			"duration": 5.0,
+			"start": 1.0,
+			"segmentId": "seg-tema-5"
+		},
+		{
+			"id": "piece-part-tema-5-syn-2-vid",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-tema-5-syn-2",
+			"name": "SYN",
+			"rank": 0,
+			"float": false,
+			"pieceType": "video",
+			"payload": {
+				"fileName": "clips/SYN bednar ok.mp4",
+				"sourceDuration": 12000
+			},
+			"segmentId": "seg-tema-5",
+			"start": 0
+		},
+		{
+			"id": "piece-part-tema-5-syn-2-l3d",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-tema-5-syn-2",
+			"name": "Učiteľ",
+			"rank": 1,
+			"float": false,
+			"pieceType": "l3d-syn",
+			"payload": {
+				"name": "Učiteľ",
+				"role": "pedagóg"
+			},
+			"duration": 4.0,
+			"start": 0.5,
+			"segmentId": "seg-tema-5"
+		},
+		{
+			"id": "wipe-sjv",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-sjv-open",
+			"name": "Wipe SJV",
+			"rank": 0,
+			"float": false,
+			"pieceType": "wipe",
+			"payload": {
+				"fileName": "wipes/wipe_sjv",
+				"transition": "Spravy JV"
+			},
+			"duration": 0,
 			"segmentId": "seg-sjv",
-			"partId": "part-sjv-gfx",
-			"name": "L3D SJV",
+			"start": 0
+		},
+		{
+			"id": "piece-sjv-l3d",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-sjv-open",
+			"name": "SJV",
+			"rank": 1,
+			"float": false,
 			"pieceType": "l3d-sjv",
 			"payload": {
-				"headline": "Správy jednou vetou"
+				"kicker": "SPRÁVY JEDNOU VETOU",
+				"headline": "Kamenický o konsolidácií Slovenska"
 			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-13-ilu",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
 			"segmentId": "seg-sjv",
-			"partId": "part-ilu-13",
-			"name": "ILU Headline",
-			"pieceType": "headline",
-			"payload": {
-				"text": "Tematický titulok",
-				"iluFile": "clips/ILU takac.mp4",
-				"sourceEnabled": true,
-				"source": "Citácia",
-				"iluPrerendered": false
-			},
 			"start": 0
 		},
 		{
-			"id": "piece-part-ilu-13-l3d",
+			"id": "piece-part-sjv-syn-1-vid",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
+			"partId": "part-sjv-syn-1",
+			"name": "SYN",
+			"rank": 0,
+			"float": false,
+			"pieceType": "video",
+			"payload": {
+				"fileName": "clips/SYN CLUSTER rutte trump.mp4",
+				"sourceDuration": 8000
+			},
 			"segmentId": "seg-sjv",
-			"partId": "part-ilu-13",
-			"name": "L3D Téma",
-			"pieceType": "l3d-tema",
-			"payload": {
-				"headline": "Tematický titulok"
-			},
 			"start": 0
 		},
 		{
-			"id": "piece-part-ilu-13-cam",
+			"id": "piece-part-sjv-syn-1-l3d",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
+			"partId": "part-sjv-syn-1",
+			"name": "Kamenický o konsolidácií Slovenska",
+			"rank": 1,
+			"float": false,
+			"pieceType": "l3d-sjv",
+			"payload": {
+				"kicker": "SPRÁVY JEDNOU VETOU",
+				"headline": "Kamenický o konsolidácií Slovenska"
+			},
+			"duration": 5,
+			"start": 0.5,
+			"segmentId": "seg-sjv"
+		},
+		{
+			"id": "piece-part-sjv-syn-2-vid",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-sjv-syn-2",
+			"name": "SYN",
+			"rank": 0,
+			"float": false,
+			"pieceType": "video",
+			"payload": {
+				"fileName": "clips/SYN CLUSTER fico tusk.mp4",
+				"sourceDuration": 8000
+			},
 			"segmentId": "seg-sjv",
-			"partId": "part-ilu-13",
-			"name": "Camera A",
-			"pieceType": "camera",
-			"payload": {
-				"camNo": 1
-			},
 			"start": 0
 		},
 		{
-			"id": "piece-part-ilu-14-ilu",
+			"id": "piece-part-sjv-syn-2-l3d",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
+			"partId": "part-sjv-syn-2",
+			"name": "Výzva prezidentovi k reforme",
+			"rank": 1,
+			"float": false,
+			"pieceType": "l3d-sjv",
+			"payload": {
+				"kicker": "SPRÁVY JEDNOU VETOU",
+				"headline": "Výzva prezidentovi k reforme"
+			},
+			"duration": 5,
+			"start": 0.5,
+			"segmentId": "seg-sjv"
+		},
+		{
+			"id": "piece-part-sjv-syn-3-vid",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-sjv-syn-3",
+			"name": "SYN",
+			"rank": 0,
+			"float": false,
+			"pieceType": "video",
+			"payload": {
+				"fileName": "clips/SYN CLUSTER rutte trump.mp4",
+				"sourceDuration": 8000
+			},
 			"segmentId": "seg-sjv",
-			"partId": "part-ilu-14",
-			"name": "ILU Headline",
-			"pieceType": "headline",
-			"payload": {
-				"text": "Tematický titulok",
-				"iluFile": "clips/ILU uhlerova.mp4",
-				"sourceEnabled": true,
-				"source": "Citácia",
-				"iluPrerendered": false
-			},
 			"start": 0
 		},
 		{
-			"id": "piece-part-ilu-14-l3d",
+			"id": "piece-part-sjv-syn-3-l3d",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
+			"partId": "part-sjv-syn-3",
+			"name": "Európsky parlament o bezpečnosti",
+			"rank": 1,
+			"float": false,
+			"pieceType": "l3d-sjv",
+			"payload": {
+				"kicker": "SPRÁVY JEDNOU VETOU",
+				"headline": "Európsky parlament o bezpečnosti"
+			},
+			"duration": 5,
+			"start": 0.5,
+			"segmentId": "seg-sjv"
+		},
+		{
+			"id": "piece-part-sjv-syn-4-vid",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-sjv-syn-4",
+			"name": "SYN",
+			"rank": 0,
+			"float": false,
+			"pieceType": "video",
+			"payload": {
+				"fileName": "clips/SYN CLUSTER fico tusk.mp4",
+				"sourceDuration": 8000
+			},
 			"segmentId": "seg-sjv",
-			"partId": "part-ilu-14",
-			"name": "L3D Téma",
-			"pieceType": "l3d-tema",
-			"payload": {
-				"headline": "Tematický titulok"
-			},
 			"start": 0
 		},
 		{
-			"id": "piece-part-ilu-14-cam",
+			"id": "piece-part-sjv-syn-4-l3d",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-sjv",
-			"partId": "part-ilu-14",
-			"name": "Camera A",
-			"pieceType": "camera",
+			"partId": "part-sjv-syn-4",
+			"name": "Nové čísla o nezamestnanosti",
+			"rank": 1,
+			"float": false,
+			"pieceType": "l3d-sjv",
 			"payload": {
-				"camNo": 1
+				"kicker": "SPRÁVY JEDNOU VETOU",
+				"headline": "Nové čísla o nezamestnanosti"
 			},
-			"start": 0
+			"duration": 5,
+			"start": 0.5,
+			"segmentId": "seg-sjv"
 		},
 		{
-			"id": "piece-part-ilu-15-ilu",
+			"id": "wipe-sport",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-sjv",
-			"partId": "part-ilu-15",
-			"name": "ILU Headline",
-			"pieceType": "headline",
+			"partId": "part-sport-open",
+			"name": "Wipe Sport",
+			"rank": 0,
+			"float": false,
+			"pieceType": "wipe",
 			"payload": {
-				"text": "Tematický titulok",
-				"iluFile": "clips/ILU ursula zelensky.mp4",
-				"sourceEnabled": true,
-				"source": "Citácia",
-				"iluPrerendered": false
+				"fileName": "wipes/wipe_sport",
+				"transition": "Sport"
 			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-15-l3d",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-sjv",
-			"partId": "part-ilu-15",
-			"name": "L3D Téma",
-			"pieceType": "l3d-tema",
-			"payload": {
-				"headline": "Tematický titulok"
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-15-cam",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-sjv",
-			"partId": "part-ilu-15",
-			"name": "Camera A",
-			"pieceType": "camera",
-			"payload": {
-				"camNo": 1
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-16-ilu",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-sjv",
-			"partId": "part-ilu-16",
-			"name": "ILU Headline",
-			"pieceType": "headline",
-			"payload": {
-				"text": "Tematický titulok",
-				"iluFile": "clips/ILU ursula.mp4",
-				"sourceEnabled": true,
-				"source": "Citácia",
-				"iluPrerendered": false
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-16-l3d",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-sjv",
-			"partId": "part-ilu-16",
-			"name": "L3D Téma",
-			"pieceType": "l3d-tema",
-			"payload": {
-				"headline": "Tematický titulok"
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-16-cam",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-sjv",
-			"partId": "part-ilu-16",
-			"name": "Camera A",
-			"pieceType": "camera",
-			"payload": {
-				"camNo": 1
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-sport-gfx",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
+			"duration": 0,
 			"segmentId": "seg-sport",
-			"partId": "part-sport-gfx",
-			"name": "L3D Šport",
+			"start": 0
+		},
+		{
+			"id": "piece-sport-l3d",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-sport-open",
+			"name": "Šport",
+			"rank": 1,
+			"float": false,
 			"pieceType": "l3d-sport",
 			"payload": {
-				"headline": "Šport",
-				"source": "Citácia"
+				"kicker": "ŠPORT",
+				"headline": "Pokračuje boj o Stanley cup"
 			},
+			"segmentId": "seg-sport",
 			"start": 0
 		},
 		{
-			"id": "piece-part-ilu-17-ilu",
+			"id": "piece-part-sport-syn-1-vid",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-sport",
-			"partId": "part-ilu-17",
-			"name": "ILU Headline",
-			"pieceType": "headline",
+			"partId": "part-sport-syn-1",
+			"name": "SYN",
+			"rank": 0,
+			"float": false,
+			"pieceType": "video",
 			"payload": {
-				"text": "Tematický titulok",
-				"iluFile": "clips/ILU zemetrasenie.mp4",
-				"sourceEnabled": true,
-				"source": "Citácia",
-				"iluPrerendered": false
+				"fileName": "clips/SYN bednar ok.mp4",
+				"sourceDuration": 10000
 			},
+			"segmentId": "seg-sport",
 			"start": 0
 		},
 		{
-			"id": "piece-part-ilu-17-l3d",
+			"id": "piece-part-sport-syn-1-l3d",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-sport",
-			"partId": "part-ilu-17",
-			"name": "L3D Téma",
-			"pieceType": "l3d-tema",
+			"partId": "part-sport-syn-1",
+			"name": "Pokračuje boj o Stanley cup",
+			"rank": 1,
+			"float": false,
+			"pieceType": "l3d-sport",
 			"payload": {
-				"headline": "Tematický titulok"
+				"kicker": "ŠPORT",
+				"headline": "Pokračuje boj o Stanley cup"
 			},
+			"duration": 6,
+			"start": 1.0,
+			"segmentId": "seg-sport"
+		},
+		{
+			"id": "piece-part-sport-syn-2-vid",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-sport-syn-2",
+			"name": "SYN",
+			"rank": 0,
+			"float": false,
+			"pieceType": "video",
+			"payload": {
+				"fileName": "clips/SYN bednar ok.mp4",
+				"sourceDuration": 10000
+			},
+			"segmentId": "seg-sport",
 			"start": 0
 		},
 		{
-			"id": "piece-part-ilu-17-cam",
+			"id": "piece-part-sport-syn-2-l3d",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-sport",
-			"partId": "part-ilu-17",
-			"name": "Camera A",
-			"pieceType": "camera",
+			"partId": "part-sport-syn-2",
+			"name": "Slovensko na ME v hádzanej",
+			"rank": 1,
+			"float": false,
+			"pieceType": "l3d-sport",
 			"payload": {
-				"camNo": 1
+				"kicker": "ŠPORT",
+				"headline": "Slovensko na ME v hádzanej"
 			},
+			"duration": 6,
+			"start": 1.0,
+			"segmentId": "seg-sport"
+		},
+		{
+			"id": "piece-part-sport-syn-3-vid",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-sport-syn-3",
+			"name": "SYN",
+			"rank": 0,
+			"float": false,
+			"pieceType": "video",
+			"payload": {
+				"fileName": "clips/SYN bednar ok.mp4",
+				"sourceDuration": 10000
+			},
+			"segmentId": "seg-sport",
 			"start": 0
 		},
 		{
-			"id": "piece-part-ilu-18-ilu",
+			"id": "piece-part-sport-syn-3-l3d",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-sport",
-			"partId": "part-ilu-18",
-			"name": "ILU Headline",
-			"pieceType": "headline",
+			"partId": "part-sport-syn-3",
+			"name": "Futbalová liga — výsledky kola",
+			"rank": 1,
+			"float": false,
+			"pieceType": "l3d-sport",
 			"payload": {
-				"text": "Tematický titulok",
-				"iluFile": "clips/ILU zemetrasenie2.mp4",
-				"sourceEnabled": true,
-				"source": "Citácia",
-				"iluPrerendered": false
+				"kicker": "ŠPORT",
+				"headline": "Futbalová liga — výsledky kola"
 			},
-			"start": 0
+			"duration": 6,
+			"start": 1.0,
+			"segmentId": "seg-sport"
 		},
 		{
-			"id": "piece-part-ilu-18-l3d",
+			"id": "wipe-weather",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-sport",
-			"partId": "part-ilu-18",
-			"name": "L3D Téma",
-			"pieceType": "l3d-tema",
+			"partId": "part-weather",
+			"name": "Wipe Pocasie",
+			"rank": 0,
+			"float": false,
+			"pieceType": "wipe",
 			"payload": {
-				"headline": "Tematický titulok"
+				"fileName": "wipes/wipe_pocasie",
+				"transition": "Pocasie"
 			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-18-cam",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-sport",
-			"partId": "part-ilu-18",
-			"name": "Camera A",
-			"pieceType": "camera",
-			"payload": {
-				"camNo": 1
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-19-ilu",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-sport",
-			"partId": "part-ilu-19",
-			"name": "ILU Headline",
-			"pieceType": "headline",
-			"payload": {
-				"text": "Tematický titulok",
-				"iluFile": "clips/venezuela.mp4",
-				"sourceEnabled": true,
-				"source": "Citácia",
-				"iluPrerendered": false
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-19-l3d",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-sport",
-			"partId": "part-ilu-19",
-			"name": "L3D Téma",
-			"pieceType": "l3d-tema",
-			"payload": {
-				"headline": "Tematický titulok"
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-19-cam",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-sport",
-			"partId": "part-ilu-19",
-			"name": "Camera A",
-			"pieceType": "camera",
-			"payload": {
-				"camNo": 1
-			},
+			"duration": 0,
+			"segmentId": "seg-weather",
 			"start": 0
 		},
 		{
 			"id": "piece-weather",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"segmentId": "seg-weather",
 			"partId": "part-weather",
 			"name": "Weather",
+			"rank": 1,
+			"float": false,
 			"pieceType": "weather",
 			"payload": {
-				"cities": "[{\"name\": \"Bratislava\", \"temp\": \"21\", \"condition\": \"partly-cloudy\"}, {\"name\": \"Košice\", \"temp\": \"19\", \"condition\": \"partly-cloudy\"}, {\"name\": \"Žilina\", \"temp\": \"17\", \"condition\": \"rain\"}]"
+				"bypass": true,
+				"fileName": "assets/weather"
 			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-20-ilu",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-outro",
-			"partId": "part-ilu-20",
-			"name": "ILU Headline",
-			"pieceType": "headline",
-			"payload": {
-				"text": "Sledujte na www.360tka.sk",
-				"iluFile": "clips/venezuela3.mp4",
-				"sourceEnabled": true,
-				"source": "Avízo",
-				"iluPrerendered": false
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-20-l3d",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-outro",
-			"partId": "part-ilu-20",
-			"name": "L3D Téma",
-			"pieceType": "l3d-tema",
-			"payload": {
-				"headline": "Sledujte na www.360tka.sk"
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-20-cam",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-outro",
-			"partId": "part-ilu-20",
-			"name": "Camera A",
-			"pieceType": "camera",
-			"payload": {
-				"camNo": 1
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-syn-9-l3d",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-outro",
-			"partId": "part-syn-9",
-			"name": "L3D SYN",
-			"pieceType": "l3d-syn",
-			"payload": {
-				"name": "Moderátor",
-				"role": ""
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-syn-9-vid",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-outro",
-			"partId": "part-syn-9",
-			"name": "SOT",
-			"pieceType": "video",
-			"payload": {
-				"fileName": "clips/reel FIN.mp4"
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-21-ilu",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-outro",
-			"partId": "part-ilu-21",
-			"name": "ILU Headline",
-			"pieceType": "headline",
-			"payload": {
-				"text": "Sledujte na www.360tka.sk",
-				"iluFile": "clips/ps.mp4",
-				"sourceEnabled": true,
-				"source": "nájdete na 360tka.sk",
-				"iluPrerendered": false
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-21-l3d",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-outro",
-			"partId": "part-ilu-21",
-			"name": "L3D Téma",
-			"pieceType": "l3d-tema",
-			"payload": {
-				"headline": "Sledujte na www.360tka.sk"
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-part-ilu-21-cam",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-outro",
-			"partId": "part-ilu-21",
-			"name": "Camera A",
-			"pieceType": "camera",
-			"payload": {
-				"camNo": 1
-			},
-			"start": 0
-		},
-		{
-			"id": "piece-outro-gfx",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"segmentId": "seg-outro",
-			"partId": "part-outro-gfx",
-			"name": "Outro",
-			"pieceType": "outro",
-			"payload": {},
-			"start": 0
-		},
-		{
-			"id": "wipe-05-part-ilu-1",
-			"partId": "part-ilu-1",
-			"segmentId": "seg-tema-1",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · Double Box",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe",
-				"transition": "Double Box"
-			}
-		},
-		{
-			"id": "wipe-06-part-syn-1",
-			"partId": "part-syn-1",
-			"segmentId": "seg-tema-1",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · ILU TO SYN CLUSTER",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe",
-				"transition": "ILU TO SYN CLUSTER"
-			}
-		},
-		{
-			"id": "wipe-07-part-syn-2",
-			"partId": "part-syn-2",
-			"segmentId": "seg-tema-1",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · SYN TO SYN",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe",
-				"transition": "SYN TO SYN"
-			}
-		},
-		{
-			"id": "wipe-08-part-ilu-2",
-			"partId": "part-ilu-2",
-			"segmentId": "seg-tema-1",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · SYN TO ILU TEMA",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe",
-				"transition": "SYN TO ILU TEMA"
-			}
-		},
-		{
-			"id": "wipe-09-part-ilu-3",
-			"partId": "part-ilu-3",
-			"segmentId": "seg-tema-1",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · ILU TO ILU TEMA",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe",
-				"transition": "ILU TO ILU TEMA"
-			}
-		},
-		{
-			"id": "wipe-10-part-syn-3",
-			"partId": "part-syn-3",
-			"segmentId": "seg-tema-1",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · ILU TO SYN",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe",
-				"transition": "ILU TO SYN"
-			}
-		},
-		{
-			"id": "wipe-11-part-ilu-4",
-			"partId": "part-ilu-4",
-			"segmentId": "seg-tema-2",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · Double Box",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe",
-				"transition": "Double Box"
-			}
-		},
-		{
-			"id": "wipe-12-part-ilu-5",
-			"partId": "part-ilu-5",
-			"segmentId": "seg-tema-2",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · ILU TO ILU TEMA",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe",
-				"transition": "ILU TO ILU TEMA"
-			}
-		},
-		{
-			"id": "wipe-13-part-ilu-6",
-			"partId": "part-ilu-6",
-			"segmentId": "seg-tema-3",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · Double Box",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe",
-				"transition": "Double Box"
-			}
-		},
-		{
-			"id": "wipe-14-part-syn-4",
-			"partId": "part-syn-4",
-			"segmentId": "seg-tema-3",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · ILU TO SYN",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe",
-				"transition": "ILU TO SYN"
-			}
-		},
-		{
-			"id": "wipe-15-part-ilu-7",
-			"partId": "part-ilu-7",
-			"segmentId": "seg-tema-3",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · SYN TO ILU",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe",
-				"transition": "SYN TO ILU"
-			}
-		},
-		{
-			"id": "wipe-16-part-ilu-8",
-			"partId": "part-ilu-8",
-			"segmentId": "seg-tema-3",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · ILU TO ILU TEMA",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe",
-				"transition": "ILU TO ILU TEMA"
-			}
-		},
-		{
-			"id": "wipe-17-part-syn-5",
-			"partId": "part-syn-5",
-			"segmentId": "seg-tema-3",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · ILU TO SYN",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe",
-				"transition": "ILU TO SYN"
-			}
-		},
-		{
-			"id": "wipe-18-part-ilu-9",
-			"partId": "part-ilu-9",
-			"segmentId": "seg-tema-4",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · Double Box",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe",
-				"transition": "Double Box"
-			}
-		},
-		{
-			"id": "wipe-19-part-syn-6",
-			"partId": "part-syn-6",
-			"segmentId": "seg-tema-4",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · ILU TO SYN",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe",
-				"transition": "ILU TO SYN"
-			}
-		},
-		{
-			"id": "wipe-20-part-ilu-10",
-			"partId": "part-ilu-10",
-			"segmentId": "seg-tema-4",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · Double Box",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe",
-				"transition": "Double Box"
-			}
-		},
-		{
-			"id": "wipe-21-part-syn-7",
-			"partId": "part-syn-7",
-			"segmentId": "seg-tema-4",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · ILU TO SYN",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe",
-				"transition": "ILU TO SYN"
-			}
-		},
-		{
-			"id": "wipe-22-part-ilu-11",
-			"partId": "part-ilu-11",
-			"segmentId": "seg-tema-4",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · SYN TO ILU",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe",
-				"transition": "SYN TO ILU"
-			}
-		},
-		{
-			"id": "wipe-23-part-ilu-12",
-			"partId": "part-ilu-12",
-			"segmentId": "seg-tema-4",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · ILU TO ILU TEMA",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe",
-				"transition": "ILU TO ILU TEMA"
-			}
-		},
-		{
-			"id": "wipe-24-part-syn-8",
-			"partId": "part-syn-8",
-			"segmentId": "seg-tema-4",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · ILU TO SYN",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe",
-				"transition": "ILU TO SYN"
-			}
-		},
-		{
-			"id": "wipe-25-part-sjv-gfx",
-			"partId": "part-sjv-gfx",
-			"segmentId": "seg-sjv",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · Spravy JV",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe_sjv",
-				"transition": "Spravy JV"
-			}
-		},
-		{
-			"id": "wipe-26-part-ilu-13",
-			"partId": "part-ilu-13",
-			"segmentId": "seg-sjv",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · Spravy JV NEXT",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe_sjv",
-				"transition": "Spravy JV NEXT"
-			}
-		},
-		{
-			"id": "wipe-27-part-ilu-14",
-			"partId": "part-ilu-14",
-			"segmentId": "seg-sjv",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · Spravy JV NEXT",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe_sjv",
-				"transition": "Spravy JV NEXT"
-			}
-		},
-		{
-			"id": "wipe-28-part-ilu-15",
-			"partId": "part-ilu-15",
-			"segmentId": "seg-sjv",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · Spravy JV NEXT",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe_sjv",
-				"transition": "Spravy JV NEXT"
-			}
-		},
-		{
-			"id": "wipe-29-part-ilu-16",
-			"partId": "part-ilu-16",
-			"segmentId": "seg-sjv",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · Spravy JV NEXT",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe_sjv",
-				"transition": "Spravy JV NEXT"
-			}
-		},
-		{
-			"id": "wipe-30-part-sport-gfx",
-			"partId": "part-sport-gfx",
-			"segmentId": "seg-sport",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · Sport",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe_sport",
-				"transition": "Sport"
-			}
-		},
-		{
-			"id": "wipe-31-part-ilu-17",
-			"partId": "part-ilu-17",
-			"segmentId": "seg-sport",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · Sport NEXT",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe_sport",
-				"transition": "Sport NEXT"
-			}
-		},
-		{
-			"id": "wipe-32-part-ilu-18",
-			"partId": "part-ilu-18",
-			"segmentId": "seg-sport",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · Sport NEXT",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe_sport",
-				"transition": "Sport NEXT"
-			}
-		},
-		{
-			"id": "wipe-33-part-ilu-19",
-			"partId": "part-ilu-19",
-			"segmentId": "seg-sport",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · Sport NEXT",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe_sport",
-				"transition": "Sport NEXT"
-			}
-		},
-		{
-			"id": "wipe-34-part-weather",
-			"partId": "part-weather",
 			"segmentId": "seg-weather",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · Pocasie",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe_pocasie",
-				"transition": "Pocasie"
-			}
+			"start": 0
 		},
 		{
-			"id": "wipe-35-part-ilu-20",
-			"partId": "part-ilu-20",
-			"segmentId": "seg-outro",
+			"id": "piece-weather-logo",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"name": "Wipe · Zaver",
+			"partId": "part-weather",
+			"name": "Logo",
+			"rank": 2,
+			"float": false,
+			"pieceType": "logo-bug",
+			"payload": {},
+			"segmentId": "seg-weather",
+			"start": 0
+		},
+		{
+			"id": "wipe-avizo",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-avizo-db",
+			"name": "Wipe",
+			"rank": 0,
+			"float": false,
 			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
 			"payload": {
 				"fileName": "wipes/wipe",
 				"transition": "Zaver"
-			}
-		},
-		{
-			"id": "wipe-36-part-syn-9",
-			"partId": "part-syn-9",
-			"segmentId": "seg-outro",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · ILU TO SYN",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
+			},
 			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe",
-				"transition": "ILU TO SYN"
-			}
-		},
-		{
-			"id": "wipe-37-part-ilu-21",
-			"partId": "part-ilu-21",
 			"segmentId": "seg-outro",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"name": "Wipe · SYN TO ILU TEMA",
-			"pieceType": "wipe",
-			"rank": 1,
-			"start": 0,
-			"duration": 0,
-			"payload": {
-				"fileName": "wipes/wipe",
-				"transition": "SYN TO ILU TEMA"
-			}
+			"start": 0
 		},
 		{
-			"id": "wipe-38-part-outro-gfx",
-			"partId": "part-outro-gfx",
+			"id": "piece-avizo-ilu",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-avizo-db",
+			"name": "Avízo",
+			"rank": 1,
+			"float": false,
+			"pieceType": "doublebox-ilu",
+			"payload": {
+				"text": "Sledujte na www.360tka.sk",
+				"iluFile": "clips/ILU bednar.mp4"
+			},
 			"segmentId": "seg-outro",
+			"start": 0
+		},
+		{
+			"id": "piece-avizo-l3d",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"name": "Wipe · OUTRO",
-			"pieceType": "wipe",
+			"partId": "part-avizo-db",
+			"name": "CTA",
+			"rank": 2,
+			"float": false,
+			"pieceType": "l3d-odporucanie",
+			"payload": {
+				"headline": "Sledujte na www.360tka.sk"
+			},
+			"segmentId": "seg-outro",
+			"start": 0
+		},
+		{
+			"id": "piece-avizo-cam",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-avizo-db",
+			"name": "Cam 1",
+			"rank": 3,
+			"float": false,
+			"pieceType": "camera",
+			"payload": {
+				"camNo": 1
+			},
+			"segmentId": "seg-outro",
+			"start": 0
+		},
+		{
+			"id": "piece-avizo-syn-vid",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-avizo-syn",
+			"name": "SYN",
+			"rank": 0,
+			"float": false,
+			"pieceType": "video",
+			"payload": {
+				"fileName": "clips/SYN bednar ok.mp4",
+				"sourceDuration": 8000
+			},
+			"segmentId": "seg-outro",
+			"start": 0
+		},
+		{
+			"id": "piece-avizo-syn-l3d",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-avizo-syn",
+			"name": "CTA",
 			"rank": 1,
-			"start": 0,
-			"duration": 0,
+			"float": false,
+			"pieceType": "l3d-odporucanie",
 			"payload": {
-				"fileName": "wipes/wipe",
-				"transition": "OUTRO"
-			}
+				"headline": "Sledujte na www.360tka.sk"
+			},
+			"duration": 5,
+			"start": 0.5,
+			"segmentId": "seg-outro"
 		},
 		{
-			"id": "bgm-a-tema-gfx-1",
-			"partId": "part-tema-gfx-1",
-			"segmentId": "seg-tema-1",
+			"id": "piece-avizo2-ilu",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"name": "BG music A",
-			"pieceType": "bg-music",
-			"start": 0,
+			"partId": "part-avizo-db2",
+			"name": "Avízo",
+			"rank": 0,
+			"float": false,
+			"pieceType": "doublebox-ilu",
 			"payload": {
-				"fileName": "loops/bg_music_a.wav"
-			}
+				"text": "Sledujte na www.360tka.sk",
+				"iluFile": "clips/ILU bednar2.mp4"
+			},
+			"segmentId": "seg-outro",
+			"start": 0
 		},
 		{
-			"id": "bgm-c-sport-gfx",
-			"partId": "part-sport-gfx",
-			"segmentId": "seg-sport",
+			"id": "piece-avizo2-l3d",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"name": "BG music C (Šport)",
-			"pieceType": "bg-music",
-			"start": 0,
+			"partId": "part-avizo-db2",
+			"name": "CTA",
+			"rank": 1,
+			"float": false,
+			"pieceType": "l3d-odporucanie",
 			"payload": {
-				"fileName": "loops/bg_music_c.wav"
-			}
+				"headline": "Sledujte na www.360tka.sk"
+			},
+			"segmentId": "seg-outro",
+			"start": 0
+		},
+		{
+			"id": "piece-avizo2-cam",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-avizo-db2",
+			"name": "Cam 1",
+			"rank": 2,
+			"float": false,
+			"pieceType": "camera",
+			"payload": {
+				"camNo": 1
+			},
+			"segmentId": "seg-outro",
+			"start": 0
+		},
+		{
+			"id": "piece-outro",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-outro",
+			"name": "Outro",
+			"rank": 0,
+			"float": false,
+			"pieceType": "outro",
+			"payload": {},
+			"segmentId": "seg-outro",
+			"start": 0
 		}
 	]
 }

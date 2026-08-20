@@ -156,6 +156,28 @@
 		]
 	},
 	{
+		"id": "l3d-predstavovak",
+		"entityType": "piece",
+		"name": "L3D Predstavovak",
+		"shortName": "L3DP",
+		"colour": "#a0522d",
+		"includeTypeInName": true,
+		"previewTemplate": "l3d-predstavovak",
+		"payload": [
+			{
+				"id": "name",
+				"label": "Name",
+				"type": "string",
+				"includeInName": true
+			},
+			{
+				"id": "title",
+				"label": "Title",
+				"type": "string"
+			}
+		]
+	},
+	{
 		"id": "l3d-headline",
 		"entityType": "piece",
 		"name": "L3D Headline",
@@ -209,6 +231,11 @@
 		"previewTemplate": "l3d-sjv",
 		"payload": [
 			{
+				"id": "kicker",
+				"label": "Kicker",
+				"type": "string"
+			},
+			{
 				"id": "headline",
 				"label": "Headline",
 				"type": "string",
@@ -225,6 +252,11 @@
 		"includeTypeInName": true,
 		"previewTemplate": "l3d-sport",
 		"payload": [
+			{
+				"id": "kicker",
+				"label": "Kicker",
+				"type": "string"
+			},
 			{
 				"id": "headline",
 				"label": "Headline",
@@ -246,7 +278,24 @@
 		"colour": "#17becf",
 		"includeTypeInName": true,
 		"previewTemplate": "weather",
-		"payload": []
+		"payload": [
+			{
+				"id": "bypass",
+				"label": "Bypass (premade animation)",
+				"type": "boolean"
+			},
+			{
+				"id": "fileName",
+				"label": "Bypass clip",
+				"type": "mediaPick",
+				"subdir": "assets"
+			},
+			{
+				"id": "cities",
+				"label": "Cities JSON (HTML mode)",
+				"type": "string"
+			}
+		]
 	},
 	{
 		"id": "headline",
@@ -324,6 +373,30 @@
 		"shortName": "Outro",
 		"colour": "#bcbd22",
 		"includeTypeInName": true,
-		"payload": []
+		"payload": [
+			{
+				"id": "fileName",
+				"label": "Outro clip (default assets/outro)",
+				"type": "mediaPick",
+				"subdir": "assets"
+			}
+		]
+	},
+	{
+		"id": "l3d-odporucanie",
+		"entityType": "piece",
+		"name": "L3D Odporúčanie",
+		"shortName": "L3DO",
+		"colour": "#8c564b",
+		"includeTypeInName": true,
+		"previewTemplate": "l3d-odporucanie",
+		"payload": [
+			{
+				"id": "headline",
+				"label": "Headline",
+				"type": "string",
+				"includeInName": true
+			}
+		]
 	}
 ]
