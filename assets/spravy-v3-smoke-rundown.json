@@ -2832,7 +2832,7 @@
 			"pieceType": "bg-music",
 			"start": 0,
 			"payload": {
-				"fileName": "loops/bg_music_a"
+				"fileName": "loops/bg_music_a.wav"
 			}
 		},
 		{
@@ -2845,7 +2845,7 @@
 			"pieceType": "bg-music",
 			"start": 0,
 			"payload": {
-				"fileName": "loops/bg_music_c"
+				"fileName": "loops/bg_music_c.wav"
 			}
 		}
 	]

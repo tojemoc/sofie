@@ -81,9 +81,13 @@ emitting ExpectedPackages (`toPackageManagerPath`); timeline `PLAY` still uses
   baseline (layer 110) stays as fallback before intro fires; once `db_loop` is on
   top it covers the full frame with its own baked-in bg_loop.
 - `bg-music` piece type plays background music on `CasparCGAudioBed` (LED ch1
-  layer 80). Blueprints baseline loops `loops/bg_music_a`; smoke includes a
-  `bg-music` piece on the first Téma part and a swap piece on Sport (`loops/bg_music_c`).
-  During Intro the bed is muted (blueprints `mixer.volume: 0` override).
+  layer 80). Blueprints baseline Caspar PLAY uses extensionless `loops/bg_music_a`
+  / `loops/bg_music_c`; smoke stores disk paths `loops/bg_music_a.wav` /
+  `loops/bg_music_c.wav` in piece `fileName` so ExpectedPackage /
+  `LOCAL_FOLDER` match the real files (extensionless `loops/` paths are mapped
+  to `.mov` by `toPackageManagerPath`, which is wrong for `.wav`). Smoke includes
+  a `bg-music` piece on the first Téma part and a swap piece on Sport. During
+  Intro the bed is muted (blueprints `mixer.volume: 0` override).
 - Wipe default duration in blueprints is **2500 ms** (full stinger overlay). The
   **cut point** — when the screen is fully covered and underlying content switches
   — is at **760 ms** (38 frames @ 50 fps). Wipe SFX is embedded in the `.mov`;
