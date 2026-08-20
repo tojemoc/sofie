@@ -1,0 +1,284 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1">
+  <title>Spravy 360 - Jednou Vetou</title>
+  <style>
+    :root {
+      --stage-width: 1920px;
+      --stage-height: 1080px;
+    }
+
+    html,
+    body {
+      width: var(--stage-width);
+      height: var(--stage-height);
+      margin: 0;
+      overflow: hidden;
+      background: transparent;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    @font-face {
+      font-family: "Bauplan";
+      font-style: normal;
+      font-weight: 900;
+      src: local("Bauplan Heavy"), local("Bauplan-Heavy"), local("Bauplan");
+    }
+
+    @font-face {
+      font-family: "Diform";
+      font-style: normal;
+      font-weight: 700;
+      src: local("Diform Bold"), local("Diform-Bold"), local("Diform");
+    }
+
+    .stage {
+      position: relative;
+      width: var(--stage-width);
+      height: var(--stage-height);
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+
+    .stage.is-playing {
+      animation: template-in 420ms cubic-bezier(.16, 1, .3, 1) both;
+    }
+
+    .stage.is-stopping {
+      animation: template-out 280ms cubic-bezier(.7, 0, .84, 0) both;
+    }
+
+    .panel {
+      position: absolute;
+      left: 40px;
+      top: 847px;
+      width: 1626px;
+      height: 160px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: transparent;
+      filter: blur(.5px);
+      box-shadow:
+        inset 0 0 0 1000px rgba(0, 0, 0, .4),
+        0 4px 10px rgba(0, 0, 0, .8),
+        0 0 26px rgba(0, 0, 0, .35),
+        inset 0 2px 1px rgba(255, 255, 255, .5),
+        inset 0 0 32px rgba(255, 255, 255, .03);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, .055), rgba(255, 255, 255, 0) 30%),
+        radial-gradient(ellipse at 16% 0%, rgba(255, 255, 255, .1), transparent 42%),
+        radial-gradient(ellipse at 50% 100%, rgba(0, 0, 0, .34), transparent 58%);
+      pointer-events: none;
+    }
+
+    .panel::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      opacity: .16;
+      background-image:
+        radial-gradient(circle at 17% 32%, rgba(255, 255, 255, .12) 0 .8px, transparent .9px),
+        radial-gradient(circle at 71% 64%, rgba(0, 0, 0, .3) 0 .9px, transparent 1px);
+      background-size: 4px 4px, 5px 5px;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+    }
+
+    .kicker-box {
+      position: absolute;
+      left: 80px;
+      top: 803px;
+      width: 395px;
+      height: 44px;
+      border-radius: 0 0 10px 10px;
+      background: rgba(255, 255, 255, .8);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, .5);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .kicker-dot {
+      position: absolute;
+      left: 100px;
+      top: 825px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 34% 28%, rgba(255, 255, 255, .2), transparent 34%),
+        #2c7dff;
+      box-shadow: 0 0 8px rgba(44, 125, 255, .22);
+      transform: translateY(-50%);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .kicker,
+    .headline {
+      position: absolute;
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: normal;
+      letter-spacing: 0;
+      text-rendering: geometricPrecision;
+      -webkit-font-smoothing: antialiased;
+      font-kerning: normal;
+      font-feature-settings: "kern" 1;
+    }
+
+    .kicker {
+      left: 129px;
+      top: 808px;
+      width: 330px;
+      height: 34px;
+      color: #000;
+      font-family: "Diform", Arial, Helvetica, sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 34px;
+      text-transform: uppercase;
+    }
+
+    .headline {
+      left: 80px;
+      top: 883px;
+      width: 1566px;
+      height: 104px;
+      color: #fff;
+      font-family: "Bauplan", "Arial Black", Arial, Helvetica, sans-serif;
+      font-size: 86px;
+      font-weight: 900;
+      line-height: 104px;
+    }
+
+    @keyframes template-in {
+      from {
+        opacity: 0;
+        transform: translate3d(-40px, 18px, 0);
+      }
+      to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+    }
+
+    @keyframes template-out {
+      from {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+      to {
+        opacity: 0;
+        transform: translate3d(-40px, 18px, 0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main id="template" class="stage">
+    <div class="panel"></div>
+    <div class="kicker-box"></div>
+    <div class="kicker-dot"></div>
+    <p id="kicker" class="kicker">SPRÁVY JEDNOU VETOU</p>
+    <p id="headline" class="headline">Kamenický o konsolidácií Slovenska</p>
+  </main>
+
+  <script>
+    (() => {
+      const templateElement = document.getElementById("template");
+      const fields = {
+        kicker: document.getElementById("kicker"),
+        headline: document.getElementById("headline")
+      };
+
+      function fitText(element, maxSize, minSize) {
+        element.style.fontSize = maxSize + "px";
+        while (element.scrollWidth > element.clientWidth && maxSize > minSize) {
+          maxSize -= 1;
+          element.style.fontSize = maxSize + "px";
+        }
+      }
+
+      function parseTemplateData(rawData) {
+        if (!rawData) return {};
+        if (typeof rawData === "object") return rawData;
+
+        const data = String(rawData).trim();
+        if (!data) return {};
+
+        try {
+          return JSON.parse(data);
+        } catch (error) {
+          // CasparCG Client commonly sends templateData XML.
+        }
+
+        const result = {};
+        try {
+          const xml = new DOMParser().parseFromString(data, "text/xml");
+          xml.querySelectorAll("componentData").forEach((component) => {
+            const id = component.getAttribute("id");
+            const valueNode = component.querySelector("data");
+            if (!id || !valueNode) return;
+            result[id] = valueNode.getAttribute("value") || valueNode.textContent || "";
+          });
+        } catch (error) {
+          console.warn("Unable to parse template data", error);
+        }
+        return result;
+      }
+
+      function applyData(rawData) {
+        const data = parseTemplateData(rawData);
+        const nextKicker = data.kicker || data.Kicker || data.rubrika || data.label || data.f0;
+        const nextHeadline = data.headline || data.Headline || data.title || data.titulok || data.f1;
+
+        if (nextKicker !== undefined) fields.kicker.textContent = nextKicker;
+        if (nextHeadline !== undefined) fields.headline.textContent = nextHeadline;
+
+        fitText(fields.kicker, 28, 18);
+        fitText(fields.headline, 86, 48);
+      }
+
+      function play() {
+        templateElement.classList.remove("is-stopping");
+        templateElement.classList.remove("is-playing");
+        void templateElement.offsetWidth;
+        templateElement.classList.add("is-playing");
+      }
+
+      function stop() {
+        templateElement.classList.remove("is-playing");
+        templateElement.classList.add("is-stopping");
+      }
+
+      function update(rawData) {
+        applyData(rawData);
+      }
+
+      window.play = play;
+      window.stop = stop;
+      window.update = update;
+      window.applyData = applyData;
+
+      applyData({});
+    })();
+  </script>
+</body>
+</html>
