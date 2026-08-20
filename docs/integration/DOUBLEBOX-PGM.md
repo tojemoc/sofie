@@ -15,16 +15,16 @@ production still (ILU left / CAM right / tema+bug bar / `bg_loop` behind):
 │   │  (clip / headline ILU)   │  │  (UVC/mod) │             │
 │   └──────────────────────────┘  └────────────┘             │
 │  ┌────────────────────────────────────┬──────────────────┐ │
-│  │  thematic title (l3d-tema)         │  360° sekúnd bug │ │
+│  │  thematic title (l3d-predstavovak) │  360° sekúnd bug │ │
 │  └────────────────────────────────────┴──────────────────┘ │
 └────────────────────────────────────────────────────────────┘
 ```
 
 **LED (Caspar channel 1)** production rule: **headline ILU + `loops/bg_loop` only**.
 The loop is blueprint **baseline** on layer 110 (not a RE piece) and must never be
-displaced by VT/VO/SYN — those play on **PGM ClipPlayer2**. `l3d-mod` / tema / syn /
-headline bars are **PGM**. No intro / znelka on LED. Intro overlay plays on
-**PGM layer 210** (above wipe 200) — see
+displaced by VT/VO/SYN — those play on **PGM ClipPlayer2**. `l3d-predstavovak` /
+`l3d-mod` / `l3d-syn` / headline bars are **PGM**. No intro / znelka on LED. Intro
+overlay plays on **PGM layer 210** (above wipe 200) — see
 [`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md)
 and [`handoffs/blueprints-baseline-bg-loop.md`](./handoffs/blueprints-baseline-bg-loop.md).
 
@@ -153,14 +153,14 @@ labelled variant) and `transition: <label>` for operators.
 | `casparcg_pgm_ilu_player` | PGM 2 | 115 | Thematic DoubleBox left ILU (`doublebox-ilu`) |
 | `casparcg_intro_player_pgm` | PGM 2 | 210 | Intro / znelka — **never LED** (handoff; may still be LED 200 until remapped) |
 | `casparcg_pgm_camera` | PGM 2 | 116 | UVC / CAM1 (FILL + left cover-crop) |
-| `casparcg_graphics_pgm_l3d` | PGM 2 | 121 | `l3d-tema` / `l3d-syn` / headline bars |
+| `casparcg_graphics_pgm_l3d` | PGM 2 | 121 | `l3d-predstavovak` / `l3d-odporucanie` / `l3d-syn` / headline bars |
 | `casparcg_graphics_logo` | PGM 2 | 123 | `gfx/logo-bug` (360° sekúnd bug) — **not** on LED |
 | `casparcg_effects_player_pgm` | PGM 2 | 200 | Wipes |
 
 Headline / story ILU on LED vs PGM: opening **headline** ILU stays on **LED**
 (`casparcg_ilu_player`). Thematic DoubleBox left-window media uses
 `casparcg_pgm_ilu_player` on **PGM channel 2 layer 115** via piece type
-`doublebox-ilu`. PGM also carries camera FILL + `l3d-tema` + baseline loop
+`doublebox-ilu`. PGM also carries camera FILL + `l3d-predstavovak` + baseline loop
 (`casparcg_clip_player2`). The **logo-bug is PGM-only**.
 
 ### `bg-loop` folder structure
