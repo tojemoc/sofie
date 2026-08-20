@@ -40,70 +40,70 @@
 			"id": "seg-tema-1",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"name": "Téma 1",
+			"name": "Obchodný register",
 			"rank": 2,
 			"float": false,
 			"isTemplate": false,
 			"segmentType": "story",
 			"payload": {
 				"type": "story",
-				"name": "Téma 1"
+				"name": "Obchodný register"
 			}
 		},
 		{
 			"id": "seg-tema-2",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"name": "Téma 2",
+			"name": "Spor Saková – Fico",
 			"rank": 3,
 			"float": false,
 			"isTemplate": false,
 			"segmentType": "story",
 			"payload": {
 				"type": "story",
-				"name": "Téma 2"
+				"name": "Spor Saková – Fico"
 			}
 		},
 		{
 			"id": "seg-tema-3",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"name": "Téma 3",
+			"name": "Referendum / novela Ústavy",
 			"rank": 4,
 			"float": false,
 			"isTemplate": false,
 			"segmentType": "story",
 			"payload": {
 				"type": "story",
-				"name": "Téma 3"
+				"name": "Referendum / novela Ústavy"
 			}
 		},
 		{
 			"id": "seg-tema-4",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"name": "Téma 4",
+			"name": "Ukrajina",
 			"rank": 5,
 			"float": false,
 			"isTemplate": false,
 			"segmentType": "story",
 			"payload": {
 				"type": "story",
-				"name": "Téma 4"
+				"name": "Ukrajina"
 			}
 		},
 		{
 			"id": "seg-tema-5",
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
-			"name": "Téma 5",
+			"name": "Migaľ",
 			"rank": 6,
 			"float": false,
 			"isTemplate": false,
 			"segmentType": "story",
 			"payload": {
 				"type": "story",
-				"name": "Téma 5"
+				"name": "Migaľ"
 			}
 		},
 		{
@@ -177,8 +177,10 @@
 			"duration": 8,
 			"payload": {
 				"type": "ilu",
-				"name": "HEADLINE1"
-			}
+				"name": "HEADLINE1",
+				"script": "Osobné údaje v OR SR. Rodné čísla, podpisy, údaje z dokladov — aj to sa dá vyčítať z nového obchodného registra. Podľa ministra sa nič nedeje."
+			},
+			"script": "Osobné údaje v OR SR. Rodné čísla, podpisy, údaje z dokladov — aj to sa dá vyčítať z nového obchodného registra. Podľa ministra sa nič nedeje."
 		},
 		{
 			"id": "part-hl-2",
@@ -193,8 +195,10 @@
 			"duration": 8,
 			"payload": {
 				"type": "ilu",
-				"name": "HEADLINE2"
-			}
+				"name": "HEADLINE2",
+				"script": "Vláda sa vrátila k rokovaniam. Prvé vládne rokovanie po lete sa skončilo mlčaním. Avizovaná novela Ústavy z dielne Smeru sa z programu vytratila."
+			},
+			"script": "Vláda sa vrátila k rokovaniam. Prvé vládne rokovanie po lete sa skončilo mlčaním. Avizovaná novela Ústavy z dielne Smeru sa z programu vytratila."
 		},
 		{
 			"id": "part-hl-3",
@@ -209,8 +213,10 @@
 			"duration": 8,
 			"payload": {
 				"type": "ilu",
-				"name": "HEADLINE3"
-			}
+				"name": "HEADLINE3",
+				"script": "Fedorov vyzýva na voľby. Nevídaná výzva na ukrajinské voľby — populárny exminister nakrútil video a chce hovoriť aj o korupcii."
+			},
+			"script": "Fedorov vyzýva na voľby. Nevídaná výzva na ukrajinské voľby — populárny exminister nakrútil video a chce hovoriť aj o korupcii."
 		},
 		{
 			"id": "part-intro",
@@ -225,15 +231,17 @@
 			"duration": 25,
 			"payload": {
 				"type": "intro",
-				"name": "Intro"
-			}
+				"name": "Intro",
+				"script": ""
+			},
+			"script": ""
 		},
 		{
 			"id": "part-intro-mod",
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-intro",
 			"playlistId": null,
-			"name": "Michal Kovačič",
+			"name": "Gabriela Kajtárová",
 			"rank": 1,
 			"float": false,
 			"isTemplate": false,
@@ -241,15 +249,17 @@
 			"duration": 5,
 			"payload": {
 				"type": "cam",
-				"name": "Michal Kovačič"
-			}
+				"name": "Gabriela Kajtárová",
+				"script": "Gabriela Kajtárová"
+			},
+			"script": "Gabriela Kajtárová"
 		},
 		{
 			"id": "part-tema-1-db",
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-1",
 			"playlistId": null,
-			"name": "DoubleBox",
+			"name": "ILU Register",
 			"rank": 0,
 			"float": false,
 			"isTemplate": false,
@@ -257,15 +267,17 @@
 			"duration": 10,
 			"payload": {
 				"type": "doublebox",
-				"name": "DoubleBox"
-			}
+				"name": "ILU Register",
+				"script": "Dobrý večer. Z nového Obchodného registra sa dajú zistiť osobné údaje zástupcov firiem — vrátane rodných čísel, adries, čísel občianskych preukazov a podpisových vzorov. Podľa ministra spravodlivosti je všetko tak, ako má byť."
+			},
+			"script": "Dobrý večer. Z nového Obchodného registra sa dajú zistiť osobné údaje zástupcov firiem — vrátane rodných čísel, adries, čísel občianskych preukazov a podpisových vzorov. Podľa ministra spravodlivosti je všetko tak, ako má byť."
 		},
 		{
 			"id": "part-tema-1-syn-1",
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-1",
 			"playlistId": null,
-			"name": "SYN 1",
+			"name": "SYN Susko",
 			"rank": 1,
 			"float": false,
 			"isTemplate": false,
@@ -273,15 +285,17 @@
 			"duration": 12,
 			"payload": {
 				"type": "syn",
-				"name": "SYN 1"
-			}
+				"name": "SYN Susko",
+				"script": ""
+			},
+			"script": ""
 		},
 		{
 			"id": "part-tema-1-syn-2",
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-1",
 			"playlistId": null,
-			"name": "SYN 2",
+			"name": "SYN Šipoš",
 			"rank": 2,
 			"float": false,
 			"isTemplate": false,
@@ -289,15 +303,17 @@
 			"duration": 12,
 			"payload": {
 				"type": "syn",
-				"name": "SYN 2"
-			}
+				"name": "SYN Šipoš",
+				"script": ""
+			},
+			"script": ""
 		},
 		{
 			"id": "part-tema-1-db2",
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-1",
 			"playlistId": null,
-			"name": "DoubleBox 2",
+			"name": "ILU Úrad",
 			"rank": 3,
 			"float": false,
 			"isTemplate": false,
@@ -305,15 +321,17 @@
 			"duration": 8,
 			"payload": {
 				"type": "doublebox",
-				"name": "DoubleBox 2"
-			}
+				"name": "ILU Úrad",
+				"script": "Úrad na ochranu osobných údajov už začal voči ministerstvu spravodlivosti konanie. Tvrdí, že citlivé údaje mali byť anonymizované."
+			},
+			"script": "Úrad na ochranu osobných údajov už začal voči ministerstvu spravodlivosti konanie. Tvrdí, že citlivé údaje mali byť anonymizované."
 		},
 		{
 			"id": "part-tema-2-db",
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-2",
 			"playlistId": null,
-			"name": "DoubleBox",
+			"name": "ILU Saková – Fico",
 			"rank": 0,
 			"float": false,
 			"isTemplate": false,
@@ -321,15 +339,17 @@
 			"duration": 10,
 			"payload": {
 				"type": "doublebox",
-				"name": "DoubleBox"
-			}
+				"name": "ILU Saková – Fico",
+				"script": "Ani Robert Fico ani ministerka Denisa Saková neprišli po rokovaní vlády pred novinárov, aby vysvetlili svoj spor okolo nového jadrového zdroja v Jaslovských Bohuniciach. Ide o odkúpenie českého podielu v spoločnosti JESS. Ministerka Denisa Saková považovala sumu 190 miliónov za predraženú. Premiérovi sa nepáčia prieťahy."
+			},
+			"script": "Ani Robert Fico ani ministerka Denisa Saková neprišli po rokovaní vlády pred novinárov, aby vysvetlili svoj spor okolo nového jadrového zdroja v Jaslovských Bohuniciach. Ide o odkúpenie českého podielu v spoločnosti JESS. Ministerka Denisa Saková považovala sumu 190 miliónov za predraženú. Premiérovi sa nepáčia prieťahy."
 		},
 		{
 			"id": "part-tema-2-syn-1",
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-2",
 			"playlistId": null,
-			"name": "SYN 1",
+			"name": "SYN Takáč / Štefunko",
 			"rank": 1,
 			"float": false,
 			"isTemplate": false,
@@ -337,15 +357,17 @@
 			"duration": 12,
 			"payload": {
 				"type": "syn",
-				"name": "SYN 1"
-			}
+				"name": "SYN Takáč / Štefunko",
+				"script": ""
+			},
+			"script": ""
 		},
 		{
 			"id": "part-tema-3-db",
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-3",
 			"playlistId": null,
-			"name": "DoubleBox",
+			"name": "ILU Susko",
 			"rank": 0,
 			"float": false,
 			"isTemplate": false,
@@ -353,15 +375,17 @@
 			"duration": 10,
 			"payload": {
 				"type": "doublebox",
-				"name": "DoubleBox"
-			}
+				"name": "ILU Susko",
+				"script": "Návrh na zmenu ústavy vydržal sotva pol dňa. Z rokovania vlády zmizla novela, ktorá by umožnila skrátiť budúce volebné obdobia referendom. Minister Susko pritom vysvetľoval, že ide o prísľub premiéra."
+			},
+			"script": "Návrh na zmenu ústavy vydržal sotva pol dňa. Z rokovania vlády zmizla novela, ktorá by umožnila skrátiť budúce volebné obdobia referendom. Minister Susko pritom vysvetľoval, že ide o prísľub premiéra."
 		},
 		{
 			"id": "part-tema-3-syn-1",
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-3",
 			"playlistId": null,
-			"name": "SYN 1",
+			"name": "SYN Susko",
 			"rank": 1,
 			"float": false,
 			"isTemplate": false,
@@ -369,31 +393,35 @@
 			"duration": 12,
 			"payload": {
 				"type": "syn",
-				"name": "SYN 1"
-			}
+				"name": "SYN Susko",
+				"script": ""
+			},
+			"script": ""
 		},
 		{
 			"id": "part-tema-3-syn-2",
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-3",
 			"playlistId": null,
-			"name": "SYN 2",
+			"name": "ILU Drucker",
 			"rank": 2,
 			"float": false,
 			"isTemplate": false,
-			"partType": "syn",
-			"duration": 12,
+			"partType": "doublebox",
+			"duration": 8,
 			"payload": {
-				"type": "syn",
-				"name": "SYN 2"
-			}
+				"type": "doublebox",
+				"name": "ILU Drucker",
+				"script": "Podľa ministra Druckera musí novelu Ústavy najskôr prerokovať koaličná rada."
+			},
+			"script": "Podľa ministra Druckera musí novelu Ústavy najskôr prerokovať koaličná rada."
 		},
 		{
 			"id": "part-tema-4-db",
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-4",
 			"playlistId": null,
-			"name": "DoubleBox",
+			"name": "ILU Fedorov",
 			"rank": 0,
 			"float": false,
 			"isTemplate": false,
@@ -401,15 +429,17 @@
 			"duration": 10,
 			"payload": {
 				"type": "doublebox",
-				"name": "DoubleBox"
-			}
+				"name": "ILU Fedorov",
+				"script": "Bývalý ukrajinský minister obrany zverejnil video, v ktorom vyzýva, aby sa na Ukrajine konali voľby. Populárneho Mykhaila Fedorova odvolal prezident Zelenskyj pred mesiacom, čo doteraz vyvoláva protesty. Funkčné obdobie prezidenta sa skončilo pred vyše dvomi rokmi. Konaniu volieb bráni vojnový stav."
+			},
+			"script": "Bývalý ukrajinský minister obrany zverejnil video, v ktorom vyzýva, aby sa na Ukrajine konali voľby. Populárneho Mykhaila Fedorova odvolal prezident Zelenskyj pred mesiacom, čo doteraz vyvoláva protesty. Funkčné obdobie prezidenta sa skončilo pred vyše dvomi rokmi. Konaniu volieb bráni vojnový stav."
 		},
 		{
 			"id": "part-tema-4-syn-1",
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-4",
 			"playlistId": null,
-			"name": "SYN 1",
+			"name": "SYN Fedorov",
 			"rank": 1,
 			"float": false,
 			"isTemplate": false,
@@ -417,7 +447,27 @@
 			"duration": 12,
 			"payload": {
 				"type": "syn",
-				"name": "SYN 1"
+				"name": "SYN Fedorov",
+				"script": ""
+			},
+			"script": ""
+		},
+		{
+			"id": "part-tema-4-db2",
+			"rundownId": "spravy-v3-smoke",
+			"segmentId": "seg-tema-4",
+			"playlistId": null,
+			"name": "ILU Zelenskyj",
+			"rank": 2,
+			"float": false,
+			"isTemplate": false,
+			"partType": "doublebox",
+			"duration": 8,
+			"script": "Ukrajina dnes navyše rieši ďalší korupčný škandál. Protikorupčné agentúry vyšetrujú vysokopostavených politikov. Volodymyr Zelenskyj odvolal zástupkyňu šéfa vlastnej kancelárie.",
+			"payload": {
+				"type": "doublebox",
+				"name": "ILU Zelenskyj",
+				"script": "Ukrajina dnes navyše rieši ďalší korupčný škandál. Protikorupčné agentúry vyšetrujú vysokopostavených politikov. Volodymyr Zelenskyj odvolal zástupkyňu šéfa vlastnej kancelárie."
 			}
 		},
 		{
@@ -425,7 +475,7 @@
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-5",
 			"playlistId": null,
-			"name": "DoubleBox",
+			"name": "ILU Migaľ",
 			"rank": 0,
 			"float": false,
 			"isTemplate": false,
@@ -433,15 +483,17 @@
 			"duration": 10,
 			"payload": {
 				"type": "doublebox",
-				"name": "DoubleBox"
-			}
+				"name": "ILU Migaľ",
+				"script": "Minister Migaľ odmieta odpovedať na otázky o výkupe pozemkov pre nájomné byty za 30 miliónov eur."
+			},
+			"script": "Minister Migaľ odmieta odpovedať na otázky o výkupe pozemkov pre nájomné byty za 30 miliónov eur."
 		},
 		{
 			"id": "part-tema-5-syn-1",
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-5",
 			"playlistId": null,
-			"name": "SYN 1",
+			"name": "SYN Migaľ cluster",
 			"rank": 1,
 			"float": false,
 			"isTemplate": false,
@@ -449,24 +501,28 @@
 			"duration": 12,
 			"payload": {
 				"type": "syn",
-				"name": "SYN 1"
-			}
+				"name": "SYN Migaľ cluster",
+				"script": ""
+			},
+			"script": ""
 		},
 		{
 			"id": "part-tema-5-syn-2",
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-5",
 			"playlistId": null,
-			"name": "SYN 2",
+			"name": "ILU Avízo Migaľ",
 			"rank": 2,
 			"float": false,
 			"isTemplate": false,
-			"partType": "syn",
-			"duration": 12,
+			"partType": "doublebox",
+			"duration": 8,
 			"payload": {
-				"type": "syn",
-				"name": "SYN 2"
-			}
+				"type": "doublebox",
+				"name": "ILU Avízo Migaľ",
+				"script": "Celú reportáž Barbory Šišolákovej nájdete na našom webe."
+			},
+			"script": "Celú reportáž Barbory Šišolákovej nájdete na našom webe."
 		},
 		{
 			"id": "part-sjv-open",
@@ -481,15 +537,17 @@
 			"duration": 4,
 			"payload": {
 				"type": "gfx",
-				"name": "SJV"
-			}
+				"name": "SJV",
+				"script": "Správy jednou vetou."
+			},
+			"script": "Správy jednou vetou."
 		},
 		{
 			"id": "part-sjv-syn-1",
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-sjv",
 			"playlistId": null,
-			"name": "SJV SYN 1",
+			"name": "SJV Minibus",
 			"rank": 1,
 			"float": false,
 			"isTemplate": false,
@@ -497,15 +555,17 @@
 			"duration": 8,
 			"payload": {
 				"type": "syn",
-				"name": "SJV SYN 1"
-			}
+				"name": "SJV Minibus",
+				"script": "Ruský dron zasiahol civilný minibus v meste Charkov. Zomreli 4 ľudia, ďalších 5 utrpelo zranenia."
+			},
+			"script": "Ruský dron zasiahol civilný minibus v meste Charkov. Zomreli 4 ľudia, ďalších 5 utrpelo zranenia."
 		},
 		{
 			"id": "part-sjv-syn-2",
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-sjv",
 			"playlistId": null,
-			"name": "SJV SYN 2",
+			"name": "SJV Meta",
 			"rank": 2,
 			"float": false,
 			"isTemplate": false,
@@ -513,15 +573,17 @@
 			"duration": 8,
 			"payload": {
 				"type": "syn",
-				"name": "SJV SYN 2"
-			}
+				"name": "SJV Meta",
+				"script": "V USA sa začal súdny spor medzi technologickým gigantom Meta a 29timi americkými štátmi, ktoré tvrdia, že Facebook a Instagram sú zámerne navrhnuté, aby vytvárali závislosť užívateľov. Od Mety žiadajú 200 miliárd dolárov v náhradách škôd."
+			},
+			"script": "V USA sa začal súdny spor medzi technologickým gigantom Meta a 29timi americkými štátmi, ktoré tvrdia, že Facebook a Instagram sú zámerne navrhnuté, aby vytvárali závislosť užívateľov. Od Mety žiadajú 200 miliárd dolárov v náhradách škôd."
 		},
 		{
 			"id": "part-sjv-syn-3",
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-sjv",
 			"playlistId": null,
-			"name": "SJV SYN 3",
+			"name": "SJV 3",
 			"rank": 3,
 			"float": false,
 			"isTemplate": false,
@@ -529,15 +591,17 @@
 			"duration": 8,
 			"payload": {
 				"type": "syn",
-				"name": "SJV SYN 3"
-			}
+				"name": "SJV 3",
+				"script": ""
+			},
+			"script": ""
 		},
 		{
 			"id": "part-sjv-syn-4",
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-sjv",
 			"playlistId": null,
-			"name": "SJV SYN 4",
+			"name": "SJV 4",
 			"rank": 4,
 			"float": false,
 			"isTemplate": false,
@@ -545,8 +609,10 @@
 			"duration": 8,
 			"payload": {
 				"type": "syn",
-				"name": "SJV SYN 4"
-			}
+				"name": "SJV 4",
+				"script": ""
+			},
+			"script": ""
 		},
 		{
 			"id": "part-sport-open",
@@ -561,15 +627,17 @@
 			"duration": 4,
 			"payload": {
 				"type": "gfx",
-				"name": "Šport"
-			}
+				"name": "Šport",
+				"script": "Šport."
+			},
+			"script": "Šport."
 		},
 		{
 			"id": "part-sport-syn-1",
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-sport",
 			"playlistId": null,
-			"name": "Sport SYN 1",
+			"name": "Šport Slovan",
 			"rank": 1,
 			"float": false,
 			"isTemplate": false,
@@ -577,15 +645,17 @@
 			"duration": 10,
 			"payload": {
 				"type": "syn",
-				"name": "Sport SYN 1"
-			}
+				"name": "Šport Slovan",
+				"script": "Už o pár hodín nastúpia futbalisti Slovana Bratislava na duel štvrtého predkola Ligy majstrov so slovínskym Celje. Ak z dvojzápasu vyjdu víťazne, po 2 rokoch sa vrátia do skupinovej fázy najprestížnejšej klubovej súťaže."
+			},
+			"script": "Už o pár hodín nastúpia futbalisti Slovana Bratislava na duel štvrtého predkola Ligy majstrov so slovínskym Celje. Ak z dvojzápasu vyjdu víťazne, po 2 rokoch sa vrátia do skupinovej fázy najprestížnejšej klubovej súťaže."
 		},
 		{
 			"id": "part-sport-syn-2",
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-sport",
 			"playlistId": null,
-			"name": "Sport SYN 2",
+			"name": "Šport Felix",
 			"rank": 2,
 			"float": false,
 			"isTemplate": false,
@@ -593,15 +663,17 @@
 			"duration": 10,
 			"payload": {
 				"type": "syn",
-				"name": "Sport SYN 2"
-			}
+				"name": "Šport Felix",
+				"script": "Kanadský tenista Auger-Aliassime postúpil do osemfinále turnaja v Cincinnati. Svetová štvorka si v dvoch setoch poradila s Argentínčanom Cerúndolom."
+			},
+			"script": "Kanadský tenista Auger-Aliassime postúpil do osemfinále turnaja v Cincinnati. Svetová štvorka si v dvoch setoch poradila s Argentínčanom Cerúndolom."
 		},
 		{
 			"id": "part-sport-syn-3",
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-sport",
 			"playlistId": null,
-			"name": "Sport SYN 3",
+			"name": "Šport 3",
 			"rank": 3,
 			"float": false,
 			"isTemplate": false,
@@ -609,8 +681,10 @@
 			"duration": 10,
 			"payload": {
 				"type": "syn",
-				"name": "Sport SYN 3"
-			}
+				"name": "Šport 3",
+				"script": ""
+			},
+			"script": ""
 		},
 		{
 			"id": "part-weather",
@@ -625,15 +699,17 @@
 			"duration": 20,
 			"payload": {
 				"type": "gfx",
-				"name": "Počasie"
-			}
+				"name": "Počasie",
+				"script": "Zajtra sa oteplí a bude až do 34 stupňov. Na väčšine územia bude oblačno, na východe jasno. Večer sa začnú od juhozápadu intenzívne búrky."
+			},
+			"script": "Zajtra sa oteplí a bude až do 34 stupňov. Na väčšine územia bude oblačno, na východe jasno. Večer sa začnú od juhozápadu intenzívne búrky."
 		},
 		{
 			"id": "part-avizo-db",
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-outro",
 			"playlistId": null,
-			"name": "Odporúčanie",
+			"name": "ILU Avízo",
 			"rank": 0,
 			"float": false,
 			"isTemplate": false,
@@ -641,15 +717,17 @@
 			"duration": 10,
 			"payload": {
 				"type": "doublebox",
-				"name": "Odporúčanie"
-			}
+				"name": "ILU Avízo",
+				"script": "A na záver ešte jeden tip od nás. Žije sa ľuďom na Slovensku lepšie vďaka štvrtej vláde Roberta Fica? Aj o tom debatoval poslanec Smeru Michal Stuška a Martina Holečková z SaS. Témou boli aj dôchodky."
+			},
+			"script": "A na záver ešte jeden tip od nás. Žije sa ľuďom na Slovensku lepšie vďaka štvrtej vláde Roberta Fica? Aj o tom debatoval poslanec Smeru Michal Stuška a Martina Holečková z SaS. Témou boli aj dôchodky."
 		},
 		{
 			"id": "part-avizo-syn",
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-outro",
 			"playlistId": null,
-			"name": "Avízo SYN",
+			"name": "SYN Avízo",
 			"rank": 1,
 			"float": false,
 			"isTemplate": false,
@@ -657,15 +735,17 @@
 			"duration": 8,
 			"payload": {
 				"type": "syn",
-				"name": "Avízo SYN"
-			}
+				"name": "SYN Avízo",
+				"script": ""
+			},
+			"script": ""
 		},
 		{
 			"id": "part-avizo-db2",
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-outro",
 			"playlistId": null,
-			"name": "Odporúčanie 2",
+			"name": "ILU Avízo záver",
 			"rank": 2,
 			"float": false,
 			"isTemplate": false,
@@ -673,8 +753,10 @@
 			"duration": 6,
 			"payload": {
 				"type": "doublebox",
-				"name": "Odporúčanie 2"
-			}
+				"name": "ILU Avízo záver",
+				"script": "Zvažuje strana Smer aj 14te dôchodky? Celú debatu nájdete na našom webe — 360tka.sk. A to je na dnes všetko, dovidenia opäť zajtra."
+			},
+			"script": "Zvažuje strana Smer aj 14te dôchodky? Celú debatu nájdete na našom webe — 360tka.sk. A to je na dnes všetko, dovidenia opäť zajtra."
 		},
 		{
 			"id": "part-outro",
@@ -689,8 +771,10 @@
 			"duration": 30,
 			"payload": {
 				"type": "gfx",
-				"name": "Outro"
-			}
+				"name": "Outro",
+				"script": ""
+			},
+			"script": ""
 		}
 	],
 	"pieces": [
@@ -700,14 +784,14 @@
 			"playlistId": null,
 			"segmentId": "seg-headlines",
 			"partId": "part-hl-1",
-			"name": "Headline",
+			"name": "Osobné údaje v OR SR",
 			"rank": 0,
 			"float": false,
 			"pieceType": "headline",
 			"start": 0,
 			"duration": 8,
 			"payload": {
-				"text": "Headline horný riadok",
+				"text": "Osobné údaje v OR SR",
 				"iluFile": "clips/HEADLINE1.mov",
 				"sourceEnabled": false,
 				"source": "",
@@ -720,15 +804,15 @@
 			"playlistId": null,
 			"segmentId": "seg-headlines",
 			"partId": "part-hl-1",
-			"name": "L3D",
+			"name": "Osobné údaje",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-headline",
 			"start": 0,
 			"duration": 8,
 			"payload": {
-				"headline": "Headline L3D horný riadok",
-				"subline": "Headline dolný riadok"
+				"headline": "Osobné údaje",
+				"subline": "v OR SR"
 			}
 		},
 		{
@@ -765,14 +849,14 @@
 			"playlistId": null,
 			"segmentId": "seg-headlines",
 			"partId": "part-hl-2",
-			"name": "Headline",
+			"name": "Vláda sa vrátila k rokovaniam",
 			"rank": 0,
 			"float": false,
 			"pieceType": "headline",
 			"start": 0,
 			"duration": 8,
 			"payload": {
-				"text": "Headline horný riadok",
+				"text": "Vláda sa vrátila k rokovaniam",
 				"iluFile": "clips/HEADLINE2.mov",
 				"sourceEnabled": false,
 				"source": "",
@@ -785,15 +869,15 @@
 			"playlistId": null,
 			"segmentId": "seg-headlines",
 			"partId": "part-hl-2",
-			"name": "L3D",
+			"name": "Vláda sa vrátila",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-headline",
 			"start": 0,
 			"duration": 8,
 			"payload": {
-				"headline": "Headline L3D horný riadok",
-				"subline": "Headline dolný riadok"
+				"headline": "Vláda sa vrátila",
+				"subline": "k rokovaniam"
 			}
 		},
 		{
@@ -817,14 +901,14 @@
 			"playlistId": null,
 			"segmentId": "seg-headlines",
 			"partId": "part-hl-3",
-			"name": "Headline",
+			"name": "Fedorov vyzýva na voľby",
 			"rank": 0,
 			"float": false,
 			"pieceType": "headline",
 			"start": 0,
 			"duration": 8,
 			"payload": {
-				"text": "Headline horný riadok",
+				"text": "Fedorov vyzýva na voľby",
 				"iluFile": "clips/HEADLINE3.mov",
 				"sourceEnabled": false,
 				"source": "",
@@ -837,15 +921,15 @@
 			"playlistId": null,
 			"segmentId": "seg-headlines",
 			"partId": "part-hl-3",
-			"name": "L3D",
+			"name": "Fedorov vyzýva",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-headline",
 			"start": 0,
 			"duration": 8,
 			"payload": {
-				"headline": "Headline L3D horný riadok",
-				"subline": "Headline dolný riadok"
+				"headline": "Fedorov vyzýva",
+				"subline": "na voľby"
 			}
 		},
 		{
@@ -898,13 +982,13 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-intro-mod",
-			"name": "MOD",
+			"name": "Gabriela Kajtárová",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-predstavovak",
 			"payload": {
-				"name": "Michal Kovačič",
-				"title": "moderátor"
+				"name": "Gabriela Kajtárová",
+				"title": "moderátorka"
 			},
 			"segmentId": "seg-intro",
 			"start": 0
@@ -994,13 +1078,13 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-tema-1-syn-1",
-			"name": "Meno Priezvisko",
+			"name": "Boris Susko",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-syn",
 			"payload": {
-				"name": "Meno Priezvisko",
-				"role": "funkcia"
+				"name": "Boris Susko",
+				"role": "minister spravodlivosti (SMER-SD)"
 			},
 			"duration": 6.0,
 			"start": 2.0,
@@ -1044,13 +1128,13 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-tema-1-syn-2",
-			"name": "Meno Priezvisko",
+			"name": "Šipoš",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-syn",
 			"payload": {
-				"name": "Meno Priezvisko",
-				"role": "funkcia"
+				"name": "Šipoš",
+				"role": ""
 			},
 			"duration": 5.0,
 			"start": 1.5,
@@ -1061,12 +1145,12 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-tema-1-db2",
-			"name": "Osobné údaje na OR SR",
+			"name": "Osobné údaje v registri",
 			"rank": 0,
 			"float": false,
 			"pieceType": "doublebox-ilu",
 			"payload": {
-				"text": "Osobné údaje na OR SR",
+				"text": "Osobné údaje v registri",
 				"iluFile": "clips/ILU bednar2.mp4"
 			},
 			"segmentId": "seg-tema-1",
@@ -1077,13 +1161,13 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-tema-1-db2",
-			"name": "Osobné údaje na OR SR",
+			"name": "Osobné údaje v registri",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-predstavovak",
 			"payload": {
-				"name": "Boris Susko",
-				"title": "minister spravodlivosti (SMER-SD)"
+				"name": "Osobné údaje v registri",
+				"title": ""
 			},
 			"segmentId": "seg-tema-1",
 			"start": 0
@@ -1108,12 +1192,12 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-tema-2-db",
-			"name": "Rozpočet a konsolidácia",
+			"name": "Spor Saková – Fico",
 			"rank": 0,
 			"float": false,
 			"pieceType": "doublebox-ilu",
 			"payload": {
-				"text": "Rozpočet a konsolidácia",
+				"text": "Spor Saková – Fico",
 				"iluFile": "clips/ILU bednar2.mp4"
 			},
 			"segmentId": "seg-tema-2",
@@ -1124,12 +1208,12 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-tema-2-db",
-			"name": "Rozpočet a konsolidácia",
+			"name": "Spor Saková – Fico",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-predstavovak",
 			"payload": {
-				"name": "Rozpočet a konsolidácia",
+				"name": "Spor Saková – Fico",
 				"title": ""
 			},
 			"segmentId": "seg-tema-2",
@@ -1188,13 +1272,13 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-tema-2-syn-1",
-			"name": "Peter Pellegrini",
+			"name": "Takáč",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-syn",
 			"payload": {
-				"name": "Peter Pellegrini",
-				"role": "Prezident SR"
+				"name": "Takáč",
+				"role": ""
 			},
 			"duration": 7.0,
 			"start": 1.0,
@@ -1205,12 +1289,12 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-tema-3-db",
-			"name": "Bezpečnosť v Európe",
+			"name": "Nerokovali o novele Ústavy",
 			"rank": 0,
 			"float": false,
 			"pieceType": "doublebox-ilu",
 			"payload": {
-				"text": "Bezpečnosť v Európe",
+				"text": "Nerokovali o novele Ústavy",
 				"iluFile": "clips/ILU bosna.mp4"
 			},
 			"segmentId": "seg-tema-3",
@@ -1221,12 +1305,12 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-tema-3-db",
-			"name": "Bezpečnosť v Európe",
+			"name": "Nerokovali o novele Ústavy",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-predstavovak",
 			"payload": {
-				"name": "Bezpečnosť v Európe",
+				"name": "Nerokovali o novele Ústavy",
 				"title": ""
 			},
 			"segmentId": "seg-tema-3",
@@ -1285,49 +1369,16 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-tema-3-syn-1",
-			"name": "Host",
+			"name": "Boris Susko",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-syn",
 			"payload": {
-				"name": "Host",
-				"role": "analytik"
+				"name": "Boris Susko",
+				"role": "minister spravodlivosti (SMER-SD)"
 			},
 			"duration": 5.0,
 			"start": 0.5,
-			"segmentId": "seg-tema-3"
-		},
-		{
-			"id": "piece-part-tema-3-syn-2-vid",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"partId": "part-tema-3-syn-2",
-			"name": "SYN",
-			"rank": 0,
-			"float": false,
-			"pieceType": "video",
-			"payload": {
-				"fileName": "clips/SYN CLUSTER fico tusk.mp4",
-				"sourceDuration": 12000
-			},
-			"segmentId": "seg-tema-3",
-			"start": 0
-		},
-		{
-			"id": "piece-part-tema-3-syn-2-l3d",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"partId": "part-tema-3-syn-2",
-			"name": "Host",
-			"rank": 1,
-			"float": false,
-			"pieceType": "l3d-syn",
-			"payload": {
-				"name": "Host",
-				"role": "analytik"
-			},
-			"duration": 4.0,
-			"start": 1.0,
 			"segmentId": "seg-tema-3"
 		},
 		{
@@ -1335,12 +1386,12 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-tema-4-db",
-			"name": "Energetika a ceny",
+			"name": "Priama výzva na voľby",
 			"rank": 0,
 			"float": false,
 			"pieceType": "doublebox-ilu",
 			"payload": {
-				"text": "Energetika a ceny",
+				"text": "Priama výzva na voľby",
 				"iluFile": "clips/ILU bednar.mp4"
 			},
 			"segmentId": "seg-tema-4",
@@ -1351,12 +1402,12 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-tema-4-db",
-			"name": "Energetika a ceny",
+			"name": "Priama výzva na voľby",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-predstavovak",
 			"payload": {
-				"name": "Energetika a ceny",
+				"name": "Priama výzva na voľby",
 				"title": ""
 			},
 			"segmentId": "seg-tema-4",
@@ -1415,13 +1466,13 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-tema-4-syn-1",
-			"name": "Expert",
+			"name": "Mykhailo Fedorov",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-syn",
 			"payload": {
-				"name": "Expert",
-				"role": "ekonom"
+				"name": "Mykhailo Fedorov",
+				"role": "bývalý minister obrany Ukrajiny"
 			},
 			"duration": 6.0,
 			"start": 2.0,
@@ -1432,12 +1483,12 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-tema-5-db",
-			"name": "Vzdelávanie",
+			"name": "Migaľ odmieta odpovedať",
 			"rank": 0,
 			"float": false,
 			"pieceType": "doublebox-ilu",
 			"payload": {
-				"text": "Vzdelávanie",
+				"text": "Migaľ odmieta odpovedať",
 				"iluFile": "clips/ILU bednar2.mp4"
 			},
 			"segmentId": "seg-tema-5",
@@ -1448,12 +1499,12 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-tema-5-db",
-			"name": "Vzdelávanie",
+			"name": "Migaľ odmieta odpovedať",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-predstavovak",
 			"payload": {
-				"name": "Vzdelávanie",
+				"name": "Migaľ odmieta odpovedať",
 				"title": ""
 			},
 			"segmentId": "seg-tema-5",
@@ -1512,49 +1563,16 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-tema-5-syn-1",
-			"name": "Učiteľ",
+			"name": "Migaľ",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-syn",
 			"payload": {
-				"name": "Učiteľ",
-				"role": "pedagóg"
+				"name": "Migaľ",
+				"role": "minister"
 			},
 			"duration": 5.0,
 			"start": 1.0,
-			"segmentId": "seg-tema-5"
-		},
-		{
-			"id": "piece-part-tema-5-syn-2-vid",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"partId": "part-tema-5-syn-2",
-			"name": "SYN",
-			"rank": 0,
-			"float": false,
-			"pieceType": "video",
-			"payload": {
-				"fileName": "clips/SYN bednar ok.mp4",
-				"sourceDuration": 12000
-			},
-			"segmentId": "seg-tema-5",
-			"start": 0
-		},
-		{
-			"id": "piece-part-tema-5-syn-2-l3d",
-			"rundownId": "spravy-v3-smoke",
-			"playlistId": null,
-			"partId": "part-tema-5-syn-2",
-			"name": "Učiteľ",
-			"rank": 1,
-			"float": false,
-			"pieceType": "l3d-syn",
-			"payload": {
-				"name": "Učiteľ",
-				"role": "pedagóg"
-			},
-			"duration": 4.0,
-			"start": 0.5,
 			"segmentId": "seg-tema-5"
 		},
 		{
@@ -1579,13 +1597,13 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-sjv-open",
-			"name": "SJV",
+			"name": "4 mŕtvi v minibuse",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-sjv",
 			"payload": {
 				"kicker": "SPRÁVY JEDNOU VETOU",
-				"headline": "Kamenický o konsolidácií Slovenska"
+				"headline": "4 mŕtvi v minibuse"
 			},
 			"segmentId": "seg-sjv",
 			"start": 0
@@ -1611,13 +1629,13 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-sjv-syn-1",
-			"name": "Kamenický o konsolidácií Slovenska",
+			"name": "4 mŕtvi v minibuse",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-sjv",
 			"payload": {
 				"kicker": "SPRÁVY JEDNOU VETOU",
-				"headline": "Kamenický o konsolidácií Slovenska"
+				"headline": "4 mŕtvi v minibuse"
 			},
 			"duration": 5,
 			"start": 0.5,
@@ -1644,13 +1662,13 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-sjv-syn-2",
-			"name": "Výzva prezidentovi k reforme",
+			"name": "200-miliardový súdny spor",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-sjv",
 			"payload": {
 				"kicker": "SPRÁVY JEDNOU VETOU",
-				"headline": "Výzva prezidentovi k reforme"
+				"headline": "200-miliardový súdny spor"
 			},
 			"duration": 5,
 			"start": 0.5,
@@ -1744,13 +1762,13 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-sport-open",
-			"name": "Šport",
+			"name": "Posledný krok Slovanu k LM",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-sport",
 			"payload": {
 				"kicker": "ŠPORT",
-				"headline": "Pokračuje boj o Stanley cup"
+				"headline": "Posledný krok Slovanu k LM"
 			},
 			"segmentId": "seg-sport",
 			"start": 0
@@ -1776,13 +1794,13 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-sport-syn-1",
-			"name": "Pokračuje boj o Stanley cup",
+			"name": "Posledný krok Slovanu k LM",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-sport",
 			"payload": {
 				"kicker": "ŠPORT",
-				"headline": "Pokračuje boj o Stanley cup"
+				"headline": "Posledný krok Slovanu k LM"
 			},
 			"duration": 6,
 			"start": 1.0,
@@ -1809,13 +1827,13 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-sport-syn-2",
-			"name": "Slovensko na ME v hádzanej",
+			"name": "Auger-Aliassime dominuje v USA",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-sport",
 			"payload": {
 				"kicker": "ŠPORT",
-				"headline": "Slovensko na ME v hádzanej"
+				"headline": "Auger-Aliassime dominuje v USA"
 			},
 			"duration": 6,
 			"start": 1.0,
@@ -1922,7 +1940,7 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-avizo-db",
-			"name": "Avízo",
+			"name": "Sledujte na www.360tka.sk",
 			"rank": 1,
 			"float": false,
 			"pieceType": "doublebox-ilu",
@@ -1938,7 +1956,7 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-avizo-db",
-			"name": "CTA",
+			"name": "Sledujte na www.360tka.sk",
 			"rank": 2,
 			"float": false,
 			"pieceType": "l3d-odporucanie",
@@ -2000,7 +2018,7 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-avizo-db2",
-			"name": "Avízo",
+			"name": "Sledujte na www.360tka.sk",
 			"rank": 0,
 			"float": false,
 			"pieceType": "doublebox-ilu",
@@ -2016,7 +2034,7 @@
 			"rundownId": "spravy-v3-smoke",
 			"playlistId": null,
 			"partId": "part-avizo-db2",
-			"name": "CTA",
+			"name": "Sledujte na www.360tka.sk",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-odporucanie",
@@ -2053,6 +2071,146 @@
 			"payload": {},
 			"segmentId": "seg-outro",
 			"start": 0
+		},
+		{
+			"id": "piece-part-tema-3-db-drucker-ilu",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"segmentId": "seg-tema-3",
+			"partId": "part-tema-3-syn-2",
+			"name": "Nerokovali o novele Ústavy",
+			"rank": 0,
+			"float": false,
+			"pieceType": "doublebox-ilu",
+			"start": 0,
+			"payload": {
+				"text": "Nerokovali o novele Ústavy",
+				"iluFile": "clips/ILU bednar2.mp4"
+			}
+		},
+		{
+			"id": "piece-part-tema-3-db-drucker-l3d",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"segmentId": "seg-tema-3",
+			"partId": "part-tema-3-syn-2",
+			"name": "Nerokovali o novele Ústavy",
+			"rank": 1,
+			"float": false,
+			"pieceType": "l3d-predstavovak",
+			"start": 0,
+			"payload": {
+				"name": "Nerokovali o novele Ústavy",
+				"title": ""
+			}
+		},
+		{
+			"id": "piece-part-tema-3-db-drucker-cam",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"segmentId": "seg-tema-3",
+			"partId": "part-tema-3-syn-2",
+			"name": "Cam",
+			"rank": 2,
+			"float": false,
+			"pieceType": "camera",
+			"start": 0,
+			"payload": {
+				"camNo": 1
+			}
+		},
+		{
+			"id": "piece-part-tema-4-db2-ilu",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"segmentId": "seg-tema-4",
+			"partId": "part-tema-4-db2",
+			"name": "Problémy s korupciou",
+			"rank": 0,
+			"float": false,
+			"pieceType": "doublebox-ilu",
+			"start": 0,
+			"payload": {
+				"text": "Problémy s korupciou",
+				"iluFile": "clips/ILU bosna.mp4"
+			}
+		},
+		{
+			"id": "piece-part-tema-4-db2-l3d",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"segmentId": "seg-tema-4",
+			"partId": "part-tema-4-db2",
+			"name": "Problémy s korupciou",
+			"rank": 1,
+			"float": false,
+			"pieceType": "l3d-predstavovak",
+			"start": 0,
+			"payload": {
+				"name": "Problémy s korupciou",
+				"title": ""
+			}
+		},
+		{
+			"id": "piece-part-tema-4-db2-cam",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"segmentId": "seg-tema-4",
+			"partId": "part-tema-4-db2",
+			"name": "Cam",
+			"rank": 2,
+			"float": false,
+			"pieceType": "camera",
+			"start": 0,
+			"payload": {
+				"camNo": 1
+			}
+		},
+		{
+			"id": "piece-part-tema-5-avizo-ilu",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"segmentId": "seg-tema-5",
+			"partId": "part-tema-5-syn-2",
+			"name": "Viac na 360tka.sk",
+			"rank": 0,
+			"float": false,
+			"pieceType": "doublebox-ilu",
+			"start": 0,
+			"payload": {
+				"text": "Viac na 360tka.sk",
+				"iluFile": "clips/ILU bednar.mp4"
+			}
+		},
+		{
+			"id": "piece-part-tema-5-avizo-l3d",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"segmentId": "seg-tema-5",
+			"partId": "part-tema-5-syn-2",
+			"name": "Viac na 360tka.sk",
+			"rank": 1,
+			"float": false,
+			"pieceType": "l3d-odporucanie",
+			"start": 0,
+			"payload": {
+				"headline": "Viac na 360tka.sk"
+			}
+		},
+		{
+			"id": "piece-part-tema-5-avizo-cam",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"segmentId": "seg-tema-5",
+			"partId": "part-tema-5-syn-2",
+			"name": "Cam",
+			"rank": 2,
+			"float": false,
+			"pieceType": "camera",
+			"start": 0,
+			"payload": {
+				"camNo": 1
+			}
 		}
 	]
 }
