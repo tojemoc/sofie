@@ -71,18 +71,17 @@ emitting ExpectedPackages (`toPackageManagerPath`); timeline `PLAY` still uses
 - Rundown Editor `mediaPick.subdir` (`loops` / `wipes` / `clips` / `assets`) only
   scopes the picker UI under the ingest root — the saved `fileName` must include
   the subdir.
-- `bg-loop` plays on LED ClipPlayer1 (layer 110). Baseline also loops
+- `bg-loop` plays on LED ClipPlayer1 (layer 110) only. Baseline loops
   `loops/bg_loop` at priority 0; a `bg-loop` piece overrides at priority 1.
+  There is **no** PGM companion/`bg_loop` fallback on ClipPlayer2.
   Blueprints baseline uses the same basename
   ([sofie-demo-blueprints#58](https://github.com/tojemoc/sofie-demo-blueprints/pull/58)).
   Smoke does not carry a `bg-loop` piece on Intro.
 - `db_loop.mov` is the **DoubleBox compositing frame** — a 32-second alpha loop
   with `bg_loop` baked in plus the blue animated border with two cutouts (left =
-  ILU/content, right = camera). It plays on **PGM layer 118** (above ILU 115 /
-  camera 116, below L3D 121). Starts on Take into Intro
-  (`OutOnRundownEnd`) and persists for the rest of the show. `bg_loop` on PGM
-  baseline (layer 110) stays as fallback before intro fires; once `db_loop` is on
-  top it covers the full frame with its own baked-in bg_loop.
+  ILU/content, right = camera). It plays on **PGM layer 118** (above CAM **115** /
+  ILU **116**, below L3D 121) on **DoubleBox Takes only** (`WithinPart`). Headlines,
+  post-intro MOD, SYN, and weather stay fullscreen and do not keep `db_loop`.
 - `bg-music` piece type plays background music on `CasparCGAudioBed` (LED ch1
   layer 80). Blueprints baseline Caspar PLAY uses extensionless `loops/bg_music_a`
   / `loops/bg_music_c`; smoke stores disk paths `loops/bg_music_a.wav` /
