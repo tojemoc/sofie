@@ -15,16 +15,16 @@ production still (ILU left / CAM right / tema+bug bar / `bg_loop` behind):
 │   │  (clip / headline ILU)   │  │  (UVC/mod) │             │
 │   └──────────────────────────┘  └────────────┘             │
 │  ┌────────────────────────────────────┬──────────────────┐ │
-│  │  thematic title (l3d-tema)         │  360° sekúnd bug │ │
+│  │  thematic title (l3d-predstavovak) │  360° sekúnd bug │ │
 │  └────────────────────────────────────┴──────────────────┘ │
 └────────────────────────────────────────────────────────────┘
 ```
 
 **LED (Caspar channel 1)** production rule: **headline ILU + `loops/bg_loop` only**.
 The loop is blueprint **baseline** on layer 110 (not a RE piece) and must never be
-displaced by VT/VO/SYN — those play on **PGM ClipPlayer2**. `l3d-mod` / tema / syn /
-headline bars are **PGM**. No intro / znelka on LED. Intro overlay plays on
-**PGM layer 210** (above wipe 200) — see
+displaced by VT/VO/SYN — those play on **PGM ClipPlayer2**. `l3d-predstavovak` /
+`l3d-mod` / `l3d-syn` / headline bars are **PGM**. No intro / znelka on LED. Intro
+overlay plays on **PGM layer 210** (above wipe 200) — see
 [`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md)
 and [`handoffs/blueprints-baseline-bg-loop.md`](./handoffs/blueprints-baseline-bg-loop.md).
 
@@ -41,15 +41,15 @@ Connection → Reload type manifests from assets — or equivalent) so `doublebo
 `doublebox-ilu` definitions are loaded before any DoubleBox Take. Resume the
 `PLAY <pgm>-115` smoke check only after those prerequisites.
 
-**Camera / UVC:** studio `casparcg.hypercomposed.pgmCameraProducer` (demo default
-`dshow://video=OBS Virtual Camera`) is played on **PGM 2-116** when a part with a
-`camera` piece (`camNo: 1` = Camera A) is Taken. Remove the camera piece to keep
-DoubleBox without the CAM window. See
-[`RE-READINESS-AND-PLAYOUT-UX.md`](./RE-READINESS-AND-PLAYOUT-UX.md) for wipe/order/NR planning.
+**Camera / UVC:** studio `casparcg.hypercomposed.pgmCameraProducer` (e.g.
+`dshow://video=OBS Virtual Camera`):
 
-**CAM aspect (no squish):** before FILL, blueprints apply MIXER CROP that keeps 16:9
-and **cuts from the left** into the frame (right portion stays in the tall CAM box).
-Do not stretch CAM1 to the box.
+- **Headlines / post-intro MOD** → PGM 2-116 **fullscreen** (FILL `0 0 1 1`)
+- **DoubleBox** → PGM 2-116 under `db_loop` (118), ~**80%** width, right edge stuck to
+  the screen right (`FILL 0.2 0.1 0.8 0.8`) with cover-crop so the feed does not squish
+
+`db_loop` is **WithinPart** on DoubleBox Takes only (not Intro) so SYN / weather stay
+fullscreen. Production file may be named `dp_loop.mov` — place/symlink as `loops/db_loop`.
 
 **Story ILU piece:** use piece type `doublebox-ilu` (part preset `doublebox`) — not
 `headline`. `doublebox-ilu` plays the clip on **PGM 2-115** with DoubleBox left FILL
@@ -95,11 +95,13 @@ checks.
 | Region | Layer (PGM ch2) | FILL `x y xScale yScale` |
 |--------|-----------------|---------------------------|
 | BG loop | 110 | full frame (no FILL) |
-| ILU | 115 | `0.04 0.08 0.55 0.72` |
-| CAM1 UVC | 116 | `0.62 0.08 0.34 0.72` |
-| `l3d-tema` + bug | 121 / 123 | HTML templates (bottom bar) |
+| ILU | 115 | `0.0219 0.0769 0.6802 0.6824` |
+| CAM1 UVC (DoubleBox) | 116 | `0.2 0.1 0.8 0.8` (under `db_loop`) |
+| CAM1 UVC (headlines/MOD) | 116 | `0 0 1 1` fullscreen |
+| `db_loop` frame | 118 | full frame alpha cutouts |
+| topic L3D + bug | 121 / 123 | HTML templates (bottom bar) |
 | Wipe | 200 | full frame alpha wipe |
-| Intro / znelka | 210 | full frame — above wipe + compose; **PGM only** |
+| Intro / outro | 210 | full frame — above wipe + compose; **PGM only** |
 
 Tune FILL against the real HTML chrome; values above match the attached still
 approximately.
@@ -151,14 +153,14 @@ labelled variant) and `transition: <label>` for operators.
 | `casparcg_pgm_ilu_player` | PGM 2 | 115 | Thematic DoubleBox left ILU (`doublebox-ilu`) |
 | `casparcg_intro_player_pgm` | PGM 2 | 210 | Intro / znelka — **never LED** (handoff; may still be LED 200 until remapped) |
 | `casparcg_pgm_camera` | PGM 2 | 116 | UVC / CAM1 (FILL + left cover-crop) |
-| `casparcg_graphics_pgm_l3d` | PGM 2 | 121 | `l3d-tema` / `l3d-syn` / headline bars |
+| `casparcg_graphics_pgm_l3d` | PGM 2 | 121 | `l3d-predstavovak` / `l3d-odporucanie` / `l3d-syn` / headline bars |
 | `casparcg_graphics_logo` | PGM 2 | 123 | `gfx/logo-bug` (360° sekúnd bug) — **not** on LED |
 | `casparcg_effects_player_pgm` | PGM 2 | 200 | Wipes |
 
 Headline / story ILU on LED vs PGM: opening **headline** ILU stays on **LED**
 (`casparcg_ilu_player`). Thematic DoubleBox left-window media uses
 `casparcg_pgm_ilu_player` on **PGM channel 2 layer 115** via piece type
-`doublebox-ilu`. PGM also carries camera FILL + `l3d-tema` + baseline loop
+`doublebox-ilu`. PGM also carries camera FILL + `l3d-predstavovak` + baseline loop
 (`casparcg_clip_player2`). The **logo-bug is PGM-only**.
 
 ### `bg-loop` folder structure

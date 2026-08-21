@@ -50,11 +50,12 @@ story VT/SYN fullscreen, no Presenter MOD.
 | PGM bg loop | `casparcg_clip_player2` | 110 | Baseline companion loop |
 | DoubleBox story ILU | `casparcg_pgm_ilu_player` | 115 | Piece type `doublebox-ilu` (FILL + crop) |
 | Camera / UVC | `casparcg_pgm_camera` | 116 | e.g. `dshow://video=OBS Virtual Camera` |
-| PGM L3D HTML | `casparcg_graphics_pgm_l3d` | 121 | `gfx/l3d-headline`, `l3d-tema`, `l3d-syn`, `l3d-mod`, `l3d-sjv`, `l3d-sport` |
+| DoubleBox frame (`db_loop`) | `casparcg_pgm_doublebox_loop` | 118 | `loops/db_loop` alpha cutouts — WithinPart on DoubleBox Takes |
+| PGM L3D HTML | `casparcg_graphics_pgm_l3d` | 121 | `gfx/l3d-headline`, `l3d-predstavovak`, `l3d-odporucanie`, `l3d-syn`, `l3d-mod`, `l3d-sjv`, `l3d-sport` |
 | Logo-bug | `casparcg_graphics_logo` | 123 | `gfx/logo-bug` — PGM only |
 | Alpha wipe | `casparcg_effects_player_pgm` | 200 | `wipes/wipe` on Take into part |
-| Intro / znelka | `casparcg_intro_player_pgm` | 210 | `assets/intro_*` — above wipe; **never LED** |
-| Fullscreen story GFX | `casparcg_clip_player2` | 110 | `weather` / `outro` / fullscreen — must not displace LED 110 |
+| Intro / znelka / outro | `casparcg_intro_player_pgm` | 210 | `assets/intro_*`, `assets/outro` — above wipe; **never LED** |
+| Weather / fullscreen story GFX | `casparcg_clip_player2` | 110 | `weather` bypass / fullscreen — must not displace LED 110 |
 
 Legacy LED mappings still exist (`casparcg_effects_player` → LED 200,
 `casparcg_graphics_l3d` → LED 121) for non-hypercomposed / unused paths. Hypercomposed
@@ -68,13 +69,14 @@ SPRÁVY must not route Intro or PGM L3Ds through them.
 |------------|------------------------------|--------|
 | `bg-loop` / baseline loop | — | **LED 1-110** (+ PGM 2-110 baseline) |
 | `headline` ILU (`gfx/headline` + `clips/…`) | Lower Third | **LED 1-115** (+ fallback CG on LED 121) |
-| `l3d-headline` / `l3d-mod` / `l3d-tema` / `l3d-syn` / `l3d-sjv` / `l3d-sport` | PGM L3D (`lower_third_pgm`) | **PGM 2-121** |
+| `l3d-headline` / `l3d-predstavovak` / `l3d-odporucanie` / `l3d-mod` / `l3d-syn` / `l3d-sjv` / `l3d-sport` | PGM L3D (`lower_third_pgm`) | **PGM 2-121** |
 | `doublebox-ilu` | Lower Third | **PGM 2-115** |
 | `camera` | Camera | **PGM 2-116** |
+| DoubleBox `db_loop` (blueprint WithinPart) | PGM DoubleBox loop | **PGM 2-118** |
 | `logo-bug` | Logo | **PGM 2-123** |
 | `wipe` | — | **PGM 2-200** |
-| `intro` | Titles | **PGM 2-210** |
-| `weather` / `outro` / fullscreen | GFX | **PGM 2-110** |
+| `intro` / `outro` | Titles | **PGM 2-210** |
+| `weather` / fullscreen | GFX | **PGM 2-110** |
 
 **Sofie WebUI “GFX” vs “PGM” tracks ≠ Caspar channels.** PGM L3Ds stay on the Sofie **GFX**
 output track (so they are not flattened with Camera) while Caspar still plays them on
@@ -106,11 +108,11 @@ Check in order:
 | Name | What it means | Examples |
 |------|---------------|----------|
 | Caspar **channel** | Physical output | 1 = LED, 2 = PGM |
-| Caspar **layer** | Z-order on that channel | 110 loop, 115 ILU, 121 L3D, 200 wipe |
+| Caspar **layer** | Z-order on that channel | 110 loop, 115 ILU, 116 cam, 118 `db_loop`, 121 L3D, 200 wipe |
 | Sofie **output layer** | WebUI track (GFX / PGM / …) | Not the same as Caspar channel |
 | Sofie **source layer** | Exclusive WithinPart slot | Lower Third vs PGM L3D |
 | Media **folder** | Disk under media-path | `clips/`, `loops/`, `wipes/`, `assets/` |
-| HTML **clipName** | Template under template-path | `gfx/l3d-tema` |
+| HTML **clipName** | Template under template-path | `gfx/l3d-predstavovak` |
 
 WebUI “Lower Third can't be found on the playout system” is Package Manager path verify —
 not “Caspar PLAY failed”. See [`assets/README.md`](../../assets/README.md).
@@ -136,11 +138,12 @@ not “Caspar PLAY failed”. See [`assets/README.md`](../../assets/README.md).
 ### PGM channel 2
 
 ```text
-210  Intro / znelka
+210  Intro / znelka / outro
 200  Wipe
 123  logo-bug
 121  l3d-* HTML
-116  Camera (DoubleBox right)
+118  db_loop (DoubleBox frame — above cam/ILU)
+116  Camera (DoubleBox right / fullscreen headlines)
 115  Story ILU (DoubleBox left)
 110  bg loop / fullscreen story GFX
 ```
@@ -152,6 +155,7 @@ not “Caspar PLAY failed”. See [`assets/README.md`](../../assets/README.md).
 | Doc | Role |
 |-----|------|
 | [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md) | DoubleBox FILL/CROP, UVC, wipe labels, smoke checklist |
+| [`SPRAVY-SHOW-FLOW.md`](./SPRAVY-SHOW-FLOW.md) | Full show spine: headlines → topics → SJV → sport → weather → outro |
 | [`SPRAVY-V2-INTEGRATION.md`](./SPRAVY-V2-INTEGRATION.md) | Cross-repo status, template catalogue, deploy |
 | [`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md) | Intro → PGM 210 (never LED) |
 | `demo-assets` (when present) | HTML templates + media scaffold; historical path `docs/OUTPUT_TOPOLOGY.md` redirects here |

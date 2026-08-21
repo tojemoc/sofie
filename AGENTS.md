@@ -30,13 +30,15 @@ rundown is this megarepo:
 
 | Path | Purpose |
 |------|---------|
-| `assets/sofie-rundown-editor-piece-types.json` | Piece types + GFX preview templates (includes `wipe`) |
+| `assets/sofie-rundown-editor-piece-types.json` | Piece types + GFX preview templates (includes `wipe`, `l3d-predstavovak`, `l3d-odporucanie`) |
 | `assets/sofie-rundown-editor-part-types.json` | Part presets |
 | `assets/sofie-rundown-editor-segment-types.json` | Segment presets |
-| `assets/spravy-v3-smoke-rundown.json` | Smoke rundown fixture (`spravy-v3-smoke`) |
+| `assets/spravy-v3-smoke-rundown.json` | Smoke rundown fixture (`spravy-v3-smoke`, 5 topics) |
+| `spravy_360_predstavovak/` | Figma HTML source for topic/guest L3D (ported to demo-assets `l3d-predstavovak`) |
+| `spravy_360_jednou_vetou/` | Figma HTML source for SJV/Sport/odporúčanie shell |
 
-**LED vs PGM (which source goes where):**
-[`docs/integration/OUTPUT_TOPOLOGY.md`](docs/integration/OUTPUT_TOPOLOGY.md).
+**Show flow:** [`docs/integration/SPRAVY-SHOW-FLOW.md`](docs/integration/SPRAVY-SHOW-FLOW.md).
+**LED vs PGM:** [`docs/integration/OUTPUT_TOPOLOGY.md`](docs/integration/OUTPUT_TOPOLOGY.md).
 DoubleBox compose / UVC / wipes:
 [`docs/integration/DOUBLEBOX-PGM.md`](docs/integration/DOUBLEBOX-PGM.md).
 
