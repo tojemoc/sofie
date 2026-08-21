@@ -50,6 +50,7 @@ story VT/SYN fullscreen, no Presenter MOD.
 | PGM bg loop | `casparcg_clip_player2` | 110 | Baseline companion loop |
 | DoubleBox story ILU | `casparcg_pgm_ilu_player` | 115 | Piece type `doublebox-ilu` (FILL + crop) |
 | Camera / UVC | `casparcg_pgm_camera` | 116 | e.g. `dshow://video=OBS Virtual Camera` |
+| DoubleBox frame (`db_loop`) | `casparcg_pgm_doublebox_loop` | 118 | `loops/db_loop` alpha cutouts — WithinPart on DoubleBox Takes |
 | PGM L3D HTML | `casparcg_graphics_pgm_l3d` | 121 | `gfx/l3d-headline`, `l3d-predstavovak`, `l3d-odporucanie`, `l3d-syn`, `l3d-mod`, `l3d-sjv`, `l3d-sport` |
 | Logo-bug | `casparcg_graphics_logo` | 123 | `gfx/logo-bug` — PGM only |
 | Alpha wipe | `casparcg_effects_player_pgm` | 200 | `wipes/wipe` on Take into part |
@@ -71,6 +72,7 @@ SPRÁVY must not route Intro or PGM L3Ds through them.
 | `l3d-headline` / `l3d-predstavovak` / `l3d-odporucanie` / `l3d-mod` / `l3d-syn` / `l3d-sjv` / `l3d-sport` | PGM L3D (`lower_third_pgm`) | **PGM 2-121** |
 | `doublebox-ilu` | Lower Third | **PGM 2-115** |
 | `camera` | Camera | **PGM 2-116** |
+| DoubleBox `db_loop` (blueprint WithinPart) | PGM DoubleBox loop | **PGM 2-118** |
 | `logo-bug` | Logo | **PGM 2-123** |
 | `wipe` | — | **PGM 2-200** |
 | `intro` / `outro` | Titles | **PGM 2-210** |
@@ -106,7 +108,7 @@ Check in order:
 | Name | What it means | Examples |
 |------|---------------|----------|
 | Caspar **channel** | Physical output | 1 = LED, 2 = PGM |
-| Caspar **layer** | Z-order on that channel | 110 loop, 115 ILU, 121 L3D, 200 wipe |
+| Caspar **layer** | Z-order on that channel | 110 loop, 115 ILU, 116 cam, 118 `db_loop`, 121 L3D, 200 wipe |
 | Sofie **output layer** | WebUI track (GFX / PGM / …) | Not the same as Caspar channel |
 | Sofie **source layer** | Exclusive WithinPart slot | Lower Third vs PGM L3D |
 | Media **folder** | Disk under media-path | `clips/`, `loops/`, `wipes/`, `assets/` |
@@ -136,11 +138,12 @@ not “Caspar PLAY failed”. See [`assets/README.md`](../../assets/README.md).
 ### PGM channel 2
 
 ```text
-210  Intro / znelka
+210  Intro / znelka / outro
 200  Wipe
 123  logo-bug
 121  l3d-* HTML
-116  Camera (DoubleBox right)
+118  db_loop (DoubleBox frame — above cam/ILU)
+116  Camera (DoubleBox right / fullscreen headlines)
 115  Story ILU (DoubleBox left)
 110  bg loop / fullscreen story GFX
 ```
