@@ -99,10 +99,11 @@ Tune FILL against the real HTML chrome; values above match the attached still
 approximately.
 
 **Cutouts / DoubleBox frame media:** you do **not** need a black/white matte. Soft
-compose is loop full-bleed on PGM 110 + MIXER FILL for ILU/CAM windows. If design needs
-a branded frame (borders/shadows between windows), use a **full-frame PNG or ProRes/Hap
-alpha `.mov`** with transparent holes — not a luma mask (this stack is not wired for
-luma key). Put that chrome on a layer between 110 and 115/116, or bake it into HTML.
+compose is `db_loop` full-frame on PGM **118** + MIXER FILL for ILU/CAM windows
+(115/116). If design needs a branded frame (borders/shadows between windows), use a
+**full-frame PNG or ProRes/Hap alpha `.mov`** with transparent holes — not a luma mask
+(this stack is not wired for luma key). That chrome is `db_loop` on 118 (or bake it
+into HTML); do not put a background loop on PGM 110.
 
 ## Wipes (same media, different semantics)
 
