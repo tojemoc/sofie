@@ -6,7 +6,7 @@ in the `tojemoc/sofie` megarepo — not in `sofie-demo-blueprints` or `unopus`.
 Caspar channel/layer map (camera = PGM **2-115**, DoubleBox ILU = **2-116**):
 [`docs/integration/OUTPUT_TOPOLOGY.md`](../docs/integration/OUTPUT_TOPOLOGY.md).
 
-```
+```text
 PLAY 2-115 "dshow://video=OBS Virtual Camera"
 ```
 
