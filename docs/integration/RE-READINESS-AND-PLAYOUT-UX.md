@@ -11,7 +11,7 @@ Status as of 2026-08-05 after DoubleBox / flat-media / PGM L3D work.
 | RE piece **DUR** | Editorial on-air length (seconds) on the piece — **not** always source-file length |
 | Sofie WebUI piece status | Package Manager / `PieceStatusCode` from Core |
 | LED `bg_loop` | Baseline on Caspar **1-110**. An optional RE `bg-loop` piece plays the same (or alternate) file at **priority 1** and **overrides** the baseline — operators should keep only one active loop on LED, not two simultaneous loops |
-| Camera A (`camNo: 1`) | Vision-mixer cut + optional Caspar **2-116** UVC when `pgmCameraProducer` is set |
+| Camera A (`camNo: 1`) | Vision-mixer cut + optional Caspar **2-115** UVC when `pgmCameraProducer` is set |
 | Wipe row | PGM **2-200** overlay; `start`/`duration` drive enable, list order does not |
 
 ---
@@ -172,7 +172,9 @@ relative to L3D/camera when starts are equal.
 |------|----------------|
 | LED always has `bg_loop` | Baseline `CasparCGClipPlayer1` prio 0; optional RE `bg-loop` **overrides** at prio 1 (one active loop, not two). Editorial VT/VO/SYN on **PGM ClipPlayer2** when hypercomposed so they never steal 1-110 |
 | LED graphics allow-list | Headline ILU (+ HTML) on LED; `l3d-tema` / `l3d-syn` / `l3d-headline` / `l3d-mod` on **PGM** |
-| Camera visibility | Include/exclude `camera` piece (`camNo: 1` = Camera A). With `pgmCameraProducer` set → `PLAY 2-116 "dshow://…"`. No camera piece → no UVC on that Take |
+| Camera visibility | Include/exclude `camera` piece (`camNo: 1` = Camera A). With `pgmCameraProducer` set → `PLAY 2-115 "dshow://…"`. No camera piece → no UVC on that Take |
 | Intro | PGM layer 210; never LED |
 
-See also: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md), [`SPRAVY-V2-INTEGRATION.md`](./SPRAVY-V2-INTEGRATION.md), ADR 0001.
+See also: [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md) (canonical Caspar channel/layer
+map — supersedes layer numbers here if they diverge), [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md),
+[`SPRAVY-V2-INTEGRATION.md`](./SPRAVY-V2-INTEGRATION.md), ADR 0001.

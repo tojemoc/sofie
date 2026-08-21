@@ -25,16 +25,17 @@ Reference implementation: [unopus PR #45](https://github.com/tojemoc/unopus/pull
 
 Do **not** fetch from `…/sofie/main/assets/…` or `…/sofie/cursor/…/assets/…` in CI or Docker.
 
-## Current pin (bg-music + wipe assets, smoke rundown)
+## Current pin (topology docs + assets README layer contract)
 
-Pin is the immutable Sofie commit that contains the `bg-music` piece type, smoke
-bg-music pieces (`.wav` paths for Package Manager), and wipe cut-point docs.
-Prefer the merge commit on `main` once [#33](https://github.com/tojemoc/sofie/pull/33)
-lands; until then consumers pin the PR tip SHA below.
+Pin is the immutable Sofie commit on `cursor/pgm-bg-loop-ilu-docs-ae33` that
+documents LED-only `bg_loop`, CAM **115** / DoubleBox ILU **116**, and `db_loop`
+on **118** (DoubleBox Takes only). Prefer the merge commit on `main` once
+[#35](https://github.com/tojemoc/sofie/pull/35) lands; until then consumers pin
+the tip SHA below.
 
 | Item | Value |
 |------|--------|
-| Sofie commit | `0ab55efa28fc75878b0d2ca4fc4086c05480b72c` |
+| Sofie commit | `d04f0f8b7eb883b43568c3ebf881d668f08ad8ad` |
 | Unopus pin (committed) | `PINNED_SOFIE_ASSETS_REF` — bump with checksums |
 | Unopus override (optional) | `SOFIE_ASSETS_REF` — if set, must be a full 40-char lowercase SHA; otherwise defaults to `PINNED_SOFIE_ASSETS_REF` |
 
@@ -42,9 +43,9 @@ lands; until then consumers pin the PR tip SHA below.
 
 | File | SHA-256 |
 |------|---------|
-| `spravy-v3-smoke-rundown.json` | `833de1dc3ce90165fd7d0ee62590d3ec4744a6fbaf4bb7952cd3495830fbebf8` |
-| `sofie-rundown-editor-piece-types.json` | `2610e438331467bfe33188ebb86a0abf5abc25009f01fd21d1b5a72f2be4b136` |
-| `sofie-rundown-editor-part-types.json` | `f61640d04e8c52f8d536db11259a97f1ff46ebb4edc5c92a84567489d814f819` |
+| `spravy-v3-smoke-rundown.json` | `41ac4b4f291f72b1ce7b13dbd5e588491abb2e2e13d5ef5fe3d09bc554c69b4e` |
+| `sofie-rundown-editor-piece-types.json` | `64da096955234c86287fc9cae87295f2a48e7c581741bdf7797de2184096d505` |
+| `sofie-rundown-editor-part-types.json` | `74d89de9d65298a6d48054ca85cd7319bef56038a09b061f25e81f111040a7e6` |
 | `sofie-rundown-editor-segment-types.json` | `56f68da340a1029f4c31a1f69b6594e5d440f1e7223528cd2ce9dbaa8c1aaf7b` |
 
 Checksums are owned by the consumer script (they must match that commit’s `assets/*.json`).

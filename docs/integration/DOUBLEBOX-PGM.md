@@ -5,14 +5,14 @@
 compose / FILL / wipe detail.
 
 Target look for **thematic DoubleBox** on PGM (Caspar channel 2), matching the
-production still (ILU left / CAM right / tema+bug bar / `bg_loop` behind):
+production still (ILU left / CAM right / tema+bug bar / `db_loop` frame with bg baked in):
 
 ```text
 ┌────────────────────────────────────────────────────────────┐
-│  bg_loop (full-bleed background)                           │
+│  db_loop frame (bg baked in; LED still has bg_loop)        │
 │   ┌──────────────────────────┐  ┌────────────┐             │
-│   │  ILU 16:9                │  │  CAM1      │             │
-│   │  (clip / headline ILU)   │  │  (UVC/mod) │             │
+│   │  ILU 16:9 (layer 116)    │  │  CAM1      │             │
+│   │  (above CAM overhang)    │  │  (115 UVC) │             │
 │   └──────────────────────────┘  └────────────┘             │
 │  ┌────────────────────────────────────┬──────────────────┐ │
 │  │  thematic title (l3d-predstavovak) │  360° sekúnd bug │ │
@@ -28,31 +28,23 @@ overlay plays on **PGM layer 210** (above wipe 200) — see
 [`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md)
 and [`handoffs/blueprints-baseline-bg-loop.md`](./handoffs/blueprints-baseline-bg-loop.md).
 
-**Story ILU on PGM 115 (pending companion CI/deploy):** mapping
-`casparcg_pgm_ilu_player` → **PGM channel 2 layer 115** (piece type `doublebox-ilu`)
-is documented and implemented on sofie-demo-blueprints
-`cursor/doublebox-ilu-cam-crop-3109` / PR
-[#59](https://github.com/tojemoc/sofie-demo-blueprints/pull/59). Headline ILU remains
-on LED `casparcg_ilu_player` (1-115). **Do not treat end-to-end PGM-115 validation
-as complete** until that companion branch has **passing Test + Typecheck/Lint CI**,
-a **deployed commit** uploaded to Sofie with **Apply config**, and the Rundown
-Editor has **reloaded type manifests** from megarepo `assets/` (Settings →
-Connection → Reload type manifests from assets — or equivalent) so `doublebox` /
-`doublebox-ilu` definitions are loaded before any DoubleBox Take. Resume the
-`PLAY <pgm>-115` smoke check only after those prerequisites.
+**Story ILU on PGM 116:** mapping
+`casparcg_pgm_ilu_player` → **PGM channel 2 layer 116** (piece type `doublebox-ilu`)
+sits **above** CAM (115) so the left window covers CAM overhang without cropping the camera.
+Headline ILU remains on LED `casparcg_ilu_player` (1-115).
 
 **Camera / UVC:** studio `casparcg.hypercomposed.pgmCameraProducer` (e.g.
 `dshow://video=OBS Virtual Camera`):
 
-- **Headlines / post-intro MOD** → PGM 2-116 **fullscreen** (FILL `0 0 1 1`)
-- **DoubleBox** → PGM 2-116 under `db_loop` (118), ~**80%** width, right edge stuck to
-  the screen right (`FILL 0.2 0.1 0.8 0.8`) with cover-crop so the feed does not squish
+- **Headlines / post-intro MOD** → PGM 2-115 **fullscreen** (FILL `0 0 1 1`)
+- **DoubleBox** → PGM 2-115 under ILU (116) and `db_loop` (118), ~**80%** width, right edge stuck to
+  the screen right (`FILL 0.2 0.1 0.8 0.8`). ILU covers CAM left overhang — no CAM cover-crop.
 
 `db_loop` is **WithinPart** on DoubleBox Takes only (not Intro) so SYN / weather stay
 fullscreen. Production file may be named `dp_loop.mov` — place/symlink as `loops/db_loop`.
 
 **Story ILU piece:** use piece type `doublebox-ilu` (part preset `doublebox`) — not
-`headline`. `doublebox-ilu` plays the clip on **PGM 2-115** with DoubleBox left FILL
+`headline`. `doublebox-ilu` plays the clip on **PGM 2-116** with DoubleBox left FILL
 + center cover-crop and **no** `gfx/headline-fallback` chrome. Headline ILU stays on
 LED for the opening block only.
 
@@ -68,12 +60,12 @@ Yes. Caspar can PLAY a webcam/UVC device as a media producer on the PGM channel.
    GraphEdit, or try AMCP:
 
 ```text
-PLAY 2-116 "dshow://video=OBS Virtual Camera"
-MIXER 2-116 FILL 0.62 0.08 0.34 0.72
+PLAY 2-115 "dshow://video=OBS Virtual Camera"
+MIXER 2-115 FILL 0.2 0.1 0.8 0.8
 ```
 
 3. Sofie studio config (blueprints) can store that producer string and, on camera
-   pieces, PLAY it on **PGM camera layer 116** with the DoubleBox FILL (see below).
+   pieces, PLAY it on **PGM camera layer 115** with the DoubleBox FILL (see below).
 
 Device string is machine-local — set it in studio config, do not hardcode in
 rundowns.
@@ -94,10 +86,10 @@ checks.
 
 | Region | Layer (PGM ch2) | FILL `x y xScale yScale` |
 |--------|-----------------|---------------------------|
-| BG loop | 110 | full frame (no FILL) |
-| ILU | 115 | `0.0219 0.0769 0.6802 0.6824` |
-| CAM1 UVC (DoubleBox) | 116 | `0.2 0.1 0.8 0.8` (under `db_loop`) |
-| CAM1 UVC (headlines/MOD) | 116 | `0 0 1 1` fullscreen |
+| Story VT / weather | 110 | full frame (no FILL) — **not** baseline `bg_loop` |
+| CAM1 UVC (DoubleBox) | 115 | `0.2 0.1 0.8 0.8` (under ILU + `db_loop`) |
+| ILU | 116 | `0.0219 0.0769 0.6802 0.6824` (above CAM) |
+| CAM1 UVC (headlines/MOD) | 115 | `0 0 1 1` fullscreen |
 | `db_loop` frame | 118 | full frame alpha cutouts |
 | topic L3D + bug | 121 / 123 | HTML templates (bottom bar) |
 | Wipe | 200 | full frame alpha wipe |
@@ -107,10 +99,11 @@ Tune FILL against the real HTML chrome; values above match the attached still
 approximately.
 
 **Cutouts / DoubleBox frame media:** you do **not** need a black/white matte. Soft
-compose is loop full-bleed on PGM 110 + MIXER FILL for ILU/CAM windows. If design needs
-a branded frame (borders/shadows between windows), use a **full-frame PNG or ProRes/Hap
-alpha `.mov`** with transparent holes — not a luma mask (this stack is not wired for
-luma key). Put that chrome on a layer between 110 and 115/116, or bake it into HTML.
+compose is `db_loop` full-frame on PGM **118** + MIXER FILL for ILU/CAM windows
+(115/116). If design needs a branded frame (borders/shadows between windows), use a
+**full-frame PNG or ProRes/Hap alpha `.mov`** with transparent holes — not a luma mask
+(this stack is not wired for luma key). That chrome is `db_loop` on 118 (or bake it
+into HTML); do not put a background loop on PGM 110.
 
 ## Wipes (same media, different semantics)
 
@@ -148,20 +141,20 @@ labelled variant) and `transition: <label>` for operators.
 | Sofie mapping id | Channel | Layer | Role |
 |------------------|---------|-------|------|
 | `casparcg_clip_player1` | LED 1 | 110 | LED `bg_loop` |
-| `casparcg_clip_player2` | PGM 2 | 110 | PGM bg loop (or omit if UVC carries bg) |
+| `casparcg_clip_player2` | PGM 2 | 110 | Story VT / weather (no baseline `bg_loop`) |
 | `casparcg_ilu_player` | LED 1 | 115 | Headline ILU MEDIA (+ `gfx/headline-fallback`) |
-| `casparcg_pgm_ilu_player` | PGM 2 | 115 | Thematic DoubleBox left ILU (`doublebox-ilu`) |
-| `casparcg_intro_player_pgm` | PGM 2 | 210 | Intro / znelka — **never LED** (handoff; may still be LED 200 until remapped) |
-| `casparcg_pgm_camera` | PGM 2 | 116 | UVC / CAM1 (FILL + left cover-crop) |
+| `casparcg_pgm_camera` | PGM 2 | 115 | UVC / CAM1 (FILL; under ILU on DoubleBox) |
+| `casparcg_pgm_ilu_player` | PGM 2 | 116 | Thematic DoubleBox left ILU (`doublebox-ilu`) |
+| `casparcg_intro_player_pgm` | PGM 2 | 210 | Intro / znelka — **never LED** |
 | `casparcg_graphics_pgm_l3d` | PGM 2 | 121 | `l3d-predstavovak` / `l3d-odporucanie` / `l3d-syn` / headline bars |
 | `casparcg_graphics_logo` | PGM 2 | 123 | `gfx/logo-bug` (360° sekúnd bug) — **not** on LED |
 | `casparcg_effects_player_pgm` | PGM 2 | 200 | Wipes |
 
 Headline / story ILU on LED vs PGM: opening **headline** ILU stays on **LED**
 (`casparcg_ilu_player`). Thematic DoubleBox left-window media uses
-`casparcg_pgm_ilu_player` on **PGM channel 2 layer 115** via piece type
-`doublebox-ilu`. PGM also carries camera FILL + `l3d-predstavovak` + baseline loop
-(`casparcg_clip_player2`). The **logo-bug is PGM-only**.
+`casparcg_pgm_ilu_player` on **PGM channel 2 layer 116** via piece type
+`doublebox-ilu`. PGM also carries camera FILL + `l3d-predstavovak`. Baseline
+`bg_loop` is **LED-only**. The **logo-bug is PGM-only**.
 
 ### `bg-loop` folder structure
 
@@ -180,20 +173,13 @@ same basename (see [`handoffs/blueprints-baseline-bg-loop.md`](./handoffs/bluepr
    `wipe_sjv` / `wipe_sport` / `wipe_pocasie`) and Intro disk asset at
    `sofie-demo-media/assets/intro_michal.mov`
    (PLAY path `assets/intro_michal`)
-2. Confirm OBS Virtual Camera name; test `PLAY 2-116 "dshow://…"` by hand
+2. Confirm OBS Virtual Camera name; test `PLAY 2-115 "dshow://…"` by hand
 3. Import megarepo `assets/spravy-v3-smoke-rundown.json` (includes story-block `wipe` pieces)
 4. Watch **Caspar channel 2** for wipes + DoubleBox + Intro
-5. **Intro on PGM 210 only (pending until companion blueprints remap is deployed):**
-   after uploading the `casparcg_intro_player_pgm` bundle and Sofie Apply config,
-   Intro take must show `PLAY <pgm>-210 "assets/intro_michal"` and **must not** play
-   Intro on LED (`1-200`). Until that branch lands, treat this check as **pending** —
-   do not mark smoke Intro routing complete on LED EffectsPlayer 200.
-6. **Story ILU on PGM 115 (pending until companion blueprints CI is green + deployed):**
-   mapping `casparcg_pgm_ilu_player` → channel 2 layer 115 is specified above. After
-   sofie-demo-blueprints PR #59 (or successor) has **passing Test and Typecheck/Lint**,
-   the bundle is uploaded + Sofie **Apply config**, **and** RE has **reloaded type
-   manifests** from megarepo `assets/` (so `doublebox` / `doublebox-ilu` are loaded),
-   a DoubleBox Take must show `PLAY <pgm>-115 "clips/…"` (with FILL + CROP) on
-   **channel 2**. Headline parts still use LED `1-115`. Do **not** Take until those
-   definitions are loaded. Until the prerequisites land, keep this checklist item
-   **pending**.
+5. **Activate (Rehearsal):** LED shows `PLAY 1-110 "loops/bg_loop"`; PGM must **not** play
+   `bg_loop` on ClipPlayer2.
+6. **Intro on PGM 210 only:** Intro take must show `PLAY <pgm>-210 "assets/intro_michal"` and
+   **must not** play Intro on LED (`1-200`).
+7. **Post-intro MOD:** `PLAY <pgm>-115 "dshow://…"` fullscreen — not `bg_loop` on PGM.
+8. **Story ILU on PGM 116 above CAM:** DoubleBox Take must show `PLAY <pgm>-116 "clips/…"`
+   and CAM on **115** (ILU z-order above CAM). Headline parts still use LED `1-115`.

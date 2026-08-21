@@ -12,7 +12,7 @@ etc.).
 
 | Layer | Path | Notes |
 |-------|------|--------|
-| **Blueprints baseline** (prio 0) | `loops/bg_loop` on `CasparCGClipPlayer1` / LED 1-110 | Not a smoke RE piece |
+| **Blueprints baseline** (prio 0) | `loops/bg_loop` on `CasparCGClipPlayer1` / LED 1-110 | Not a smoke RE piece; **LED only** — do not also PLAY on PGM ClipPlayer2 |
 | RE optional `bg-loop` piece (prio 1) | part-type default `loops/bg_loop` | Overrides baseline; smoke Intro has **no** `bg-loop` piece |
 | Smoke fixture | no `bg-loop` media path | Loop comes from baseline only |
 
