@@ -40,8 +40,8 @@ find_repo() {
 	return 0
 }
 
-# Core's postinstall requires Meteor on PATH. It is normally baked into the
-# base snapshot; install it if a fresh base image is missing it.
+# Core's postinstall requires Meteor on PATH. cloud-env.sh already bootstrapped
+# the pinned Node via nvm; install Meteor here if the base image lacks it.
 if ! command -v meteor >/dev/null 2>&1; then
 	echo "[setup] Installing Meteor 3.4.1..."
 	curl -s "https://install.meteor.com/?release=3.4.1" | sh

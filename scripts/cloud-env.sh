@@ -12,6 +12,13 @@ SOFIE_NODE_VERSION="22.22.0"
 export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
 # shellcheck disable=SC1091
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+# Ensure the pinned Node is installed. Idempotent: the directory check makes this
+# a no-op once the version exists (so sourcing from terminals stays fast), and it
+# only downloads on a fresh base image during the install phase.
+if command -v nvm >/dev/null 2>&1 && [ ! -d "$NVM_DIR/versions/node/v$SOFIE_NODE_VERSION" ]; then
+	nvm install "$SOFIE_NODE_VERSION" >/dev/null 2>&1 || true
+fi
 nvm use "$SOFIE_NODE_VERSION" >/dev/null 2>&1 || true
 
 # The VM default node (/exec-daemon/node) is older than Core requires and is
