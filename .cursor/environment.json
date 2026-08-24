@@ -27,8 +27,8 @@
     },
     {
       "name": "demo-assets",
-      "command": "source scripts/cloud-env.sh && cd ../sofie-demo-assets && yarn serve",
-      "description": "Demo Assets CasparCG HTML template dev server (8080), e.g. http://localhost:8080/l3d-tema/index.html. Also the Rundown Editor GFX preview target."
+      "command": "source scripts/cloud-env.sh && cd ../sofie-demo-assets && yarn build && python3 -m http.server 8080 --bind ::1 --directory dist",
+      "description": "Demo Assets CasparCG templates: builds the Vue templates, then serves the generated dist/ statically on 8080 (the dev server's deploy-tuned publicPath breaks in-browser preview, so the built output is served instead). Each template auto-plays sample data at http://localhost:8080/<tpl>/index.html (e.g. l3d-tema); also the Rundown Editor GFX preview target."
     }
   ]
 }
