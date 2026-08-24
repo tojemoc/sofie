@@ -20,6 +20,26 @@ REPOS_ROOT="$(cd "$SOFIE_ROOT/.." && pwd)"
 # shellcheck disable=SC1091
 source "$SCRIPT_DIR/cloud-env.sh"
 
+# Locate a consumer repo by directory name. The Sofie superproject is checked
+# out at different places depending on context (e.g. /agent/repos/sofie on a
+# Cloud Agent VM, /workspace during an environment build), and the four consumer
+# repos are provisioned as siblings via repositoryDependencies. Search the
+# likely roots and echo the first match; echo nothing if not found.
+find_repo() {
+	local name="$1" candidate
+	for candidate in \
+		"$REPOS_ROOT/$name" \
+		"/agent/repos/$name" \
+		"$HOME/$name" \
+		"/workspace/$name"; do
+		if [ -d "$candidate" ]; then
+			(cd "$candidate" && pwd)
+			return 0
+		fi
+	done
+	return 0
+}
+
 # Core's postinstall requires Meteor on PATH. It is normally baked into the
 # base snapshot; install it if a fresh base image is missing it.
 if ! command -v meteor >/dev/null 2>&1; then
@@ -30,13 +50,13 @@ fi
 echo "[setup] node=$(node --version) meteor=$(meteor --version 2>/dev/null || echo missing)"
 echo "[setup] SOFIE_MEGAREPO_ASSETS=${SOFIE_MEGAREPO_ASSETS:-<unset>}"
 
-CORE="$REPOS_ROOT/sofie-core"
-BLUEPRINTS="$REPOS_ROOT/sofie-demo-blueprints"
-RUNDOWN="$REPOS_ROOT/unopus"
-ASSETS="$REPOS_ROOT/sofie-demo-assets"
+CORE="$(find_repo sofie-core)"
+BLUEPRINTS="$(find_repo sofie-demo-blueprints)"
+RUNDOWN="$(find_repo unopus)"
+ASSETS="$(find_repo sofie-demo-assets)"
 
 # --- Sofie Core: install deps (Meteor + monorepo) then build packages --------
-if [ -d "$CORE" ]; then
+if [ -n "$CORE" ] && [ -d "$CORE" ]; then
 	echo "[setup] === sofie-core ==="
 	# NODE_ENV=production breaks Core's dev install/build.
 	unset NODE_ENV
@@ -49,7 +69,7 @@ else
 fi
 
 # --- Demo Blueprints: install deps ------------------------------------------
-if [ -d "$BLUEPRINTS" ]; then
+if [ -n "$BLUEPRINTS" ] && [ -d "$BLUEPRINTS" ]; then
 	echo "[setup] === sofie-demo-blueprints ==="
 	cd "$BLUEPRINTS"
 	corepack enable
@@ -59,7 +79,7 @@ else
 fi
 
 # --- Rundown Editor: install deps + seed backend/.env ------------------------
-if [ -d "$RUNDOWN" ]; then
+if [ -n "$RUNDOWN" ] && [ -d "$RUNDOWN" ]; then
 	echo "[setup] === unopus (rundown-editor) ==="
 	cd "$RUNDOWN"
 	corepack enable
@@ -73,7 +93,7 @@ else
 fi
 
 # --- Demo Assets: install deps + build CasparCG templates -> deploy/ ---------
-if [ -d "$ASSETS" ]; then
+if [ -n "$ASSETS" ] && [ -d "$ASSETS" ]; then
 	echo "[setup] === sofie-demo-assets ==="
 	cd "$ASSETS"
 	corepack enable
