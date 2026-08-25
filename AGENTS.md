@@ -140,3 +140,24 @@ graphics, and alpha wipes — without vision-mixer program cuts. Blueprint suppo
   not running — benign; the editor is fully usable standalone.
 - All four repos use Husky `lint-staged` pre‑commit hooks where configured.
 - `demo-assets` webpack 4 needs OpenSSL legacy provider — `yarn build` sets it in `package.json` scripts.
+- `demo-assets` `yarn serve` compiles fine but its `publicPath: '../'` (tuned for the built
+  `deploy/` layout) breaks in‑browser bundle resolution — `http://localhost:8080/<tpl>/index.html`
+  loads blank because the dev server returns the SPA fallback for the template's JS bundle. To
+  preview a *rendered* template, use the built output instead: `yarn build`, then serve `dist/`
+  statically from the repo (e.g. `cd demo-assets/dist && python3 -m http.server 8080 --bind ::1`).
+  Served on port 8080, each template auto‑plays its sample data (the `onDevAutoplay` hook keys on
+  `location.host === 'localhost:8080'`). Templates are 1920×1080; zoom the browser out to see
+  lower‑thirds anchored at the bottom.
+- The Core WebUI (Vite, 3005) and Rundown Editor frontend (Vite, 5173) bind to `::1` (IPv6
+  loopback), which is what `localhost` resolves to here — use `http://localhost:<port>` (or
+  `http://[::1]:<port>`), not `127.0.0.1`. First browser load of the Core WebUI triggers a large
+  on‑demand Vite compile, so it can show blank for a bit before rendering; wait/hard‑reload rather
+  than assuming it's broken.
+- **Cloud Agent environment:** `.cursor/environment.json` + `scripts/cloud-agent-setup.sh` +
+  `scripts/cloud-env.sh` bootstrap the whole megarepo (pinned Node 22.22.0 + Meteor 3.4.1). The
+  install installs dependencies for all four sibling consumer repos (checked out via
+  `repositoryDependencies`) but only *builds* Sofie Core packages and the Demo Assets templates — it
+  does not build the Demo Blueprints bundles (`yarn dist`) or the Rundown Editor production output.
+  It then starts the three service terminals (`sofie-core`, `rundown-editor`, `demo-assets`). Source
+  `scripts/cloud-env.sh` before running any repo command to get the right Node/Meteor/PATH and
+  `SOFIE_MEGAREPO_ASSETS`.

@@ -1,0 +1,34 @@
+{
+  "name": "Sofie megarepo (Core + Blueprints + Rundown Editor + Demo Assets)",
+  "install": "bash scripts/cloud-agent-setup.sh",
+  "repositoryDependencies": [
+    "github.com/tojemoc/sofie-core",
+    "github.com/tojemoc/sofie-demo-blueprints",
+    "github.com/tojemoc/unopus",
+    "github.com/tojemoc/sofie-demo-assets"
+  ],
+  "ports": [
+    { "name": "Sofie Core API/DDP", "port": 3000 },
+    { "name": "Sofie Core WebUI", "port": 3005 },
+    { "name": "Rundown Editor backend", "port": 3010 },
+    { "name": "Rundown Editor frontend", "port": 5173 },
+    { "name": "Demo Assets CasparCG templates", "port": 8080 }
+  ],
+  "terminals": [
+    {
+      "name": "sofie-core",
+      "command": "source scripts/cloud-env.sh && cd ../sofie-core && unset NODE_ENV && yarn dev",
+      "description": "Sofie Core dev stack: Meteor backend (3000, DDP/API), Vite WebUI (3005), and job workers. First readiness takes a few minutes; the [TSC] 'Cannot find module meteor/...' lines are expected false positives."
+    },
+    {
+      "name": "rundown-editor",
+      "command": "source scripts/cloud-env.sh && cd ../unopus && yarn dev",
+      "description": "Sofie Rundown Editor: Express + Socket.IO backend (3010) and Vite frontend (5173). Reads type manifests from the megarepo assets/ via SOFIE_MEGAREPO_ASSETS. 'Core Initialization Error ECONNREFUSED 127.0.0.1:3000' is benign when Core is not up."
+    },
+    {
+      "name": "demo-assets",
+      "command": "source scripts/cloud-env.sh && cd ../sofie-demo-assets && yarn build && python3 -m http.server 8080 --bind ::1 --directory dist",
+      "description": "Demo Assets CasparCG templates: builds the Vue templates, then serves the generated dist/ statically on 8080 (the dev server's deploy-tuned publicPath breaks in-browser preview, so the built output is served instead). Each template auto-plays sample data at http://localhost:8080/<tpl>/index.html (e.g. l3d-tema); also the Rundown Editor GFX preview target."
+    }
+  ]
+}
