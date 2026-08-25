@@ -34,6 +34,21 @@
 				"id": "sourceDuration",
 				"label": "Source duration (ms)",
 				"type": "number"
+			},
+			{
+				"id": "trimIn",
+				"label": "Trim in (seconds)",
+				"type": "number"
+			},
+			{
+				"id": "trimOut",
+				"label": "Trim out (seconds)",
+				"type": "number"
+			},
+			{
+				"id": "volume",
+				"label": "Volume (0–1)",
+				"type": "number"
 			}
 		]
 	},

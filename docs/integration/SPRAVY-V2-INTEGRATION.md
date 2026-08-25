@@ -3,7 +3,7 @@
 Living document for agents working across the Sofie megarepo. Update this file when
 demo-assets, blueprints, rundown-editor, or core integration status changes.
 
-**Last updated:** 2026-08-13
+**Last updated:** 2026-08-25
 
 ---
 
@@ -29,10 +29,9 @@ remains single-channel. DoubleBox compose detail:
 |------|-------------|--------|
 | `tojemoc/sofie-demo-assets` | `main` @ `85c706b` | **PR #3 merged** — 10 v2 HTML templates + `assemble-caspar.mjs` |
 | `tojemoc/sofie-demo-assets` | [PR #4](https://github.com/tojemoc/sofie-demo-assets/pull/4) | **Open** — CI/CD, pre-releases (`sofie-demo-assets-pre-<sha>.zip`), Docker image |
-| `tojemoc/sofie-demo-blueprints` | `develop` | v2 templates + Intro on **LED** EffectsPlayer 200 (needs remap) |
-| `tojemoc/sofie-demo-blueprints` | handoff [`blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md) | **Todo** — Intro → PGM layer 210; never LED |
-| `tojemoc/unopus` (Rundown Editor) | `main` | Readiness, media picker, ILU/GFX presets; type manifests from megarepo `assets/` |
-| `tojemoc/sofie-core` | — | No template-specific code; Playout Gateway is transport only |
+| `tojemoc/sofie-demo-blueprints` | `cursor/kubo-playout-graphics-audio-1ddf` | v2 Caspar templates on PGM; Intro is a **video clip** (`pgm_intro`, not Titles); wipes ignore media status; SYN trim-in/out + clip volume; Koliska hit then duck |
+| `tojemoc/unopus` (Rundown Editor) | `cursor/kubo-unopus-rundown-ux-1ddf` | Full-width status rows, compact rundown, GFX preview stubs, presence lock chips, SYN trim timing |
+| `tojemoc/sofie-core` | `cursor/kubo-take-previous-pause-clock-1ddf` | **Take Previous**, **Pause/Resume clock** (časovka freeze + stop VT/VO) |
 
 ---
 
@@ -110,6 +109,24 @@ Clip paths are placeholders under `clips/`. Camera letters:
 Wipes: piece type `wipe`, file `wipes/wipe` (or labelled `wipe_sjv` / `wipe_sport` / `wipe_pocasie`), play on **PGM** (see DOUBLEBOX-PGM.md).
 Smoke rundown includes story-block wipe pieces with a `transition` label
 (`ILU TO SYN`, `Double Box`, …) — not on HEADLINES / Intro.
+
+## Kubo studio tasks (2026-08-25)
+
+Operator list items assigned to Kubo, landed as sibling-repo PRs (this megarepo tracks docs + piece-type fields):
+
+| Area | Change |
+|------|--------|
+| Grafika | v2 “novú” Caspar templates already imported into blueprints; Intro plays as **video** on `pgm_intro` (UI label Intro, not Titles) |
+| Grafika | Wipes set `ignoreMediaObjectStatus` so missing Package Manager objects do not block PLAY |
+| Playout | SYN/VO/VT `trimIn` / `trimOut` (seconds) + `volume` on video pieces; on-air duration is source length minus trims |
+| Zvuk | Clip mixer volume; Koliska bed starts at 1.0 for 4s then ducks to 0.45 |
+| Flow | Sofie **Pause clock** / **Resume clock** / **Take Previous** — časovka freezes at `timings.pausedAt`; pause also stops VT/VO clips |
+| Unopus | Full-width story/piece rows colored by ready/NR; compact headings; GFX preview stubs; row lock chips when another user has the row focused |
+
+Video piece payload fields (megarepo `assets/sofie-rundown-editor-piece-types.json`): `trimIn`, `trimOut`, `volume`.
+
+**Out of scope (Ondro / studio):** HTML graphic production, casomierka pips, wall broadcast, FFMPEG record, podcast mix minus music.
+
 ---
 
 ## Demo-assets contract (source of truth for blueprints)
