@@ -25,17 +25,14 @@ Reference implementation: [unopus PR #45](https://github.com/tojemoc/unopus/pull
 
 Do **not** fetch from `…/sofie/main/assets/…` or `…/sofie/cursor/…/assets/…` in CI or Docker.
 
-## Current pin (topology docs + assets README layer contract)
+## Current pin (SPRÁVY v2 Caspar graphics wiring)
 
-Pin is the immutable Sofie commit that adds SYN `trimIn` / `trimOut` / `volume`
-on video piece types (topology files unchanged from
-[#35](https://github.com/tojemoc/sofie/pull/35)). Prefer the merge commit on
-`main` once [#37](https://github.com/tojemoc/sofie/pull/37) lands; until then
-consumers pin the tip SHA below.
+Pin is the immutable Sofie commit that wires v2 clipNames in megarepo assets
+(`l3d-mod` intro, `source` piece type, canonical l3d-headline fields).
 
 | Item | Value |
 |------|--------|
-| Sofie commit | `5d5daf23d1ddcfe0a4a2dbea8e79b777baf30fed` |
+| Sofie commit | `51c26cd` *(full SHA after merge — use `git rev-parse 51c26cd`)* |
 | Unopus pin (committed) | `PINNED_SOFIE_ASSETS_REF` — bump with checksums |
 | Unopus override (optional) | `SOFIE_ASSETS_REF` — if set, must be a full 40-char lowercase SHA; otherwise defaults to `PINNED_SOFIE_ASSETS_REF` |
 
@@ -43,8 +40,8 @@ consumers pin the tip SHA below.
 
 | File | SHA-256 |
 |------|---------|
-| `spravy-v3-smoke-rundown.json` | `41ac4b4f291f72b1ce7b13dbd5e588491abb2e2e13d5ef5fe3d09bc554c69b4e` |
-| `sofie-rundown-editor-piece-types.json` | `5092a162c92135dcfb79fabff70580fdf9ca8a31dafec2797e08923a7d3ffe19` |
+| `spravy-v3-smoke-rundown.json` | `ef3921a19770e45221ba61c725eea1c158818c1f3a5f0b238e82c26bbd6d261e` |
+| `sofie-rundown-editor-piece-types.json` | `f2435a8172968e39b8075de76950793d4144d2a85a74a0ac20cb20b3415f203c` |
 | `sofie-rundown-editor-part-types.json` | `74d89de9d65298a6d48054ca85cd7319bef56038a09b061f25e81f111040a7e6` |
 | `sofie-rundown-editor-segment-types.json` | `56f68da340a1029f4c31a1f69b6594e5d440f1e7223528cd2ce9dbaa8c1aaf7b` |
 
