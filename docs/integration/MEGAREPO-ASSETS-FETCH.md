@@ -32,7 +32,7 @@ Pin is the immutable Sofie commit that wires v2 clipNames in megarepo assets
 
 | Item | Value |
 |------|--------|
-| Sofie commit | `51c26cd` *(full SHA after merge — use `git rev-parse 51c26cd`)* |
+| Sofie commit | `ffa29a2c8a56edd2d82cc7fc436e806e10381421` |
 | Unopus pin (committed) | `PINNED_SOFIE_ASSETS_REF` — bump with checksums |
 | Unopus override (optional) | `SOFIE_ASSETS_REF` — if set, must be a full 40-char lowercase SHA; otherwise defaults to `PINNED_SOFIE_ASSETS_REF` |
 
