@@ -1,0 +1,6 @@
+# Consumer repos are independent clones (see AGENTS.md). Never commit them
+# into this superproject.
+/core/
+/blueprints/
+/rundown-editor/
+/demo-assets/
