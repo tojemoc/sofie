@@ -3,7 +3,7 @@
 Living document for agents working across the Sofie megarepo. Update this file when
 demo-assets, blueprints, rundown-editor, or core integration status changes.
 
-**Last updated:** 2026-08-25
+**Last updated:** 2026-08-31
 
 ---
 
@@ -27,9 +27,9 @@ remains single-channel. DoubleBox compose detail:
 
 | Repo | Branch / PR | Status |
 |------|-------------|--------|
-| `tojemoc/sofie-demo-assets` | `main` @ `85c706b` | **PR #3 merged** — 10 v2 HTML templates + `assemble-caspar.mjs` |
-| `tojemoc/sofie-demo-assets` | [PR #4](https://github.com/tojemoc/sofie-demo-assets/pull/4) | **Open** — CI/CD, pre-releases (`sofie-demo-assets-pre-<sha>.zip`), Docker image |
-| `tojemoc/sofie-demo-blueprints` | `cursor/kubo-playout-graphics-audio-1ddf` | v2 Caspar templates on PGM; Intro is a **video clip** (`pgm_intro`, not Titles); wipes ignore media status; SYN trim-in/out + clip volume; Koliska hit then duck |
+| `tojemoc/sofie-demo-assets` | `cursor/cleanup-v2-graphics-bc1a` / [PR #34](https://github.com/tojemoc/sofie-demo-assets/pull/34) | **v2-only templates** — legacy v1 stubs removed; Bauplan/Diform fonts; see [`demo-assets/docs/BLUEPRINTS_HANDOFF.md`](https://github.com/tojemoc/sofie-demo-assets/blob/main/docs/BLUEPRINTS_HANDOFF.md) |
+| `tojemoc/sofie-demo-assets` | [PR #4](https://github.com/tojemoc/sofie-demo-assets/pull/4) | CI/CD, pre-releases (`sofie-demo-assets-pre-<sha>.zip`), Docker `ghcr.io/tojemoc/sofie-demo-assets` |
+| `tojemoc/sofie-demo-blueprints` | `cursor/spravy-v2-caspar-wire-d6ac` | v2 Caspar clipNames wired; v1 routes removed; `gfx/source` on PGM L121 |
 | `tojemoc/unopus` (Rundown Editor) | `cursor/kubo-unopus-rundown-ux-1ddf` | Full-width status rows, compact rundown, GFX preview stubs, presence lock chips, SYN trim timing |
 | `tojemoc/sofie-core` | `cursor/kubo-take-previous-pause-clock-1ddf` | **Take Previous**, **Pause/Resume clock** (časovka freeze + stop VT/VO) |
 
@@ -131,6 +131,8 @@ Video piece payload fields (megarepo `assets/sofie-rundown-editor-piece-types.js
 
 ## Demo-assets contract (source of truth for blueprints)
 
+**Canonical handoff:** [`tojemoc/sofie-demo-assets` → `docs/BLUEPRINTS_HANDOFF.md`](https://github.com/tojemoc/sofie-demo-assets/blob/main/docs/BLUEPRINTS_HANDOFF.md) (branch `cursor/cleanup-v2-graphics-bc1a` or later `main` after PR #34 merge).
+
 ### Build & deploy
 
 ```bash
@@ -151,19 +153,25 @@ Pin the `pre-<sha>` tag you tested; do not assume `latest`.
 
 ```text
 <template-path>/
-  js/ css/ img/ …          # shared webpack bundles
+  js/ css/ img/ fonts/ …     # shared webpack bundles + brand fonts
   gfx/
     headline/headline.html
+    headline-fallback/headline-fallback.html
+    source/source.html
     l3d-headline/l3d-headline.html
+    l3d-predstavovak/l3d-predstavovak.html
     l3d-mod/l3d-mod.html
     l3d-tema/l3d-tema.html
     l3d-syn/l3d-syn.html
     l3d-sjv/l3d-sjv.html
     l3d-sport/l3d-sport.html
+    l3d-odporucanie/l3d-odporucanie.html
     weather/weather.html
     outro/outro.html
     logo-bug/logo-bug.html
 ```
+
+**Removed — do not reference:** `gfx/l3d`, `gfx/mod-l3d`, `gfx/head-spravy`, `gfx/ticker`, `gfx/strap`, `gfx/wipe`, `gfx/head`, `gfx/fullscreen`.
 
 **Blueprint `clipName` / Caspar `TEMPLATE` name must be:** `gfx/<folder>` (e.g. `gfx/l3d-tema`).
 
@@ -182,16 +190,20 @@ The bridge accepts JSON objects and XML-wrapped JSON from Caspar.
 
 | Spec | Folder | `clipName` | `update({ ... })` fields | Notes |
 |------|--------|------------|--------------------------|-------|
-| T01 | `headline` | `gfx/headline` | `iluFile`, `source` | ILU + source pill; **LED ch1** (media 115 + fallback chrome) |
-| T04b | `l3d-headline` | `gfx/l3d-headline` | `title`, `subtitle` | Text bars; **PGM ch2 layer 121** |
-| T03 | `l3d-mod` | `gfx/l3d-mod` | `name` | Presenter MOD; **PGM ch2** (not LED) |
+| T01 | `headline` | `gfx/headline` | `iluFile`, `source` | ILU MEDIA on **LED ch1 L115** (not HTML video) |
+| T01b | `headline-fallback` | `gfx/headline-fallback` | `source` | ILU chrome overlay; **LED ch1 L121** only |
+| T01c | `source` | `gfx/source` | `source` | Standalone source pill; **PGM ch2 L121** |
+| T04b | `l3d-headline` | `gfx/l3d-headline` | `title`, `subtitle` | RE aliases `headline`/`subline`; **PGM ch2 L121** |
+| T03a | `l3d-predstavovak` | `gfx/l3d-predstavovak` | `name`, `title` | Guest/topic nameplate; **PGM ch2** |
+| T03 | `l3d-mod` | `gfx/l3d-mod` | `name`, `title` | Presenter MOD (Intro); **PGM ch2** |
 | T04 | `l3d-tema` | `gfx/l3d-tema` | `headline` | Thematic doublebox bar; **PGM ch2** |
 | T05 | `l3d-syn` | `gfx/l3d-syn` | `name`, `role` | SYN name/role L3D; **PGM ch2** |
-| T06 | `l3d-sjv` | `gfx/l3d-sjv` | `headline` | SJV segment bar; **PGM ch2** |
-| T07 | `l3d-sport` | `gfx/l3d-sport` | `headline`, `source` | ŠPORT bar; **PGM ch2**; JS timer logo↔counter at 100/200/300s |
+| T06 | `l3d-sjv` | `gfx/l3d-sjv` | `kicker`, `headline` | SJV segment bar; **PGM ch2** |
+| T06b | `l3d-odporucanie` | `gfx/l3d-odporucanie` | `headline` | Avízo / CTA (no kicker); **PGM ch2** |
+| T07 | `l3d-sport` | `gfx/l3d-sport` | `kicker` *(default `ŠPORT`)*, `headline` | ŠPORT bar; **PGM ch2** |
 | T08 | `weather` | `gfx/weather` | `cities[]` (`name`, `temp`, `condition`) | Full-frame on **PGM**; `condition` = icon key |
 | T09 | `outro` | `gfx/outro` | _(none)_ | Hardcoded URL; **PGM** |
-| T10 | `logo-bug` | `gfx/logo-bug` | _(none)_ | Persistent bug on **PGM 123**; needs `OutOnRundownEnd` lifespan |
+| T10 | `logo-bug` | `gfx/logo-bug` | _(none)_ | Persistent bug on **PGM logo layer**; `OutOnRundownEnd`; alias `gfx/logo-bug-kubo` |
 
 ### v2 design decisions (already implemented in templates)
 
@@ -199,7 +211,7 @@ The bridge accepts JSON objects and XML-wrapped JSON from Caspar.
 - Bar backgrounds: solid `rgba(8, 16, 40, 0.82)` — no `backdrop-filter`
 - SPORT counter: approach A (client-side timer on `play()`)
 - Placeholders: `public/assets/logo-360.svg`, weather icons in `public/icons/`
-- Old v1 templates (`l3d`, `wipe`, `ticker`, `strap`) remain in `src/` but are **not** in `vue.config.js`
+- Old v1 templates (`l3d`, `mod-l3d`, `head-spravy`, `ticker`, `strap`, `wipe`, `head`, `fullscreen`) **removed from demo-assets build** (PR #34)
 
 ### Media scaffold
 
@@ -240,22 +252,32 @@ See **`docs/integration/handoffs/blueprints-v2-wiring.md`** for the copy-paste a
 | `packages/blueprints/src/base/rundown/baseline.ts` | `logo-bug` on rundown start |
 | `packages/blueprints/src/common/definitions/objects.ts` | Extend `GraphicObjectAttributes` |
 
-### Current v1 behaviour to replace/extend
+### Current v2 behaviour (2026-08-31)
 
-- Parser: `clipName = 'gfx/' + piece.objectType` for `['strap','head','l3d','fullscreen','stepped-graphic']`
-- Graphics: regex routes ticker/strap/fullscreen; **everything else → ch3 layer 111**
-- Piece payloads: `name`/`description`/`text`/`location` — **not** v2 field names
+- Parser: RE graphic piece types → `clipName = 'gfx/' + pieceType` (see `rundownEditorTypes.ts`)
+- Graphics: PGM L3D set routes to `casparcg_graphics_pgm_l3d` (ch2 L121); LED ILU uses `headline-fallback` on ch1 L121
+- v1 spreadsheet remaps (`gfx/l3d`, `gfx/strap`, …) **removed**
+- Piece payloads: canonical field names per table above; blueprints `getTemplateAttributes` maps RE aliases
 
-### Friday MVP scope (recommended)
+### Deploy assets to Caspar
 
-Wire **first**, test on Caspar **before** Sofie:
+After `yarn build` in demo-assets (or CI pre-release zip / Docker image):
 
-1. `gfx/logo-bug` — baseline, `CasparCGGraphicsLogo`, `OutOnRundownEnd`
-2. `gfx/l3d-tema` — `headline` field
-3. `gfx/l3d-mod` — `name` field
-4. `gfx/l3d-headline` — `title`, `subtitle`
+1. Copy `deploy/template-path/*` → Caspar `<template-path>`
+2. Copy `deploy/media-path/*` → Caspar `<media-path>`
+3. Upload new blueprint bundle → **Apply studio config** in Sofie Core WebUI
 
-Defer: `weather`, `l3d-sport`, `headline`+ILU pair, hypercomposed multi-channel, wipes.
+### Verification AMCP (Caspar Client)
+
+```text
+CG 2-121 ADD 1 "gfx/l3d-tema" "{\"headline\":\"Test\"}"
+CG 2-121 ADD 1 "gfx/l3d-predstavovak" "{\"name\":\"Peter Pellegrini\",\"title\":\"Prezident SR\"}"
+CG 2-121 ADD 1 "gfx/l3d-mod" "{\"name\":\"Gabriela Kajtárová\",\"title\":\"moderátorka\"}"
+CG 2-121 ADD 1 "gfx/source" "{\"source\":\"TASR\"}"
+CG 2-123 ADD 1 "gfx/logo-bug"
+PLAY 1-115 "clips/headline1"
+CG 1-121 ADD 1 "gfx/headline-fallback" "{\"source\":\"TASR\"}"
+```
 
 ### Post-demo (PR2)
 
@@ -391,6 +413,7 @@ See the two handoffs below for the concrete, file-level plan.
 | Handoff | Path |
 |---------|------|
 | Blueprints v2 wiring | [`docs/integration/handoffs/blueprints-v2-wiring.md`](handoffs/blueprints-v2-wiring.md) |
+| Demo-assets canonical handoff | [`tojemoc/sofie-demo-assets` → `docs/BLUEPRINTS_HANDOFF.md`](https://github.com/tojemoc/sofie-demo-assets/blob/main/docs/BLUEPRINTS_HANDOFF.md) |
 | RE readiness/duration diagnostics | [`docs/integration/handoffs/re-readiness-diagnostics.md`](handoffs/re-readiness-diagnostics.md) |
 | RE daily template workflow (clone + bulk rewrite + readiness-aware picker) | [`docs/integration/handoffs/re-daily-template-workflow.md`](handoffs/re-daily-template-workflow.md) |
 | This log | [`docs/integration/SPRAVY-V2-INTEGRATION.md`](SPRAVY-V2-INTEGRATION.md) |

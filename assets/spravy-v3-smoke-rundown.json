@@ -811,8 +811,8 @@
 			"start": 0,
 			"duration": 8,
 			"payload": {
-				"headline": "Osobné údaje",
-				"subline": "v OR SR"
+				"title": "Osobné údaje",
+				"subtitle": "v OR SR"
 			}
 		},
 		{
@@ -876,8 +876,8 @@
 			"start": 0,
 			"duration": 8,
 			"payload": {
-				"headline": "Vláda sa vrátila",
-				"subline": "k rokovaniam"
+				"title": "Vláda sa vrátila",
+				"subtitle": "k rokovaniam"
 			}
 		},
 		{
@@ -928,8 +928,8 @@
 			"start": 0,
 			"duration": 8,
 			"payload": {
-				"headline": "Fedorov vyzýva",
-				"subline": "na voľby"
+				"title": "Fedorov vyzýva",
+				"subtitle": "na voľby"
 			}
 		},
 		{
@@ -985,11 +985,24 @@
 			"name": "Gabriela Kajtárová",
 			"rank": 1,
 			"float": false,
-			"pieceType": "l3d-predstavovak",
+			"pieceType": "l3d-mod",
 			"payload": {
 				"name": "Gabriela Kajtárová",
 				"title": "moderátorka"
 			},
+			"segmentId": "seg-intro",
+			"start": 0
+		},
+		{
+			"id": "piece-part-intro-mod-logo",
+			"rundownId": "spravy-v3-smoke",
+			"playlistId": null,
+			"partId": "part-intro-mod",
+			"name": "Logo",
+			"rank": 2,
+			"float": false,
+			"pieceType": "logo-bug",
+			"payload": {},
 			"segmentId": "seg-intro",
 			"start": 0
 		},
@@ -1098,10 +1111,9 @@
 			"name": "Zdroj",
 			"rank": 2,
 			"float": false,
-			"pieceType": "l3d-syn",
+			"pieceType": "source",
 			"payload": {
-				"name": "Zdroj: Markíza",
-				"role": ""
+				"source": "Markíza"
 			},
 			"duration": 6.0,
 			"start": 2.0,

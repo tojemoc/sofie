@@ -202,14 +202,14 @@
 		"previewTemplate": "l3d-headline",
 		"payload": [
 			{
-				"id": "headline",
-				"label": "Headline",
+				"id": "title",
+				"label": "Title",
 				"type": "string",
 				"includeInName": true
 			},
 			{
-				"id": "subline",
-				"label": "Subline",
+				"id": "subtitle",
+				"label": "Subtitle",
 				"type": "string"
 			}
 		]
@@ -277,11 +277,23 @@
 				"label": "Headline",
 				"type": "string",
 				"includeInName": true
-			},
+			}
+		]
+	},
+	{
+		"id": "source",
+		"entityType": "piece",
+		"name": "Source pill",
+		"shortName": "SRC",
+		"colour": "#636363",
+		"includeTypeInName": true,
+		"previewTemplate": "source",
+		"payload": [
 			{
 				"id": "source",
 				"label": "Source",
-				"type": "string"
+				"type": "string",
+				"includeInName": true
 			}
 		]
 	},
