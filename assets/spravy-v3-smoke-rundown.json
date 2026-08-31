@@ -1111,10 +1111,9 @@
 			"name": "Zdroj",
 			"rank": 2,
 			"float": false,
-			"pieceType": "l3d-syn",
+			"pieceType": "source",
 			"payload": {
-				"name": "Zdroj: Markíza",
-				"role": ""
+				"source": "Markíza"
 			},
 			"duration": 6.0,
 			"start": 2.0,

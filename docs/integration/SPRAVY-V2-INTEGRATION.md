@@ -270,13 +270,13 @@ After `yarn build` in demo-assets (or CI pre-release zip / Docker image):
 ### Verification AMCP (Caspar Client)
 
 ```text
-CG 2 ADD 121 "gfx/l3d-tema" 1 "{\"headline\":\"Test\"}"
-CG 2 ADD 121 "gfx/l3d-predstavovak" 1 "{\"name\":\"Peter Pellegrini\",\"title\":\"Prezident SR\"}"
-CG 2 ADD 121 "gfx/l3d-mod" 1 "{\"name\":\"Gabriela Kajtárová\",\"title\":\"moderátorka\"}"
-CG 2 ADD 121 "gfx/source" 1 "{\"source\":\"TASR\"}"
-CG 2 ADD 121 "gfx/logo-bug" 1
+CG 2-121 ADD 1 "gfx/l3d-tema" "{\"headline\":\"Test\"}"
+CG 2-121 ADD 1 "gfx/l3d-predstavovak" "{\"name\":\"Peter Pellegrini\",\"title\":\"Prezident SR\"}"
+CG 2-121 ADD 1 "gfx/l3d-mod" "{\"name\":\"Gabriela Kajtárová\",\"title\":\"moderátorka\"}"
+CG 2-121 ADD 1 "gfx/source" "{\"source\":\"TASR\"}"
+CG 2-123 ADD 1 "gfx/logo-bug"
 PLAY 1-115 "clips/headline1"
-CG 1 ADD 121 "gfx/headline-fallback" 1 "{\"source\":\"TASR\"}"
+CG 1-121 ADD 1 "gfx/headline-fallback" "{\"source\":\"TASR\"}"
 ```
 
 ### Post-demo (PR2)
