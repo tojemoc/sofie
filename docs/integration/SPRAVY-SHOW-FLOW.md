@@ -19,7 +19,7 @@ DoubleBox geometry: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 | 9 | SJV (3–5 SYNs) | `bg_loop` | Timed `l3d-sjv` over SYNs | `wipes/wipe_sjv` |
 | 10 | Šport (2–5) | `bg_loop` | Timed `l3d-sport` (`kicker=ŠPORT`) | `wipes/wipe_sport` |
 | 11 | Počasie | `bg_loop` | Weather **bypass** default (`assets/weather`) + logo-bug | `wipes/wipe_pocasie` |
-| 12 | Odporúčanie | `bg_loop` | DoubleBox + `l3d-odporucanie` (no kicker) | Normal wipe |
+| 12 | Odporúčanie | `bg_loop` + ILU (headline bypass) | Fullscreen OBS + `l3d-odporucanie` (no DoubleBox) | Normal wipe |
 | 12b | optional SYN | `bg_loop` | Hard cut ILU↔SYN | Hard cut |
 | 13 | Outro | `bg_loop` | `assets/outro` on layer 210 (above everything) | — |
 

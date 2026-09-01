@@ -227,7 +227,8 @@
 			},
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
-			"segmentId": "seg-intro"
+			"segmentId": "seg-intro",
+			"duration": 8
 		},
 		{
 			"id": "part-intro-mod",
@@ -642,11 +643,11 @@
 			"name": "ILU Avízo",
 			"rank": 0,
 			"float": false,
-			"partType": "doublebox",
+			"partType": "ilu",
 			"script": "A na záver ešte jeden tip od nás. Žije sa ľuďom na Slovensku lepšie vďaka štvrtej vláde Roberta Fica? Aj o tom debatoval poslanec Smeru Michal Stuška a Martina Holečková z SaS. Témou boli aj dôchodky.",
 			"payload": {
 				"name": "ILU Avízo",
-				"type": "DoubleBox"
+				"type": "ILU"
 			},
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
@@ -673,11 +674,11 @@
 			"name": "ILU Avízo záver",
 			"rank": 2,
 			"float": false,
-			"partType": "doublebox",
+			"partType": "ilu",
 			"script": "Zvažuje strana Smer aj 14te dôchodky? Celú debatu nájdete na našom webe — 360tka.sk. A to je na dnes všetko, dovidenia opäť zajtra.",
 			"payload": {
 				"name": "ILU Avízo záver",
-				"type": "DoubleBox"
+				"type": "ILU"
 			},
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
@@ -721,10 +722,13 @@
 			"name": "Sledujte na www.360tka.sk",
 			"rank": 1,
 			"float": false,
-			"pieceType": "doublebox-ilu",
+			"pieceType": "headline",
 			"payload": {
 				"text": "Sledujte na www.360tka.sk",
-				"iluFile": "clips/ILU AVIZO.mp4"
+				"iluFile": "clips/ILU AVIZO.mp4",
+				"sourceEnabled": false,
+				"source": "",
+				"iluPrerendered": true
 			},
 			"start": 0,
 			"id": "piece-avizo-ilu",
@@ -767,10 +771,13 @@
 			"name": "Sledujte na www.360tka.sk",
 			"rank": 0,
 			"float": false,
-			"pieceType": "doublebox-ilu",
+			"pieceType": "headline",
 			"payload": {
 				"text": "Sledujte na www.360tka.sk",
-				"iluFile": "clips/ILU AVIZO MIGAL.mp4"
+				"iluFile": "clips/ILU AVIZO MIGAL.mp4",
+				"sourceEnabled": false,
+				"source": "",
+				"iluPrerendered": true
 			},
 			"start": 0,
 			"id": "piece-avizo2-ilu",
@@ -1378,10 +1385,10 @@
 			"name": "Osobné údaje na OR SR",
 			"rank": 1,
 			"float": false,
-			"pieceType": "l3d-predstavovak",
+			"pieceType": "l3d-tema",
 			"payload": {
-				"name": "Osobné údaje na OR SR",
-				"title": "Osobné údaje na OR SR"
+				"headline": "Osobné údaje na OR SR",
+				"subline": "Osobné údaje na OR SR"
 			},
 			"start": 0,
 			"duration": 10,
@@ -1457,10 +1464,9 @@
 			"name": "Osobné údaje v registri",
 			"rank": 1,
 			"float": false,
-			"pieceType": "l3d-predstavovak",
+			"pieceType": "l3d-tema",
 			"payload": {
-				"name": "Osobné údaje v registri",
-				"title": ""
+				"headline": "Osobné údaje v registri"
 			},
 			"start": 0,
 			"playlistId": null,
@@ -1606,10 +1612,9 @@
 			"name": "Spor Saková – Fico",
 			"rank": 1,
 			"float": false,
-			"pieceType": "l3d-predstavovak",
+			"pieceType": "l3d-tema",
 			"payload": {
-				"name": "Spor Saková – Fico",
-				"title": ""
+				"headline": "Spor Saková – Fico"
 			},
 			"start": 0,
 			"playlistId": null,
@@ -1703,10 +1708,9 @@
 			"name": "Nerokovali o novele Ústavy",
 			"rank": 1,
 			"float": false,
-			"pieceType": "l3d-predstavovak",
+			"pieceType": "l3d-tema",
 			"payload": {
-				"name": "Nerokovali o novele Ústavy",
-				"title": ""
+				"headline": "Nerokovali o novele Ústavy"
 			},
 			"start": 0,
 			"playlistId": null,
@@ -1800,11 +1804,10 @@
 			"name": "Nerokovali o novele Ústavy",
 			"rank": 1,
 			"float": false,
-			"pieceType": "l3d-predstavovak",
+			"pieceType": "l3d-tema",
 			"start": 0,
 			"payload": {
-				"name": "Nerokovali o novele Ústavy",
-				"title": ""
+				"headline": "Nerokovali o novele Ústavy"
 			},
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
@@ -1847,10 +1850,9 @@
 			"name": "Priama výzva na voľby",
 			"rank": 1,
 			"float": false,
-			"pieceType": "l3d-predstavovak",
+			"pieceType": "l3d-tema",
 			"payload": {
-				"name": "Priama výzva na voľby",
-				"title": ""
+				"headline": "Priama výzva na voľby"
 			},
 			"start": 0,
 			"playlistId": null,
@@ -1911,11 +1913,10 @@
 			"name": "Problémy s korupciou",
 			"rank": 1,
 			"float": false,
-			"pieceType": "l3d-predstavovak",
+			"pieceType": "l3d-tema",
 			"start": 0,
 			"payload": {
-				"name": "Problémy s korupciou",
-				"title": ""
+				"headline": "Problémy s korupciou"
 			},
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
@@ -1992,10 +1993,9 @@
 			"name": "Migaľ odmieta odpovedať",
 			"rank": 1,
 			"float": false,
-			"pieceType": "l3d-predstavovak",
+			"pieceType": "l3d-tema",
 			"payload": {
-				"name": "Migaľ odmieta odpovedať",
-				"title": ""
+				"headline": "Migaľ odmieta odpovedať"
 			},
 			"start": 0,
 			"duration": 7,
