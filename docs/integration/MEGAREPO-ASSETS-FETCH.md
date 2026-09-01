@@ -25,14 +25,14 @@ Reference implementation: [unopus PR #45](https://github.com/tojemoc/unopus/pull
 
 Do **not** fetch from `…/sofie/main/assets/…` or `…/sofie/cursor/…/assets/…` in CI or Docker.
 
-## Current pin (SPRÁVY v2 Caspar graphics wiring)
+## Current pin (SPRÁVY smoke rundown demo fixes)
 
-Pin is the immutable Sofie commit that wires v2 clipNames in megarepo assets
-(`l3d-mod` intro, `source` piece type, canonical l3d-headline fields).
+Pin is the immutable Sofie commit with smoke rundown updates: 8s intro,
+`l3d-tema` on DoubleBox topics, ILU-style avízo/outro (no DoubleBox).
 
 | Item | Value |
 |------|--------|
-| Sofie commit | `ffa29a2c8a56edd2d82cc7fc436e806e10381421` |
+| Sofie commit | `37bc380f3062b3503ac4beadbbed68e801e80f0b` |
 | Unopus pin (committed) | `PINNED_SOFIE_ASSETS_REF` — bump with checksums |
 | Unopus override (optional) | `SOFIE_ASSETS_REF` — if set, must be a full 40-char lowercase SHA; otherwise defaults to `PINNED_SOFIE_ASSETS_REF` |
 
@@ -40,7 +40,7 @@ Pin is the immutable Sofie commit that wires v2 clipNames in megarepo assets
 
 | File | SHA-256 |
 |------|---------|
-| `spravy-v3-smoke-rundown.json` | `ef3921a19770e45221ba61c725eea1c158818c1f3a5f0b238e82c26bbd6d261e` |
+| `spravy-v3-smoke-rundown.json` | `24c32d2ddad0607a36a926bdae11bed58fae2c9a227ef166c39ad402febf3c4d` |
 | `sofie-rundown-editor-piece-types.json` | `f2435a8172968e39b8075de76950793d4144d2a85a74a0ac20cb20b3415f203c` |
 | `sofie-rundown-editor-part-types.json` | `74d89de9d65298a6d48054ca85cd7319bef56038a09b061f25e81f111040a7e6` |
 | `sofie-rundown-editor-segment-types.json` | `56f68da340a1029f4c31a1f69b6594e5d440f1e7223528cd2ce9dbaa8c1aaf7b` |
