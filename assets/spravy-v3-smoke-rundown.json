@@ -1424,19 +1424,6 @@
 			"partId": "part-tema-1-db"
 		},
 		{
-			"id": "piece-part-tema-1-db-logo",
-			"name": "Logo",
-			"rank": 4,
-			"float": false,
-			"pieceType": "logo-bug",
-			"payload": {},
-			"start": 0,
-			"playlistId": null,
-			"rundownId": "spravy-v3-smoke",
-			"segmentId": "seg-tema-1",
-			"partId": "part-tema-1-db"
-		},
-		{
 			"name": "Osobné údaje v registri",
 			"rank": 0,
 			"float": false,
