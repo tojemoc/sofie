@@ -33,8 +33,13 @@ Pin is the immutable Sofie commit with smoke rundown updates: 8s intro,
 | Item | Value |
 |------|--------|
 | Sofie commit | `37bc380f3062b3503ac4beadbbed68e801e80f0b` |
-| Unopus pin (committed) | `PINNED_SOFIE_ASSETS_REF` — bump with checksums |
-| Unopus override (optional) | `SOFIE_ASSETS_REF` — if set, must be a full 40-char lowercase SHA; otherwise defaults to `PINNED_SOFIE_ASSETS_REF` |
+| unopus `PINNED_SOFIE_ASSETS_REF` | `37bc380f3062b3503ac4beadbbed68e801e80f0b` |
+| sofie-demo-blueprints `PINNED_SOFIE_ASSETS_REF` | `37bc380f3062b3503ac4beadbbed68e801e80f0b` |
+| unopus override (optional) | `SOFIE_ASSETS_REF` — if set, must be a full 40-char lowercase SHA; otherwise defaults to `PINNED_SOFIE_ASSETS_REF` |
+
+Both consumer scripts must pin the **same** commit SHA and fetch the **same** `assets/`
+tree. unopus additionally verifies every file against `EXPECTED_SHA256` (table below);
+sofie-demo-blueprints pins the commit only (no per-file map).
 
 ### Per-file SHA-256 (`assets/` at that commit)
 
