@@ -70,6 +70,13 @@ MIXER 2-115 FILL 0.2 0.1 0.8 0.8
 Device string is machine-local — set it in studio config, do not hardcode in
 rundowns.
 
+**DShow buffer drops:** If Caspar logs `real-time buffer … too full (102% of size:
+3041280 [rtbufsize parameter])`, FFmpeg’s default ~3 MiB capture buffer is too small
+for 1080p virtual camera under compositing load. Raising `<consumers><screen><buffer-depth>`
+in `caspar.config` only smooths **output** — it does not fix capture drops. Patch the
+Caspar server to set `rtbufsize=100M` for `dshow://` inputs, or lower OBS Virtual
+Camera to 720p. See [`CASPAR-FFMPEG-BUFFERS.md`](./CASPAR-FFMPEG-BUFFERS.md).
+
 ### OBS “finished look” shortcut
 
 If you want a quick preview before Sofie owns the full compose:

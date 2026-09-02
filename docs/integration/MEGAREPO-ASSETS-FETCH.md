@@ -25,16 +25,16 @@ Reference implementation: [unopus PR #45](https://github.com/tojemoc/unopus/pull
 
 Do **not** fetch from `…/sofie/main/assets/…` or `…/sofie/cursor/…/assets/…` in CI or Docker.
 
-## Current pin (SPRÁVY smoke rundown demo fixes)
+## Current pin (SPRÁVY piece types + smoke rundown)
 
-Pin is the immutable Sofie commit with smoke rundown updates: 8s intro,
-`l3d-tema` on DoubleBox topics, ILU-style avízo/outro (no DoubleBox).
+Pin is the immutable Sofie commit with L3D headline/subline fields, ILU headline
+manifest cleanup, logo-bug DoubleBox timing, and aligned smoke payloads.
 
 | Item | Value |
 |------|--------|
-| Sofie commit | `37bc380f3062b3503ac4beadbbed68e801e80f0b` |
-| unopus `PINNED_SOFIE_ASSETS_REF` | `37bc380f3062b3503ac4beadbbed68e801e80f0b` |
-| sofie-demo-blueprints `PINNED_SOFIE_ASSETS_REF` | `37bc380f3062b3503ac4beadbbed68e801e80f0b` |
+| Sofie commit | `74950f511b0569ecdffa01b8a3292a5d7b04764a` |
+| unopus `PINNED_SOFIE_ASSETS_REF` | `74950f511b0569ecdffa01b8a3292a5d7b04764a` |
+| sofie-demo-blueprints `PINNED_SOFIE_ASSETS_REF` | `74950f511b0569ecdffa01b8a3292a5d7b04764a` |
 | unopus override (optional) | `SOFIE_ASSETS_REF` — if set, must be a full 40-char lowercase SHA; otherwise defaults to `PINNED_SOFIE_ASSETS_REF` |
 
 Both consumer scripts must pin the **same** commit SHA, verify every file against
@@ -44,8 +44,8 @@ Both consumer scripts must pin the **same** commit SHA, verify every file agains
 
 | File | SHA-256 |
 |------|---------|
-| `spravy-v3-smoke-rundown.json` | `24c32d2ddad0607a36a926bdae11bed58fae2c9a227ef166c39ad402febf3c4d` |
-| `sofie-rundown-editor-piece-types.json` | `f2435a8172968e39b8075de76950793d4144d2a85a74a0ac20cb20b3415f203c` |
+| `spravy-v3-smoke-rundown.json` | `62b4490fd9cfe8f046e482805cd89c15f4da6e15d58deac1517fe52150e89b2f` |
+| `sofie-rundown-editor-piece-types.json` | `c6b939f306b8dfbcbd548c1dcdbf8f8b9f589276f40348bfc5646494f0d6c7bc` |
 | `sofie-rundown-editor-part-types.json` | `74d89de9d65298a6d48054ca85cd7319bef56038a09b061f25e81f111040a7e6` |
 | `sofie-rundown-editor-segment-types.json` | `56f68da340a1029f4c31a1f69b6594e5d440f1e7223528cd2ce9dbaa8c1aaf7b` |
 

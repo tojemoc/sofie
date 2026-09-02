@@ -202,14 +202,14 @@
 		"previewTemplate": "l3d-headline",
 		"payload": [
 			{
-				"id": "title",
-				"label": "Title",
+				"id": "headline",
+				"label": "Headline",
 				"type": "string",
 				"includeInName": true
 			},
 			{
-				"id": "subtitle",
-				"label": "Subtitle",
+				"id": "subline",
+				"label": "Subline",
 				"type": "string"
 			}
 		]
@@ -333,12 +333,6 @@
 		"includeTypeInName": true,
 		"previewTemplate": "headline",
 		"payload": [
-			{
-				"id": "text",
-				"label": "Headline",
-				"type": "string",
-				"includeInName": true
-			},
 			{
 				"id": "iluFile",
 				"label": "ILU clip",

@@ -711,7 +711,6 @@
       "float": false,
       "pieceType": "headline",
       "payload": {
-        "text": "Sledujte na www.360tka.sk",
         "iluFile": "clips/ILU AVIZO MIGAL.mp4",
         "sourceEnabled": false,
         "source": "",
@@ -732,7 +731,6 @@
       "start": 0,
       "duration": 10,
       "payload": {
-        "text": "Osobné údaje v OR SR",
         "iluFile": "clips/HEADLINE1.mov",
         "sourceEnabled": false,
         "source": "",
@@ -753,7 +751,6 @@
       "start": 0,
       "duration": 8,
       "payload": {
-        "text": "Vláda sa vrátila k rokovaniam",
         "iluFile": "clips/HEADLINE2.mov",
         "sourceEnabled": false,
         "source": "",
@@ -773,7 +770,6 @@
       "start": 0,
       "duration": 8,
       "payload": {
-        "text": "Fedorov vyzýva na voľby",
         "iluFile": "clips/HEADLINE3.mov",
         "sourceEnabled": false,
         "source": "",
@@ -1277,7 +1273,6 @@
       "float": false,
       "pieceType": "headline",
       "payload": {
-        "text": "Sledujte na www.360tka.sk",
         "iluFile": "clips/ILU AVIZO.mp4",
         "sourceEnabled": false,
         "source": "",
@@ -2157,7 +2152,7 @@
       "float": false,
       "pieceType": "logo-bug",
       "payload": {},
-      "start": 0,
+      "start": 2.5,
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-1",
