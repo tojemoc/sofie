@@ -37,9 +37,8 @@ Pin is the immutable Sofie commit with smoke rundown updates: 8s intro,
 | sofie-demo-blueprints `PINNED_SOFIE_ASSETS_REF` | `37bc380f3062b3503ac4beadbbed68e801e80f0b` |
 | unopus override (optional) | `SOFIE_ASSETS_REF` — if set, must be a full 40-char lowercase SHA; otherwise defaults to `PINNED_SOFIE_ASSETS_REF` |
 
-Both consumer scripts must pin the **same** commit SHA and fetch the **same** `assets/`
-tree. unopus additionally verifies every file against `EXPECTED_SHA256` (table below);
-sofie-demo-blueprints pins the commit only (no per-file map).
+Both consumer scripts must pin the **same** commit SHA, verify every file against
+`EXPECTED_SHA256` (table below), and fail closed on download or checksum mismatch.
 
 ### Per-file SHA-256 (`assets/` at that commit)
 
@@ -57,17 +56,16 @@ Recompute with:
 git -C /path/to/sofie show <sha>:assets/<file>.json | sha256sum
 ```
 
-**unopus:** set `PINNED_SOFIE_ASSETS_REF` and every `EXPECTED_SHA256[…]` in the **same**
-commit. **sofie-demo-blueprints:** set the single `PINNED_SOFIE_ASSETS_REF` in
-`scripts/fetch-sofie-megarepo-assets.sh` in the same bump (no older-SHA fallback —
-fail closed if that revision cannot be fetched).
+**Both consumers:** set `PINNED_SOFIE_ASSETS_REF` and every `EXPECTED_SHA256[…]` in
+`scripts/fetch-sofie-megarepo-assets.sh` in the **same** commit (no older-SHA fallback —
+fail closed if that revision cannot be fetched or verified).
 
 ## Bumping when megarepo assets change
 
 1. Land the asset change in `tojemoc/sofie` (merge to `main` or note the commit SHA).
 2. In each consumer (`unopus`, `sofie-demo-blueprints`):
    - Set the pin to that commit SHA.
-   - Update every entry in the expected SHA-256 map (or equivalent; blueprints pin only).
+   - Update every entry in the expected SHA-256 map.
    - Run the fetch script once; confirm exit 0.
    - Intentionally break one checksum (or the pin) and confirm exit 1 + cleaned dest.
 3. Ship consumer PRs that bump **pin + checksums in the same commit**.
