@@ -57,9 +57,9 @@ Rebuild CasparCG Server and redeploy. **`100M`** is a sane default for 1080p vir
 
 ### Optional: per-studio value (future)
 
-`main-studio-config.json` includes optional `pgmCameraDshowRtbufsize` for documentation and a
-future server build that reads producer `media-content` options. Until that server exists, only the
-**global patch** above applies.
+`pgmCameraDshowRtbufsize` is **not** exposed in studio config — stock CasparCG ignores
+producer-side `rtbufsize` options. Until a patched server reads a media-content option,
+only the **global patch** above applies.
 
 ## Operational mitigations (no rebuild)
 
