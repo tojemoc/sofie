@@ -1,0 +1,16 @@
+--- a/src/modules/ffmpeg/av_input.cpp
++++ b/src/modules/ffmpeg/av_input.cpp
+@@ -248,6 +248,12 @@ input::input(const core::frame_factory& frame_factory,
+             av_dict_set(&options, "pixel_format", u8(pixel_format_).c_str(), 0);
+         }
+ 
++        // Live capture (DShow on Windows, V4L2 on Linux) defaults to ~3 MiB rtbufsize and
++        // drops frames when compositing load stalls the producer thread. SPRÁVY PGM uses
++        // dshow://video=OBS Virtual Camera — raise buffer to absorb brief backpressure.
++        if (format_.find(L"dshow://") == 0 || format_.find(L"v4l2://") == 0) {
++            av_dict_set(&options, "rtbufsize", "100M", 0);
++        }
++
+         int ret = avformat_open_input(&format_context_, u8(format_).c_str(), input_format, &options);
+         if (ret < 0) {
+             CASPAR_THROW_EXCEPTION(file_not_found() << msg_info(u8(format_)));
