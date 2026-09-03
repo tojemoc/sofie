@@ -101,10 +101,11 @@ piece On air (seconds) **and** `sourceDuration` (ms). Operators may override or
 **clear** On air afterward — story duration sync does **not** force On air back
 to source length.
 
-**L3D / PGM graphics:** empty On air is intentional. Blueprints use
-`duration: undefined` on the timeline enable → graphic **holds until Take**.
-RE no longer auto-fills empty L3D On air from part duration (that made nuked
-durations snap back and L3Ds disappear mid-part).
+**L3D graphics:** empty On air is intentional. Blueprints use `duration: undefined` on
+the timeline enable → L3D **holds until Take**. RE no longer auto-fills empty L3D On
+air from part duration (that made nuked durations snap back and L3Ds disappear
+mid-part). This does **not** apply to wipes — empty wipe On air still plays
+`DEFAULT_WIPE_DURATION_MS` (**2500**) and RE shows that as **2.5s** (see Wipes below).
 
 **ffprobe vs browser preview:** probe takes the max of container/stream duration
 tags and `nb_frames / fps`. Lying `mvhd` tags (common on NLE exports) used to

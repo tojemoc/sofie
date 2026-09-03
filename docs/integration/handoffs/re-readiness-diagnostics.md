@@ -191,10 +191,12 @@ UI shows **On air** (editable) vs **Source** (ffprobe, read-only). Follow-up fix
 `tojemoc/unopus` branch `cursor/fix-duration-probe-and-on-air-5c12`:
 
 - On air overrides / clears stick (no force from `sourceDuration`; `json_patch` null clears)
-- Empty L3D On air = hold until Take (no part inherit fill)
+- Empty **L3D** On air = hold until Take (no part inherit fill) — not wipes
 - Probe uses format/stream + `nb_frames/fps` so Source matches playable length
 
-Wipe empty On air still displays the blueprint default 2.5s in the Dur column.
+Empty **wipe** On air: playout still uses blueprint `DEFAULT_WIPE_DURATION_MS` (**2500**);
+RE Dur column + piece form show that default as **2.5s** (see
+`RE-READINESS-AND-PLAYOUT-UX.md` wipe contract).
 
 ---
 
