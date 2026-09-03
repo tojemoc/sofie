@@ -1571,7 +1571,8 @@
       "float": false,
       "pieceType": "weather",
       "payload": {
-        "bypass": false
+        "bypass": false,
+        "cities": "[{\"region\":\"BA\",\"name\":\"BRATISLAVA\",\"temp\":\"4\",\"delay\":200},{\"region\":\"KE\",\"name\":\"KOŠICE\",\"temp\":\"2\",\"delay\":400},{\"region\":\"ZA\",\"name\":\"ŽILINA\",\"temp\":\"-1\",\"delay\":600}]"
       },
       "start": 0,
       "playlistId": null,
