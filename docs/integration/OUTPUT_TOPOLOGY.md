@@ -29,6 +29,23 @@ A second Caspar host is **not** required. If L3D / wipe / intro look “missing�
 
 Studio config overrides: `casparcg.hypercomposed.ledChannel` / `pgmChannel` (defaults 1 / 2).
 
+### Target: wipe via pre-built BG channels (ADR 0002)
+
+**Not implemented yet.** Story wipes today are an alpha overlay on PGM layer 200 while
+other PGM layers cold-start — HTML/clip load races the wipe (DoubleBox graphics pop in
+last). Target architecture:
+
+```text
+BG A (ch3)  Builds doublebox   ──┐
+                                 ├──► PGM (ch2) route + wipe ──► logo/bug above route
+BG B (ch4)  Builds fullscreen  ──┘
+```
+
+Decision + sketch: [`adr/0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md).
+Blueprints handoff:
+[`handoffs/blueprints-wipe-route-bg-channels.md`](./handoffs/blueprints-wipe-route-bg-channels.md).
+LED channel 1 allow-list is unchanged.
+
 ---
 
 ## Production allow-list
@@ -155,6 +172,8 @@ not “Caspar PLAY failed”. See [`assets/README.md`](../../assets/README.md).
 | Doc | Role |
 |-----|------|
 | [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md) | DoubleBox FILL/CROP, UVC, wipe labels, smoke checklist |
+| [`adr/0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md) | Target: BG pre-build + PGM route wipe |
+| [`handoffs/blueprints-wipe-route-bg-channels.md`](./handoffs/blueprints-wipe-route-bg-channels.md) | Blueprints implementation handoff |
 | [`SPRAVY-SHOW-FLOW.md`](./SPRAVY-SHOW-FLOW.md) | Full show spine: headlines → topics → SJV → sport → weather → outro |
 | [`SPRAVY-V2-INTEGRATION.md`](./SPRAVY-V2-INTEGRATION.md) | Cross-repo status, template catalogue, deploy |
 | [`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md) | Intro → PGM 210 (never LED) |

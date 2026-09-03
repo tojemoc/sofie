@@ -106,7 +106,7 @@ production muster spine:
 Clip paths are placeholders under `clips/`. Camera letters:
 **A→1**, **P→2**, **M→3**.
 
-Wipes: piece type `wipe`, file `wipes/wipe` (or labelled `wipe_sjv` / `wipe_sport` / `wipe_pocasie`), play on **PGM** (see DOUBLEBOX-PGM.md).
+Wipes: piece type `wipe`, file `wipes/wipe` (or labelled `wipe_sjv` / `wipe_sport` / `wipe_pocasie`), play on **PGM** today as overlay layer 200 (see DOUBLEBOX-PGM.md). **Target:** pre-build scenes on BG channels + PGM `route://` wipe ([ADR 0002](../adr/0002-wipe-prebuild-bg-channels.md)).
 Smoke rundown includes story-block wipe pieces with a `transition` label
 (`ILU TO SYN`, `Double Box`, …) — not on HEADLINES / Intro.
 

@@ -125,6 +125,10 @@ graphics, and alpha wipes — without vision-mixer program cuts. Blueprint suppo
 (e.g. ch1 → LED, ch2 → PGM). A second Caspar server is not required. Canonical map:
 [`docs/integration/OUTPUT_TOPOLOGY.md`](docs/integration/OUTPUT_TOPOLOGY.md).
 
+**Wipe target (ADR 0002):** pre-build DoubleBox / fullscreen on BG channels, PGM only
+`route://` + wipe; logo above the route — so HTML load does not race the transition.
+Handoff: [`docs/integration/handoffs/blueprints-wipe-route-bg-channels.md`](docs/integration/handoffs/blueprints-wipe-route-bg-channels.md).
+
 ### Gotchas
 
 - A fresh Core dev DB reports `status: FAIL` / "Version mismatch … to fix, run migration" at
