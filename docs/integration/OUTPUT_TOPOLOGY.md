@@ -42,8 +42,8 @@ must match Caspar `media-path`, e.g. `Y:/360-ingest/sofie-demo-media`).
 
 ### Ops: `caspar.config` must declare ≥4 channels
 
-If Caspar logs spam **`400 ERROR`** on every `LOADBG`/`PLAY`/`CG` for **3-*** and
-**4-***, add two render-only channels (same `video-mode`, **no** Screen/NDI/SDI
+If Caspar logs spam **`400 ERROR`** on every `LOADBG`/`PLAY`/`CG` for `3-*` and
+`4-*`, add two render-only channels (same `video-mode`, **no** Screen/NDI/SDI
 consumers on 3/4), restart Caspar, re-**Apply** studio config. See ADR
 [`0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md).
 
@@ -162,13 +162,24 @@ not “Caspar PLAY failed”. See [`assets/README.md`](../../assets/README.md).
 
 ```text
 210  Intro / znelka / outro
-200  Wipe
+200  Wipe (STING on route layer)
 123  logo-bug
-121  l3d-* HTML
+110  Full-channel route (route://3|4)
+ 80  Audio bed
+990  Debug channel label (optional)
+```
+
+### DoubleBox / Full channels 3 / 4
+
+Story looks pre-build here; PGM hears them via `route://3` or `route://4`.
+
+```text
+121  l3d-* HTML (téma / SYN / weather / sport)
 118  db_loop (DoubleBox frame — above cam/ILU)
 116  Story ILU (DoubleBox left — above CAM overhang)
 115  Camera (DoubleBox right / fullscreen headlines)
-110  Fullscreen story GFX / weather (no baseline bg_loop)
+110  Fullscreen story GFX / SYN / weather (no baseline bg_loop)
+ 80  Audio bed (clip audio from SYN/VT)
 ```
 
 ---

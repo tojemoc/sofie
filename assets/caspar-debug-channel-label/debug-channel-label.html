@@ -31,9 +31,22 @@
 <body>
 	<div id="label"></div>
 	<script>
+		function parsePayload(data) {
+			if (data == null) return {}
+			if (typeof data === 'object') return data
+			if (typeof data !== 'string') return {}
+			var trimmed = data.trim()
+			if (!trimmed) return {}
+			try {
+				return JSON.parse(trimmed)
+			} catch (e) {
+				return { label: trimmed }
+			}
+		}
+
 		function setLabel(data) {
 			var el = document.getElementById('label')
-			var payload = typeof data === 'string' ? JSON.parse(data || '{}') : (data || {})
+			var payload = parsePayload(data)
 			var label = payload.label || payload.f0 || ''
 			el.textContent = label
 			el.style.display = label ? 'block' : 'none'
