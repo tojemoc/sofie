@@ -126,6 +126,9 @@ length — re-pick / blur the media path after upgrading to refresh stored
   - `start = piece.start * 1000` (seconds → ms; missing start → `0`)
   - `duration = piece.duration * 1000` when `piece.duration > 0`
   - `duration = DEFAULT_WIPE_DURATION_MS` (**2500**) when duration is empty/`0`
+- RE display when On air is empty/`0`: Dur column uses `formatPieceOnAirDuration` →
+  **2.5s**; piece form placeholder / hint **Default 2.5s** (`DEFAULT_WIPE_DURATION_SECONDS`).
+  Stored On air stays empty until the editor sets an explicit value.
 - Lifespan: WithinPart — fires on Take into that part.
 - File: `payload.fileName` (Caspar path, no extension), default `wipes/wipe`.
 
@@ -135,19 +138,18 @@ length — re-pick / blur the media path after upgrading to refresh stored
 |---------|-------|
 | Which part gets a wipe | Add wipe piece on that part (smoke does this on story Takes) |
 | When within the part | Piece **Start** (offset from Take) — UI exposes it; often left at `00:00` |
-| How long | Piece **Duration** (seconds). Non-zero → timeline `duration = piece.duration * 1000` ms. Empty/`00:00` → blueprint `DEFAULT_WIPE_DURATION_MS` (**2500**), not shown as 2.5s in RE |
+| How long | Piece **On air** (seconds). Non-zero → timeline `duration = piece.duration * 1000` ms. Empty/`0` → blueprint `DEFAULT_WIPE_DURATION_MS` (**2500**). RE Dur column + form show that default as **2.5s** (same as the L3D section above) |
 | Transition label | `payload.transition` (operator label only; same file plays) |
 | List order vs other pieces | **Rank / list order ≠ timeline priority** for same start; all start at 0 play together |
 
-**Why it feels uncontrollable:** wipes sit at the bottom of the list with Start/DUR `00:00`,
-so it looks like “always on / never timed,” while playout still runs a short PGM overlay
-on every Take into that part. Moving the wipe row up/down does not change Caspar order
+**Why it feels uncontrollable:** wipe rows often leave Start at `00:00` and leave On air
+empty (RE still shows the **2.5s** default), so the transition still fires on every Take
+into that part. Moving the wipe row up/down does not change Caspar order
 relative to L3D/camera when starts are equal.
 
 ### Planning questions
 
 - First-class “Transition on Take” toggle that creates/removes the wipe piece?
-- Show effective wipe length when DUR empty (“default 2.5s”)?
 - Separate Transitions section so wipes aren’t mixed with ILU/L3D/Cam rows?
 - Drag-reorder that writes `start`/`rank` with sensible defaults?
 
