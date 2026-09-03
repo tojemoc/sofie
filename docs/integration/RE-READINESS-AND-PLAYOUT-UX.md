@@ -92,23 +92,27 @@ Three different durations exist; conflating them caused operator confusion.
 
 | Field | Unit | Meaning | Who sets it |
 |-------|------|---------|-------------|
-| Piece **Duration** (RE form / DUR column) | seconds | On-air / enable length for Sofie `expectedDuration` & timeline enable | Editor (manual or ffprobe fill) |
+| Piece **On air** (RE form / DUR column) | seconds | On-air / enable length for Sofie timeline enable | Editor (media picker can seed; overrides stick) |
 | `payload.sourceDuration` | milliseconds | Source clip length for Sofie VT/VO `content.sourceDuration` | Media picker ffprobe (`backend/.../media.ts`) |
-| Part **Duration** | seconds | Part-level expected length (ILU inherit for headline/L3DH) | Editor / presets |
+| Part **Duration** | seconds | Part-level expected length (ILU script reading time, or longest child) | Editor / sync |
 
-**Picker behaviour (today):** choosing a file via media picker runs ffprobe and can fill
-piece duration (seconds) **and** `sourceDuration` (ms). Operators can still override
-Duration for editorial timing (e.g. headline ILU = 8s while source is longer).
+**Picker behaviour:** choosing a file via media picker runs ffprobe and can fill
+piece On air (seconds) **and** `sourceDuration` (ms). Operators may override or
+**clear** On air afterward — story duration sync does **not** force On air back
+to source length.
 
-**Not shown today:** source length as a separate DUR column; Sofie’s hoverscrub /
-Package Manager media info in RE.
+**L3D / PGM graphics:** empty On air is intentional. Blueprints use
+`duration: undefined` on the timeline enable → graphic **holds until Take**.
+RE no longer auto-fills empty L3D On air from part duration (that made nuked
+durations snap back and L3Ds disappear mid-part).
 
-### Planning questions
+**ffprobe vs browser preview:** probe takes the max of container/stream duration
+tags and `nb_frames / fps`. Lying `mvhd` tags (common on NLE exports) used to
+report a short Source length while `<video>` correctly showed the playable
+length — re-pick / blur the media path after upgrading to refresh stored
+`sourceDuration`.
 
-- Show two columns: **On air** vs **Source**?
-- Auto-fill on-air from source only for VT/SYN, never for GFX/wipe?
-- Should wipe DUR default to blueprint `DEFAULT_WIPE_DURATION_MS` (2500) in the RE form
-  when left empty, so the column isn’t `00:00` while playout still fires 2.5s?
+**Shown in RE:** On air vs Source columns where `sourceDuration` exists.
 
 ---
 
