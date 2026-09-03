@@ -115,19 +115,15 @@ a Cursor agent session on `sofie-demo-blueprints`.
 v2 Caspar `clipName` convention: `gfx/<template-folder>` (e.g. `gfx/l3d-tema`). Built layout:
 `deploy/template-path/gfx/<name>/<name>.html`. See integration log for full payload table.
 
-### Hypercomposed Caspar (WIP — post-demo PR2)
+### Hypercomposed Caspar
 
-SPRÁVY targets a **single CasparCG server** compositing background loop, camera, ILU, HTML
-graphics, and alpha wipes — without vision-mixer program cuts. Blueprint support lands in PR 2
-(`hypercomposed` studio preset); templates and media are built from `demo-assets/`.
+SPRÁVY uses a **single CasparCG server** with **four channels** (sofie-demo-blueprints
+#77): LED **1**, PGM **2** (`route://` + overlays), BG A/B **3/4** (render-only
+pre-build). Canonical map: [`docs/integration/OUTPUT_TOPOLOGY.md`](docs/integration/OUTPUT_TOPOLOGY.md).
 
-**LED ≠ PGM:** one Caspar can output **different content on different channels/consumers**
-(e.g. ch1 → LED, ch2 → PGM). A second Caspar server is not required. Canonical map:
-[`docs/integration/OUTPUT_TOPOLOGY.md`](docs/integration/OUTPUT_TOPOLOGY.md).
-
-**Wipe target (ADR 0002):** pre-build DoubleBox / fullscreen on BG channels, PGM only
-`route://` + wipe; logo above the route — so HTML load does not race the transition.
-Handoff: [`docs/integration/handoffs/blueprints-wipe-route-bg-channels.md`](docs/integration/handoffs/blueprints-wipe-route-bg-channels.md).
+**Ops:** `caspar.config` must declare channels 3 and 4 (no consumers required). Missing
+channels → Caspar `400 ERROR` spam on `LOADBG 3-…` / `4-…` and dead PGM route.
+ADR: [`docs/adr/0002-wipe-prebuild-bg-channels.md`](docs/adr/0002-wipe-prebuild-bg-channels.md).
 
 ### Gotchas
 

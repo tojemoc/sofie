@@ -1,6 +1,6 @@
 # ADR 0002: Pre-build wipe scenes on background Caspar channels
 
-**Status:** Accepted (target architecture — not yet implemented in blueprints)
+**Status:** Implemented in blueprints ([sofie-demo-blueprints #77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77)) — **requires Caspar ≥4 channels**
 **Date:** 2026-09-03
 **Repos affected:** `tojemoc/sofie-demo-blueprints` (primary), Caspar `caspar.config`,
 megarepo docs (`OUTPUT_TOPOLOGY`, `DOUBLEBOX-PGM`)

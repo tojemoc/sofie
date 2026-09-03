@@ -11,40 +11,58 @@ Integration status / catalogue: [`SPRAVY-V2-INTEGRATION.md`](./SPRAVY-V2-INTEGRA
 
 ## One picture
 
-One **CasparCG server**, two **channels** (default hypercomposed studio):
+One **CasparCG server**, **four channels** (default hypercomposed studio after
+sofie-demo-blueprints **#77**):
 
-| Consumer | Caspar channel | What operators see |
-|----------|----------------|--------------------|
-| **LED** (wall / studio screen) | **1** | Background loop + opening headline ILUs only |
-| **PGM** (program / OBS / SDI) | **2** | Full compose: DoubleBox, L3Ds, camera, wipe, intro, logo-bug |
+| Role | Caspar channel | Consumers |
+|------|----------------:|-----------|
+| **LED** | **1** | Screen / NDI / SDI — `bg_loop` + headline ILU |
+| **PGM** | **2** | Screen / NDI / SDI — `route://{3\|4}` + logo/intro above |
+| **BG A** | **3** | **none** (render-only pre-build look) |
+| **BG B** | **4** | **none** (render-only ping-pong look) |
 
 ```text
 CasparCG
-├── Channel 1 ──► LED consumer(s)     Screen / NDI / SDI for ch1
-└── Channel 2 ──► PGM consumer(s)     Screen / NDI / SDI for ch2
+├── Channel 1 ──► LED consumer(s)
+├── Channel 2 ──► PGM consumer(s)   PLAY route://3 or route://4 (+ STING wipe)
+├── Channel 3 ──► (no consumer)     DoubleBox / look A composite
+└── Channel 4 ──► (no consumer)     Fullscreen / look B composite
 ```
 
-A second Caspar host is **not** required. If L3D / wipe / intro look “missing”, open the
-**channel 2** consumer — channel 1 will never show them by design.
+Studio config: `casparcg.hypercomposed.ledChannel` / `pgmChannel` / `bgChannelA` /
+`bgChannelB` (defaults **1 / 2 / 3 / 4**).
 
-Studio config overrides: `casparcg.hypercomposed.ledChannel` / `pgmChannel` (defaults 1 / 2).
+### Ops: `caspar.config` must declare ≥4 channels
 
-### Target: wipe via pre-built BG channels (ADR 0002)
+If Caspar logs spam **`400 ERROR`** on every `LOADBG`/`PLAY`/`CG` for **3-*** and
+**4-***, and `PLAY 2-110 route://3` returns **403 / Check syntax**, the server only
+has two channels configured. Blueprints still issue BG commands; Caspar rejects the
+channel index.
 
-**Not implemented yet.** Story wipes today are an alpha overlay on PGM layer 200 while
-other PGM layers cold-start — HTML/clip load races the wipe (DoubleBox graphics pop in
-last). Target architecture:
+Add two render-only channels (match LED/PGM `video-mode`; **omit** Screen/NDI/SDI
+consumers on 3/4), restart Caspar, re-**Apply** studio config / activate rundown:
 
-```text
-BG A (ch3)  Builds doublebox   ──┐
-                                 ├──► PGM (ch2) route + wipe ──► logo/bug above route
-BG B (ch4)  Builds fullscreen  ──┘
+```xml
+<channels>
+  <channel> <!-- 1 LED — keep existing consumers -->
+    <video-mode>1080p5000</video-mode>
+    <!-- ... -->
+  </channel>
+  <channel> <!-- 2 PGM — keep existing consumers -->
+    <video-mode>1080p5000</video-mode>
+    <!-- ... -->
+  </channel>
+  <channel> <!-- 3 BG A — no consumers -->
+    <video-mode>1080p5000</video-mode>
+  </channel>
+  <channel> <!-- 4 BG B — no consumers -->
+    <video-mode>1080p5000</video-mode>
+  </channel>
+</channels>
 ```
 
-Decision + sketch: [`adr/0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md).
-Blueprints handoff:
-[`handoffs/blueprints-wipe-route-bg-channels.md`](./handoffs/blueprints-wipe-route-bg-channels.md).
-LED channel 1 allow-list is unchanged.
+Four 1080p50 channels can be GPU-heavy — confirm headroom if playback stutters.
+See ADR [`0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md).
 
 ---
 
