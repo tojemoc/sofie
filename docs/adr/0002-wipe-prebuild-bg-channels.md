@@ -58,9 +58,10 @@ CG pre-render). Caspar’s transition producer wraps generic producers including
 
 ### Positive
 
-- Wipe no longer races CEF / clip cue — pop-in during transition goes away.
-- One readiness gate per Take: “has the next BG channel settled?” instead of
-  coordinating N layers mid-wipe.
+- Wipe no longer races CEF / clip cue — pop-in during transition goes away **when** the
+  next BG channel is gated ready before the route transition starts.
+- One **mandatory** readiness gate per wiped Take: “has the next BG channel settled?”
+  instead of coordinating N layers mid-wipe.
 - Logo/bug (and similar) survive untouched if kept above the route layer.
 
 ### Costs / risks
@@ -68,9 +69,10 @@ CG pre-render). Caspar’s transition producer wraps generic producers including
 - **Idle GPU/CPU:** 2–3 channels render full composites continuously (BG A, BG B, PGM).
   No extra *consumers* on BG channels — only render cost. Measure headroom at production
   resolution before locking channel count.
-- **Lookahead:** Sofie must schedule next-BG build with enough preroll before Take
-  (HTML settle + clip cue). Prefer explicit preroll on wipe/part adapters over hoping
-  WithinPart loads finish in time.
+- **Lookahead + ready gate:** Sofie must schedule next-BG build before Take **and** must
+  not start the PGM route transition until that BG is settled (playing / CG loaded or
+  equivalent). Fixed preroll alone may still punch up **partial** content if CEF/clip
+  cue overruns the timer.
 - **Mapping churn:** hypercomposed studio gains BG channel ids; DoubleBox FILL/L3D
   targets move from PGM layers to BG channel layers; wipe stops being a pure overlay on
   200 and becomes a route transition (or route + transition media).
@@ -101,7 +103,7 @@ PGM layer stack (conceptual):
 ```text
 210  Intro / outro (may stay PGM-local or move later)
 123  logo-bug / persistent overlays   ◄── above wipe
-110  route://N-10  (+ wipe transition) ◄── punched-up BG composite
+110  route://N  (+ wipe transition)   ◄── full BG channel composite
 ```
 
 BG A/B reuse today’s DoubleBox / fullscreen layer geometry (110/115/116/118/121), but

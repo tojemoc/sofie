@@ -2,7 +2,7 @@
 
 Copy this into a Cursor agent session on **`tojemoc/sofie-demo-blueprints`**.
 Architecture decision: megarepo
-[`docs/adr/0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md).
+[`docs/adr/0002-wipe-prebuild-bg-channels.md`](../../adr/0002-wipe-prebuild-bg-channels.md).
 
 ## Goal
 
@@ -53,7 +53,7 @@ BG channels: **no Screen/NDI/SDI consumers** in `caspar.config` (render only).
 
 | Layer | Content |
 |------:|---------|
-| 110 (or dedicated route layer) | `route://{bg}-10` (or full-channel route) + wipe transition |
+| 110 (or dedicated route layer) | `route://{bg}` (full BG channel composite) + wipe transition |
 | 123 | `gfx/logo-bug` — **always above route** |
 | 210 | Intro / outro — decide: PGM-local (above wipe) vs own path; keep above route |
 
@@ -63,14 +63,16 @@ compat if needed, but story-block wipe pieces should drive the **route transitio
 
 ## Sofie / timeline requirements
 
-1. **Lookahead / preroll:** before a wiped Take into part N, the *next* BG channel must
-   already hold part N’s composite long enough for CEF + clip cue (suggest ≥1–2s; tune).
-   Use piece `prerollDuration` / part prepare, or a sticky “next look” baseline that
-   updates on the upcoming part while current is on-air.
+1. **Lookahead:** before a wiped Take into part N, the *next* BG channel must already
+   hold part N’s composite. Use piece `prerollDuration` / part prepare, or a sticky
+   “next look” baseline that updates on the upcoming part while current is on-air.
+   Preroll alone is **not** the readiness gate (see below).
 2. **Ping-pong:** while PGM routes from A, build next look on B; after Take, swap. Do not
    rebuild the on-air BG channel under the route.
-3. **Ready gate (optional v2):** if Caspar/Sofie can observe layer playing/CG loaded,
-   gate Take or auto-delay wipe until next BG is settled. v1 can use fixed preroll.
+3. **Ready gate (required for no-pop-in):** do **not** start the PGM route transition
+   until the next BG channel reports settled (layers playing / CG loaded, or an
+   equivalent Sofie readiness signal). Fixed preroll without that signal can still punch
+   up a partially loaded composite. Gate Take or auto-delay the wipe until ready.
 4. **Hard cuts:** parts without a wipe piece keep today’s cut semantics (instant route
    switch or continue building on PGM if not yet migrated).
 
@@ -92,21 +94,25 @@ compat if needed, but story-block wipe pieces should drive the **route transitio
 
 ### WP3 — Wipe = route transition
 
-- Wipe piece / `playLayer: 'wipe'`: instead of (or in addition to retiring) PLAY wipe file
-  on PGM 200 as overlay-only, generate timeline that:
-  - ensures next BG is built,
-  - `PLAY` PGM route from next BG **with** transition (wipe media / MIXER TRANSITION as
-    supported by your Caspar build),
+- Wipe piece / `playLayer: 'wipe'`: the **route transition from the next BG replaces**
+  overlay-only `PLAY` of wipe media on PGM layer **200**. One Take must not fire both a
+  route wipe and a layer-200 overlay (that would be two wipes). Generate timeline that:
+  - ensures next BG is built **and ready**,
+  - `PLAY` PGM `route://{bg}` from next BG **with** transition (wipe media / MIXER
+    TRANSITION as supported by your Caspar build),
   - leaves logo on 123 untouched.
+- Retain PGM layer **200** only for explicitly **non-migrated** compatibility paths
+  (legacy overlay wipe while a look still cold-starts on PGM). Migrated story-block
+  wipes must not use 200.
 - Preserve RE labels (`ILU TO SYN`, `Double Box`, …) as operator metadata; map labelled
-  wipe files (`wipes/wipe_sjv`, …) into the transition where applicable.
+  wipe files (`wipes/wipe_sjv`, …) into the route transition where applicable.
 
 ### WP4 — Tests + smoke
 
-- Unit: mappings for ch3/ch4; wipe timeline contains `route://` + transition, not only
-  overlay on 200.
+- Unit: mappings for ch3/ch4; wipe timeline contains `route://{bg}` + transition, and
+  does **not** also PLAY overlay wipe on 200 for the same Take.
 - Extend smoke expectations: wiped Takes do not cold-start HTML on the routed channel at
-  transition start.
+  transition start; transition waits for BG ready.
 - Manual: Take DoubleBox → SYN with wipe — L3D/db_loop must not pop mid-wipe; logo-bug
   continuous.
 
@@ -120,11 +126,12 @@ compat if needed, but story-block wipe pieces should drive the **route transitio
 
 1. `yarn test:blueprints` / wipe + DoubleBox specs updated.
 2. Caspar log on wiped Take: route/transition on PGM; CG ADD for next look appeared on BG
-   channel **before** transition start (timestamps).
+   channel **and** ready gate passed **before** transition start (timestamps); no parallel
+   `PLAY … 2-200` wipe for that Take.
 3. Operator check: no mid-wipe pop-in of DoubleBox HTML; logo stays up.
 
 ## References
 
-- ADR: `docs/adr/0002-wipe-prebuild-bg-channels.md`
+- ADR: [`docs/adr/0002-wipe-prebuild-bg-channels.md`](../../adr/0002-wipe-prebuild-bg-channels.md)
 - Today: `OUTPUT_TOPOLOGY.md`, `DOUBLEBOX-PGM.md`, `helpers/clips.ts` wipe path,
   `CasparCGPgmEffectsPlayer`
