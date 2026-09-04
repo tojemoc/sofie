@@ -4,8 +4,9 @@
 [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md) first. This page is the DoubleBox
 compose / FILL / wipe detail.
 
-Target look for **thematic DoubleBox** on PGM (Caspar channel 2), matching the
-production still (ILU left / CAM right / tema+bug bar / `db_loop` frame with bg baked in):
+Target look for **thematic DoubleBox** on a **BG look channel** (3 or 4), routed to
+PGM (Caspar channel 2) via `route://`, matching the production still (ILU left / CAM
+right / tema+bug bar / `db_loop` frame with bg baked in):
 
 ```text
 ┌────────────────────────────────────────────────────────────┐
@@ -22,16 +23,17 @@ production still (ILU left / CAM right / tema+bug bar / `db_loop` frame with bg 
 
 **LED (Caspar channel 1)** production rule: **headline ILU + `loops/bg_loop` only**.
 The loop is blueprint **baseline** on layer 110 (not a RE piece) and must never be
-displaced by VT/VO/SYN — those play on **PGM ClipPlayer2**. `l3d-predstavovak` /
-`l3d-mod` / `l3d-syn` / headline bars are **PGM**. No intro / znelka on LED. Intro
-overlay plays on **PGM layer 210** (above wipe 200) — see
+displaced by VT/VO/SYN — those play on **BG look** channels (3/4). `l3d-predstavovak` /
+`l3d-mod` / `l3d-syn` / headline bars are on the **look**, then routed to PGM. No intro /
+znelka on LED. Intro overlay plays on **PGM layer 210** (above the route on 110) — see
 [`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md)
 and [`handoffs/blueprints-baseline-bg-loop.md`](./handoffs/blueprints-baseline-bg-loop.md).
 
-**Story ILU on PGM 116:** mapping
-`casparcg_pgm_ilu_player` → **PGM channel 2 layer 116** (piece type `doublebox-ilu`)
+**Story ILU on look 116:** mapping
+`casparcg_pgm_ilu_player` → **BG channel 3/4 layer 116** (piece type `doublebox-ilu`)
 sits **above** CAM (115) so the left window covers CAM overhang without cropping the camera.
-Headline ILU remains on LED `casparcg_ilu_player` (1-115).
+Headline ILU remains on LED `casparcg_ilu_player` (1-115). PGM hears the mix via
+`PLAY 2-110 route://{3|4}` (`layer: null` — full channel, never `route://N-0`).
 
 **Camera / UVC:** studio `casparcg.hypercomposed.pgmCameraProducer` (e.g.
 `dshow://video=OBS Virtual Camera`):
@@ -98,9 +100,9 @@ checks.
 | ILU | 116 | `0.0219 0.0769 0.6802 0.6824` (above CAM) |
 | CAM1 UVC (headlines/MOD) | 115 | `0 0 1 1` fullscreen |
 | `db_loop` frame | 118 | full frame alpha cutouts |
-| topic L3D + bug | 121 / 123 | HTML templates (bottom bar) |
-| Wipe | 200 | full frame alpha wipe |
-| Intro / outro | 210 | full frame — above wipe + compose; **PGM only** |
+| topic L3D + bug | 121 / 123 | HTML templates on **BG look** 121; logo/bug on **PGM 123** (above route) |
+| Story wipe | **PGM 110** | `PLAY 2-110 route://{3\|4}` + STING (`wipes/wipe…`) — **not** overlay 200 |
+| Intro / outro | 210 | full frame — above route; **PGM only** |
 
 Tune FILL against the real HTML chrome; values above match the attached still
 approximately.
@@ -115,20 +117,21 @@ into HTML); do not put a background loop on PGM 110.
 ## Wipes (same media, different semantics)
 
 Story-block transitions use alpha wipe files under Caspar media, default
-`wipes/wipe` (plus `wipe_sjv` / `wipe_sport` / `wipe_pocasie` where labelled). Sofie
-plays them on **PGM layer 200** as a short overlay on **Take into that part** (not a
-vision-mixer cut). Empty/0 RE duration defaults to ~2.5s so layer 200 does not cover
-the rest of the part after the wipe finishes.
+`wipes/wipe` (plus `wipe_sjv` / `wipe_sport` / `wipe_pocasie` where labelled).
 
-**Why mid-wipe pop-in happens:** overlay wipe races CEF/clip load on the same PGM
-channel. **Target fix:** pre-build DoubleBox vs fullscreen on BG channels, then
-`route://` + wipe on PGM with logo above the route — see
-[`adr/0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md) and
-[`handoffs/blueprints-wipe-route-bg-channels.md`](./handoffs/blueprints-wipe-route-bg-channels.md).
+**Shipped (sofie-demo-blueprints [#77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77)):**
+looks pre-build on **BG channels 3/4**; PGM takes
+`PLAY 2-110 route://{3|4}` with STING (wipe file as mask/overlay). Logo stays on
+**PGM 123** above the route. Empty/0 RE wipe duration still defaults to ~2.5s for the
+transition length. See [`adr/0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md)
+and [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md).
+
+**Legacy:** overlay `PLAY 2-200 "wipes/wipe"` while cold-starting on PGM — compatibility
+only; migrated story wipes must not use layer 200.
 
 **If wipes never appear:** (1) watch **Caspar channel 2**, not LED; (2) confirm
-`PLAY 2-200 "wipes/wipe"` on Take (else `404` → file missing on disk); (3) re-upload
-blueprints + Apply studio config so `casparcg_effects_player_pgm` exists.
+`PLAY 2-110 route://{3|4}` with STING on Take (not `route://N-0`); (3) Caspar
+`caspar.config` has **≥4 channels**; (4) re-upload blueprints + Apply studio config.
 
 The **label** records direction (file may still be the default wipe):
 
@@ -154,20 +157,22 @@ labelled variant) and `transition: <label>` for operators.
 | Sofie mapping id | Channel | Layer | Role |
 |------------------|---------|-------|------|
 | `casparcg_clip_player1` | LED 1 | 110 | LED `bg_loop` |
-| `casparcg_clip_player2` | PGM 2 | 110 | Story VT / weather (no baseline `bg_loop`) |
+| `casparcg_clip_player2` / `_b` | BG 3 / 4 | 110 | Story VT / weather on look (no baseline `bg_loop`) |
+| `casparcg_pgm_route` | PGM 2 | 110 | Full-channel `route://{3\|4}` (+ STING wipe) |
 | `casparcg_ilu_player` | LED 1 | 115 | Headline ILU MEDIA (+ `gfx/headline-fallback`) |
-| `casparcg_pgm_camera` | PGM 2 | 115 | UVC / CAM1 (FILL; under ILU on DoubleBox) |
-| `casparcg_pgm_ilu_player` | PGM 2 | 116 | Thematic DoubleBox left ILU (`doublebox-ilu`) |
+| `casparcg_pgm_camera` / `_b` | BG 3 / 4 | 115 | UVC / CAM1 (FILL on DoubleBox look) |
+| `casparcg_pgm_ilu_player` / `_b` | BG 3 / 4 | 116 | Thematic DoubleBox left ILU (`doublebox-ilu`) |
 | `casparcg_intro_player_pgm` | PGM 2 | 210 | Intro / znelka — **never LED** |
-| `casparcg_graphics_pgm_l3d` | PGM 2 | 121 | `l3d-predstavovak` / `l3d-odporucanie` / `l3d-syn` / headline bars |
-| `casparcg_graphics_logo` | PGM 2 | 123 | `gfx/logo-bug` (360° sekúnd bug) — **not** on LED |
-| `casparcg_effects_player_pgm` | PGM 2 | 200 | Wipes |
+| `casparcg_graphics_pgm_l3d` / `_b` | BG 3 / 4 | 121 | `l3d-predstavovak` / `l3d-odporucanie` / `l3d-syn` / headline bars |
+| `casparcg_graphics_logo` | PGM 2 | 123 | `gfx/logo-bug` / countup — **above route; not on LED** |
+| `casparcg_effects_player_pgm` | PGM 2 | 200 | Legacy overlay wipe only (story wipes use route STING) |
 
-Headline / story ILU on LED vs PGM: opening **headline** ILU stays on **LED**
+Headline / story ILU on LED vs look: opening **headline** ILU stays on **LED**
 (`casparcg_ilu_player`). Thematic DoubleBox left-window media uses
-`casparcg_pgm_ilu_player` on **PGM channel 2 layer 116** via piece type
-`doublebox-ilu`. PGM also carries camera FILL + `l3d-predstavovak`. Baseline
-`bg_loop` is **LED-only**. The **logo-bug is PGM-only**.
+`casparcg_pgm_ilu_player` on the **BG look** (ch 3/4 layer 116) via piece type
+`doublebox-ilu`. Looks also carry camera FILL + `l3d-predstavovak`; PGM only
+**routes** the settled mix on layer 110. Baseline `bg_loop` is **LED-only**.
+The **logo-bug is PGM-only** (layer 123).
 
 ### `bg-loop` folder structure
 
@@ -188,11 +193,12 @@ same basename (see [`handoffs/blueprints-baseline-bg-loop.md`](./handoffs/bluepr
    (PLAY path `assets/intro_michal`)
 2. Confirm OBS Virtual Camera name; test `PLAY 2-115 "dshow://…"` by hand
 3. Import megarepo `assets/spravy-v3-smoke-rundown.json` (includes story-block `wipe` pieces)
-4. Watch **Caspar channel 2** for wipes + DoubleBox + Intro
+4. Watch **Caspar channel 2** for `route://` + STING wipes + Intro; confirm looks on **3/4**
 5. **Activate (Rehearsal):** LED shows `PLAY 1-110 "loops/bg_loop"`; PGM must **not** play
    `bg_loop` on ClipPlayer2.
 6. **Intro on PGM 210 only:** Intro take must show `PLAY <pgm>-210 "assets/intro_michal"` and
    **must not** play Intro on LED (`1-200`).
-7. **Post-intro MOD:** `PLAY <pgm>-115 "dshow://…"` fullscreen — not `bg_loop` on PGM.
-8. **Story ILU on PGM 116 above CAM:** DoubleBox Take must show `PLAY <pgm>-116 "clips/…"`
+7. **Post-intro MOD:** camera on look channel 115 — not `bg_loop` on PGM.
+8. **Story ILU on look 116 above CAM:** DoubleBox Take must show `PLAY {3|4}-116 "clips/…"`
+9. **Wiped Take:** AMCP shows `PLAY 2-110 route://{3|4}` (full channel, **not** `route://N-0`) with STING; logo on `2-123` uninterrupted
    and CAM on **115** (ILU z-order above CAM). Headline parts still use LED `1-115`.

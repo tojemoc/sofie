@@ -1,6 +1,6 @@
 # ADR 0002: Pre-build wipe scenes on background Caspar channels
 
-**Status:** Implemented in blueprints ([sofie-demo-blueprints #77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77)) — **requires Caspar ≥4 channels**
+**Status:** Implemented in blueprints ([sofie-demo-blueprints #77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77)) — **requires Caspar ≥4 channels**. Operator map: PGM `route://{3|4}` on **layer 110** (+ STING); looks on BG **3/4**; logo on PGM **123**. See [`OUTPUT_TOPOLOGY.md`](../integration/OUTPUT_TOPOLOGY.md) and [`DOUBLEBOX-PGM.md`](../integration/DOUBLEBOX-PGM.md).
 **Date:** 2026-09-03
 **Repos affected:** `tojemoc/sofie-demo-blueprints` (primary), Caspar `caspar.config`,
 megarepo docs (`OUTPUT_TOPOLOGY`, `DOUBLEBOX-PGM`)

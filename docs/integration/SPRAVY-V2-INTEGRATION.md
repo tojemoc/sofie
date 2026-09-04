@@ -3,7 +3,7 @@
 Living document for agents working across the Sofie megarepo. Update this file when
 demo-assets, blueprints, rundown-editor, or core integration status changes.
 
-**Last updated:** 2026-08-31
+**Last updated:** 2026-09-04
 
 ---
 
@@ -12,14 +12,11 @@ demo-assets, blueprints, rundown-editor, or core integration status changes.
 End-to-end demo: **Rundown Editor → Sofie Core → Playout Gateway → CasparCG** driving
 v2 HTML templates from `tojemoc/sofie-demo-assets`.
 
-**Near-term demo target (August 14, 2026):** one Caspar, single-channel LED stack, 3–4 templates,
-imported H.264 clips. Full hypercomposed (LED≠PGM, wipes, all 10 templates) is **post-demo**.
-
-**LED vs PGM (canonical — planned / pending):** [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md) —
-target is LED = headline ILU + `bg_loop` only; L3Ds / intro / wipe / camera / logo-bug on
-**Caspar channel 2**. Two-channel CH1/CH2 mapping is **not yet deployed**; the August 14 demo
-remains single-channel. DoubleBox compose detail:
-[`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
+**Hypercomposed (LED ≠ PGM):** one Caspar, **four channels** — LED=1, PGM=2, BG A/B=3/4.
+Canonical map: [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md). Story looks pre-build on
+BG 3/4; PGM routes with STING wipe on layer **110** ([ADR 0002](../adr/0002-wipe-prebuild-bg-channels.md),
+blueprints [#77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77)). DoubleBox
+compose: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 
 ---
 
@@ -41,7 +38,7 @@ Operators need **absolute control** over two different Caspar layers / channels:
 
 | Item | RE part / piece | Caspar target | Role |
 |------|-----------------|---------------|------|
-| **Intro overlay** | Part `Intro` + piece `intro` | **PGM** IntroOverlay **210** (above wipe 200) | Full-frame znelka / alpha — **never on LED** |
+| **Intro overlay** | Part `Intro` + piece `intro` | **PGM** IntroOverlay **210** (above route 110) | Full-frame znelka / alpha — **never on LED** |
 | **Background loop** | Piece `bg-loop` (optional) + baseline | LED ClipPlayer1 **110** | LED `loops/bg_loop` |
 
 **LED allow-list (channel 1):** **headline ILU** + **`bg_loop` only**.
@@ -112,7 +109,9 @@ production muster spine:
 Clip paths are placeholders under `clips/`. Camera letters:
 **A→1**, **P→2**, **M→3**.
 
-Wipes: piece type `wipe`, file `wipes/wipe` (or labelled `wipe_sjv` / `wipe_sport` / `wipe_pocasie`), play on **PGM** today as overlay layer 200 (see DOUBLEBOX-PGM.md). **Target:** pre-build scenes on BG channels + PGM `route://` wipe ([ADR 0002](../adr/0002-wipe-prebuild-bg-channels.md)).
+Wipes: piece type `wipe`, file `wipes/wipe` (or labelled `wipe_sjv` / `wipe_sport` / `wipe_pocasie`).
+**Shipped:** PGM `PLAY 2-110 route://{3|4}` + STING ([ADR 0002](../adr/0002-wipe-prebuild-bg-channels.md),
+blueprints [#77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77)). Overlay layer 200 is legacy only.
 Smoke rundown includes story-block wipe pieces with a `transition` label
 (`ILU TO SYN`, `Double Box`, …) — not on HEADLINES / Intro.
 
@@ -225,7 +224,7 @@ The bridge accepts JSON objects and XML-wrapped JSON from Caspar.
 <media-path>/
   loops/     # e.g. bg_loop.mov — bg-loop / baseline LED loop
   clips/     # ILU, VT, VO (e.g. clips/premiera.mp4)
-  wipes/     # alpha wipe media (piece type `wipe` → PGM layer 200)
+  wipes/     # alpha wipe media (piece type `wipe` → PGM route STING on layer 110)
   assets/    # pip-frame.png, etc.
 ```
 
