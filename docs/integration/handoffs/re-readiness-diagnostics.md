@@ -185,21 +185,18 @@ If so, a small addition to `sofie-core`'s
 `PeripheralDevices`/`PackageContainerPackageStatuses` health for the studio would be
 the minimal extension — reuse existing collections, don't invent a new status model.
 
-### 6. Duration: split "on-air" vs "source" (separate, smaller task, same PR is fine)
+### 6. Duration: split "on-air" vs "source" — landed in unopus
 
-The `RE-READINESS-AND-PLAYOUT-UX.md` planning doc flags this as unresolved: three
-different durations exist (piece on-air `duration` in seconds, `payload.sourceDuration`
-in ms from ffprobe, part `duration`) and operators conflate them. Concretely:
+UI shows **On air** (editable) vs **Source** (ffprobe, read-only). Follow-up fixes on
+`tojemoc/unopus` branch `cursor/fix-duration-probe-and-on-air-5c12`:
 
-- In the story/part table and `piecePropertiesForm`, show **two** columns/fields where
-  a `sourceDuration` exists: "On air" (editable) and "Source" (read-only, from
-  ffprobe via the existing media picker probe in `mediaPickerField.tsx` /
-  `backend/src/background/media.ts`).
-- For piece type `wipe`, when `duration` is empty/0, display the effective blueprint
-  default (`DEFAULT_WIPE_DURATION_MS` = 2500ms = "2.5s") instead of a blank/`00:00`,
-  so it doesn't look uncontrolled. Pull this constant from wherever blueprints expose
-  it, or just hardcode `2.5s` with a comment pointing at the blueprints constant if
-  there's no shared source of truth today.
+- On air overrides / clears stick (no force from `sourceDuration`; `json_patch` null clears)
+- Empty **L3D** On air = hold until Take (no part inherit fill) — not wipes
+- Probe uses format/stream + `nb_frames/fps` so Source matches playable length
+
+Empty **wipe** On air: playout still uses blueprint `DEFAULT_WIPE_DURATION_MS` (**2500**);
+RE Dur column + piece form show that default as **2.5s** (see
+`RE-READINESS-AND-PLAYOUT-UX.md` wipe contract).
 
 ---
 

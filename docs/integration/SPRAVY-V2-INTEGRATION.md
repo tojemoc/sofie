@@ -78,12 +78,18 @@ the HTML template loaded — the companion ILU PLAY still needs the file.
 - **demo-assets:** v2 HTML must exist on Caspar (`gfx/l3d-headline.html`, etc.). Rebuild with `yarn build` and copy `deploy/template-path` if needed.
 - **`gfx/headline-fallback` (LED 1-121) is chrome only** — transparent ILU window + optional `source` pill. It does **not** render the ILU `text` field; headline copy on PGM comes from **`gfx/l3d-headline` on channel 2 layer 121**. If fallback frame shows but words do not, check PGM ch2 (not LED) for `gfx/l3d-headline`, and redeploy templates after `demo-assets` fixes.
 - **`gfx/l3d-headline` invisible while `l3d-tema` / `l3d-mod` work:** fixed in `demo-assets` — `play()` must set bar transform to `x: 0` before `gsap.from` (otherwise bars stay off-screen at `-1200px` even when AMCP returns `202 CG OK`). Rebuild `yarn build`, copy `deploy/template-path/gfx/l3d-headline/` to Caspar, restart or `CG … STOP` + Take again.
-- **Piece Duration → Part Duration in RE:** backend `syncStoryDurationsForPart` persists inheritance (child with duration fills unset part; part duration fills unset inheriting siblings). The UI must receive `parts:update` / `pieces:update` after sync — fixed in unopus when sync runs from piece/part saves.
+- **Piece Duration → Part Duration in RE:** backend `syncStoryDurationsForPart` may set
+  unset **part** duration from the longest child On air (or trimmed source). It does
+  **not** force piece On air from ffprobe, and does **not** auto-fill empty L3D On air
+  from the part (empty L3D = hold until Take). Cleared durations persist via JSON
+  merge-patch `null`. See unopus branch `cursor/fix-duration-probe-and-on-air-5c12`.
 - **Timing (not AUTO):** three durations must not be conflated (see [`RE-READINESS-AND-PLAYOUT-UX.md`](./RE-READINESS-AND-PLAYOUT-UX.md)):
   - **Part Duration** (seconds) — story-level expected length in the Rundown Editor.
-  - **Piece Duration** (seconds) — on-air enable length in the RE form / Dur column; unset PGM L3D piece duration **inherits Part Duration** (`l3d-mod`, `l3d-headline`, `l3d-tema`, …). An **explicitly set** piece Duration is left unchanged. RE shows the same resolved values in Dur and exports them to Sofie ingest; blueprints pass ingest durations through unchanged.
+  - **Piece On air** (seconds) — enable length for Sofie timeline; **empty L3D On air**
+    means hold until Take (not inherited from part). Media picker may seed On air from
+    ffprobe; editorial overrides stick.
   - **Sofie `expectedDuration`** (milliseconds after ingest conversion) — the on-air timeline enable length Sofie uses at playout.
-  - **`payload.sourceDuration`** (milliseconds) — separate from on-air timing; maps to VT/VO `content.sourceDuration` (media clip length from ffprobe, not the Dur column).
+  - **`payload.sourceDuration`** (milliseconds) — separate from on-air timing; maps to VT/VO `content.sourceDuration` (media clip length from ffprobe using format/stream + frame-count heuristics, not the Dur column).
   Sofie **AUTO** only appears when blueprints set `autoNext` (VT / Intro / non-ILU GFX). ILU parts (with or without camera) do **not** autoNext — leave Start at `0` so they begin on Take.
 - **RE Ready/NR, DUR, wipe timing, piece order:** planning notes in
   [`RE-READINESS-AND-PLAYOUT-UX.md`](./RE-READINESS-AND-PLAYOUT-UX.md) (ADR 0001 for Core PM readiness).
