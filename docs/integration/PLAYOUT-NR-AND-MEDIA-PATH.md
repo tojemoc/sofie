@@ -7,6 +7,8 @@ When Sofie WebUI shows yellow warnings like:
 - **Lower Third** / **Logo** / **Audio Bed** / **PGM DoubleBox frame** can't be found…
 
 those strings are **Sofie source-layer names**, not missing scripts or L3D templates.
+Diagonal striping (“banding”) on a timeline piece is the same signal: Package Manager
+marked that ExpectedPackage **not ready**.
 
 | Sofie badge | What Package Manager is verifying |
 |-------------|-----------------------------------|
@@ -16,6 +18,16 @@ those strings are **Sofie source-layer names**, not missing scripts or L3D templ
 | Logo | Countup / logo-bug asset (`assets/countup`) |
 | Audio Bed | `loops/bg_music_*` |
 | PGM DoubleBox frame | `loops/db_loop` |
+
+**How to read a useful warning after the path is fixed**
+
+1. Title row = piece / payload (e.g. `HEADLINES • gfx/headline | clips/HEADLINE1.mov, …`).
+2. Body = source layer that failed verify (`ILU`, `Voice Over`, …).
+3. One missing file can appear twice in the notifications list (piece status + package
+   status). Treat identical title+body pairs as a single issue.
+4. If **every** clip is banded and every layer says “can't be found”, ignore the
+   per-clip wording until Package Manager can read its media folder (below). The
+   folder is broken, not fifty separate files.
 
 ## Root cause on this studio
 
@@ -33,14 +45,27 @@ c:\casparcg\sofie-demo-media   ← ENOENT every ~60s in PM logs
 
 Caspar `PLAY` / `LOADBG` can succeed (files on `Y:`) while Sofie marks every ExpectedPackage **not ready** because PM cannot `access()` its container folder. **Do not suppress these warnings** — fix the path so warnings mean a real miss.
 
+Confirm in Package Manager logs:
+
+```text
+ENOENT: no such file or directory, access 'c:\\casparcg\\sofie-demo-media'
+```
+
+That single error produces the mass “Voice Over / ILU / … can't be found” spam.
+
 ## Fix (ops)
 
 1. Sofie WebUI → Studio settings → set **Ingest media folder** and **CasparCG media folder** to the same tree Caspar uses, e.g. `Y:/360-ingest/sofie-demo-media` (forward slashes OK).
 2. **Apply Configuration**.
 3. Confirm Package Manager log no longer spam `ENOENT … sofie-demo-media`.
 4. Optional: `mklink /J c:\casparcg\sofie-demo-media Y:\360-ingest\sofie-demo-media` if you want the blueprint default path to keep working.
+5. Re-check the rundown: banding should clear for files that exist; remaining NR rows
+   are real misses (wrong relative path, typo, or file not on the Caspar host).
 
 Rundown Editor **Ingest media root** must match the same tree.
+
+Near-duplicate on-air filenames (`FOO.mp4` vs `FOO v2.mp4` / `FOO_final.mp4`) are
+warned in the Rundown Editor media picker (unopus), not via Sofie NR banding.
 
 ## Related black PGM after DoubleBox → SYN
 
