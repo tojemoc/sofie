@@ -28,13 +28,13 @@ Do **not** fetch from `…/sofie/main/assets/…` or `…/sofie/cursor/…/asset
 ## Current pin (SPRÁVY piece types + smoke rundown)
 
 Pin is the immutable Sofie commit with L3D headline/subline fields, ILU headline
-manifest cleanup, logo-bug DoubleBox timing, and aligned smoke payloads.
+manifest cleanup, logo-bug DoubleBox timing, and smoke weather `cities` payloads.
 
 | Item | Value |
 |------|--------|
-| Sofie commit | `74950f511b0569ecdffa01b8a3292a5d7b04764a` |
-| unopus `PINNED_SOFIE_ASSETS_REF` | `74950f511b0569ecdffa01b8a3292a5d7b04764a` |
-| sofie-demo-blueprints `PINNED_SOFIE_ASSETS_REF` | `74950f511b0569ecdffa01b8a3292a5d7b04764a` |
+| Sofie commit | `ac1a211c7d42884d604de7d4a6849d672f4c33a9` |
+| unopus `PINNED_SOFIE_ASSETS_REF` | `ac1a211c7d42884d604de7d4a6849d672f4c33a9` |
+| sofie-demo-blueprints `PINNED_SOFIE_ASSETS_REF` | `ac1a211c7d42884d604de7d4a6849d672f4c33a9` |
 | unopus override (optional) | `SOFIE_ASSETS_REF` — if set, must be a full 40-char lowercase SHA; otherwise defaults to `PINNED_SOFIE_ASSETS_REF` |
 
 Both consumer scripts must pin the **same** commit SHA, verify every file against
@@ -44,17 +44,12 @@ Both consumer scripts must pin the **same** commit SHA, verify every file agains
 
 | File | SHA-256 |
 |------|---------|
-| `spravy-v3-smoke-rundown.json` | `62b4490fd9cfe8f046e482805cd89c15f4da6e15d58deac1517fe52150e89b2f` |
+| `spravy-v3-smoke-rundown.json` | `daa90b1953e9471ecc131cbd5fb5357b44915d3a9d9c03f341d22fe72197c97d` |
 | `sofie-rundown-editor-piece-types.json` | `c6b939f306b8dfbcbd548c1dcdbf8f8b9f589276f40348bfc5646494f0d6c7bc` |
 | `sofie-rundown-editor-part-types.json` | `74d89de9d65298a6d48054ca85cd7319bef56038a09b061f25e81f111040a7e6` |
 | `sofie-rundown-editor-segment-types.json` | `56f68da340a1029f4c31a1f69b6594e5d440f1e7223528cd2ce9dbaa8c1aaf7b` |
 
 Checksums are owned by the consumer script (they must match that commit’s `assets/*.json`).
-The table above is the digest of files **at the pin SHA**, not of unmerged branch
-tips. Open PRs that edit `assets/` (e.g. smoke weather `cities`) must **not** bump
-these rows until the change is on `main` and consumers retarget `PINNED_SOFIE_ASSETS_REF`
-to that merge commit in the same consumer commit.
-
 Recompute with:
 
 ```bash
@@ -67,13 +62,18 @@ fail closed if that revision cannot be fetched or verified).
 
 ## Bumping when megarepo assets change
 
-1. Land the asset change in `tojemoc/sofie` (merge to `main` or note the commit SHA).
+1. Merge the asset change into `tojemoc/sofie` `main` and record the **merge commit SHA**.
 2. In each consumer (`unopus`, `sofie-demo-blueprints`):
-   - Set the pin to that commit SHA.
+   - Set the pin to that merge commit SHA.
    - Update every entry in the expected SHA-256 map.
    - Run the fetch script once; confirm exit 0.
    - Intentionally break one checksum (or the pin) and confirm exit 1 + cleaned dest.
 3. Ship consumer PRs that bump **pin + checksums in the same commit**.
+
+Do not pin unmerged feature-branch tips for the long-lived consumer default. When an
+open megarepo PR changes `assets/`, bump the pin table and consumer scripts to the
+immutable commit that introduced those bytes in the same change set (then retarget to
+the merge commit on `main` once it exists, if different).
 
 ## Runtime env
 
