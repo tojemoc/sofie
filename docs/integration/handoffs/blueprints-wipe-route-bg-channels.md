@@ -92,7 +92,10 @@ Unit coverage: `pgmLook.spec.ts` asserts `layer: null` for routes to **both** BG
 
 Run on the studio box with ≥4 Caspar channels and a fresh blueprint bundle (#77+).
 
-1. Activate smoke rundown; logo-bug on air (`PLAY 2-123 …`).
+1. Activate smoke rundown; confirm logo on air with
+   `CG 2-123 ADD 1 "gfx/logo-bug"` (HTML template on PGM layer 123 — not `PLAY`).
+   After the first DoubleBox Take, production also holds `assets/countup` MEDIA on the
+   same layer; either on-air check is fine for the route smoke.
 2. Take into a **DoubleBox** look so PGM shows `PLAY 2-110 route://3` (or whichever slot
    is A) — confirm AMCP is **`route://3`**, not `route://3-0`.
 3. Take with a **wipe** into a **fullscreen SYN** look that ping-pongs to the other BG

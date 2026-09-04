@@ -42,10 +42,11 @@ Operators need **absolute control** over two different Caspar layers / channels:
 | **Background loop** | Piece `bg-loop` (optional) + baseline | LED ClipPlayer1 **110** | LED `loops/bg_loop` |
 
 **LED allow-list (channel 1):** **headline ILU** + **`bg_loop` only**.
-`l3d-mod` (Presenter MOD) and other L3Ds are **PGM** — see Headline L3Ds below.
-**Intro / znelka must not appear on LED.** See handoff
-[`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md)
-(current blueprints still map `playLayer: 'effects'` → LED layer 200 — remapping required).
+`l3d-mod` (Presenter MOD) and other L3Ds are on the **BG look** (ch 3/4 layer 121), then
+routed to PGM — see Headline L3Ds below.
+**Intro / znelka must not appear on LED.** Blueprints map RE `playLayer: 'effects'` →
+`casparcg_intro_player_pgm` (**PGM layer 210**), not LED 200. See handoff
+[`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md).
 
 **Why GFX + video failed:** GFX parts require a graphic object. A video-only GFX part produced Sofie Invalid **"No graphic object"**. Use the **Intro** toolbar button instead (or add an `intro` piece). Blueprints also recover video-only GFX parts as Intro overlays so existing smoke attempts keep working after bundle upload.
 
@@ -66,14 +67,14 @@ Path convention is correct (`clips/<name>` without extension for PLAY).
 copy / ingest). Place or ingest the MP4s; Sofie cannot invent media. CG OK only means
 the HTML template loaded — the companion ILU PLAY still needs the file.
 
-### Headline L3Ds (LED vs PGM)
+### Headline L3Ds (LED vs look → PGM)
 
 - **Field mapping** is fine: RE `headline`/`subline` → Caspar `title`/`subtitle` (templates also accept the RE names). ILU presets include `l3d-headline`; re-upload blueprints and re-ingest if Sofie still omits them.
-- **`l3d-headline` / `l3d-tema` / `l3d-syn` / `l3d-mod` are on PGM (Caspar channel 2)** by design. LED allow-list is **headline ILU + `bg_loop` only** — if you only watch the LED consumer, those L3Ds look “missing”.
-- **Sofie source layers:** LED headline ILU stays on `Lower Third`. PGM L3Ds use `PGM L3D` (`lower_third_pgm`) — a **separate source layer** on the **GFX** output track (PGM output is `isFlattened` with Camera). Caspar still plays them on channel 2. They must not share one Sofie source layer — Core keeps only one WithinPart piece per layer at the same start (otherwise HEADLINE3 can lose `PLAY 1-115` while only `CG 2-121 gfx/l3d-headline` fires).
-- **How to look at PGM:** open the Caspar **channel 2** consumer (screen / NDI / SDI for ch2), not channel 1. Studio mapping id `casparcg_graphics_pgm_l3d` → ch2 layer 121. Confirm with AMCP e.g. `INFO 2` or a second Screen consumer bound to `<channel-index>2</channel-index>`.
+- **`l3d-headline` / `l3d-tema` / `l3d-syn` / `l3d-mod` compose on BG look channels 3/4 (layer 121)** by design, then PGM hears them via `route://{3|4}`. LED allow-list is **headline ILU + `bg_loop` only** — if you only watch the LED consumer, those L3Ds look “missing”.
+- **Sofie source layers:** LED headline ILU stays on `Lower Third` / `ILU`. Look L3Ds use `PGM L3D` (`lower_third_pgm`) — a **separate source layer** on the **GFX** output track (PGM output is `isFlattened` with Camera). Caspar plays the templates on **{3|4}-121**. They must not share one Sofie source layer — Core keeps only one WithinPart piece per layer at the same start (otherwise HEADLINE3 can lose `PLAY 1-115` while only `CG {3|4}-121 gfx/l3d-headline` fires).
+- **How to look at PGM:** open the Caspar **channel 2** consumer (screen / NDI / SDI for ch2), not channel 1. Studio mapping id `casparcg_graphics_pgm_l3d` / `_b` → **BG 3/4** layer 121 (routed onto PGM). Confirm with AMCP e.g. `INFO 2` / `INFO 3` or a Screen consumer bound to channel 2.
 - **demo-assets:** v2 HTML must exist on Caspar (`gfx/l3d-headline.html`, etc.). Rebuild with `yarn build` and copy `deploy/template-path` if needed.
-- **`gfx/headline-fallback` (LED 1-121) is chrome only** — transparent ILU window + optional `source` pill. It does **not** render the ILU `text` field; headline copy on PGM comes from **`gfx/l3d-headline` on channel 2 layer 121**. If fallback frame shows but words do not, check PGM ch2 (not LED) for `gfx/l3d-headline`, and redeploy templates after `demo-assets` fixes.
+- **`gfx/headline-fallback` (LED 1-121) is chrome only** — transparent ILU window + optional `source` pill. It does **not** render the ILU `text` field; headline copy on PGM comes from **`gfx/l3d-headline` on look layer 121** (visible via the PGM route). If fallback frame shows but words do not, check look ch3/4 (and PGM ch2 route), and redeploy templates after `demo-assets` fixes.
 - **`gfx/l3d-headline` invisible while `l3d-tema` / `l3d-mod` work:** fixed in `demo-assets` — `play()` must set bar transform to `x: 0` before `gsap.from` (otherwise bars stay off-screen at `-1200px` even when AMCP returns `202 CG OK`). Rebuild `yarn build`, copy `deploy/template-path/gfx/l3d-headline/` to Caspar, restart or `CG … STOP` + Take again.
 - **Piece Duration → Part Duration in RE:** backend `syncStoryDurationsForPart` may set
   unset **part** duration from the longest child On air (or trimmed source). It does
@@ -274,11 +275,14 @@ After `yarn build` in demo-assets (or CI pre-release zip / Docker image):
 
 ### Verification AMCP (Caspar Client)
 
+Story L3Ds compose on **BG look** channels (probe on **3**; use **4** for look B).
+PGM hears them via `route://{3|4}` — do not expect `CG 2-121` for hypercomposed looks.
+
 ```text
-CG 2-121 ADD 1 "gfx/l3d-tema" "{\"headline\":\"Test\"}"
-CG 2-121 ADD 1 "gfx/l3d-predstavovak" "{\"name\":\"Peter Pellegrini\",\"title\":\"Prezident SR\"}"
-CG 2-121 ADD 1 "gfx/l3d-mod" "{\"name\":\"Gabriela Kajtárová\",\"title\":\"moderátorka\"}"
-CG 2-121 ADD 1 "gfx/source" "{\"source\":\"TASR\"}"
+CG 3-121 ADD 1 "gfx/l3d-tema" "{\"headline\":\"Test\"}"
+CG 3-121 ADD 1 "gfx/l3d-predstavovak" "{\"name\":\"Peter Pellegrini\",\"title\":\"Prezident SR\"}"
+CG 3-121 ADD 1 "gfx/l3d-mod" "{\"name\":\"Gabriela Kajtárová\",\"title\":\"moderátorka\"}"
+CG 3-121 ADD 1 "gfx/source" "{\"source\":\"TASR\"}"
 CG 2-123 ADD 1 "gfx/logo-bug"
 PLAY 1-115 "clips/headline1"
 CG 1-121 ADD 1 "gfx/headline-fallback" "{\"source\":\"TASR\"}"
@@ -374,8 +378,8 @@ Ops: mount media at the configured ingest root so both RE readiness and Sofie Pa
 [ ] CG <ch> UPDATE 0 "<clipName>" "{\"headline\":\"test\"}"
 [ ] Blueprints dist bundle uploaded to Core
 [ ] Studio config applied; Sofie mappings: casparcg_clip_player1 (CasparCGClipPlayer1)→110, casparcg_ilu_player (CasparCGIluPlayer)→115, casparcg_graphics_l3d (CasparCGGraphicsLowerThird)→121
-[ ] Sofie mappings: casparcg_graphics_pgm_l3d (CasparCGGraphicsPgmLowerThird) → channel 2, layer 121
-[ ] Take ILU / GFX with l3d-headline: AMCP shows CG/TEMPLATE on 2-121 (casparcg_graphics_pgm_l3d), not on LED 1-121
+[ ] Sofie mappings: casparcg_graphics_pgm_l3d / _b (CasparCGGraphicsPgmLowerThird) → BG 3/4, layer 121
+[ ] Take ILU / GFX with l3d-headline: AMCP shows CG/TEMPLATE on {3|4}-121 (casparcg_graphics_pgm_l3d), not on LED 1-121; PGM shows route://{3|4}
 [ ] Headline ILU (bypass OFF): AMCP shows PLAY + MIXER CROP/FILL on 1-115 (casparcg_ilu_player) + CG headline-fallback; loop keeps PLAY on 1-110
 [ ] Headline ILU (bypass ON): AMCP shows PLAY + FILL 0 0 1 1 on 1-115 only (no HTML chrome)
 [ ] RE rundown ingested; take fires correct template + data

@@ -36,17 +36,19 @@ Headline ILU remains on LED `casparcg_ilu_player` (1-115). PGM hears the mix via
 `PLAY 2-110 route://{3|4}` (`layer: null` — full channel, never `route://N-0`).
 
 **Camera / UVC:** studio `casparcg.hypercomposed.pgmCameraProducer` (e.g.
-`dshow://video=OBS Virtual Camera`):
+`dshow://video=OBS Virtual Camera`) on the **active BG look** (`casparcg_pgm_camera` /
+`_b` → channel **3 or 4**, layer **115**). PGM hears CAM via `route://{3|4}`:
 
-- **Headlines / post-intro MOD** → PGM 2-115 **fullscreen** (FILL `0 0 1 1`)
-- **DoubleBox** → PGM 2-115 under ILU (116) and `db_loop` (118), ~**80%** width, right edge stuck to
-  the screen right (`FILL 0.2 0.1 0.8 0.8`). ILU covers CAM left overhang — no CAM cover-crop.
+- **Headlines / post-intro MOD** → look **{3|4}-115** **fullscreen** (FILL `0 0 1 1`)
+- **DoubleBox** → look **{3|4}-115** under ILU (116) and `db_loop` (118), ~**80%** width,
+  right edge stuck to the screen right (`FILL 0.2 0.1 0.8 0.8`). ILU covers CAM left
+  overhang — no CAM cover-crop.
 
 `db_loop` is **WithinPart** on DoubleBox Takes only (not Intro) so SYN / weather stay
 fullscreen. Production file may be named `dp_loop.mov` — place/symlink as `loops/db_loop`.
 
 **Story ILU piece:** use piece type `doublebox-ilu` (part preset `doublebox`) — not
-`headline`. `doublebox-ilu` plays the clip on **PGM 2-116** with DoubleBox left FILL
+`headline`. `doublebox-ilu` plays the clip on **look {3|4}-116** with DoubleBox left FILL
 + center cover-crop and **no** `gfx/headline-fallback` chrome. Headline ILU stays on
 LED for the opening block only.
 
@@ -62,12 +64,16 @@ Yes. Caspar can PLAY a webcam/UVC device as a media producer on the PGM channel.
    GraphEdit, or try AMCP:
 
 ```text
-PLAY 2-115 "dshow://video=OBS Virtual Camera"
-MIXER 2-115 FILL 0.2 0.1 0.8 0.8
+PLAY 3-115 "dshow://video=OBS Virtual Camera"
+MIXER 3-115 FILL 0.2 0.1 0.8 0.8
 ```
 
+(Use channel **4** when probing look B. Hand-testing on PGM `2-115` only proves the
+device string — production camera pieces target the BG look, not PGM.)
+
 3. Sofie studio config (blueprints) can store that producer string and, on camera
-   pieces, PLAY it on **PGM camera layer 115** with the DoubleBox FILL (see below).
+   pieces, PLAY it on the **look camera layer 115** (BG 3/4) with the DoubleBox FILL
+   (see below).
 
 Device string is machine-local — set it in studio config, do not hardcode in
 rundowns.
@@ -93,26 +99,29 @@ checks.
 
 ### FILL geometry (starting point — tune to graphics)
 
-| Region | Layer (PGM ch2) | FILL `x y xScale yScale` |
+Story compose layers sit on **BG look channels 3/4**; PGM (ch2) only routes + overlays.
+
+| Region | Channel · layer | FILL `x y xScale yScale` |
 |--------|-----------------|---------------------------|
-| Story VT / weather | 110 | full frame (no FILL) — **not** baseline `bg_loop` |
-| CAM1 UVC (DoubleBox) | 115 | `0.2 0.1 0.8 0.8` (under ILU + `db_loop`) |
-| ILU | 116 | `0.0219 0.0769 0.6802 0.6824` (above CAM) |
-| CAM1 UVC (headlines/MOD) | 115 | `0 0 1 1` fullscreen |
-| `db_loop` frame | 118 | full frame alpha cutouts |
-| topic L3D + bug | 121 / 123 | HTML templates on **BG look** 121; logo/bug on **PGM 123** (above route) |
-| Story wipe | **PGM 110** | `PLAY 2-110 route://{3\|4}` + STING (`wipes/wipe…`) — **not** overlay 200 |
-| Intro / outro | 210 | full frame — above route; **PGM only** |
+| Story VT / weather | **BG 3/4** · 110 | full frame (no FILL) — **not** baseline `bg_loop` |
+| CAM1 UVC (DoubleBox) | **BG 3/4** · 115 | `0.2 0.1 0.8 0.8` (under ILU + `db_loop`) |
+| Story ILU | **BG 3/4** · 116 | `0.0219 0.0769 0.6802 0.6824` (above CAM) |
+| CAM1 UVC (headlines/MOD) | **BG 3/4** · 115 | `0 0 1 1` fullscreen |
+| `db_loop` frame | **BG 3/4** · 118 | full frame alpha cutouts |
+| Topic L3D | **BG 3/4** · 121 | HTML templates (`l3d-predstavovak`, …) |
+| Logo / countup | **PGM 2** · 123 | above route |
+| Story wipe | **PGM 2** · 110 | `PLAY 2-110 route://{3\|4}` + STING (`wipes/wipe…`) — **not** overlay 200 |
+| Intro / outro | **PGM 2** · 210 | full frame — above route; **PGM only** |
 
 Tune FILL against the real HTML chrome; values above match the attached still
 approximately.
 
 **Cutouts / DoubleBox frame media:** you do **not** need a black/white matte. Soft
-compose is `db_loop` full-frame on PGM **118** + MIXER FILL for ILU/CAM windows
+compose is `db_loop` full-frame on look **118** + MIXER FILL for ILU/CAM windows
 (115/116). If design needs a branded frame (borders/shadows between windows), use a
 **full-frame PNG or ProRes/Hap alpha `.mov`** with transparent holes — not a luma mask
-(this stack is not wired for luma key). That chrome is `db_loop` on 118 (or bake it
-into HTML); do not put a background loop on PGM 110.
+(this stack is not wired for luma key). That chrome is `db_loop` on look 118 (or bake
+it into HTML); do not put a background loop on look clip 110.
 
 ## Wipes (same media, different semantics)
 
@@ -191,14 +200,14 @@ same basename (see [`handoffs/blueprints-baseline-bg-loop.md`](./handoffs/bluepr
    `wipe_sjv` / `wipe_sport` / `wipe_pocasie`) and Intro disk asset at
    `sofie-demo-media/assets/intro_michal.mov`
    (PLAY path `assets/intro_michal`)
-2. Confirm OBS Virtual Camera name; test `PLAY 2-115 "dshow://…"` by hand
+2. Confirm OBS Virtual Camera name; test `PLAY 3-115 "dshow://…"` by hand (look A)
 3. Import megarepo `assets/spravy-v3-smoke-rundown.json` (includes story-block `wipe` pieces)
 4. Watch **Caspar channel 2** for `route://` + STING wipes + Intro; confirm looks on **3/4**
 5. **Activate (Rehearsal):** LED shows `PLAY 1-110 "loops/bg_loop"`; PGM must **not** play
    `bg_loop` on ClipPlayer2.
 6. **Intro on PGM 210 only:** Intro take must show `PLAY <pgm>-210 "assets/intro_michal"` and
    **must not** play Intro on LED (`1-200`).
-7. **Post-intro MOD:** camera on look channel 115 — not `bg_loop` on PGM.
+7. **Post-intro MOD:** camera on look channel **{3|4}-115** — not `bg_loop` on PGM.
 8. **Story ILU on look 116 above CAM:** DoubleBox Take must show `PLAY {3|4}-116 "clips/…"`
 9. **Wiped Take:** AMCP shows `PLAY 2-110 route://{3|4}` (full channel, **not** `route://N-0`) with STING; logo on `2-123` uninterrupted
-   and CAM on **115** (ILU z-order above CAM). Headline parts still use LED `1-115`.
+   and CAM on look **115** (ILU z-order above CAM). Headline parts still use LED `1-115`.
