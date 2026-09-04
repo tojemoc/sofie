@@ -17,7 +17,7 @@ sofie-demo-blueprints **#77** + route/cam fixes):
 | Role | Caspar channel | Consumers |
 |------|----------------:|-----------|
 | **LED** | **1** | Screen / NDI / SDI — `bg_loop` + headline ILU + LED audio bed |
-| **PGM** | **2** | Screen / NDI / SDI — `route://{3\|4}` + logo/countup/intro + PGM audio bed |
+| **PGM** | **2** | Screen / NDI / SDI — `route://{3\|4}` on **layer 110** + logo/countup/intro + PGM audio bed |
 | **DoubleBox (BG A)** | **3** | **none** — cam + ILU + `db_loop` + L3D téma (pre-build look A) |
 | **Full (BG B)** | **4** | **none** — SYN / SJV / Sport / Weather / fullscreen cam (pre-build look B) |
 
@@ -43,9 +43,34 @@ must match Caspar `media-path`, e.g. `Y:/360-ingest/sofie-demo-media`).
 ### Ops: `caspar.config` must declare ≥4 channels
 
 If Caspar logs spam **`400 ERROR`** on every `LOADBG`/`PLAY`/`CG` for `3-*` and
-`4-*`, add two render-only channels (same `video-mode`, **no** Screen/NDI/SDI
-consumers on 3/4), restart Caspar, re-**Apply** studio config. See ADR
-[`0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md).
+`4-*`, and `PLAY 2-110 route://3` returns **403 / Check syntax**, the server only
+has two channels configured. Blueprints still issue BG commands; Caspar rejects the
+channel index.
+
+Add two render-only channels (match LED/PGM `video-mode`; **omit** Screen/NDI/SDI
+consumers on 3/4), restart Caspar, re-**Apply** studio config / activate rundown:
+
+```xml
+<channels>
+  <channel> <!-- 1 LED — keep existing consumers -->
+    <video-mode>1080p5000</video-mode>
+    <!-- ... -->
+  </channel>
+  <channel> <!-- 2 PGM — keep existing consumers -->
+    <video-mode>1080p5000</video-mode>
+    <!-- ... -->
+  </channel>
+  <channel> <!-- 3 BG A — no consumers -->
+    <video-mode>1080p5000</video-mode>
+  </channel>
+  <channel> <!-- 4 BG B — no consumers -->
+    <video-mode>1080p5000</video-mode>
+  </channel>
+</channels>
+```
+
+Four 1080p50 channels can be GPU-heavy — confirm headroom if playback stutters.
+See ADR [`0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md).
 
 ---
 
@@ -75,10 +100,12 @@ story VT/SYN fullscreen, no Presenter MOD.
 
 | Content | Mapping id | Layer | Notes |
 |---------|------------|------:|-------|
-| Full-channel route | `casparcg_pgm_route` | 110 | `route://{3\|4}` CUT or STING wipe |
+| Full-channel route | `casparcg_pgm_route` | **110** | `route://{3\|4}` CUT or STING wipe — **canonical story transition** |
 | Logo / countup | `casparcg_graphics_logo` | 123 | `assets/countup` — above route |
-| Intro / znelka / outro | `casparcg_intro_player_pgm` | 210 | `assets/intro_*`, `assets/outro` |
+| Intro / znelka / outro | `casparcg_intro_player_pgm` | 210 | `assets/intro_*`, `assets/outro` — above route; **never LED** |
 | Audio bed | `casparcg_audio_bed_pgm` | 80 | Mirrors LED kolíska |
+| Alpha wipe (legacy) | `casparcg_effects_player_pgm` | **200** | **Compatibility only** — pre-#77 overlay wipe; migrated story wipes use **110 STING** |
+| Weather / fullscreen (legacy) | `casparcg_clip_player2` | 110 | **Compatibility only** when story still composes on PGM instead of BG 3/4 |
 
 Legacy LED mappings still exist (`casparcg_effects_player` → LED 200,
 `casparcg_graphics_l3d` → LED 121) for non-hypercomposed / unused paths. Hypercomposed
@@ -98,12 +125,12 @@ SPRÁVY must not route Intro or PGM L3Ds through them.
 | DoubleBox `db_loop` | PGM DoubleBox frame | **look 3/4-118** |
 | `video` SYN/VO | Voice Over | **look 3/4-110** |
 | `logo-bug` / countup | Logo | **PGM 2-123** |
-| `wipe` | PGM Wipe | **PGM 2-110 route STING** |
+| `wipe` | PGM Wipe | **PGM 2-110 route STING** (not legacy **2-200** overlay) |
 | `intro` / `outro` | Titles | **PGM 2-210** |
 | `weather` | GFX | **look clip 110** + `assets/bg_pocasie` + HTML |
 
 **Sofie WebUI “GFX” vs “PGM” tracks ≠ Caspar channels.** Story looks compose on BG 3/4;
-PGM only routes the settled mix.
+PGM only routes the settled mix on **layer 110**.
 
 ---
 
@@ -118,9 +145,8 @@ Check in order:
    `demo-assets` `yarn build` → `deploy/template-path`.
 4. **Blank HTML / wrong data** — CG OK means Caspar loaded the template; empty `title` /
    missing assets can still look invisible.
-5. **Covered** — wipe STING or intro (210) sitting above the route until they clear.
+5. **Covered** — route STING on **110** or intro (210) sitting above the mix until they clear.
 6. **Package Manager path** — yellow NR badges: [`PLAYOUT-NR-AND-MEDIA-PATH.md`](./PLAYOUT-NR-AND-MEDIA-PATH.md).
-
 
 `INFO 2` (or a Screen consumer with `<channel-index>2</channel-index>`) confirms ch2 is live.
 
@@ -162,8 +188,8 @@ not “Caspar PLAY failed”. See [`assets/README.md`](../../assets/README.md).
 
 ```text
 210  Intro / znelka / outro
-200  Wipe (STING on route layer)
-123  logo-bug
+200  Wipe overlay (legacy compat — story wipes use 110 STING)
+123  logo-bug / countup
 110  Full-channel route (route://3|4)
  80  Audio bed
 990  Debug channel label (optional)
@@ -171,7 +197,7 @@ not “Caspar PLAY failed”. See [`assets/README.md`](../../assets/README.md).
 
 ### DoubleBox / Full channels 3 / 4
 
-Story looks pre-build here; PGM hears them via `route://3` or `route://4`.
+Story looks pre-build here; PGM hears them via `route://3` or `route://4` on **layer 110**.
 
 ```text
 121  l3d-* HTML (téma / SYN / weather / sport)
@@ -189,6 +215,9 @@ Story looks pre-build here; PGM hears them via `route://3` or `route://4`.
 | Doc | Role |
 |-----|------|
 | [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md) | DoubleBox FILL/CROP, UVC, wipe labels, smoke checklist |
+| [`adr/0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md) | Target: BG pre-build + PGM route wipe |
+| [`handoffs/blueprints-wipe-route-bg-channels.md`](./handoffs/blueprints-wipe-route-bg-channels.md) | Blueprints implementation handoff |
+| [`PLAYOUT-NR-AND-MEDIA-PATH.md`](./PLAYOUT-NR-AND-MEDIA-PATH.md) | Mass NR banding / PM path mismatch |
 | [`SPRAVY-SHOW-FLOW.md`](./SPRAVY-SHOW-FLOW.md) | Full show spine: headlines → topics → SJV → sport → weather → outro |
 | [`SPRAVY-V2-INTEGRATION.md`](./SPRAVY-V2-INTEGRATION.md) | Cross-repo status, template catalogue, deploy |
 | [`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md) | Intro → PGM 210 (never LED) |

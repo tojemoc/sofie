@@ -120,6 +120,12 @@ plays them on **PGM layer 200** as a short overlay on **Take into that part** (n
 vision-mixer cut). Empty/0 RE duration defaults to ~2.5s so layer 200 does not cover
 the rest of the part after the wipe finishes.
 
+**Why mid-wipe pop-in happens:** overlay wipe races CEF/clip load on the same PGM
+channel. **Target fix:** pre-build DoubleBox vs fullscreen on BG channels, then
+`route://` + wipe on PGM with logo above the route — see
+[`adr/0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md) and
+[`handoffs/blueprints-wipe-route-bg-channels.md`](./handoffs/blueprints-wipe-route-bg-channels.md).
+
 **If wipes never appear:** (1) watch **Caspar channel 2**, not LED; (2) confirm
 `PLAY 2-200 "wipes/wipe"` on Take (else `404` → file missing on disk); (3) re-upload
 blueprints + Apply studio config so `casparcg_effects_player_pgm` exists.
