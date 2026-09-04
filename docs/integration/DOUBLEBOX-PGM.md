@@ -117,7 +117,7 @@ Tune FILL against the real HTML chrome; values above match the attached still
 approximately.
 
 **Cutouts / DoubleBox frame media:** you do **not** need a black/white matte. Soft
-compose is `db_loop` full-frame on look **118** + MIXER FILL for ILU/CAM windows
+compositing uses `db_loop` full-frame on look **118** + MIXER FILL for ILU/CAM windows
 (115/116). If design needs a branded frame (borders/shadows between windows), use a
 **full-frame PNG or ProRes/Hap alpha `.mov`** with transparent holes — not a luma mask
 (this stack is not wired for luma key). That chrome is `db_loop` on look 118 (or bake
