@@ -53,7 +53,7 @@ BG channels: **no Screen/NDI/SDI consumers** in `caspar.config` (render only).
 
 | Layer | Content |
 |------:|---------|
-| 110 (or dedicated route layer) | `route://{bg}` (full BG channel composite) + wipe transition |
+| 110 | `route://{bg}` (full BG channel composite) + STING wipe transition |
 | 123 | `gfx/logo-bug` — **always above route** |
 | 210 | Intro / outro — decide: PGM-local (above wipe) vs own path; keep above route |
 
@@ -94,11 +94,11 @@ compat if needed, but story-block wipe pieces should drive the **route transitio
 
 ### WP3 — Wipe = route transition
 
-- Wipe piece / `playLayer: 'wipe'`: the **route transition from the next BG replaces**
+- Wipe piece / `playLayer: 'wipe'`: the **route STING on PGM layer 110** replaces
   overlay-only `PLAY` of wipe media on PGM layer **200**. One Take must not fire both a
   route wipe and a layer-200 overlay (that would be two wipes). Generate timeline that:
   - ensures next BG is built **and ready**,
-  - `PLAY` PGM `route://{bg}` from next BG **with** transition (wipe media / MIXER
+  - `PLAY 2-110 route://{bg}` **with** STING transition (wipe media / MIXER
     TRANSITION as supported by your Caspar build),
   - leaves logo on 123 untouched.
 - Retain PGM layer **200** only for explicitly **non-migrated** compatibility paths
@@ -125,9 +125,9 @@ compat if needed, but story-block wipe pieces should drive the **route transitio
 ## Verify
 
 1. `yarn test:blueprints` / wipe + DoubleBox specs updated.
-2. Caspar log on wiped Take: route/transition on PGM; CG ADD for next look appeared on BG
-   channel **and** ready gate passed **before** transition start (timestamps); no parallel
-   `PLAY … 2-200` wipe for that Take.
+2. Caspar log on wiped Take: `PLAY 2-110 route://{bg}` with STING on PGM; CG ADD for
+   next look appeared on BG channel **and** ready gate passed **before** transition start
+   (timestamps); no parallel `PLAY … 2-200` wipe for that Take.
 3. Operator check: no mid-wipe pop-in of DoubleBox HTML; logo stays up.
 
 ## References

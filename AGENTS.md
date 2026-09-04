@@ -117,8 +117,8 @@ v2 Caspar `clipName` convention: `gfx/<template-folder>` (e.g. `gfx/l3d-tema`). 
 
 ### Hypercomposed Caspar
 
-SPRÁVY uses a **single CasparCG server** with **four channels** (sofie-demo-blueprints
-#77): LED **1**, PGM **2** (`route://` + overlays), BG A/B **3/4** (render-only
+SPRÁVY uses a **single CasparCG server** with **four channels** after sofie-demo-blueprints
+**#77**: LED **1**, PGM **2** (`route://` + overlays), BG A/B **3/4** (render-only
 pre-build). Canonical map: [`docs/integration/OUTPUT_TOPOLOGY.md`](docs/integration/OUTPUT_TOPOLOGY.md).
 
 **Ops:** `caspar.config` must declare channels 3 and 4 (no consumers required). Missing

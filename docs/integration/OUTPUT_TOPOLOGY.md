@@ -17,9 +17,9 @@ sofie-demo-blueprints **#77**):
 | Role | Caspar channel | Consumers |
 |------|----------------:|-----------|
 | **LED** | **1** | Screen / NDI / SDI — `bg_loop` + headline ILU |
-| **PGM** | **2** | Screen / NDI / SDI — `route://{3\|4}` + logo/intro above |
-| **BG A** | **3** | **none** (render-only pre-build look) |
-| **BG B** | **4** | **none** (render-only ping-pong look) |
+| **PGM** | **2** | Screen / NDI / SDI — `route://{3\|4}` on **layer 110** + logo/intro overlays |
+| **DoubleBox (BG A)** | **3** | **none** — cam + ILU + `db_loop` + L3D (pre-build look A) |
+| **Full (BG B)** | **4** | **none** — SYN / SJV / Sport / Weather / fullscreen cam (pre-build look B) |
 
 ```text
 CasparCG
@@ -34,8 +34,8 @@ Studio config: `casparcg.hypercomposed.ledChannel` / `pgmChannel` / `bgChannelA`
 
 ### Ops: `caspar.config` must declare ≥4 channels
 
-If Caspar logs spam **`400 ERROR`** on every `LOADBG`/`PLAY`/`CG` for **3-*** and
-**4-***, and `PLAY 2-110 route://3` returns **403 / Check syntax**, the server only
+If Caspar logs spam **`400 ERROR`** on every `LOADBG`/`PLAY`/`CG` for `3-*` and
+`4-*`, and `PLAY 2-110 route://3` returns **403 / Check syntax**, the server only
 has two channels configured. Blueprints still issue BG commands; Caspar rejects the
 channel index.
 
@@ -78,19 +78,25 @@ See ADR [`0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-chann
 **Nothing else on LED.** No intro/znelka, no wipe, no `l3d-*`, no logo-bug, no camera, no
 story VT/SYN fullscreen, no Presenter MOD.
 
-### PGM (channel 2) — everything else
+### DoubleBox / Full (channels 3 / 4) — story looks
 
 | Content | Mapping id | Layer | Notes |
 |---------|------------|------:|-------|
-| PGM story VT / weather | `casparcg_clip_player2` | 110 | Editorial fullscreen — **not** baseline `bg_loop` |
-| Camera / UVC | `casparcg_pgm_camera` | 115 | e.g. `dshow://video=OBS Virtual Camera` |
-| DoubleBox story ILU | `casparcg_pgm_ilu_player` | 116 | Piece type `doublebox-ilu` (FILL + crop; above CAM) |
-| DoubleBox frame (`db_loop`) | `casparcg_pgm_doublebox_loop` | 118 | `loops/db_loop` alpha cutouts — WithinPart on DoubleBox Takes |
-| PGM L3D HTML | `casparcg_graphics_pgm_l3d` | 121 | `gfx/l3d-headline`, `l3d-predstavovak`, `l3d-odporucanie`, `l3d-syn`, `l3d-mod`, `l3d-sjv`, `l3d-sport` |
-| Logo-bug | `casparcg_graphics_logo` | 123 | `gfx/logo-bug` — PGM only |
-| Alpha wipe | `casparcg_effects_player_pgm` | 200 | `wipes/wipe` on Take into part |
-| Intro / znelka / outro | `casparcg_intro_player_pgm` | 210 | `assets/intro_*`, `assets/outro` — above wipe; **never LED** |
-| Weather / fullscreen story GFX | `casparcg_clip_player2` | 110 | `weather` bypass / fullscreen — must not displace LED 110 |
+| SYN / VT / weather BG | `casparcg_clip_player2` / `_b` | 110 | Fullscreen editorial on the active look |
+| Camera / UVC | `casparcg_pgm_camera` / `_b` | 115 | e.g. `dshow://video=OBS Virtual Camera` |
+| DoubleBox story ILU | `casparcg_pgm_ilu_player` / `_b` | 116 | Piece type `doublebox-ilu` |
+| DoubleBox frame (`db_loop`) | `casparcg_pgm_doublebox_loop` / `_b` | 118 | Alpha cutouts |
+| Topic / SYN L3D HTML | `casparcg_graphics_pgm_l3d` / `_b` | 121 | `l3d-tema`, `l3d-syn`, `pocasie`, … |
+
+### PGM (channel 2) — route bus + overlays
+
+| Content | Mapping id | Layer | Notes |
+|---------|------------|------:|-------|
+| Full-channel route | `casparcg_pgm_route` | **110** | `route://{3\|4}` CUT or STING wipe — **canonical story transition** |
+| Logo-bug | `casparcg_graphics_logo` | 123 | `gfx/logo-bug` — above route |
+| Intro / znelka / outro | `casparcg_intro_player_pgm` | 210 | `assets/intro_*`, `assets/outro` — above route; **never LED** |
+| Alpha wipe (legacy) | `casparcg_effects_player_pgm` | **200** | **Compatibility only** — pre-#77 overlay wipe; migrated story wipes use **110 STING** |
+| Weather / fullscreen (legacy) | `casparcg_clip_player2` | 110 | **Compatibility only** when story still composes on PGM instead of BG 3/4 |
 
 Legacy LED mappings still exist (`casparcg_effects_player` → LED 200,
 `casparcg_graphics_l3d` → LED 121) for non-hypercomposed / unused paths. Hypercomposed
@@ -104,18 +110,18 @@ SPRÁVY must not route Intro or PGM L3Ds through them.
 |------------|------------------------------|--------|
 | `bg-loop` / baseline loop | — | **LED 1-110 only** (never PGM companion) |
 | `headline` ILU (`gfx/headline` + `clips/…`) | Lower Third | **LED 1-115** (+ fallback CG on LED 121) |
-| `l3d-headline` / `l3d-predstavovak` / `l3d-odporucanie` / `l3d-mod` / `l3d-syn` / `l3d-sjv` / `l3d-sport` | PGM L3D (`lower_third_pgm`) | **PGM 2-121** |
-| `doublebox-ilu` | Lower Third | **PGM 2-116** |
-| `camera` | Camera | **PGM 2-115** |
-| DoubleBox `db_loop` (blueprint WithinPart) | PGM DoubleBox loop | **PGM 2-118** |
+| `l3d-headline` / `l3d-predstavovak` / … | PGM L3D | **look 3/4-121** (routed to PGM) |
+| `doublebox-ilu` | Lower Third | **look 3/4-116** |
+| `camera` | Camera | **look 3/4-115** |
+| DoubleBox `db_loop` | PGM DoubleBox loop | **look 3/4-118** |
+| `video` SYN/VO | Voice Over | **look 3/4-110** |
 | `logo-bug` | Logo | **PGM 2-123** |
-| `wipe` | — | **PGM 2-200** |
+| `wipe` | PGM Wipe | **PGM 2-110 route STING** (not legacy **2-200** overlay) |
 | `intro` / `outro` | Titles | **PGM 2-210** |
-| `weather` / fullscreen | GFX | **PGM 2-110** |
+| `weather` / fullscreen | GFX | **look 3/4-110** + `assets/bg_pocasie` + HTML |
 
-**Sofie WebUI “GFX” vs “PGM” tracks ≠ Caspar channels.** PGM L3Ds stay on the Sofie **GFX**
-output track (so they are not flattened with Camera) while Caspar still plays them on
-**channel 2**. See blueprints PR for `lower_third_pgm` → OutputLayer.Gfx.
+**Sofie WebUI “GFX” vs “PGM” tracks ≠ Caspar channels.** Story looks compose on BG 3/4;
+PGM only routes the settled mix on **layer 110**.
 
 ---
 
@@ -123,16 +129,14 @@ output track (so they are not flattened with Camera) while Caspar still plays th
 
 Check in order:
 
-1. **Wrong consumer** — watching LED (ch1). L3Ds are **PGM ch2 layer 121** only.
-2. **AMCP fired?** Caspar log should show `CG 2-121 ADD … "gfx/l3d-…" … 202 CG OK`.
-   - If you only see `CG 2-121` and **no** `PLAY 1-115` on a HEADLINE that should have both:
-     Sofie pruned ILU vs L3D on one source layer (fixed by separate `lower_third_pgm`).
-   - If **no** `CG 2-121` at all: bundle / ingest / piece not on the timeline.
+1. **Wrong consumer** — watching LED (ch1). Story L3Ds are on look channels routed to **PGM ch2**.
+2. **AMCP fired?** Caspar log should show `CG {3\|4}-121 ADD … "gfx/l3d-…" … 202 CG OK` and
+   `PLAY 2-110 route://{3\|4}` (**not** `route://N-0`).
 3. **Templates on disk?** `<template-path>/gfx/l3d-headline/l3d-headline.html` (etc.) from
    `demo-assets` `yarn build` → `deploy/template-path`.
 4. **Blank HTML / wrong data** — CG OK means Caspar loaded the template; empty `title` /
    missing assets can still look invisible.
-5. **Covered** — wipe (200) or intro (210) sitting above 121 until they clear.
+5. **Covered** — route STING on **110** or intro (210) sitting above the mix until they clear.
 
 `INFO 2` (or a Screen consumer with `<channel-index>2</channel-index>`) confirms ch2 is live.
 
@@ -174,13 +178,23 @@ not “Caspar PLAY failed”. See [`assets/README.md`](../../assets/README.md).
 
 ```text
 210  Intro / znelka / outro
-200  Wipe
+200  Wipe overlay (legacy compat — story wipes use 110 STING)
 123  logo-bug
+110  Full-channel route (route://3|4)
+ 80  Audio bed
+```
+
+### DoubleBox / Full channels 3 / 4
+
+Story looks pre-build here; PGM hears them via `route://3` or `route://4` on **layer 110**.
+
+```text
 121  l3d-* HTML
-118  db_loop (DoubleBox frame — above cam/ILU)
-116  Story ILU (DoubleBox left — above CAM overhang)
-115  Camera (DoubleBox right / fullscreen headlines)
-110  Fullscreen story GFX / weather (no baseline bg_loop)
+118  db_loop (DoubleBox frame)
+116  Story ILU (DoubleBox left)
+115  Camera
+110  Fullscreen story GFX / SYN / weather
+ 80  Audio bed (clip audio)
 ```
 
 ---
