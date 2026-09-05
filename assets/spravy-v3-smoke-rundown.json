@@ -177,7 +177,8 @@
       "duration": 10,
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
-      "segmentId": "seg-headlines"
+      "segmentId": "seg-headlines",
+      "script": "Osobné údaje v OR SR. Rodné čísla, podpisy, údaje z dokladov — aj to sa dá vyčítať z nového obchodného registra. Podľa ministra sa nič nedeje."
     },
     {
       "id": "part-hl-2",
@@ -192,7 +193,8 @@
       "duration": 8,
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
-      "segmentId": "seg-headlines"
+      "segmentId": "seg-headlines",
+      "script": "Vláda sa vrátila k rokovaniam. Prvé vládne rokovanie po lete sa skončilo mlčaním. Avizovaná novela Ústavy z dielne Smeru sa z programu vytratila."
     },
     {
       "id": "part-hl-3",
@@ -207,7 +209,8 @@
       "duration": 8,
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
-      "segmentId": "seg-headlines"
+      "segmentId": "seg-headlines",
+      "script": "Fedorov vyzýva na voľby. Nevídaná výzva na ukrajinské voľby — populárny exminister nakrútil video a chce hovoriť aj o korupcii."
     },
     {
       "name": "Intro",
@@ -240,7 +243,8 @@
       "duration": 5,
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
-      "segmentId": "seg-intro"
+      "segmentId": "seg-intro",
+      "script": "Gabriela Kajtárová"
     },
     {
       "id": "part-tema-1-db",
@@ -255,7 +259,8 @@
       "duration": 16,
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
-      "segmentId": "seg-tema-1"
+      "segmentId": "seg-tema-1",
+      "script": "Dobrý večer. Z nového Obchodného registra sa dajú zistiť osobné údaje zástupcov firiem — vrátane rodných čísel, adries, čísel občianskych preukazov a podpisových vzorov. Podľa ministra spravodlivosti je všetko tak, ako má byť."
     },
     {
       "id": "part-tema-1-syn-1",
@@ -270,7 +275,8 @@
       "duration": 12,
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
-      "segmentId": "seg-tema-1"
+      "segmentId": "seg-tema-1",
+      "script": ""
     },
     {
       "id": "part-tema-1-syn-2",
@@ -285,7 +291,8 @@
       "duration": 12,
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
-      "segmentId": "seg-tema-1"
+      "segmentId": "seg-tema-1",
+      "script": ""
     },
     {
       "id": "part-tema-1-db2",
@@ -299,7 +306,8 @@
       },
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
-      "segmentId": "seg-tema-1"
+      "segmentId": "seg-tema-1",
+      "script": "Úrad na ochranu osobných údajov už začal voči ministerstvu spravodlivosti konanie. Tvrdí, že citlivé údaje mali byť anonymizované."
     },
     {
       "id": "part-tema-2-db",
@@ -314,7 +322,8 @@
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-2",
-      "duration": 2.5
+      "duration": 2.5,
+      "script": "Ani Robert Fico ani ministerka Denisa Saková neprišli po rokovaní vlády pred novinárov, aby vysvetlili svoj spor okolo nového jadrového zdroja v Jaslovských Bohuniciach. Ide o odkúpenie českého podielu v spoločnosti JESS. Ministerka Denisa Saková považovala sumu 190 miliónov za predraženú. Premiérovi sa nepáčia prieťahy."
     },
     {
       "id": "part-tema-2-syn-1",
@@ -329,7 +338,8 @@
       "duration": 12,
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
-      "segmentId": "seg-tema-2"
+      "segmentId": "seg-tema-2",
+      "script": ""
     },
     {
       "id": "part-tema-3-db",
@@ -344,7 +354,8 @@
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-3",
-      "duration": 2.5
+      "duration": 2.5,
+      "script": "Návrh na zmenu ústavy vydržal sotva pol dňa. Z rokovania vlády zmizla novela, ktorá by umožnila skrátiť budúce volebné obdobia referendom. Minister Susko pritom vysvetľoval, že ide o prísľub premiéra."
     },
     {
       "id": "part-tema-3-syn-1",
@@ -359,7 +370,8 @@
       "duration": 12,
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
-      "segmentId": "seg-tema-3"
+      "segmentId": "seg-tema-3",
+      "script": ""
     },
     {
       "id": "part-tema-3-syn-2",
@@ -373,7 +385,8 @@
       },
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
-      "segmentId": "seg-tema-3"
+      "segmentId": "seg-tema-3",
+      "script": "Podľa ministra Druckera musí novelu Ústavy najskôr prerokovať koaličná rada."
     },
     {
       "id": "part-tema-4-db",
@@ -387,7 +400,8 @@
       },
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
-      "segmentId": "seg-tema-4"
+      "segmentId": "seg-tema-4",
+      "script": "Bývalý ukrajinský minister obrany zverejnil video, v ktorom vyzýva, aby sa na Ukrajine konali voľby. Populárneho Mykhaila Fedorova odvolal prezident Zelenskyj pred mesiacom, čo doteraz vyvoláva protesty. Funkčné obdobie prezidenta sa skončilo pred vyše dvomi rokmi. Konaniu volieb bráni vojnový stav."
     },
     {
       "id": "part-tema-4-syn-1",
@@ -402,7 +416,8 @@
       "duration": 12,
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
-      "segmentId": "seg-tema-4"
+      "segmentId": "seg-tema-4",
+      "script": ""
     },
     {
       "id": "part-tema-4-db2",
@@ -416,7 +431,8 @@
       },
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
-      "segmentId": "seg-tema-4"
+      "segmentId": "seg-tema-4",
+      "script": "Ukrajina dnes navyše rieši ďalší korupčný škandál. Protikorupčné agentúry vyšetrujú vysokopostavených politikov. Volodymyr Zelenskyj odvolal zástupkyňu šéfa vlastnej kancelárie."
     },
     {
       "id": "part-tema-5-db",
@@ -431,7 +447,8 @@
       "duration": 7,
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
-      "segmentId": "seg-tema-5"
+      "segmentId": "seg-tema-5",
+      "script": "Minister Migaľ odmieta odpovedať na otázky o výkupe pozemkov pre nájomné byty za 30 miliónov eur."
     },
     {
       "id": "part-tema-5-syn-1",
@@ -446,7 +463,8 @@
       "duration": 12,
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
-      "segmentId": "seg-tema-5"
+      "segmentId": "seg-tema-5",
+      "script": ""
     },
     {
       "id": "part-tema-5-syn-2",
@@ -460,7 +478,8 @@
       },
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
-      "segmentId": "seg-tema-5"
+      "segmentId": "seg-tema-5",
+      "script": "Celú reportáž Barbory Šišolákovej nájdete na našom webe."
     },
     {
       "name": "SJV",
@@ -472,7 +491,7 @@
         "type": "GFX"
       },
       "duration": 2.5,
-      "script": "",
+      "script": "Správy jednou vetou.",
       "skip": false,
       "editorChecked": false,
       "id": "part-sjv-open",
@@ -493,7 +512,8 @@
       "duration": 8,
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
-      "segmentId": "seg-sjv"
+      "segmentId": "seg-sjv",
+      "script": "Ruský dron zasiahol civilný minibus v meste Charkov. Zomreli 4 ľudia, ďalších 5 utrpelo zranenia."
     },
     {
       "id": "part-sjv-syn-2",
@@ -508,7 +528,8 @@
       "duration": 8,
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
-      "segmentId": "seg-sjv"
+      "segmentId": "seg-sjv",
+      "script": "V USA sa začal súdny spor medzi technologickým gigantom Meta a 29timi americkými štátmi, ktoré tvrdia, že Facebook a Instagram sú zámerne navrhnuté, aby vytvárali závislosť užívateľov. Od Mety žiadajú 200 miliárd dolárov v náhradách škôd."
     },
     {
       "name": "SJV 3",
@@ -556,7 +577,7 @@
         "type": "GFX"
       },
       "duration": 2.5,
-      "script": "",
+      "script": "Šport.",
       "skip": false,
       "editorChecked": false,
       "id": "part-sport-open",
@@ -577,7 +598,8 @@
       "duration": 10,
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
-      "segmentId": "seg-sport"
+      "segmentId": "seg-sport",
+      "script": "Už o pár hodín nastúpia futbalisti Slovana Bratislava na duel štvrtého predkola Ligy majstrov so slovínskym Celje. Ak z dvojzápasu vyjdu víťazne, po 2 rokoch sa vrátia do skupinovej fázy najprestížnejšej klubovej súťaže."
     },
     {
       "id": "part-sport-syn-2",
@@ -592,7 +614,8 @@
       "duration": 10,
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
-      "segmentId": "seg-sport"
+      "segmentId": "seg-sport",
+      "script": "Kanadský tenista Auger-Aliassime postúpil do osemfinále turnaja v Cincinnati. Svetová štvorka si v dvoch setoch poradila s Argentínčanom Cerúndolom."
     },
     {
       "name": "Šport 3",
@@ -625,7 +648,8 @@
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-weather",
-      "duration": 2.5
+      "duration": 2.5,
+      "script": "Zajtra sa oteplí a bude až do 34 stupňov. Na väčšine územia bude oblačno, na východe jasno. Večer sa začnú od juhozápadu intenzívne búrky."
     },
     {
       "id": "part-avizo-db",
@@ -640,7 +664,8 @@
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-outro",
-      "duration": 2.5
+      "duration": 2.5,
+      "script": "A na záver ešte jeden tip od nás. Žije sa ľuďom na Slovensku lepšie vďaka štvrtej vláde Roberta Fica? Aj o tom debatoval poslanec Smeru Michal Stuška a Martina Holečková z SaS. Témou boli aj dôchodky."
     },
     {
       "id": "part-avizo-syn",
@@ -655,7 +680,8 @@
       "duration": 8,
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
-      "segmentId": "seg-outro"
+      "segmentId": "seg-outro",
+      "script": ""
     },
     {
       "id": "part-avizo-db2",
@@ -669,7 +695,8 @@
       },
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
-      "segmentId": "seg-outro"
+      "segmentId": "seg-outro",
+      "script": "Zvažuje strana Smer aj 14te dôchodky? Celú debatu nájdete na našom webe — 360tka.sk. A to je na dnes všetko, dovidenia opäť zajtra."
     },
     {
       "id": "part-outro",
@@ -684,7 +711,8 @@
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-outro",
-      "duration": 4
+      "duration": 4,
+      "script": ""
     }
   ],
   "pieces": [
@@ -1571,7 +1599,24 @@
       "float": false,
       "pieceType": "weather",
       "payload": {
-        "bypass": false
+        "bypass": false,
+        "cities": [
+          {
+            "name": "BRATISLAVA",
+            "temp": "4",
+            "condition": "cloudy"
+          },
+          {
+            "name": "KOŠICE",
+            "temp": "2",
+            "condition": "snow"
+          },
+          {
+            "name": "ŽILINA",
+            "temp": "-1",
+            "condition": "clear"
+          }
+        ]
       },
       "start": 0,
       "playlistId": null,

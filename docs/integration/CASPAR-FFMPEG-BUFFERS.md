@@ -69,8 +69,13 @@ only the **global patch** above applies.
 3. **Deploy current demo blueprints** so `assets/countup` is not in rundown baseline — countup
    latency lines at ~109 s often mean the old bundle still loads countup from segment 0.
 4. **Close other DShow consumers** (only one Caspar producer per virtual camera).
+5. **Demo blueprints (post route/cam fix):** camera look mappings use `LookaheadMode.NONE`
+   (no idle-channel `LOADBG dshow://`), and live camera pieces skip BG look preroll so a
+   second Virtual Camera is not opened under the upcoming look while the on-air look still
+   holds one.
 
 ## Related docs
 
 - [`DOUBLEBOX-PGM.md`](DOUBLEBOX-PGM.md) — UVC / virtual camera wiring
-- [`OUTPUT_TOPOLOGY.md`](OUTPUT_TOPOLOGY.md) — LED vs PGM channels
+- [`OUTPUT_TOPOLOGY.md`](OUTPUT_TOPOLOGY.md) — LED / PGM / DoubleBox / Full channels
+- [`PLAYOUT-NR-AND-MEDIA-PATH.md`](PLAYOUT-NR-AND-MEDIA-PATH.md) — PM path vs Caspar media tree

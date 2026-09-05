@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<style>
+		html, body {
+			margin: 0;
+			width: 1920px;
+			height: 1080px;
+			overflow: hidden;
+			background: transparent;
+			font-family: "Segoe UI", system-ui, sans-serif;
+		}
+		#label {
+			position: absolute;
+			top: 28px;
+			right: 36px;
+			padding: 10px 18px;
+			color: #fff;
+			font-size: 42px;
+			font-weight: 700;
+			letter-spacing: 0.02em;
+			text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
+			background: rgba(0, 0, 0, 0.45);
+			border-radius: 6px;
+			pointer-events: none;
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<div id="label"></div>
+	<script>
+		function parsePayload(data) {
+			if (data == null) return {}
+			if (typeof data === 'object') return data
+			if (typeof data !== 'string') return {}
+			var trimmed = data.trim()
+			if (!trimmed) return {}
+			try {
+				return JSON.parse(trimmed)
+			} catch (e) {
+				return { label: trimmed }
+			}
+		}
+
+		function setLabel(data) {
+			var el = document.getElementById('label')
+			var payload = parsePayload(data)
+			var label = payload.label || payload.f0 || ''
+			el.textContent = label
+			el.style.display = label ? 'block' : 'none'
+		}
+		window.play = function (data) { setLabel(data) }
+		window.next = function (data) { setLabel(data) }
+		window.update = function (data) { setLabel(data) }
+		window.stop = function () { setLabel({}) }
+	</script>
+</body>
+</html>
