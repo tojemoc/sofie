@@ -111,8 +111,11 @@ Run on the studio box with ≥4 Caspar channels and a fresh blueprint bundle (#7
 ## Sofie / timeline reminders
 
 1. **Lookahead / ready gate:** next BG must be settled before the route STING starts.
-2. **Ping-pong:** while PGM routes from A, build next look on B; do not rebuild the on-air BG.
-3. **Hard cuts:** parts without a wipe piece keep CUT route switch (still `layer: null`).
+2. **Wipe-gated flip:** only wiped Takes allocate the opposite look slot (build on the
+   idle BG while PGM still routes the on-air look). Hard cuts **ensure**/reuse the
+   current slot — headlines 1–3 all stay on one `route://N`.
+3. **Hard cuts:** parts without a wipe piece keep CUT route re-assert (still `layer: null`)
+   on the **same** BG channel.
 
 ## Verify (commands)
 
