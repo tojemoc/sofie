@@ -32,6 +32,12 @@ CasparCG
 Studio config: `casparcg.hypercomposed.ledChannel` / `pgmChannel` / `bgChannelA` /
 `bgChannelB` (defaults **1 / 2 / 3 / 4**).
 
+**Look-slot flips:** only **wiped** Takes move the next look onto the idle BG channel
+(pre-build + STING). Hard cuts (opening headlines, ILU↔SYN) **stay on the current look**
+so PGM keeps a stable `route://N` and the single live camera is not opened on both BG
+channels. Ping-ponging every look-bearing part caused headlines 2/3 to land on ch4/ch3
+while PGM stayed on the first route.
+
 **Audio:** SYN/ILU play on the BG look; PGM hears them via a **full-channel** route
 (`route://N`, never `route://N-0`). Beds duplicate on LED+PGM layer 80. RE `volume` on
 video pieces drives clip mixer volume.
@@ -48,7 +54,8 @@ has two channels configured. Blueprints still issue BG commands; Caspar rejects 
 channel index.
 
 Add two render-only channels (match LED/PGM `video-mode`; **omit** Screen/NDI/SDI
-consumers on 3/4), restart Caspar, re-**Apply** studio config / activate rundown:
+consumers on 3/4 for production — optional NDI on 3/4 is fine for monitoring only),
+restart Caspar, re-**Apply** studio config / activate rundown:
 
 ```xml
 <channels>
