@@ -1600,23 +1600,7 @@
       "pieceType": "weather",
       "payload": {
         "bypass": false,
-        "cities": [
-          {
-            "name": "BRATISLAVA",
-            "temp": "4",
-            "condition": "cloudy"
-          },
-          {
-            "name": "KOŠICE",
-            "temp": "2",
-            "condition": "snow"
-          },
-          {
-            "name": "ŽILINA",
-            "temp": "-1",
-            "condition": "clear"
-          }
-        ]
+        "cities": "[{\"region\":\"BA\",\"name\":\"BRATISLAVA\",\"temp\":\"4\",\"condition\":\"cloudy\"},{\"region\":\"KE\",\"name\":\"KOŠICE\",\"temp\":\"2\",\"condition\":\"snow\"},{\"region\":\"ZA\",\"name\":\"ŽILINA\",\"temp\":\"-1\",\"condition\":\"clear\"}]"
       },
       "start": 0,
       "playlistId": null,
