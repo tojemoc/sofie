@@ -18,7 +18,7 @@ DoubleBox geometry: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 | 8 | SYN → new topic | `bg_loop` | DoubleBox | **Wipe** |
 | 9 | SJV (3–5 SYNs) | `bg_loop` | Timed `l3d-sjv` over SYNs | `wipes/wipe_sjv` |
 | 10 | Šport (2–5) | `bg_loop` | Timed `l3d-sport` (`kicker=ŠPORT`) | `wipes/wipe_sport` |
-| 11 | Počasie | `bg_loop` | Transparent `gfx/pocasie` HTML over Full `loops/bg_loop` (or bypass `assets/weather`) + logo-bug | `wipes/wipe_pocasie` |
+| 11 | Počasie | `bg_loop` | Transparent `gfx/pocasie` on Full look (**routed**; look clip underlay) + logo-bug; or bypass `assets/weather` | `wipes/wipe_pocasie` |
 | 12 | Odporúčanie | `bg_loop` + ILU (headline bypass) | Fullscreen OBS + `l3d-odporucanie` (no DoubleBox) | Normal wipe |
 | 12b | optional SYN | `bg_loop` | Hard cut ILU↔SYN | Hard cut |
 | 13 | Outro | `bg_loop` | `assets/outro` on layer 210 (above everything) | — |
