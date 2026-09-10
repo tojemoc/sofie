@@ -134,7 +134,7 @@ SPRÁVY must not route Intro or PGM L3Ds through them.
 | `logo-bug` / countup | Logo | **PGM 2-123** |
 | `wipe` | PGM Wipe | **PGM 2-110 route STING** (not legacy **2-200** overlay) |
 | `intro` / `outro` | Titles | **PGM 2-210** |
-| `weather` | GFX | **look clip 110** + `assets/bg_pocasie` + HTML |
+| `weather` | GFX | **look clip 110** `loops/bg_loop` + transparent HTML `gfx/pocasie` |
 
 **Sofie WebUI “GFX” vs “PGM” tracks ≠ Caspar channels.** Story looks compose on BG 3/4;
 PGM only routes the settled mix on **layer 110**.
