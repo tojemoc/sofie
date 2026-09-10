@@ -272,7 +272,7 @@
         "name": "SYN Susko",
         "type": "SYN"
       },
-      "duration": 12,
+      "duration": 18,
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-1",
@@ -648,7 +648,7 @@
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-weather",
-      "duration": 2.5,
+      "duration": 25,
       "script": "Zajtra sa oteplí a bude až do 34 stupňov. Na väčšine územia bude oblačno, na východe jasno. Večer sa začnú od juhozápadu intenzívne búrky."
     },
     {
@@ -976,7 +976,7 @@
       "partId": "part-sport-syn-3"
     },
     {
-      "name": "Osobné údaje na OR SR",
+      "name": "DBILU: Osobné údaje na OR SR",
       "rank": 0,
       "float": false,
       "pieceType": "doublebox-ilu",
@@ -985,7 +985,7 @@
         "iluFile": "clips/ILU REGISTER.mp4"
       },
       "start": 0,
-      "duration": 16,
+      "duration": 35,
       "id": "piece-part-tema-1-db-ilu",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
@@ -1026,7 +1026,7 @@
       "partId": "part-tema-1-syn-2"
     },
     {
-      "name": "Spor Saková – Fico",
+      "name": "DBILU: Spor Saková – Fico",
       "rank": 0,
       "float": false,
       "pieceType": "doublebox-ilu",
@@ -1040,7 +1040,7 @@
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-2",
       "partId": "part-tema-2-db",
-      "duration": 2.5
+      "duration": 31
     },
     {
       "name": "SYN",
@@ -1286,7 +1286,7 @@
         "name": "Boris Susko",
         "role": "minister spravodlivosti (SMER-SD)"
       },
-      "duration": 6,
+      "duration": 18,
       "start": 2,
       "skip": false,
       "id": "piece-part-tema-1-syn-1-l3d",
@@ -1401,7 +1401,7 @@
       "partId": "part-intro-mod"
     },
     {
-      "name": "Osobné údaje na OR SR",
+      "name": "L3DT: Osobné údaje na OR SR",
       "rank": 1,
       "float": false,
       "pieceType": "l3d-tema",
@@ -1410,7 +1410,6 @@
         "subline": "Osobné údaje na OR SR"
       },
       "start": 0,
-      "duration": 10,
       "id": "piece-part-tema-1-db-l3d",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
@@ -1451,7 +1450,7 @@
     },
     {
       "id": "piece-part-tema-2-db-l3d",
-      "name": "Spor Saková – Fico",
+      "name": "L3DT: Spor Saková – Fico",
       "rank": 1,
       "float": false,
       "pieceType": "l3d-tema",
