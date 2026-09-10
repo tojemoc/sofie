@@ -207,7 +207,7 @@ The bridge accepts JSON objects and XML-wrapped JSON from Caspar.
 | T06 | `l3d-sjv` | `gfx/l3d-sjv` | `kicker`, `headline` | SJV segment bar; **PGM ch2** |
 | T06b | `l3d-odporucanie` | `gfx/l3d-odporucanie` | `headline` | Avízo / CTA (no kicker); **PGM ch2** |
 | T07 | `l3d-sport` | `gfx/l3d-sport` | `kicker` *(default `ŠPORT`)*, `headline` | ŠPORT bar; **PGM ch2** |
-| T08 | `weather` | `gfx/weather` / `gfx/pocasie` | `cities` JSON **string** of `[{ region, name, temp, …}]` | Full-frame on **PGM**; RE field is `type: string`; blueprints parse JSON and map `region` → `BA_temp` etc. |
+| T08 | `weather` | `gfx/pocasie` | `cities` JSON **string** of `[{ region, name, temp, …}]` | Full-frame on **PGM** (RE type `weather` → Caspar `gfx/pocasie` from `template/gfx/pocasie.html`); blueprints parse JSON and map `region` → `BA_temp` etc. |
 | T09 | `outro` | `gfx/outro` | _(none)_ | Hardcoded URL; **PGM** |
 | T10 | `logo-bug` | `gfx/logo-bug` | _(none)_ | Persistent bug on **PGM logo layer**; `OutOnRundownEnd`; alias `gfx/logo-bug-kubo` |
 

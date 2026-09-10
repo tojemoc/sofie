@@ -47,7 +47,7 @@ Repo: https://github.com/tojemoc/sofie-demo-assets (`main` @ PR #3 merged 2026-0
 | `l3d-syn` | `gfx/l3d-syn` | `name`, `role` |
 | `l3d-sjv` | `gfx/l3d-sjv` | `headline` |
 | `l3d-sport` | `gfx/l3d-sport` | `headline`, `source` |
-| `weather` | `gfx/weather` / `gfx/pocasie` | `cities` (JSON **string** of `{ region, name, temp, … }[]`; RE stores string, blueprints `JSON.parse`) |
+| `weather` | `gfx/pocasie` | `cities` (JSON **string** of `{ region, name, temp, … }[]`; RE type `weather` → Caspar `gfx/pocasie`; blueprints `JSON.parse`) |
 | `outro` | `gfx/outro` | _(empty — play/stop only)_ |
 | `logo-bug` | `gfx/logo-bug` | _(empty — play/stop only)_ |
 
