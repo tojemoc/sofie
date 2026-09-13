@@ -37,5 +37,7 @@ The legacy converter therefore set `script` / `duration` to `undefined`.
 ## Verify
 
 1. Import `spravy-v3-smoke-rundown.json` in the Rundown Editor.
-2. Open segment **POČASIE** → part **Počasie**.
-3. SCRIPT shows the weather copy; read time is non-zero.
+2. Story rows show a muted one-line script excerpt (no expand required).
+3. Open segment **POČASIE** → part **Počasie** (or click the on-air story — read-only).
+4. SCRIPT shows the weather copy; read time is non-zero.
+5. Re-import if an older SQLite row was created before the import fix (unopus #80).
