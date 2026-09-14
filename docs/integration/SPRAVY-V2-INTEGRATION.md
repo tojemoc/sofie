@@ -92,20 +92,20 @@ the HTML template loaded — the companion ILU PLAY still needs the file.
 - **RE Ready/NR, DUR, wipe timing, piece order:** planning notes in
   [`RE-READINESS-AND-PLAYOUT-UX.md`](./RE-READINESS-AND-PLAYOUT-UX.md) (ADR 0001 for Core PM readiness).
 
-## Muster smoke rundown (2026-07-22)
+## Muster smoke rundown (2026-09-14)
 
-`assets/spravy-v3-smoke-rundown.json` (sofie megarepo `assets/`) mirrors the
-production muster spine:
+`assets/spravy-v3-smoke-rundown.json` (sofie megarepo `assets/`) mirrors Jakub’s
+2026-09-14 RE export (skipped **Migaľ** segment omitted):
 
 | Segment | Parts |
 |---------|--------|
-| HEADLINES | HEADLINE1–3 (ILU + L3D horný/dolný + cam A); **no** wipe pieces |
-| INTRO | Intro overlay (`assets/intro_michal`, disk `….mov`) on **PGM**; Mod L3D Gabriela Kajtárová (**PGM**) + logo-bug (PGM); **no** bg-loop piece, **no** wipe |
-| Téma 1–4 | Téma GFX + ILU/SYN patterns (cams A/P/M); named ILUs use PGM `l3d-headline` |
-| SPRÁVY JEDNOU VETOU | `l3d-sjv` + 4× ILU with citácia |
-| ŠPORT | `l3d-sport` + 3× ILU with citácia |
-| POČASIE | `weather` fullscreen |
-| ZÁVER + AVIZO | ILU avízo, SYN, closing ILU, `outro` |
+| HEADLINES | HEADLINE1–3 (ILU + L3D + cam); **no** wipe pieces |
+| INTRO | Intro overlay on **PGM**; Mod L3D Gabriela Kajtárová + logo-bug; **no** bg-loop piece, **no** wipe |
+| Téma 1–4 | Obchodný register, Spor Saková – Fico, Referendum / novela Ústavy, Ukrajina — DoubleBox / SYN patterns; open/`skip` parts kept where set in export |
+| SPRÁVY JEDNOU VETOU | GFX open row + SYN slots (`l3d-sjv`); wipe on first SYN |
+| ŠPORT | GFX open row + SYN slots (`l3d-sport`); wipe on first SYN |
+| POČASIE | `weather` |
+| ZÁVER + AVIZO | `ilu-zaver` avízo (+ skipped SYN/`ilu-zaver` záver), `outro` |
 
 Clip paths are placeholders under `clips/`. Camera letters:
 **A→1**, **P→2**, **M→3**.

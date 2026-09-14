@@ -33,7 +33,7 @@ rundown is this megarepo:
 | `assets/sofie-rundown-editor-piece-types.json` | Piece types + GFX preview templates (includes `wipe`, `l3d-predstavovak`, `l3d-odporucanie`) |
 | `assets/sofie-rundown-editor-part-types.json` | Part presets |
 | `assets/sofie-rundown-editor-segment-types.json` | Segment presets |
-| `assets/spravy-v3-smoke-rundown.json` | Smoke rundown fixture (`spravy-v3-smoke`, 5 topics) |
+| `assets/spravy-v3-smoke-rundown.json` | Smoke rundown fixture (`spravy-v3-smoke`, 4 topics) |
 | `spravy_360_predstavovak/` | Figma HTML source for topic/guest L3D (ported to demo-assets `l3d-predstavovak`) |
 | `spravy_360_jednou_vetou/` | Figma HTML source for SJV/Sport/odporúčanie shell |
 
