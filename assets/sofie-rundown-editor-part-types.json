@@ -104,6 +104,42 @@
 		]
 	},
 	{
+		"id": "ilu-zaver",
+		"entityType": "part",
+		"name": "ILU Závěr",
+		"shortName": "ZAVER",
+		"buttonLabel": "ZAVER",
+		"ingestType": "Cam",
+		"colour": "#6f42c1",
+		"showInToolbar": true,
+		"payload": [],
+		"defaultPieces": [
+			{
+				"pieceType": "ilu-zaver"
+			},
+			{
+				"pieceType": "l3d-odporucanie",
+				"payload": {
+					"headline": ""
+				}
+			},
+			{
+				"pieceType": "camera",
+				"payload": {
+					"camNo": 1
+				}
+			},
+			{
+				"pieceType": "wipe",
+				"optional": true,
+				"payload": {
+					"fileName": "wipes/wipe",
+					"transition": "Zaver"
+				}
+			}
+		]
+	},
+	{
 		"id": "vo",
 		"entityType": "part",
 		"name": "VO",
