@@ -48,21 +48,26 @@ Headline ILU remains on LED `casparcg_ilu_player` (1-115). PGM hears the mix via
 
 Keep the studio string as Caspar docs show it, e.g. `DECKLINK DEVICE 1 FORMAT 1080p5000`.
 Demo blueprints (≥ sofie-demo-blueprints **#89**) parse that into TSR **INPUT** /
-PlayDecklink. Playout then emits AMCP like:
+PlayDecklink.
+
+**AMCP must include `DEVICE`.** Upstream `casparcg-connection` serialized
+`DECKLINK <n>` without the keyword; on some DeckLink hardware that form fails
+`EnableVideoInput` while `DECKLINK DEVICE <n>` works. sofie-core applies a Yarn
+patch so playout emits:
 
 ```text
-PLAY 3-115 DECKLINK 1 FORMAT 1080P5000
+PLAY 3-115 DECKLINK DEVICE 1 FORMAT 1080p5000
 ```
 
-The missing word `DEVICE` is **casparcg-connection** serialization, not blueprints
-eating the token. Caspar’s DeckLink producer accepts both `DECKLINK DEVICE N` and
-`DECKLINK N` (device from `DEVICE=` or from the next token).
+(before the patch: `PLAY 3-115 DECKLINK 1 FORMAT 1080p5000`). Pick up the fix by
+rebuilding/restarting **playout-gateway** from a sofie-core checkout that includes
+the `casparcg-connection` Yarn patch — **not** by re-uploading blueprints alone.
 
 | Symptom | Cause | Action |
 |---------|--------|--------|
 | `404 PLAY FAILED` / File not found for a DeckLink string | Bundle still treats producer as **MEDIA** (quoted clip path) | Upload blueprints with #89+, Apply studio config, **Reset Rundown** |
-| AMCP shows `DECKLINK 1` without `DEVICE` | Expected PlayDecklink serialize | No change needed |
-| `DeckLink … [1\|1080p5000] Could not enable video input` / `EnableVideoInput` | Device+format **parsed**; BMD input enable failed | Ensure that DeckLink index is not also a Caspar **consumer**, Desktop Video connector mode matches, and a live signal is present; probe with Client AMCP `PLAY 3-115 DECKLINK DEVICE 1 FORMAT 1080p5000` |
+| AMCP shows `DECKLINK 1` **without** `DEVICE` | playout-gateway still on unpatched `casparcg-connection` | Upgrade/rebuild sofie-core playout-gateway with the DeckLink DEVICE patch; restart gateway |
+| `DeckLink … [1\|1080p5000] Could not enable video input` **and** AMCP already has `DEVICE` | BMD input enable failed after parse | Device not also a Caspar **consumer**; Desktop Video connector mode; live signal |
 | ffmpeg `rtbufsize` / buffer-too-full | **dshow://** path, not DeckLink | See [`CASPAR-FFMPEG-BUFFERS.md`](./CASPAR-FFMPEG-BUFFERS.md) |
 | `LOADBG … EMPTY` on channel 4 | Look B wipe pre-build / clear | Separate from CAM; see wipe ADR |
 
