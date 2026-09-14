@@ -88,6 +88,7 @@ See ADR [`0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-chann
 | Content | Mapping id | Layer | Typical path / template |
 |---------|------------|------:|-------------------------|
 | Background loop | `casparcg_clip_player1` | 110 | `loops/bg_loop` (baseline; optional RE `bg-loop`) |
+| Headline pod | `casparcg_led_pod_headline` | 112 | `assets/pod_headline` (headlines only) |
 | Headline ILU media | `casparcg_ilu_player` | 115 | `clips/<name>` + `gfx/headline-fallback` chrome |
 
 **Nothing else on LED.** No intro/znelka, no wipe, no `l3d-*`, no logo-bug, no camera, no

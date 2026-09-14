@@ -48,7 +48,8 @@
 			{
 				"id": "volume",
 				"label": "Volume (0–1)",
-				"type": "number"
+				"type": "number",
+				"default": 0.5
 			}
 		]
 	},
@@ -353,6 +354,12 @@
 				"id": "source",
 				"label": "Source text",
 				"type": "string"
+			},
+			{
+				"id": "volume",
+				"label": "ILU volume (0–1)",
+				"type": "number",
+				"default": 0.5
 			}
 		]
 	},
@@ -375,6 +382,12 @@
 				"label": "ILU clip (PGM left window)",
 				"type": "mediaPick",
 				"subdir": "clips"
+			},
+			{
+				"id": "volume",
+				"label": "ILU volume (0–1)",
+				"type": "number",
+				"default": 0.5
 			}
 		]
 	},
