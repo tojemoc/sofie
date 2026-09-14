@@ -44,6 +44,33 @@ Headline ILU remains on LED `casparcg_ilu_player` (1-115). PGM hears the mix via
   right edge stuck to the screen right (`FILL 0.2 0.1 0.8 0.8`). ILU covers CAM left
   overhang — no CAM cover-crop.
 
+### DeckLink producer notes (DEVICE / 404 / EnableVideoInput)
+
+Keep the studio string as Caspar docs show it, e.g. `DECKLINK DEVICE 1 FORMAT 1080p5000`.
+Demo blueprints (≥ sofie-demo-blueprints **#89**) parse that into TSR **INPUT** /
+PlayDecklink.
+
+**AMCP must include `DEVICE`.** Upstream `casparcg-connection` serialized
+`DECKLINK <n>` without the keyword; on some DeckLink hardware that form fails
+`EnableVideoInput` while `DECKLINK DEVICE <n>` works. sofie-core applies a Yarn
+patch so playout emits:
+
+```text
+PLAY 3-115 DECKLINK DEVICE 1 FORMAT 1080p5000
+```
+
+(before the patch: `PLAY 3-115 DECKLINK 1 FORMAT 1080p5000`). Pick up the fix by
+rebuilding/restarting **playout-gateway** from a sofie-core checkout that includes
+the `casparcg-connection` Yarn patch — **not** by re-uploading blueprints alone.
+
+| Symptom | Cause | Action |
+|---------|--------|--------|
+| `404 PLAY FAILED` / File not found for a DeckLink string | Bundle still treats producer as **MEDIA** (quoted clip path) | Upload blueprints with #89+, Apply studio config, **Reset Rundown** |
+| AMCP shows `DECKLINK 1` **without** `DEVICE` | playout-gateway still on unpatched `casparcg-connection` | Upgrade/rebuild sofie-core playout-gateway with the DeckLink DEVICE patch; restart gateway |
+| `DeckLink … [1\|1080p5000] Could not enable video input` **and** AMCP already has `DEVICE` | BMD input enable failed after parse | Device not also a Caspar **consumer**; Desktop Video connector mode; live signal |
+| ffmpeg `rtbufsize` / buffer-too-full | **dshow://** path, not DeckLink | See [`CASPAR-FFMPEG-BUFFERS.md`](./CASPAR-FFMPEG-BUFFERS.md) |
+| `LOADBG … EMPTY` on channel 4 | Look B wipe pre-build / clear | Separate from CAM; see wipe ADR |
+
 `db_loop` is **WithinPart** on DoubleBox Takes only (not Intro) so SYN / weather stay
 fullscreen. Production file may be named `dp_loop.mov` — place/symlink as `loops/db_loop`.
 
