@@ -41,10 +41,13 @@ Headline ILU remains on LED `casparcg_ilu_player` (1-115). PGM hears the mix via
 
 If Caspar logs still show `PLAY … "DECKLINK DEVICE …" SEEK … CLEAR_ON_404` → **404 File not found**, the timeline reaching playout is still **MEDIA** (legacy bundle or cached rundown). Fix: upload demo blueprints with DeckLink → INPUT (`cursor/pgm-camera-config-driven-a90d`), **Reset Rundown**, and deploy **playout-gateway** with DeckLink MEDIA coercion (`sofie-core` `cursor/decklink-media-coerce-a90d`). Correct AMCP is unquoted `PLAY 4-115 DECKLINK DEVICE 1 FORMAT 1080p5000` (no clip quotes, no SEEK/CLEAR_ON_404 on live DeckLink).
 
-- **Headlines / post-intro MOD** → look **{3|4}-115** **fullscreen** (FILL `0 0 1 1`)
-- **DoubleBox** → look **{3|4}-115** under ILU (116) and `db_loop` (118), ~**80%** width,
-  right edge stuck to the screen right (`FILL 0.2 0.1 0.8 0.8`). ILU covers CAM left
-  overhang — no CAM cover-crop.
+**Rolling back blueprints will not stop DeckLink.** The producer string lives in **Studio blueprint config** in Core’s DB (`casparcg.hypercomposed.pgmCameraProducer`), not in the bundle. Yesterday’s BPs still do `file: producer` as MEDIA — if that field is still `DECKLINK DEVICE 1 FORMAT 1080p5000`, Caspar keeps getting quoted DeckLink. Unfuck:
+
+1. WebUI → **Settings → Studio** → find `pgmCameraProducer` → set to `dshow://video=OBS Virtual Camera` (or clear to disable CAM).
+2. Save. (Re-upload / Apply Config does **not** overwrite this field from `demo.ts`.)
+3. On the active playlist: **Reset Rundown** (regenerates baseline + camera pieces). Deactivate / re-activate if Reset alone is not enough.
+4. Confirm Caspar no longer shows `DECKLINK` in `PLAY` (expect `dshow://…` or no camera PLAY).
+
 
 `db_loop` is **WithinPart** on DoubleBox Takes only (not Intro) so SYN / weather stay
 fullscreen. Production file may be named `dp_loop.mov` — place/symlink as `loops/db_loop`.
