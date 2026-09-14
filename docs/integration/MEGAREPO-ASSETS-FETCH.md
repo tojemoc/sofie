@@ -34,9 +34,9 @@ export uses `ilu`/`headline`).
 
 | Item | Value |
 |------|--------|
-| Sofie commit | `PIN_PENDING_THIS_PR` |
-| unopus `PINNED_SOFIE_ASSETS_REF` | `PIN_PENDING_THIS_PR` |
-| sofie-demo-blueprints `PINNED_SOFIE_ASSETS_REF` | `PIN_PENDING_THIS_PR` |
+| Sofie commit | `0237090c34dca9569df9b0c9aa0c63158bb2f1e4` |
+| unopus `PINNED_SOFIE_ASSETS_REF` | `0237090c34dca9569df9b0c9aa0c63158bb2f1e4` |
+| sofie-demo-blueprints `PINNED_SOFIE_ASSETS_REF` | `0237090c34dca9569df9b0c9aa0c63158bb2f1e4` |
 | unopus override (optional) | `SOFIE_ASSETS_REF` — if set, must be a full 40-char lowercase SHA; otherwise defaults to `PINNED_SOFIE_ASSETS_REF` |
 
 Both consumer scripts must pin the **same** commit SHA, verify every file against
