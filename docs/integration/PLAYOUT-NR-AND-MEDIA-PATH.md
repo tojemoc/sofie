@@ -101,10 +101,10 @@ If AMCP shows `PLAY 2-110 route://3-0` (layer **0**) instead of `route://3`, PGM
 ## Dual OBS Virtual Camera / DeckLink `EnableVideoInput` fail
 
 Live capture is exclusive. Opening `dshow://` or `DECKLINK DEVICE 1` on **both**
-`3-115` and `4-115` fails the second open (DeckLink: `Could not enable video input`;
-dshow: `rtbufsize` spam / black). Blueprints skip camera lookahead PRELOAD/preroll, do
-**not** baseline-warm live CAM on DoubleBox, and `EMPTY` the idle look's camera layer when
-the active look holds CAM. Still raise `rtbufsize` per [`CASPAR-FFMPEG-BUFFERS.md`](./CASPAR-FFMPEG-BUFFERS.md).
+`3-115` and `4-115` fails the second open. Blueprints open the producer **once** on CAM
+ingest channel **5** and look layers PLAY `route://5`. Camera mappings use
+`LookaheadMode.NONE`. Still raise `rtbufsize` per [`CASPAR-FFMPEG-BUFFERS.md`](./CASPAR-FFMPEG-BUFFERS.md).
+`caspar.config` must declare channel 5 or Sofie gets `400` on ingest / `route://5`.
 
 ## Debug channel labels
 

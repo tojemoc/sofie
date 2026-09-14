@@ -36,19 +36,22 @@ Headline ILU remains on LED `casparcg_ilu_player` (1-115). PGM hears the mix via
 `PLAY 2-110 route://{3|4}` (`layer: null` — full channel, never `route://N-0`).
 
 **Camera / UVC:** studio `casparcg.hypercomposed.pgmCameraProducer` (e.g.
-`dshow://video=OBS Virtual Camera`, or `DECKLINK DEVICE 1 FORMAT 1080p5000` via TSR **INPUT** so playout does not quote the producer as a clip path) on the **active BG look** (`casparcg_pgm_camera` /
-`_b` → channel **3 or 4**, layer **115**). PGM hears CAM via `route://{3|4}`:
+`dshow://video=OBS Virtual Camera`, or `DECKLINK DEVICE 1 FORMAT 1080p5000` via TSR **INPUT**)
+opens **once** on the CAM ingest helper (`camIngestChannel`, default Caspar **5**,
+mapping `casparcg_pgm_camera_ingest`). Look layers sample it:
 
-- **Headlines / post-intro MOD** → look **{3|4}-115** **fullscreen** (FILL `0 0 1 1`)
-- **DoubleBox** → look **{3|4}-115** under ILU (116) and `db_loop` (118), ~**80%** width,
-  right edge stuck to the screen right (`FILL 0.2 0.1 0.8 0.8`). ILU covers CAM left
-  overhang — no CAM cover-crop.
+- **Headlines / post-intro MOD** → look **{3\|4}-115** = MEDIA `route://5` **fullscreen** FILL
+- **DoubleBox** → look **{3\|4}-115** = MEDIA `route://5` under ILU (116) and `db_loop` (118),
+  ~**80%** width, right edge stuck (`FILL 0.2 0.1 0.8 0.8`)
+
+Looks never `PLAY … DECKLINK` / `dshow://` on 3-115 or 4-115 — that was the dual-open
+`EnableVideoInput` failure. See ADR [`0003-cam-ingest-channel.md`](../adr/0003-cam-ingest-channel.md).
 
 ### DeckLink producer notes (DEVICE / 404 / EnableVideoInput)
 
 Keep the studio string as Caspar docs show it, e.g. `DECKLINK DEVICE 1 FORMAT 1080p5000`.
 Demo blueprints (≥ sofie-demo-blueprints **#89**) parse that into TSR **INPUT** /
-PlayDecklink.
+PlayDecklink on the **ingest** channel only.
 
 **AMCP must include `DEVICE`.** Upstream `casparcg-connection` serialized
 `DECKLINK <n>` without the keyword; on some DeckLink hardware that form fails
@@ -56,27 +59,23 @@ PlayDecklink.
 patch so playout emits:
 
 ```text
-PLAY 3-115 DECKLINK DEVICE 1 FORMAT 1080p5000
+PLAY 5-10 DECKLINK DEVICE 1 FORMAT 1080p5000
+PLAY 3-115 route://5
+PLAY 4-115 route://5
 ```
 
-(before the patch: `PLAY 3-115 DECKLINK 1 FORMAT 1080p5000`). Pick up the fix by
-rebuilding/restarting **playout-gateway** from a sofie-core checkout that includes
-the `casparcg-connection` Yarn patch — **not** by re-uploading blueprints alone.
-
-**Exclusive live CAM:** DeckLink / dshow can only open once. Blueprints must not hold
-the producer on **both** `3-115` and `4-115`. Live CAM is WithinPart on the active look
-only; the idle look's layer 115 is `EMPTY` (no rundown-long baseline warm on DoubleBox).
-If Caspar logs `Could not enable video input` on `PLAY 4-115 DECKLINK …` after a successful
-`PLAY 3-115 DECKLINK …`, upload blueprints with the exclusive-cam fix and **Reset Rundown**.
+(before the DEVICE patch: `PLAY 5-10 DECKLINK 1 FORMAT …`). Pick up the DEVICE fix by
+rebuilding/restarting **playout-gateway** — **not** by re-uploading blueprints alone.
+Pick up the ch5 route fix by uploading blueprints with the ingest helper + **Reset Rundown**.
 
 | Symptom | Cause | Action |
 |---------|--------|--------|
 | `404 PLAY FAILED` / File not found for a DeckLink string | Bundle still treats producer as **MEDIA** (quoted clip path) | Upload blueprints with #89+, Apply studio config, **Reset Rundown** |
 | AMCP shows `DECKLINK 1` **without** `DEVICE` | playout-gateway still on unpatched `casparcg-connection` | Upgrade/rebuild sofie-core playout-gateway with the DeckLink DEVICE patch; restart gateway |
-| `DeckLink … [1\|1080p5000] Could not enable video input` after OK on the other BG `*-115` | Same device opened on **both** `3-115` and `4-115` | Upload exclusive-cam blueprints; **Reset Rundown** (idle look must be `EMPTY`) |
-| `DeckLink … Could not enable video input` with only one `*-115` DECKLINK | BMD input enable failed after parse | Device not also a Caspar **consumer**; Desktop Video connector mode; live signal |
+| `PLAY 3-115` / `4-115 DECKLINK …` still appears | Old blueprint bundle without CAM ingest | Upload ch5-ingest blueprints; **Reset Rundown** |
+| `400` on `5-*` or `route://5` | `caspar.config` has fewer than 5 channels | Add render-only channel 5; restart Caspar |
+| `DeckLink … Could not enable video input` with only ingest open | BMD input enable failed after parse | Device not also a Caspar **consumer**; Desktop Video connector mode; live signal |
 | ffmpeg `rtbufsize` / buffer-too-full | **dshow://** path, not DeckLink | See [`CASPAR-FFMPEG-BUFFERS.md`](./CASPAR-FFMPEG-BUFFERS.md) |
-| `LOADBG … EMPTY` on channel 4 camera layer | Idle look release of exclusive live CAM | Expected when the other look holds DeckLink/dshow |
 
 `db_loop` is **WithinPart** on DoubleBox Takes only (not Intro) so SYN / weather stay
 fullscreen. Production file may be named `dp_loop.mov` — place/symlink as `loops/db_loop`.
@@ -98,17 +97,15 @@ Yes. Caspar can PLAY a webcam/UVC device as a media producer on the PGM channel.
    GraphEdit, or try AMCP:
 
 ```text
-PLAY 3-115 "dshow://video=OBS Virtual Camera"
+PLAY 5-10 "dshow://video=OBS Virtual Camera"
+PLAY 3-115 route://5
 MIXER 3-115 FILL 0.2 0.1 0.8 0.8
 ```
 
-(Use channel **4** when probing look B. Hand-testing on PGM `2-115` only proves the
-device string — production camera pieces target the BG look, not PGM.)
+(Use channel **4** for look B: `PLAY 4-115 route://5`. Production never opens dshow on 3/4.)
 
-3. Sofie studio config (blueprints) can store that producer string and, on camera
-   pieces, PLAY it on the **look camera layer 115** (BG 3/4) with the DoubleBox FILL
-   (see below).
-
+3. Sofie studio config stores that producer string; baseline opens it on **ch5 ingest**,
+   and camera pieces PLAY `route://5` on look layer 115 with the DoubleBox FILL.
 Device string is machine-local — set it in studio config, do not hardcode in
 rundowns.
 
@@ -138,9 +135,10 @@ Story compose layers sit on **BG look channels 3/4**; PGM (ch2) only routes + ov
 | Region | Channel · layer | FILL `x y xScale yScale` |
 |--------|-----------------|---------------------------|
 | Story VT / weather | **BG 3/4** · 110 | full frame (no FILL) — **not** baseline `bg_loop` |
-| CAM1 UVC (DoubleBox) | **BG 3/4** · 115 | `0.2 0.1 0.8 0.8` (under ILU + `db_loop`) |
+| CAM1 UVC (DoubleBox) | **BG 3/4** · 115 | `route://5` + FILL `0.2 0.1 0.8 0.8` |
 | Story ILU | **BG 3/4** · 116 | `0.0219 0.0769 0.6802 0.6824` (above CAM) |
-| CAM1 UVC (headlines/MOD) | **BG 3/4** · 115 | `0 0 1 1` fullscreen |
+| CAM1 UVC (headlines/MOD) | **BG 3/4** · 115 | `route://5` + FILL `0 0 1 1` fullscreen |
+| Live CAM ingest | **CAM 5** · 10 | sole `DECKLINK` / `dshow://` |
 | `db_loop` frame | **BG 3/4** · 118 | full frame alpha cutouts |
 | Topic L3D | **BG 3/4** · 121 | HTML templates (`l3d-predstavovak`, …) |
 | Logo / countup | **PGM 2** · 123 | above route |
@@ -203,7 +201,8 @@ labelled variant) and `transition: <label>` for operators.
 | `casparcg_clip_player2` / `_b` | BG 3 / 4 | 110 | Story VT / weather on look (no baseline `bg_loop`) |
 | `casparcg_pgm_route` | PGM 2 | 110 | Full-channel `route://{3\|4}` (+ STING wipe) |
 | `casparcg_ilu_player` | LED 1 | 115 | Headline ILU MEDIA (+ `gfx/headline-fallback`) |
-| `casparcg_pgm_camera` / `_b` | BG 3 / 4 | 115 | UVC / CAM1 (FILL on DoubleBox look) |
+| `casparcg_pgm_camera` / `_b` | BG 3 / 4 | 115 | CAM via MEDIA `route://5` + FILL |
+| `casparcg_pgm_camera_ingest` | CAM 5 | 10 | Sole DeckLink / dshow |
 | `casparcg_pgm_ilu_player` / `_b` | BG 3 / 4 | 116 | Thematic DoubleBox left ILU (`doublebox-ilu`) |
 | `casparcg_intro_player_pgm` | PGM 2 | 210 | Intro / znelka — **never LED** |
 | `casparcg_graphics_pgm_l3d` / `_b` | BG 3 / 4 | 121 | `l3d-predstavovak` / `l3d-odporucanie` / `l3d-syn` / headline bars |

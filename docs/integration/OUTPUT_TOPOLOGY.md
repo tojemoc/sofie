@@ -11,34 +11,35 @@ Integration status / catalogue: [`SPRAVY-V2-INTEGRATION.md`](./SPRAVY-V2-INTEGRA
 
 ## One picture
 
-One **CasparCG server**, **four channels** (default hypercomposed studio after
-sofie-demo-blueprints **#77** + route/cam fixes):
+One **CasparCG server**, **five channels** (default hypercomposed studio after
+CAM ingest helper — ADR [`0003-cam-ingest-channel.md`](../adr/0003-cam-ingest-channel.md)):
 
 | Role | Caspar channel | Consumers |
 |------|----------------:|-----------|
 | **LED** | **1** | Screen / NDI / SDI — `bg_loop` + headline ILU + LED audio bed |
 | **PGM** | **2** | Screen / NDI / SDI — `route://{3\|4}` on **layer 110** + logo/countup/intro + PGM audio bed |
-| **DoubleBox (BG A)** | **3** | **none** — cam + ILU + `db_loop` + L3D téma (pre-build look A) |
-| **Full (BG B)** | **4** | **none** — SYN / SJV / Sport / Weather / fullscreen cam (pre-build look B) |
+| **DoubleBox (BG A)** | **3** | **none** — `route://5` CAM + ILU + `db_loop` + L3D téma (pre-build look A) |
+| **Full (BG B)** | **4** | **none** — SYN / SJV / Sport / Weather / `route://5` fullscreen cam (pre-build look B) |
+| **CAM ingest** | **5** | **none** — sole DeckLink / dshow open (`casparcg_pgm_camera_ingest`) |
 
 ```text
 CasparCG
 ├── Channel 1 ──► LED consumer(s)          bg_loop + headline ILU
-├── Channel 2 ──► PGM consumer(s)          route://3|4 (+ STING wipe) + overlays + beds
-├── Channel 3 ──► (no consumer)            DoubleBox look
-└── Channel 4 ──► (no consumer)            Full look (SYN / weather / fullscreen cam)
+├── Channel 2 ──► PGM consumer(s)          route://3|4 (+ wipe) + overlays + beds
+├── Channel 3 ──► (no consumer)            DoubleBox look (CAM = route://5)
+├── Channel 4 ──► (no consumer)            Full look (CAM = route://5)
+└── Channel 5 ──► (no consumer)            live CAM ingest (DECKLINK / dshow once)
 ```
 
 Studio config: `casparcg.hypercomposed.ledChannel` / `pgmChannel` / `bgChannelA` /
-`bgChannelB` (defaults **1 / 2 / 3 / 4**).
+`bgChannelB` / `camIngestChannel` (defaults **1 / 2 / 3 / 4 / 5**).
 
 **Look channels (semantic):** DoubleBox → BG A / ch3; Full (headlines / SYN / weather /
 fullscreen cam) → BG B / ch4. PGM routes `route://3` or `route://4` accordingly.
 
-**Exclusive live camera:** DeckLink / dshow open on **one** BG layer 115 at a time. The
-active look owns CAM; the idle look's `casparcg_pgm_camera` / `_b` is `EMPTY`. Do not
-baseline-warm live CAM on ch3 while headlines open the same device on ch4 — that yields
-`Could not enable video input` on the second `PLAY … DECKLINK`.
+**Live camera ingest:** DeckLink / dshow opens **only** on channel **5**. Look layers
+`3-115` / `4-115` PLAY MEDIA `route://5` with FILL — never a second `PLAY … DECKLINK`.
+Opening DEVICE 1 on both BG looks caused `Could not enable video input` on the second open.
 
 **Audio:** SYN/ILU play on the BG look; PGM hears them via a **full-channel** route
 (`route://N`, never `route://N-0`). Beds duplicate on LED+PGM layer 80. RE `volume` on
@@ -48,15 +49,15 @@ video pieces drives clip mixer volume.
 [`PLAYOUT-NR-AND-MEDIA-PATH.md`](./PLAYOUT-NR-AND-MEDIA-PATH.md) (Package Manager folder
 must match Caspar `media-path`, e.g. `Y:/360-ingest/sofie-demo-media`).
 
-### Ops: `caspar.config` must declare ≥4 channels
+### Ops: `caspar.config` must declare ≥5 channels
 
-If Caspar logs spam **`400 ERROR`** on every `LOADBG`/`PLAY`/`CG` for `3-*` and
-`4-*`, and `PLAY 2-110 route://3` returns **403 / Check syntax**, the server only
-has two channels configured. Blueprints still issue BG commands; Caspar rejects the
-channel index.
+If Caspar logs spam **`400 ERROR`** on every `LOADBG`/`PLAY`/`CG` for `3-*` / `4-*` /
+`5-*`, and `PLAY 2-110 route://3` returns **403 / Check syntax**, the server does not
+have enough channels configured. Blueprints still issue BG + ingest commands; Caspar
+rejects the channel index.
 
-Add two render-only channels (match LED/PGM `video-mode`; **omit** Screen/NDI/SDI
-consumers on 3/4 for production — optional NDI on 3/4 is fine for monitoring only),
+Add render-only channels 3–5 (match LED/PGM `video-mode`; **omit** Screen/NDI/SDI
+consumers on 3/4/5 for production — optional NDI is fine for monitoring only),
 restart Caspar, re-**Apply** studio config / activate rundown:
 
 ```xml
@@ -75,11 +76,15 @@ restart Caspar, re-**Apply** studio config / activate rundown:
   <channel> <!-- 4 BG B — no consumers -->
     <video-mode>1080p5000</video-mode>
   </channel>
+  <channel> <!-- 5 CAM ingest — no consumers; sole DeckLink/dshow -->
+    <video-mode>1080p5000</video-mode>
+  </channel>
 </channels>
 ```
 
-Four 1080p50 channels can be GPU-heavy — confirm headroom if playback stutters.
-See ADR [`0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md).
+Five 1080p50 channels can be GPU-heavy — confirm headroom if playback stutters.
+See ADR [`0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md)
+and [`0003-cam-ingest-channel.md`](../adr/0003-cam-ingest-channel.md).
 
 ---
 
@@ -100,7 +105,8 @@ story VT/SYN fullscreen, no Presenter MOD.
 | Content | Mapping id | Layer | Notes |
 |---------|------------|------:|-------|
 | SYN / VT / weather BG | `casparcg_clip_player2` / `_b` | 110 | Fullscreen editorial on the active look |
-| Camera / UVC | `casparcg_pgm_camera` / `_b` | 115 | `dshow://…` — **no PRELOAD** (one live capture) |
+| Camera / UVC | `casparcg_pgm_camera` / `_b` | 115 | MEDIA `route://5` + FILL — native capture is on ch5 only |
+| Live CAM ingest | `casparcg_pgm_camera_ingest` | 10 | Sole `DECKLINK` / `dshow://` on channel **5** |
 | DoubleBox story ILU | `casparcg_pgm_ilu_player` / `_b` | 116 | Piece type `doublebox-ilu` |
 | DoubleBox frame (`db_loop`) | `casparcg_pgm_doublebox_loop` / `_b` | 118 | Alpha cutouts |
 | Topic / SYN L3D HTML | `casparcg_graphics_pgm_l3d` / `_b` | 121 | `l3d-tema`, `l3d-syn`, `pocasie`, … |
@@ -130,7 +136,7 @@ SPRÁVY must not route Intro or PGM L3Ds through them.
 | `headline` ILU (`gfx/headline` + `clips/…`) | ILU | **LED 1-115** |
 | `l3d-*` / `l3d-syn` / weather HTML | PGM L3D | **look 3/4-121** (routed to PGM) |
 | `doublebox-ilu` | Lower Third | **look 3/4-116** |
-| `camera` | Camera | **look 3/4-115** |
+| `camera` | Camera | **look 3/4-115** = `route://5` (ingest on **5-10**) |
 | DoubleBox `db_loop` | PGM DoubleBox frame | **look 3/4-118** |
 | `video` SYN/VO | Voice Over | **look 3/4-110** |
 | `logo-bug` / countup | Logo | **PGM 2-123** |
