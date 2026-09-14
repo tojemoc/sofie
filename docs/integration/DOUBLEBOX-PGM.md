@@ -46,6 +46,15 @@ mapping `casparcg_pgm_camera_ingest`). Look layers sample it:
 
 Looks never `PLAY … DECKLINK` / `dshow://` on 3-115 or 4-115 — that was the dual-open
 `EnableVideoInput` failure. See ADR [`0003-cam-ingest-channel.md`](../adr/0003-cam-ingest-channel.md).
+If Caspar logs still show `PLAY … "DECKLINK DEVICE …" SEEK … CLEAR_ON_404` → **404 File not found**, the timeline reaching playout is still **MEDIA** (legacy bundle or cached rundown). Fix: upload demo blueprints with DeckLink → INPUT (`cursor/pgm-camera-config-driven-a90d`), **Reset Rundown**, and deploy **playout-gateway** with DeckLink MEDIA coercion (`sofie-core` `cursor/decklink-media-coerce-a90d`). Correct AMCP is unquoted `PLAY 4-115 DECKLINK DEVICE 1 FORMAT 1080p5000` (no clip quotes, no SEEK/CLEAR_ON_404 on live DeckLink).
+
+**Rolling back blueprints will not stop DeckLink.** The producer string lives in **Studio blueprint config** in Core’s DB (`casparcg.hypercomposed.pgmCameraProducer`), not in the bundle. Yesterday’s BPs still do `file: producer` as MEDIA — if that field is still `DECKLINK DEVICE 1 FORMAT 1080p5000`, Caspar keeps getting quoted DeckLink. Unfuck:
+
+1. WebUI → **Settings → Studio** → find `pgmCameraProducer` → set to `dshow://video=OBS Virtual Camera` (or clear to disable CAM).
+2. Save. (Re-upload / Apply Config does **not** overwrite this field from `demo.ts`.)
+3. On the active playlist: **Reset Rundown** (regenerates baseline + camera pieces). Deactivate / re-activate if Reset alone is not enough.
+4. Confirm Caspar no longer shows `DECKLINK` in `PLAY` (expect `dshow://…` or no camera PLAY).
+
 
 ### DeckLink producer notes (DEVICE / 404 / EnableVideoInput)
 

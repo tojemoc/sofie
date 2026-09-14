@@ -19,7 +19,7 @@ DoubleBox geometry: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 | 9 | SJV (3–5 SYNs) | `bg_loop` | Timed `l3d-sjv` over SYNs | `wipes/wipe_sjv` |
 | 10 | Šport (2–5) | `bg_loop` | Timed `l3d-sport` (`kicker=ŠPORT`) | `wipes/wipe_sport` |
 | 11 | Počasie | `bg_loop` | Transparent `gfx/pocasie` on Full look (**routed**; look clip underlay) + logo-bug; or bypass `assets/weather` | `wipes/wipe_pocasie` |
-| 12 | Odporúčanie | `bg_loop` + ILU (headline bypass) | Fullscreen OBS + `l3d-odporucanie` (no DoubleBox) | Normal wipe |
+| 12 | Odporúčanie / Závěr Avízo | `bg_loop` | DoubleBox ILU (left FILL) + cam + `l3d-odporucanie` | Normal wipe |
 | 12b | optional SYN | `bg_loop` | Hard cut ILU↔SYN | Hard cut |
 | 13 | Outro | `bg_loop` | `assets/outro` on layer 210 (above everything) | — |
 
@@ -41,11 +41,16 @@ cannot overflow into the next SYN even if Takes are early.
 ## Media notes
 
 - DoubleBox frame: `loops/db_loop` (production may call the file `dp_loop.mov` — rename/symlink).
-- Weather HTML (`bypass: false` in smoke): transparent `gfx/pocasie` over Full-look `loops/bg_loop` (not opaque `assets/bg_pocasie`).
+- Weather HTML (`bypass: false` in smoke): transparent `gfx/pocasie` over Full-look
+  `assets/bg_pocasie` underlay (map loop under city cards).
 - Weather bypass clip (when wired): PLAY `assets/weather` premade animation.
 - Outro: PLAY `assets/outro` on PGM intro layer 210 (jingle, no bed music).
+- Závěr + Avízo: DoubleBox look — `doublebox-ilu` at DoubleBox left FILL + cam +
+  `l3d-odporucanie` (not fullscreen LED headline ILU).
 
 ## ILU bypass
 
-`headline.iluPrerendered` (bypass) ON → alpha `.mov` FILL `0 0 1 1` on LED over `bg_loop`.
+`headline.iluPrerendered` (bypass) ON → alpha `.mov` FILL `0 0 1 1` on LED over `bg_loop`
+(+ `assets/pod_headline` on layer 112 during headlines).
 OFF → cover-cropped slot + `gfx/headline-fallback` chrome (no squish).
+Default ILU mixer volume is **0.5** when RE leaves volume unset.
