@@ -39,6 +39,8 @@ Headline ILU remains on LED `casparcg_ilu_player` (1-115). PGM hears the mix via
 `dshow://video=OBS Virtual Camera`, or `DECKLINK DEVICE 1 FORMAT 1080p5000` via TSR **INPUT** so playout does not quote the producer as a clip path) on the **active BG look** (`casparcg_pgm_camera` /
 `_b` → channel **3 or 4**, layer **115**). PGM hears CAM via `route://{3|4}`:
 
+If Caspar logs still show `PLAY … "DECKLINK DEVICE …" SEEK … CLEAR_ON_404` → **404 File not found**, the timeline reaching playout is still **MEDIA** (legacy bundle or cached rundown). Fix: upload demo blueprints with DeckLink → INPUT (`cursor/pgm-camera-config-driven-a90d`), **Reset Rundown**, and deploy **playout-gateway** with DeckLink MEDIA coercion (`sofie-core` `cursor/decklink-media-coerce-a90d`). Correct AMCP is unquoted `PLAY 4-115 DECKLINK DEVICE 1 FORMAT 1080p5000` (no clip quotes, no SEEK/CLEAR_ON_404 on live DeckLink).
+
 - **Headlines / post-intro MOD** → look **{3|4}-115** **fullscreen** (FILL `0 0 1 1`)
 - **DoubleBox** → look **{3|4}-115** under ILU (116) and `db_loop` (118), ~**80%** width,
   right edge stuck to the screen right (`FILL 0.2 0.1 0.8 0.8`). ILU covers CAM left
