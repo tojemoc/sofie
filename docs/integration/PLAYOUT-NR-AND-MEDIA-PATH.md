@@ -67,6 +67,33 @@ Rundown Editor **Ingest media root** must match the same tree.
 Near-duplicate on-air filenames (`FOO.mp4` vs `FOO v2.mp4` / `FOO_final.mp4`) are
 warned in the Rundown Editor media picker (unopus), not via Sofie NR banding.
 
+## What can delete files in that NAS folder
+
+Nothing else on the share is disappearing because **Sofie Package Manager** is the
+only process in this stack that is given **write** access to `sofie-demo-media`.
+
+Studio `applyConfig` used to emit `LOCAL_FOLDER` accessors with `allowWrite: true`
+for both **Ingest media folder** and **CasparCG media folder**. On this studio those
+two settings are the **same NAS path** (`Y:/360-ingest/sofie-demo-media`). With
+write enabled, Package Manager will:
+
+1. **`putPackageStream`** — `unlink` the existing file, then copy from the ingest
+   source. When source and target are the same folder, that unlink is the original.
+2. **`removePackage`** — delete a file when the rundown/blueprint no longer lists
+   it as an ExpectedPackage (re-ingest, clip rename, Apply Configuration).
+3. **`cleanup` cron** (if enabled on the worker) — `removeDuePackages` plus
+   `cleanupOldFiles` by age across the whole folder.
+
+Operators drop clips directly into that folder. Those files are not PM copies, so
+any of the above looks like “media vanished on an update.” Other NAS folders are
+untouched because they are not `packageContainers` targets.
+
+**Fix (blueprints):** both local-folder accessors are **read-only** (`allowWrite:
+false`). Package Manager still **verifies** files for NR badges; it no longer
+copies or deletes. After uploading a new blueprint bundle, **Apply Configuration**
+so Core/PM pick up the containers. HTTP-proxy thumbnails stay writable (not the
+NAS media tree).
+
 ## Related black PGM after DoubleBox → SYN
 
 If AMCP shows `PLAY 2-110 route://3-0` (layer **0**) instead of `route://3`, PGM is routing an empty layer while the SYN clip plays on `3-110` → black program. Blueprints after the full-channel route fix emit `layer: null` so casparcg-state serializes a full-channel mix. Upload a fresh blueprint bundle + Activate.
