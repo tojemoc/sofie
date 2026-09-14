@@ -32,11 +32,13 @@ CasparCG
 Studio config: `casparcg.hypercomposed.ledChannel` / `pgmChannel` / `bgChannelA` /
 `bgChannelB` (defaults **1 / 2 / 3 / 4**).
 
-**Look-slot flips:** only **wiped** Takes move the next look onto the idle BG channel
-(pre-build + STING). Hard cuts (opening headlines, ILU↔SYN) **stay on the current look**
-so PGM keeps a stable `route://N` and the single live camera is not opened on both BG
-channels. Ping-ponging every look-bearing part caused headlines 2/3 to land on ch4/ch3
-while PGM stayed on the first route.
+**Look channels (semantic):** DoubleBox → BG A / ch3; Full (headlines / SYN / weather /
+fullscreen cam) → BG B / ch4. PGM routes `route://3` or `route://4` accordingly.
+
+**Exclusive live camera:** DeckLink / dshow open on **one** BG layer 115 at a time. The
+active look owns CAM; the idle look's `casparcg_pgm_camera` / `_b` is `EMPTY`. Do not
+baseline-warm live CAM on ch3 while headlines open the same device on ch4 — that yields
+`Could not enable video input` on the second `PLAY … DECKLINK`.
 
 **Audio:** SYN/ILU play on the BG look; PGM hears them via a **full-channel** route
 (`route://N`, never `route://N-0`). Beds duplicate on LED+PGM layer 80. RE `volume` on

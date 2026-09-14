@@ -63,13 +63,20 @@ PLAY 3-115 DECKLINK DEVICE 1 FORMAT 1080p5000
 rebuilding/restarting **playout-gateway** from a sofie-core checkout that includes
 the `casparcg-connection` Yarn patch — **not** by re-uploading blueprints alone.
 
+**Exclusive live CAM:** DeckLink / dshow can only open once. Blueprints must not hold
+the producer on **both** `3-115` and `4-115`. Live CAM is WithinPart on the active look
+only; the idle look's layer 115 is `EMPTY` (no rundown-long baseline warm on DoubleBox).
+If Caspar logs `Could not enable video input` on `PLAY 4-115 DECKLINK …` after a successful
+`PLAY 3-115 DECKLINK …`, upload blueprints with the exclusive-cam fix and **Reset Rundown**.
+
 | Symptom | Cause | Action |
 |---------|--------|--------|
 | `404 PLAY FAILED` / File not found for a DeckLink string | Bundle still treats producer as **MEDIA** (quoted clip path) | Upload blueprints with #89+, Apply studio config, **Reset Rundown** |
 | AMCP shows `DECKLINK 1` **without** `DEVICE` | playout-gateway still on unpatched `casparcg-connection` | Upgrade/rebuild sofie-core playout-gateway with the DeckLink DEVICE patch; restart gateway |
-| `DeckLink … [1\|1080p5000] Could not enable video input` **and** AMCP already has `DEVICE` | BMD input enable failed after parse | Device not also a Caspar **consumer**; Desktop Video connector mode; live signal |
+| `DeckLink … [1\|1080p5000] Could not enable video input` after OK on the other BG `*-115` | Same device opened on **both** `3-115` and `4-115` | Upload exclusive-cam blueprints; **Reset Rundown** (idle look must be `EMPTY`) |
+| `DeckLink … Could not enable video input` with only one `*-115` DECKLINK | BMD input enable failed after parse | Device not also a Caspar **consumer**; Desktop Video connector mode; live signal |
 | ffmpeg `rtbufsize` / buffer-too-full | **dshow://** path, not DeckLink | See [`CASPAR-FFMPEG-BUFFERS.md`](./CASPAR-FFMPEG-BUFFERS.md) |
-| `LOADBG … EMPTY` on channel 4 | Look B wipe pre-build / clear | Separate from CAM; see wipe ADR |
+| `LOADBG … EMPTY` on channel 4 camera layer | Idle look release of exclusive live CAM | Expected when the other look holds DeckLink/dshow |
 
 `db_loop` is **WithinPart** on DoubleBox Takes only (not Intro) so SYN / weather stay
 fullscreen. Production file may be named `dp_loop.mov` — place/symlink as `loops/db_loop`.

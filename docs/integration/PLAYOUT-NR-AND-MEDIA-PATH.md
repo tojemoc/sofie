@@ -98,9 +98,13 @@ NAS media tree).
 
 If AMCP shows `PLAY 2-110 route://3-0` (layer **0**) instead of `route://3`, PGM is routing an empty layer while the SYN clip plays on `3-110` → black program. Blueprints after the full-channel route fix emit `layer: null` so casparcg-state serializes a full-channel mix. Upload a fresh blueprint bundle + Activate.
 
-## Dual OBS Virtual Camera / `rtbufsize` spam
+## Dual OBS Virtual Camera / DeckLink `EnableVideoInput` fail
 
-Lookahead `PRELOAD` on camera layers was opening `dshow://` on the **idle** BG channel while the on-air look still held another instance. Camera mappings now use `LookaheadMode.NONE` and live camera pieces skip look preroll. Still raise `rtbufsize` per [`CASPAR-FFMPEG-BUFFERS.md`](./CASPAR-FFMPEG-BUFFERS.md).
+Live capture is exclusive. Opening `dshow://` or `DECKLINK DEVICE 1` on **both**
+`3-115` and `4-115` fails the second open (DeckLink: `Could not enable video input`;
+dshow: `rtbufsize` spam / black). Blueprints skip camera lookahead PRELOAD/preroll, do
+**not** baseline-warm live CAM on DoubleBox, and `EMPTY` the idle look's camera layer when
+the active look holds CAM. Still raise `rtbufsize` per [`CASPAR-FFMPEG-BUFFERS.md`](./CASPAR-FFMPEG-BUFFERS.md).
 
 ## Debug channel labels
 
