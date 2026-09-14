@@ -656,10 +656,10 @@
 			"name": "ILU Avízo",
 			"rank": 0,
 			"float": false,
-			"partType": "ilu",
+			"partType": "doublebox",
 			"payload": {
 				"name": "ILU Avízo",
-				"type": "ILU"
+				"type": "DOUBLEBOX"
 			},
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
@@ -1298,12 +1298,11 @@
 			"name": "Sledujte na www.360tka.sk",
 			"rank": 1,
 			"float": false,
-			"pieceType": "headline",
+			"pieceType": "doublebox-ilu",
 			"payload": {
 				"iluFile": "clips/ILU AVIZO.mp4",
-				"sourceEnabled": false,
-				"source": "",
-				"iluPrerendered": true
+				"text": "Sledujte na www.360tka.sk",
+				"volume": 0.5
 			},
 			"start": 0,
 			"id": "piece-avizo-ilu",
