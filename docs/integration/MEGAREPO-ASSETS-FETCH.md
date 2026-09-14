@@ -32,9 +32,9 @@ Pin is the immutable Sofie commit with weather `cities` stored as a JSON **strin
 
 | Item | Value |
 |------|--------|
-| Sofie commit | `e297e0911331667ad0b3c0bd21843356456bf93a` |
-| unopus `PINNED_SOFIE_ASSETS_REF` | `e297e0911331667ad0b3c0bd21843356456bf93a` |
-| sofie-demo-blueprints `PINNED_SOFIE_ASSETS_REF` | `e297e0911331667ad0b3c0bd21843356456bf93a` |
+| Sofie commit | `559f16bbe9991575aef67807e7dadfd3b03bfb3c` |
+| unopus `PINNED_SOFIE_ASSETS_REF` | `559f16bbe9991575aef67807e7dadfd3b03bfb3c` |
+| sofie-demo-blueprints `PINNED_SOFIE_ASSETS_REF` | `559f16bbe9991575aef67807e7dadfd3b03bfb3c` |
 | unopus override (optional) | `SOFIE_ASSETS_REF` — if set, must be a full 40-char lowercase SHA; otherwise defaults to `PINNED_SOFIE_ASSETS_REF` |
 
 Both consumer scripts must pin the **same** commit SHA, verify every file against
