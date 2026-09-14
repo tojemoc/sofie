@@ -44,6 +44,28 @@ Headline ILU remains on LED `casparcg_ilu_player` (1-115). PGM hears the mix via
   right edge stuck to the screen right (`FILL 0.2 0.1 0.8 0.8`). ILU covers CAM left
   overhang — no CAM cover-crop.
 
+### DeckLink producer notes (DEVICE / 404 / EnableVideoInput)
+
+Keep the studio string as Caspar docs show it, e.g. `DECKLINK DEVICE 1 FORMAT 1080p5000`.
+Demo blueprints (≥ sofie-demo-blueprints **#89**) parse that into TSR **INPUT** /
+PlayDecklink. Playout then emits AMCP like:
+
+```text
+PLAY 3-115 DECKLINK 1 FORMAT 1080P5000
+```
+
+The missing word `DEVICE` is **casparcg-connection** serialization, not blueprints
+eating the token. Caspar’s DeckLink producer accepts both `DECKLINK DEVICE N` and
+`DECKLINK N` (device from `DEVICE=` or from the next token).
+
+| Symptom | Cause | Action |
+|---------|--------|--------|
+| `404 PLAY FAILED` / File not found for a DeckLink string | Bundle still treats producer as **MEDIA** (quoted clip path) | Upload blueprints with #89+, Apply studio config, **Reset Rundown** |
+| AMCP shows `DECKLINK 1` without `DEVICE` | Expected PlayDecklink serialize | No change needed |
+| `DeckLink … [1\|1080p5000] Could not enable video input` / `EnableVideoInput` | Device+format **parsed**; BMD input enable failed | Ensure that DeckLink index is not also a Caspar **consumer**, Desktop Video connector mode matches, and a live signal is present; probe with Client AMCP `PLAY 3-115 DECKLINK DEVICE 1 FORMAT 1080p5000` |
+| ffmpeg `rtbufsize` / buffer-too-full | **dshow://** path, not DeckLink | See [`CASPAR-FFMPEG-BUFFERS.md`](./CASPAR-FFMPEG-BUFFERS.md) |
+| `LOADBG … EMPTY` on channel 4 | Look B wipe pre-build / clear | Separate from CAM; see wipe ADR |
+
 `db_loop` is **WithinPart** on DoubleBox Takes only (not Intro) so SYN / weather stay
 fullscreen. Production file may be named `dp_loop.mov` — place/symlink as `loops/db_loop`.
 
