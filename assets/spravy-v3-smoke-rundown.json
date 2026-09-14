@@ -492,7 +492,7 @@
 			},
 			"duration": 2.5,
 			"script": "Správy jednou vetou.",
-			"skip": false,
+			"skip": true,
 			"editorChecked": false,
 			"id": "part-sjv-open",
 			"playlistId": null,
@@ -578,7 +578,7 @@
 			},
 			"duration": 2.5,
 			"script": "Šport.",
-			"skip": false,
+			"skip": true,
 			"editorChecked": false,
 			"id": "part-sport-open",
 			"playlistId": null,
@@ -656,10 +656,10 @@
 			"name": "ILU Avízo",
 			"rank": 0,
 			"float": false,
-			"partType": "doublebox",
+			"partType": "ilu-zaver",
 			"payload": {
 				"name": "ILU Avízo",
-				"type": "DOUBLEBOX"
+				"type": "Cam"
 			},
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
@@ -688,10 +688,10 @@
 			"name": "ILU Avízo záver",
 			"rank": 2,
 			"float": false,
-			"partType": "doublebox",
+			"partType": "ilu-zaver",
 			"payload": {
 				"name": "ILU Avízo záver",
-				"type": "DOUBLEBOX"
+				"type": "Cam"
 			},
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
@@ -737,7 +737,7 @@
 			"name": "Sledujte na www.360tka.sk",
 			"rank": 0,
 			"float": false,
-			"pieceType": "doublebox-ilu",
+			"pieceType": "ilu-zaver",
 			"payload": {
 				"iluFile": "clips/ILU AVIZO MIGAL.mp4",
 				"text": "Sledujte na www.360tka.sk",
@@ -1240,7 +1240,7 @@
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-sjv",
-			"partId": "part-sjv-open"
+			"partId": "part-sjv-syn-1"
 		},
 		{
 			"name": "WIPE: wipe_sport.mov: Sport",
@@ -1257,7 +1257,7 @@
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-sport",
-			"partId": "part-sport-open"
+			"partId": "part-sport-syn-1"
 		},
 		{
 			"name": "WIPE: wipe_pocasie.mov: Pocasie",
@@ -1298,7 +1298,7 @@
 			"name": "Sledujte na www.360tka.sk",
 			"rank": 1,
 			"float": false,
-			"pieceType": "doublebox-ilu",
+			"pieceType": "ilu-zaver",
 			"payload": {
 				"iluFile": "clips/ILU AVIZO.mp4",
 				"text": "Sledujte na www.360tka.sk",
