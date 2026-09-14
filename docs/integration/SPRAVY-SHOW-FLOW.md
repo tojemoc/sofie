@@ -4,7 +4,7 @@ Canonical operator sequence for `assets/spravy-v3-smoke-rundown.json` and the
 hypercomposed Caspar stack. Topology layers: [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md).
 DoubleBox geometry: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 
-## Spine (5 topics)
+## Spine (4 topics)
 
 | # | Block | LED (ch1) | PGM (ch2) | Transition |
 |---|-------|-----------|-----------|------------|
