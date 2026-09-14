@@ -33,9 +33,9 @@ Pin is the immutable Sofie commit that replaced the smoke baseline with Jakub’
 
 | Item | Value |
 |------|--------|
-| Sofie commit | `PIN_PENDING_THIS_PR` |
-| unopus `PINNED_SOFIE_ASSETS_REF` | `PIN_PENDING_THIS_PR` |
-| sofie-demo-blueprints `PINNED_SOFIE_ASSETS_REF` | `PIN_PENDING_THIS_PR` |
+| Sofie commit | `71acdf8711c48686e14a94493cc6b04e5b27d38d` |
+| unopus `PINNED_SOFIE_ASSETS_REF` | `71acdf8711c48686e14a94493cc6b04e5b27d38d` |
+| sofie-demo-blueprints `PINNED_SOFIE_ASSETS_REF` | `71acdf8711c48686e14a94493cc6b04e5b27d38d` |
 | unopus override (optional) | `SOFIE_ASSETS_REF` — if set, must be a full 40-char lowercase SHA; otherwise defaults to `PINNED_SOFIE_ASSETS_REF` |
 
 Both consumer scripts must pin the **same** commit SHA, verify every file against
