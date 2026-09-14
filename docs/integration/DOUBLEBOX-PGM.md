@@ -36,7 +36,7 @@ Headline ILU remains on LED `casparcg_ilu_player` (1-115). PGM hears the mix via
 `PLAY 2-110 route://{3|4}` (`layer: null` — full channel, never `route://N-0`).
 
 **Camera / UVC:** studio `casparcg.hypercomposed.pgmCameraProducer` (e.g.
-`dshow://video=OBS Virtual Camera`) on the **active BG look** (`casparcg_pgm_camera` /
+`dshow://video=OBS Virtual Camera`, or `DECKLINK DEVICE 1 FORMAT 1080p5000` via TSR **INPUT** so playout does not quote the producer as a clip path) on the **active BG look** (`casparcg_pgm_camera` /
 `_b` → channel **3 or 4**, layer **115**). PGM hears CAM via `route://{3|4}`:
 
 - **Headlines / post-intro MOD** → look **{3|4}-115** **fullscreen** (FILL `0 0 1 1`)
