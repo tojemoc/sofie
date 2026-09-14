@@ -105,7 +105,7 @@ the HTML template loaded — the companion ILU PLAY still needs the file.
 | SPRÁVY JEDNOU VETOU | GFX open row + SYN slots (`l3d-sjv`); wipe on first SYN |
 | ŠPORT | GFX open row + SYN slots (`l3d-sport`); wipe on first SYN |
 | POČASIE | `weather` |
-| ZÁVER + AVIZO | ILU avízo (+ skipped SYN/ILU záver), `outro` — export uses `ilu`/`headline` (not `ilu-zaver`) |
+| ZÁVER + AVIZO | `ilu-zaver` avízo (+ skipped SYN/`ilu-zaver` záver), `outro` |
 
 Clip paths are placeholders under `clips/`. Camera letters:
 **A→1**, **P→2**, **M→3**.

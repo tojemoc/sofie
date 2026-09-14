@@ -703,10 +703,10 @@
 			"name": "ILU Avízo",
 			"rank": 0,
 			"float": false,
-			"partType": "ilu",
+			"partType": "ilu-zaver",
 			"payload": {
 				"name": "ILU Avízo",
-				"type": "ILU"
+				"type": "ILU-ZAVER"
 			},
 			"script": "No a na záver ešte jeden tip od nás. Je už unavený z rečí o kaviarenských povaľačoch a že má ísť robiť skutočnú robotu. V rozhovore s Denisou Hopkovou to povedal herec Roman Pomajbo. Otvorene hovoril aj o skúsenostiach so slovenským zdravotníctvom, keď potrebovala pomoc jeho mama.",
 			"duration": 19,
@@ -739,10 +739,10 @@
 			"name": "ILU Avízo záver",
 			"rank": 2,
 			"float": false,
-			"partType": "ilu",
+			"partType": "ilu-zaver",
 			"payload": {
 				"name": "ILU Avízo záver",
-				"type": "ILU"
+				"type": "ILU-ZAVER"
 			},
 			"script": "Zvažuje strana Smer aj 14te dôchodky? Celú debatu nájdete na našom webe — 360tka.sk. A to je na dnes všetko, dovidenia opäť zajtra.",
 			"duration": 9,
@@ -2053,15 +2053,14 @@
 			"partId": "part-outro-1-ilu-av-zo"
 		},
 		{
-			"name": "ILU",
+			"name": "Sledujte na www.360tka.sk",
 			"rank": 1,
 			"float": false,
-			"pieceType": "headline",
+			"pieceType": "ilu-zaver",
 			"payload": {
 				"iluFile": "clips/ILU AVIZO POMAJBO.mp4",
-				"sourceEnabled": false,
-				"source": "",
-				"iluPrerendered": true
+				"text": "Sledujte na www.360tka.sk",
+				"volume": 0.5
 			},
 			"start": 0,
 			"duration": 19,
@@ -2138,12 +2137,11 @@
 			"name": "Sledujte na www.360tka.sk",
 			"rank": 0,
 			"float": false,
-			"pieceType": "headline",
+			"pieceType": "ilu-zaver",
 			"payload": {
 				"iluFile": "clips/ILU AVIZO MIGAL.mp4",
-				"sourceEnabled": false,
-				"source": "",
-				"iluPrerendered": true
+				"text": "Sledujte na www.360tka.sk",
+				"volume": 0.5
 			},
 			"start": 0,
 			"duration": 9,

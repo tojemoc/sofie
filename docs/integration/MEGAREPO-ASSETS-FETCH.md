@@ -28,15 +28,14 @@ Do **not** fetch from `…/sofie/main/assets/…` or `…/sofie/cursor/…/asset
 ## Current pin (SPRÁVY smoke — 2026-09-14 export, 4 topics)
 
 Pin is the immutable Sofie commit that replaced the smoke baseline with Jakub’s
-2026-09-14 RE export (Migaľ segment dropped). Piece/part type manifests are
-unchanged from polish-2 (`ilu-zaver` types still present; smoke závěr in this
-export uses `ilu`/`headline`).
+2026-09-14 RE export (Migaľ segment dropped) and maps závěr ILU Avízo parts to
+`ilu-zaver` (piece/part manifests unchanged from polish-2).
 
 | Item | Value |
 |------|--------|
-| Sofie commit | `0237090c34dca9569df9b0c9aa0c63158bb2f1e4` |
-| unopus `PINNED_SOFIE_ASSETS_REF` | `0237090c34dca9569df9b0c9aa0c63158bb2f1e4` |
-| sofie-demo-blueprints `PINNED_SOFIE_ASSETS_REF` | `0237090c34dca9569df9b0c9aa0c63158bb2f1e4` |
+| Sofie commit | `PIN_PENDING_THIS_PR` |
+| unopus `PINNED_SOFIE_ASSETS_REF` | `PIN_PENDING_THIS_PR` |
+| sofie-demo-blueprints `PINNED_SOFIE_ASSETS_REF` | `PIN_PENDING_THIS_PR` |
 | unopus override (optional) | `SOFIE_ASSETS_REF` — if set, must be a full 40-char lowercase SHA; otherwise defaults to `PINNED_SOFIE_ASSETS_REF` |
 
 Both consumer scripts must pin the **same** commit SHA, verify every file against
@@ -46,7 +45,7 @@ Both consumer scripts must pin the **same** commit SHA, verify every file agains
 
 | File | SHA-256 |
 |------|---------|
-| `spravy-v3-smoke-rundown.json` | `3ce16c324d79101cb3a840d61fdb0d95d55c643c8da23420c7f5aee2e5da71a0` |
+| `spravy-v3-smoke-rundown.json` | `0ba76d11e3bc063100d2a62b8a7706fb6854f05181139954d8415d20550e0eab` |
 | `sofie-rundown-editor-piece-types.json` | `e8bfa1aa062965c98981982f02a4eb2d1233f63e0254f84c46ed7676e618b001` |
 | `sofie-rundown-editor-part-types.json` | `2bd2c0c6f29e4f84575ba86e47ee20861cd4ffe75a2421d7a6b833d6dc5c991b` |
 | `sofie-rundown-editor-segment-types.json` | `56f68da340a1029f4c31a1f69b6594e5d440f1e7223528cd2ce9dbaa8c1aaf7b` |
