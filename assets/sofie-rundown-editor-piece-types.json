@@ -14,8 +14,7 @@
 				"includeInName": true
 			}
 		],
-		"techOnly": true,
-		"showInToolbar": false
+		"techOnly": true
 	},
 	{
 		"id": "video",
@@ -71,8 +70,7 @@
 				"includeInName": true
 			}
 		],
-		"techOnly": true,
-		"showInToolbar": false
+		"techOnly": true
 	},
 	{
 		"id": "bg-loop",
@@ -90,8 +88,7 @@
 				"includeInName": true
 			}
 		],
-		"techOnly": true,
-		"showInToolbar": false
+		"techOnly": true
 	},
 	{
 		"id": "bg-music",
@@ -109,8 +106,7 @@
 				"includeInName": true
 			}
 		],
-		"techOnly": true,
-		"showInToolbar": false
+		"techOnly": true
 	},
 	{
 		"id": "wipe",
@@ -134,8 +130,7 @@
 				"includeInName": true
 			}
 		],
-		"techOnly": true,
-		"showInToolbar": false
+		"techOnly": true
 	},
 	{
 		"id": "l3d-tema",
@@ -343,8 +338,7 @@
 				"type": "string"
 			}
 		],
-		"techOnly": true,
-		"showInToolbar": false
+		"techOnly": true
 	},
 	{
 		"id": "headline",
@@ -448,8 +442,7 @@
 		"colour": "#7f7f7f",
 		"includeTypeInName": true,
 		"payload": [],
-		"techOnly": true,
-		"showInToolbar": false
+		"techOnly": true
 	},
 	{
 		"id": "outro",
@@ -466,8 +459,7 @@
 				"subdir": "assets"
 			}
 		],
-		"techOnly": true,
-		"showInToolbar": false
+		"techOnly": true
 	},
 	{
 		"id": "l3d-odporucanie",
