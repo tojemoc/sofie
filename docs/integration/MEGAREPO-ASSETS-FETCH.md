@@ -35,8 +35,8 @@ specs are rewritten for the 2026-09-14 RE export.
 
 | Item | Value |
 |------|--------|
-| Sofie commit | `7a1e2142bb6c55be750340c021ef4e641f37723e` |
-| unopus `PINNED_SOFIE_ASSETS_REF` | `7a1e2142bb6c55be750340c021ef4e641f37723e` |
+| Sofie commit | `a1c6b9b727bba9cb9898eff1d3f1b3bc4879740c` |
+| unopus `PINNED_SOFIE_ASSETS_REF` | `a1c6b9b727bba9cb9898eff1d3f1b3bc4879740c` |
 | unopus override (optional) | `SOFIE_ASSETS_REF` — if set, must be a full 40-char lowercase SHA; otherwise defaults to `PINNED_SOFIE_ASSETS_REF` |
 
 ### Per-file SHA-256 at unopus pin (`a1c6b9b…`)

@@ -34,7 +34,7 @@ Standalone **SRC** piece type id is `source` → Caspar template **`gfx/source`*
 id `source`. If the pill does nothing on air, confirm that HTML template is on
 the Caspar template path and Sofie Reset Rundown after reload.
 
-Wipes: piece type `wipe` → Caspar PGM layer 200 (`wipes/wipe`; story blocks may
+Wipes: piece type `wipe` → Caspar PGM layer 205 (`wipes/wipe`; story blocks may
 use `wipes/wipe_sjv`, `wipes/wipe_sport`, `wipes/wipe_pocasie`). See
 `docs/integration/DOUBLEBOX-PGM.md` and
 `docs/integration/handoffs/blueprints-baseline-bg-loop.md`.
