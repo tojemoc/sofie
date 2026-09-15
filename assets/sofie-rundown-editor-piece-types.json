@@ -332,6 +332,11 @@
 				"subdir": "clips"
 			},
 			{
+				"id": "sourceDuration",
+				"label": "Source duration (ms)",
+				"type": "number"
+			},
+			{
 				"id": "iluPrerendered",
 				"label": "ILU prerendered/bypass",
 				"type": "boolean"

@@ -102,16 +102,29 @@ piece On air (seconds) **and** `sourceDuration` (ms). Operators may override or
 to source length.
 
 **L3D graphics:** empty On air is intentional. Blueprints use `duration: undefined` on
-the timeline enable → L3D **holds until Take**. RE no longer auto-fills empty L3D On
+the timeline enable → L3D **holds until Take**. Smoke `l3d-headline` and `l3d-mod`
+pieces ship with **no** On air (until next Take). RE no longer auto-fills empty L3D On
 air from part duration (that made nuked durations snap back and L3Ds disappear
 mid-part). This does **not** apply to wipes — empty wipe On air still plays
 `DEFAULT_WIPE_DURATION_MS` (**2500**) and RE shows that as **2.5s** (see Wipes below).
+
+**Headline ILU clips:** On air should match the source file length (`payload.sourceDuration`
+from ffprobe). Media picker seeds both when you pick/re-pick `iluFile`. Blueprints still
+**hold ILU MEDIA until Take** at playout (`holdIluUntilTake`) so a short On air does not
+CLEAR Caspar early — the RE duration is for planning / part timing, not for early CLEAR.
 
 **ffprobe vs browser preview:** probe takes the max of container/stream duration
 tags and `nb_frames / fps`. Lying `mvhd` tags (common on NLE exports) used to
 report a short Source length while `<video>` correctly showed the playable
 length — re-pick / blur the media path after upgrading to refresh stored
 `sourceDuration`.
+
+**ffprobe in Docker (unopus):** the Rundown Editor image must include the `ffmpeg`
+package (`ffprobe` on PATH). Older images only installed `curl` for the megarepo asset
+fetch and **did not** ship ffprobe — probes then failed silently (`durationSeconds: null`).
+After rebuilding with ffmpeg, check the backend log for `ffprobe: available` (or the
+warning if missing), then hit authenticated `GET /api/media/duration?path=clips/…`
+or re-pick a headline ILU in the UI and confirm Source length fills.
 
 **Shown in RE:** On air vs Source columns where `sourceDuration` exists.
 

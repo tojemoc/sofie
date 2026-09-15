@@ -100,8 +100,8 @@ the HTML template loaded — the companion ILU PLAY still needs the file.
 
 | Segment | Parts |
 |---------|--------|
-| HEADLINES | HEADLINE1–3 (ILU + L3D + cam); **no** wipe pieces |
-| INTRO | Intro overlay on **PGM**; Mod L3D Gabriela Kajtárová + logo-bug; **no** bg-loop piece, **no** wipe |
+| HEADLINES | HEADLINE1–3 (ILU + L3D + cam); **no** wipe pieces; `l3d-headline` On air empty (until Take); ILU On air = clip length |
+| INTRO | Intro overlay on **PGM**; Mod L3D Gabriela Kajtárová (`l3d-mod` On air empty / until Take) + logo-bug; **no** bg-loop piece, **no** wipe |
 | Téma 1–4 | Obchodný register, Spor Saková – Fico, Referendum / novela Ústavy, Ukrajina — DoubleBox / SYN patterns; open/`skip` parts kept where set in export |
 | SPRÁVY JEDNOU VETOU | GFX open row + SYN slots (`l3d-sjv`); wipe on first SYN |
 | ŠPORT | GFX open row + SYN slots (`l3d-sport`); wipe on first SYN |
@@ -314,8 +314,11 @@ CG 1-121 ADD 1 "gfx/headline-fallback" "{\"source\":\"TASR\"}"
 ### Merged (PR #32, `6e1f08a`)
 
 - **Media readiness:** `GET /api/rundowns/:id/readiness` — evaluates `mediaPick` fields (no WebM
-  sibling); polls every 10s via `RundownReadinessProvider`. Media picker probes clip duration via
-  ffprobe and pulls it into piece/part duration on save.
+  sibling); polls every 10s via `RundownReadinessProvider`. Media picker probes clip length via
+  ffprobe and seeds the piece **On air** value plus `payload.sourceDuration` (ms). **Part Duration**
+  is a separate story-level field managed by the editor / duration sync — not written directly by
+  the probe. **Docker images must include the `ffmpeg` package** (`ffprobe` on PATH); without it
+  probes return null silently. Backend logs `ffprobe: available` or a warning at startup.
 - **Story sidebar:** columnar list (Status | Type | Story | Dur) with READY/NOT READY badges
 - **Theming:** dark default + light option; semantic `--re-*` tokens; ThemeToggle in navbar/login
 - **Rebrand:** Unopus (navbar breadcrumb)

@@ -48,6 +48,18 @@ specs are rewritten for the 2026-09-14 RE export.
 | `sofie-rundown-editor-part-types.json` | `676ed7eb27f9111dc4c1c173b85a5ccfee6f309db0ed2e351c2190d1d40040fb` |
 | `sofie-rundown-editor-segment-types.json` | `56f68da340a1029f4c31a1f69b6594e5d440f1e7223528cd2ce9dbaa8c1aaf7b` |
 
+### Pending pin (l3d-headline / l3d-mod until-Take + headline `sourceDuration`)
+
+Update to the merge commit SHA after merge. Bump unopus
+`PINNED_SOFIE_ASSETS_REF` + checksums together:
+
+| File | SHA-256 (pre-merge working tree) |
+|------|---------|
+| `spravy-v3-smoke-rundown.json` | `2c12c030740c143fcb45bd9887de0c9671b973bedbf6e7dfad90ff970899c0a7` |
+| `sofie-rundown-editor-piece-types.json` | `ddd1a39e8dfaa50b24e3264194895753f5a634d68ec67d20bd7815d63d13d893` |
+| `sofie-rundown-editor-part-types.json` | `676ed7eb27f9111dc4c1c173b85a5ccfee6f309db0ed2e351c2190d1d40040fb` |
+| `sofie-rundown-editor-segment-types.json` | `56f68da340a1029f4c31a1f69b6594e5d440f1e7223528cd2ce9dbaa8c1aaf7b` |
+
 ### sofie-demo-blueprints (pre-619a6f7 smoke IDs)
 
 Blueprint vitest fixtures still expect `part-hl-*` / `part-tema-1-db` / `seg-tema-5`.
