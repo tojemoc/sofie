@@ -50,8 +50,8 @@ specs are rewritten for the 2026-09-14 RE export.
 
 ### Pending pin (l3d-headline until-Take + headline `sourceDuration`)
 
-After this branch merges, bump unopus `PINNED_SOFIE_ASSETS_REF` to the merge commit and
-set checksums (working-tree values below; recompute with `git show <sha>:assets/…`):
+Branch tip `b863cf2` (update to the merge commit SHA). Bump unopus
+`PINNED_SOFIE_ASSETS_REF` + checksums together after merge:
 
 | File | SHA-256 (pre-merge working tree) |
 |------|---------|
