@@ -977,17 +977,17 @@
 			"duration": 58
 		},
 		{
-			"name": "L3DS: Robert Fico",
+			"name": "L3DS: Fico",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-syn",
 			"start": 1,
 			"payload": {
-				"name": "Robert Fico",
-				"role": "predseda vlády"
+				"name": "Fico",
+				"role": ""
 			},
 			"editorChecked": false,
-			"id": "part-tema-1-2-syn-cluster-taraba-l3ds-robert-fico",
+			"id": "part-tema-1-2-syn-cluster-taraba-l3ds-fico",
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-1",
@@ -995,17 +995,17 @@
 			"duration": 20
 		},
 		{
-			"name": "L3DS: Branislav Gröhling",
+			"name": "L3DS: Grohling",
 			"rank": 2,
 			"float": false,
 			"pieceType": "l3d-syn",
 			"start": 22,
 			"payload": {
-				"name": "Branislav Gröhling",
-				"role": "predseda SaS"
+				"name": "Grohling",
+				"role": ""
 			},
 			"editorChecked": false,
-			"id": "part-tema-1-2-syn-cluster-taraba-l3ds-branislav-grohling",
+			"id": "part-tema-1-2-syn-cluster-taraba-l3ds-grohling",
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-1",
@@ -1013,17 +1013,17 @@
 			"duration": 10
 		},
 		{
-			"name": "L3DS: Peter Michelko",
+			"name": "L3DS: Roman Michelko",
 			"rank": 3,
 			"float": false,
 			"pieceType": "l3d-syn",
 			"start": 33,
 			"payload": {
-				"name": "Peter Michelko",
-				"role": "poslanec NR SR (SNS)"
+				"name": "Roman Michelko",
+				"role": ""
 			},
 			"editorChecked": false,
-			"id": "part-tema-1-2-syn-cluster-taraba-l3ds-peter-michelko",
+			"id": "part-tema-1-2-syn-cluster-taraba-l3ds-roman-michelko",
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-1",
@@ -1031,17 +1031,17 @@
 			"duration": 12
 		},
 		{
-			"name": "L3DS: Peter Pellegrini",
+			"name": "L3DS: Pelle",
 			"rank": 4,
 			"float": false,
 			"pieceType": "l3d-syn",
 			"start": 46,
 			"payload": {
-				"name": "Peter Pellegrini",
-				"role": "prezident SR"
+				"name": "Pelle",
+				"role": ""
 			},
 			"editorChecked": false,
-			"id": "part-tema-1-2-syn-cluster-taraba-l3ds-peter-pellegrini",
+			"id": "part-tema-1-2-syn-cluster-taraba-l3ds-pelle",
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-1",
@@ -1120,17 +1120,17 @@
 			"duration": 24
 		},
 		{
-			"name": "L3DS: Mária Kolíková",
+			"name": "L3DS: Kolíková",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-syn",
 			"start": 1,
 			"payload": {
-				"name": "Mária Kolíková",
-				"role": "poslankyňa NR SR (SaS)"
+				"name": "Kolíková",
+				"role": ""
 			},
 			"editorChecked": false,
-			"id": "part-tema-1-4-syn-cluster-kolikova-l3ds-maria-kolikova",
+			"id": "part-tema-1-4-syn-cluster-kolikova-l3ds-kolikova",
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-1",
@@ -1138,17 +1138,17 @@
 			"duration": 14
 		},
 		{
-			"name": "L3DS: Peter Michelko",
+			"name": "L3DS: Roman Michelko",
 			"rank": 2,
 			"float": false,
 			"pieceType": "l3d-syn",
 			"start": 16,
 			"payload": {
-				"name": "Peter Michelko",
-				"role": "poslanec NR SR (SNS)"
+				"name": "Roman Michelko",
+				"role": ""
 			},
 			"editorChecked": false,
-			"id": "part-tema-1-4-syn-cluster-kolikova-l3ds-peter-michelko",
+			"id": "part-tema-1-4-syn-cluster-kolikova-l3ds-roman-michelko",
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-1",
@@ -1245,17 +1245,17 @@
 			"duration": 56
 		},
 		{
-			"name": "L3DS: Róbert Richter",
+			"name": "L3DS: Richter",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-syn",
 			"start": 3,
 			"payload": {
-				"name": "Róbert Richter",
-				"role": "poslanec NR SR (SMER-SD)"
+				"name": "Richter",
+				"role": ""
 			},
 			"editorChecked": false,
-			"id": "part-tema-2-2-syn-cluster-kruzky-l3ds-robert-richter",
+			"id": "part-tema-2-2-syn-cluster-kruzky-l3ds-richter",
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-2",
@@ -1263,17 +1263,17 @@
 			"duration": 12
 		},
 		{
-			"name": "L3DS: Peter Michelko",
+			"name": "L3DS: Roman Michelko",
 			"rank": 2,
 			"float": false,
 			"pieceType": "l3d-syn",
 			"start": 28,
 			"payload": {
-				"name": "Peter Michelko",
-				"role": "poslanec NR SR (SNS)"
+				"name": "Roman Michelko",
+				"role": ""
 			},
 			"editorChecked": false,
-			"id": "part-tema-2-2-syn-cluster-kruzky-l3ds-peter-michelko",
+			"id": "part-tema-2-2-syn-cluster-kruzky-l3ds-roman-michelko",
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-2",
@@ -1281,17 +1281,17 @@
 			"duration": 10
 		},
 		{
-			"name": "L3DS: Tibor Gašpar",
+			"name": "L3DS: Gašpar",
 			"rank": 3,
 			"float": false,
 			"pieceType": "l3d-syn",
 			"start": 48,
 			"payload": {
-				"name": "Tibor Gašpar",
-				"role": "poslanec NR SR (SMER-SD)"
+				"name": "Gašpar",
+				"role": ""
 			},
 			"editorChecked": false,
-			"id": "part-tema-2-2-syn-cluster-kruzky-l3ds-tibor-gaspar",
+			"id": "part-tema-2-2-syn-cluster-kruzky-l3ds-gaspar",
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-2",
@@ -1599,17 +1599,17 @@
 			"duration": 50
 		},
 		{
-			"name": "L3DS: Adel Ghannam",
+			"name": "L3DS: Adel",
 			"rank": 1,
 			"float": false,
 			"pieceType": "l3d-syn",
 			"start": 1,
 			"payload": {
-				"name": "Adel Ghannam",
-				"role": "redaktor 360tky"
+				"name": "Adel",
+				"role": ""
 			},
 			"editorChecked": false,
-			"id": "part-tema-4-2-syn-cluster-adel-l3ds-adel-ghannam",
+			"id": "part-tema-4-2-syn-cluster-adel-l3ds-adel",
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-4",
@@ -1617,17 +1617,17 @@
 			"duration": 28
 		},
 		{
-			"name": "L3DS: Marek Para",
+			"name": "L3DS: Para",
 			"rank": 2,
 			"float": false,
 			"pieceType": "l3d-syn",
 			"start": 32,
 			"payload": {
-				"name": "Marek Para",
-				"role": "poškodený"
+				"name": "Para",
+				"role": ""
 			},
 			"editorChecked": false,
-			"id": "part-tema-4-2-syn-cluster-adel-l3ds-marek-para",
+			"id": "part-tema-4-2-syn-cluster-adel-l3ds-para",
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-4",
@@ -1635,17 +1635,17 @@
 			"duration": 8
 		},
 		{
-			"name": "L3DS: Martin Juhás",
+			"name": "L3DS: Juhas",
 			"rank": 3,
 			"float": false,
 			"pieceType": "l3d-syn",
 			"start": 42,
 			"payload": {
-				"name": "Martin Juhás",
-				"role": "obžalovaný"
+				"name": "Juhas",
+				"role": ""
 			},
 			"editorChecked": false,
-			"id": "part-tema-4-2-syn-cluster-adel-l3ds-martin-juhas",
+			"id": "part-tema-4-2-syn-cluster-adel-l3ds-juhas",
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-4",
