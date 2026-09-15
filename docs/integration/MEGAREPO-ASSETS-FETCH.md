@@ -39,13 +39,13 @@ specs are rewritten for the 2026-09-14 RE export.
 | unopus `PINNED_SOFIE_ASSETS_REF` | `7a1e2142bb6c55be750340c021ef4e641f37723e` |
 | unopus override (optional) | `SOFIE_ASSETS_REF` — if set, must be a full 40-char lowercase SHA; otherwise defaults to `PINNED_SOFIE_ASSETS_REF` |
 
-### Per-file SHA-256 at unopus pin (`7a1e214…`)
+### Per-file SHA-256 at unopus pin (`a1c6b9b…`)
 
 | File | SHA-256 |
 |------|---------|
-| `spravy-v3-smoke-rundown.json` | `0ba76d11e3bc063100d2a62b8a7706fb6854f05181139954d8415d20550e0eab` |
-| `sofie-rundown-editor-piece-types.json` | `0d34dabf4639e44462540be72797d414d3f8d0f680771e071332987da22e1104` |
-| `sofie-rundown-editor-part-types.json` | `cf6db787f851b8f9d74442252f4acd4b8e4ed44841161d39d2dec734f3de98ef` |
+| `spravy-v3-smoke-rundown.json` | `efd3e6b3f6d98b4f1f0f755905989ab349642cee752b0da338cf1964e560f4ad` |
+| `sofie-rundown-editor-piece-types.json` | `dce7e9b7b49a338826864b7f289b8e73a62c38ef04a3fa6dd42bd2c908e6a52d` |
+| `sofie-rundown-editor-part-types.json` | `676ed7eb27f9111dc4c1c173b85a5ccfee6f309db0ed2e351c2190d1d40040fb` |
 | `sofie-rundown-editor-segment-types.json` | `56f68da340a1029f4c31a1f69b6594e5d440f1e7223528cd2ce9dbaa8c1aaf7b` |
 
 ### sofie-demo-blueprints (pre-619a6f7 smoke IDs)
