@@ -1,7 +1,8 @@
 # FFmpeg recording — PGM video + discrete audio
 
 Record the **PGM Caspar channel** (default **2**) with an FFmpeg consumer so you get
-the composed picture plus multi-channel PCM for post / podcast stems.
+the composed picture plus stereo PCM for post / podcast stems. Discrete multi-channel
+PCM needs the four-channel configuration below.
 
 ## Always-on consumer (`caspar.config`)
 
