@@ -1,0 +1,2395 @@
+{
+  "rundown": {
+    "name": "Správy muster smoke",
+    "sync": true,
+    "isTemplate": false,
+    "payload": {},
+    "expectedStartTime": 1789471800000,
+    "expectedEndTime": 1789472160000,
+    "id": "spravy-v3-smoke",
+    "playlistId": null
+  },
+  "segments": [
+    {
+      "isTemplate": false,
+      "name": "HEADLINES",
+      "rank": 0,
+      "float": false,
+      "segmentType": "headlines",
+      "payload": {
+        "type": "headlines",
+        "name": "HEADLINES"
+      },
+      "id": "seg-headlines",
+      "rundownId": "spravy-v3-smoke",
+      "playlistId": null
+    },
+    {
+      "isTemplate": false,
+      "name": "INTRO",
+      "rank": 1,
+      "float": false,
+      "segmentType": "opening",
+      "payload": {
+        "type": "opening",
+        "name": "INTRO"
+      },
+      "id": "seg-intro",
+      "rundownId": "spravy-v3-smoke",
+      "playlistId": null
+    },
+    {
+      "isTemplate": false,
+      "name": "Generalny prokurator",
+      "rank": 2,
+      "float": false,
+      "segmentType": "story",
+      "payload": {
+        "type": "story",
+        "name": "Obchodný register"
+      },
+      "id": "seg-tema-1",
+      "rundownId": "spravy-v3-smoke",
+      "playlistId": null
+    },
+    {
+      "isTemplate": false,
+      "name": "Spor Saková – Fico",
+      "rank": 3,
+      "float": false,
+      "segmentType": "story",
+      "payload": {
+        "type": "story",
+        "name": "Spor Saková – Fico"
+      },
+      "id": "seg-tema-2",
+      "rundownId": "spravy-v3-smoke",
+      "playlistId": null
+    },
+    {
+      "isTemplate": false,
+      "name": "Referendum / novela Ústavy",
+      "rank": 4,
+      "float": false,
+      "segmentType": "story",
+      "payload": {
+        "type": "story",
+        "name": "Referendum / novela Ústavy"
+      },
+      "id": "seg-tema-3",
+      "rundownId": "spravy-v3-smoke",
+      "playlistId": null
+    },
+    {
+      "isTemplate": false,
+      "name": "Ukrajina",
+      "rank": 5,
+      "float": false,
+      "segmentType": "story",
+      "payload": {
+        "type": "story",
+        "name": "Ukrajina"
+      },
+      "id": "seg-tema-4",
+      "rundownId": "spravy-v3-smoke",
+      "playlistId": null
+    },
+    {
+      "isTemplate": false,
+      "name": "SPRÁVY JEDNOU VETOU",
+      "rank": 6,
+      "float": false,
+      "segmentType": "story",
+      "payload": {
+        "type": "story",
+        "name": "SPRÁVY JEDNOU VETOU"
+      },
+      "id": "seg-sjv",
+      "rundownId": "spravy-v3-smoke",
+      "playlistId": null
+    },
+    {
+      "isTemplate": false,
+      "name": "ŠPORT",
+      "rank": 7,
+      "float": false,
+      "segmentType": "story",
+      "payload": {
+        "type": "story",
+        "name": "ŠPORT"
+      },
+      "id": "seg-sport",
+      "rundownId": "spravy-v3-smoke",
+      "playlistId": null
+    },
+    {
+      "isTemplate": false,
+      "name": "POČASIE",
+      "rank": 8,
+      "float": false,
+      "segmentType": "story",
+      "payload": {
+        "type": "story",
+        "name": "POČASIE"
+      },
+      "id": "seg-weather",
+      "rundownId": "spravy-v3-smoke",
+      "playlistId": null
+    },
+    {
+      "isTemplate": false,
+      "name": "ZÁVER + AVIZO",
+      "rank": 9,
+      "float": false,
+      "segmentType": "story",
+      "payload": {
+        "type": "story",
+        "name": "ZÁVER + AVIZO"
+      },
+      "id": "seg-outro",
+      "rundownId": "spravy-v3-smoke",
+      "playlistId": null
+    }
+  ],
+  "parts": [
+    {
+      "name": "HEADLINE1",
+      "rank": 0,
+      "float": false,
+      "partType": "ilu",
+      "payload": {
+        "name": "HEADLINE1",
+        "type": "ILU"
+      },
+      "script": "Návrh na odvolanie Tomáša Tarabu je už v paláci. V najbližších týždňoch však minister nikam neodchádza.",
+      "skip": false,
+      "editorChecked": false,
+      "duration": 7,
+      "id": "part-headlines-1-headline1",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-headlines"
+    },
+    {
+      "name": "HEADLINE2",
+      "rank": 1,
+      "float": false,
+      "partType": "ilu",
+      "payload": {
+        "name": "HEADLINE2",
+        "type": "ILU"
+      },
+      "duration": 8,
+      "script": "Hľadá sa nový minister životného prostredia. SNS trvá na svojom nominantovi - pre Smer to až také jasné nie je.",
+      "skip": false,
+      "editorChecked": false,
+      "id": "part-headlines-2-headline2",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-headlines"
+    },
+    {
+      "name": "HEADLINE3",
+      "rank": 2,
+      "float": false,
+      "partType": "ilu",
+      "payload": {
+        "name": "HEADLINE3",
+        "type": "ILU"
+      },
+      "duration": 8,
+      "script": "Európa je pobúrená. Dvaja expremiéri aj bývalý šéf CIA tesne unikli ruskému útoku pri poľských hraniciach.",
+      "skip": false,
+      "editorChecked": false,
+      "id": "part-headlines-3-headline3",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-headlines"
+    },
+    {
+      "name": "Intro",
+      "rank": 0,
+      "float": false,
+      "partType": "intro",
+      "payload": {
+        "name": "Intro",
+        "type": "Intro"
+      },
+      "duration": 8,
+      "script": "",
+      "skip": false,
+      "editorChecked": false,
+      "id": "part-intro-1-intro",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-intro"
+    },
+    {
+      "name": "Gabriela Kajtárová",
+      "rank": 1,
+      "float": false,
+      "partType": "cam",
+      "payload": {
+        "name": "Gabriela Kajtárová",
+        "type": "Cam"
+      },
+      "duration": 5,
+      "script": "",
+      "skip": false,
+      "editorChecked": false,
+      "id": "part-intro-2-gabriela-kajt-rov",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-intro"
+    },
+    {
+      "name": "ILU TUREK",
+      "rank": 0,
+      "float": false,
+      "partType": "doublebox",
+      "payload": {
+        "name": "ILU Register",
+        "type": "DoubleBox"
+      },
+      "script": "Dobrý večer. Premiér Fico osobne doručil prezidentovi návrh na odvolanie ministra Tomáša Tarabu. Pred tým ho na spoločnej tlačovke chválil a naznačoval, že ide o ústupok strane SNS  ",
+      "skip": false,
+      "editorChecked": false,
+      "duration": 12,
+      "id": "part-tema-1-1-ilu-turek",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-1"
+    },
+    {
+      "name": "SYN CLUSTER GP2",
+      "rank": 1,
+      "float": false,
+      "partType": "syn",
+      "payload": {
+        "name": "SYN Susko",
+        "type": "SYN"
+      },
+      "script": "\"Denisa:\n“Či by ste boli za to, aby sa nový generálny prokurátor volil ešte pred voľbami?”\nGluck:\n“Rozhodne áno.”\nŽilinka:\n“Máme tu dlhodobo neobsadený post sudcu na ústavnom súde, dokonca teraz sú už tie miesta dve. Pripadla mi také zvláštne, že by sa mal voliť generálny prokurátor, ktorý je legitimne obsadený.”\nŠipoš:\n“Potrebujú tam dosadiť svojho človeka, ktorý ich bude chrániť na ďalších 7 rokov.”\nKaliňák:\n“Nevolí sa kandidát po skončení mandátu, mal by sa predtým. Čiže je to téma. Len sa na to musí byť väčšina zhodnúť.”\"",
+      "skip": false,
+      "editorChecked": false,
+      "duration": 36,
+      "durationMode": "manual",
+      "id": "part-tema-1-2-syn-susko",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-1"
+    },
+    {
+      "name": "SYN Šipoš",
+      "rank": 2,
+      "float": false,
+      "partType": "syn",
+      "payload": {
+        "name": "SYN Šipoš",
+        "type": "SYN"
+      },
+      "duration": 12,
+      "script": "",
+      "skip": true,
+      "editorChecked": false,
+      "id": "part-tema-1-3-syn-ipo",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-1"
+    },
+    {
+      "name": "ILU Úrad",
+      "rank": 3,
+      "float": false,
+      "partType": "doublebox",
+      "payload": {
+        "name": "ILU Úrad",
+        "type": "DoubleBox"
+      },
+      "script": "Úrad na ochranu osobných údajov už začal voči ministerstvu spravodlivosti konanie. Tvrdí, že citlivé údaje mali byť anonymizované.",
+      "duration": 9,
+      "skip": true,
+      "editorChecked": false,
+      "id": "part-tema-1-4-ilu-rad",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-1"
+    },
+    {
+      "name": "ILU Saková – Fico",
+      "rank": 0,
+      "float": false,
+      "partType": "doublebox",
+      "payload": {
+        "name": "ILU Saková – Fico",
+        "type": "DoubleBox"
+      },
+      "script": "Už zajtra by mal premiér Robert Fico poslať prezidentovi návrh na výmenu ministra životného prostredia. SNS ráta s tým, že Tomáša Tarabu nahradí štátny tajomník Filip Kuffa.",
+      "skip": false,
+      "editorChecked": false,
+      "duration": 12,
+      "id": "part-tema-2-1-ilu-sakov-fico",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-2"
+    },
+    {
+      "name": "SYN Takáč / Štefunko",
+      "rank": 1,
+      "float": false,
+      "partType": "syn",
+      "payload": {
+        "name": "SYN Takáč / Štefunko",
+        "type": "SYN"
+      },
+      "script": "Denisa:\n“Ako by sa vám pozdával pán Kufa ako nový minister životného prostredia?”\nKaliňák:\n“To nie je téma a zase sme na hypotetických otázkach, také meno nepadlo.”\nDenisa:\n“Áno, oni to stále hovoria, že to je ich kandidát.”\nKaliňák:\n“Myslím si, že neviem o tom.”\nMichelko:\n“To už naozaj nechápem, lebo bolo to v všetkých možných médiách.\nDenisa:\n“Pán Kufa to teda podľa vás nebude?\nKaliňák:\n“Ja nepredpokladám, preto ktorým čo som ja mal takého informácie, takto z verejnosti, ktoré sa hovoria, tak nie je úplne, by som povedal, priechodným kandidátom.”\nMichelko:\n“Dikcia ústavy je tak napísaná, že si neviem predstaviť, že by toto mohlo byť spochybnené.”\nGašpar:\n“Je zbytočné teraz hodnotiť pána Kuffu, keď to možno vôbec nebude nominácia na pána Kuffu.”",
+      "skip": false,
+      "editorChecked": false,
+      "duration": 35,
+      "id": "part-tema-2-2-syn-tak-tefunko",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-2"
+    },
+    {
+      "name": "ILU",
+      "rank": 2,
+      "float": false,
+      "payload": {
+        "type": "ILU"
+      },
+      "partType": "ilu",
+      "script": "Samotný Tomáš Tarba hovorí, že bude autonónmny poslanec a naznačuje, že by mohol mať aj spojencov - napríklad nezaradeného exposlanca Hlasu Jána Ferenčáka či súčasného poslanca Hlasu Petra Slyška.",
+      "skip": true,
+      "editorChecked": false,
+      "duration": 14,
+      "id": "part-tema-2-3-ilu",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-2"
+    },
+    {
+      "name": "DoubleBox",
+      "rank": 3,
+      "float": false,
+      "payload": {
+        "type": "DoubleBox"
+      },
+      "partType": "doublebox",
+      "script": "Samotný Tomáš Tarba hovorí, že bude autonónmny poslanec a naznačuje, že by mohol mať aj spojencov - napríklad nezaradeného exposlanca Hlasu Jána Ferenčáka či súčasného poslanca Hlasu Petra Slyška.",
+      "skip": false,
+      "editorChecked": false,
+      "duration": 14,
+      "id": "part-tema-2-4-doublebox",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-2"
+    },
+    {
+      "name": "SYN PUCI",
+      "rank": 4,
+      "float": false,
+      "payload": {
+        "type": "SYN"
+      },
+      "partType": "syn",
+      "script": "“Zatiaľ som nepočul z jeho ust vyjadrenia, že by chcel odísť z nášho klubu. Zatiaľ evidujem len to, že ostáva naďalej členom strany členom klubu. My s ním počítame aj ďalej..”",
+      "skip": false,
+      "editorChecked": false,
+      "duration": 12,
+      "id": "part-tema-2-5-syn-puci",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-2"
+    },
+    {
+      "name": "ILU Susko",
+      "rank": 0,
+      "float": false,
+      "partType": "doublebox",
+      "payload": {
+        "name": "ILU Susko",
+        "type": "DoubleBox"
+      },
+      "script": "Šéfka európskej diplomacie reaguje na ruský dronový útok, ktorý zasiahol osobný vlak len 2 kilometre od hraníc s Poľskom. Krátko pred tým išiel po rovnakej trati iný vlak, v ktorom cestoval aj bývalý britský premiér Boris Johnson či švédsky expremiér Carl Bildt. Neďaleko miesta útoku bol aj bývalý šéf CIA.",
+      "skip": false,
+      "editorChecked": false,
+      "duration": 21,
+      "id": "part-tema-3-1-ilu-susko",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-3"
+    },
+    {
+      "name": "SYN Susko",
+      "rank": 1,
+      "float": false,
+      "partType": "syn",
+      "payload": {
+        "name": "SYN Susko",
+        "type": "SYN"
+      },
+      "script": "“It is clearly meant to scare western countries from supporting Ukraine, from going to Ukraine. I think we should act the opposite.\"",
+      "skip": false,
+      "editorChecked": false,
+      "duration": 12,
+      "id": "part-tema-3-2-syn-susko",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-3"
+    },
+    {
+      "name": "ILU Drucker",
+      "rank": 2,
+      "float": false,
+      "partType": "doublebox",
+      "payload": {
+        "name": "ILU Drucker",
+        "type": "DoubleBox"
+      },
+      "script": "Poľský minister zahraničných vecí obvinil Vladimíra Putina z eskalácie a varoval ho, že NATO by si s Ruskom v prípade otvorenej vojny vedelo ľahko poradiť.",
+      "skip": false,
+      "editorChecked": false,
+      "duration": 11,
+      "id": "part-tema-3-3-ilu-drucker",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-3"
+    },
+    {
+      "name": "SYN SIKORSKY",
+      "rank": 3,
+      "float": false,
+      "payload": {
+        "type": "SYN"
+      },
+      "partType": "syn",
+      "script": "“If Russia attacked us and we took our gloves off I think we would defeat Russia quite quickly. We have uh overwhelming superiority over Russia in air power. if the Ukrainians have knocked out half of Russia's uh refining capacity in six months, we could do it in six weeks the and take out the other half.”",
+      "skip": false,
+      "editorChecked": false,
+      "duration": 21,
+      "id": "part-tema-3-4-syn-sikorsky",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-3"
+    },
+    {
+      "name": "ILU Fedorov",
+      "rank": 0,
+      "float": false,
+      "partType": "doublebox",
+      "payload": {
+        "name": "ILU Fedorov",
+        "type": "DoubleBox"
+      },
+      "script": "Strana CDU kancelára Fridricha Merza vyhrala krajinské voľby v Dolnom Sasku. Krajne pravicová AfD, ktorá pred týžňom triumfovala v štátnych voľbách v Sasku-Anhaltsku, skončila tretia. Získala takmer 16 percent, čím viac ako strojnásobila výsledok z prechádzajúcich volieb.",
+      "skip": false,
+      "editorChecked": false,
+      "duration": 19,
+      "id": "part-tema-4-1-ilu-fedorov",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-4"
+    },
+    {
+      "name": "SYN Fedorov",
+      "rank": 1,
+      "float": false,
+      "partType": "syn",
+      "payload": {
+        "name": "SYN Fedorov",
+        "type": "SYN"
+      },
+      "duration": 12,
+      "script": "",
+      "skip": true,
+      "editorChecked": false,
+      "id": "part-tema-4-2-syn-fedorov",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-4"
+    },
+    {
+      "name": "ILU Zelenskyj",
+      "rank": 2,
+      "float": false,
+      "partType": "doublebox",
+      "payload": {
+        "name": "ILU Zelenskyj",
+        "type": "DoubleBox"
+      },
+      "script": "Ukrajina dnes navyše rieši ďalší korupčný škandál. Protikorupčné agentúry vyšetrujú vysokopostavených politikov. Volodymyr Zelenskyj odvolal zástupkyňu šéfa vlastnej kancelárie.",
+      "duration": 12,
+      "skip": true,
+      "editorChecked": false,
+      "id": "part-tema-4-3-ilu-zelenskyj",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-4"
+    },
+    {
+      "name": "SJV",
+      "rank": 0,
+      "float": false,
+      "partType": "gfx",
+      "payload": {
+        "name": "SJV",
+        "type": "GFX"
+      },
+      "duration": 2.5,
+      "script": "Správy jednou vetou.",
+      "skip": true,
+      "editorChecked": false,
+      "id": "part-sjv-1-sjv",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sjv"
+    },
+    {
+      "name": "SJV Minibus",
+      "rank": 1,
+      "float": false,
+      "partType": "syn",
+      "payload": {
+        "name": "SJV Minibus",
+        "type": "SYN"
+      },
+      "script": "Minister Boris Susko podal dovolanie v prípade expoliciajta Jána Kaľavského, ktorý si nahrával čurillovcov a vypovedal proti nim, píše Sme. Najvyšší súd Kaľavského vlani odsúdil na 5 rokov za korupciu, marenie spravodlivosti a zneužitie právomoci.",
+      "skip": false,
+      "editorChecked": false,
+      "duration": 17,
+      "id": "part-sjv-2-sjv-minibus",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sjv"
+    },
+    {
+      "name": "SJV Meta",
+      "rank": 2,
+      "float": false,
+      "partType": "syn",
+      "payload": {
+        "name": "SJV Meta",
+        "type": "SYN"
+      },
+      "script": "Bývalý europoslanec za Smer Boris Zala sa podieľa na na vzniku novej strany s názvom Ľudskosť a Prosperita a predstaví ju v stredu.",
+      "skip": false,
+      "editorChecked": false,
+      "duration": 9,
+      "id": "part-sjv-3-sjv-meta",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sjv"
+    },
+    {
+      "name": "SJV 3",
+      "rank": 3,
+      "float": false,
+      "partType": "syn",
+      "payload": {
+        "name": "SJV 3",
+        "type": "SYN"
+      },
+      "script": "Prvýkrát po viac ako 30 rokoch nebude zajtrajší Sviatok Sedembolestnej Panny Márie dňom pracovného pokoja. Zrušenie voľna bolo súčasťou vládneho konsolidačného balíka.",
+      "skip": false,
+      "editorChecked": false,
+      "duration": 12,
+      "id": "part-sjv-4-sjv-3",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sjv"
+    },
+    {
+      "name": "SJV 4",
+      "rank": 4,
+      "float": false,
+      "partType": "syn",
+      "payload": {
+        "name": "SJV 4",
+        "type": "SYN"
+      },
+      "duration": 8,
+      "script": "",
+      "skip": true,
+      "editorChecked": false,
+      "id": "part-sjv-5-sjv-4",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sjv"
+    },
+    {
+      "name": "Šport",
+      "rank": 0,
+      "float": false,
+      "partType": "gfx",
+      "payload": {
+        "name": "Šport",
+        "type": "GFX"
+      },
+      "duration": 2.5,
+      "script": "Šport.",
+      "skip": true,
+      "editorChecked": false,
+      "id": "part-sport-1-port",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sport"
+    },
+    {
+      "name": "Šport Slovan",
+      "rank": 1,
+      "float": false,
+      "partType": "syn",
+      "payload": {
+        "name": "Šport Slovan",
+        "type": "SYN"
+      },
+      "script": "Alexander Zverev vyhral US Open. Vo finále zdolal Bena Sheltona 3:1 na sety. Po wimbledonskom titule zo začiatku leta tak získal druhú grandslemovú trofej v kariére.",
+      "skip": false,
+      "editorChecked": false,
+      "duration": 11,
+      "id": "part-sport-2-port-slovan",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sport"
+    },
+    {
+      "name": "Šport Felix",
+      "rank": 2,
+      "float": false,
+      "partType": "syn",
+      "payload": {
+        "name": "Šport Felix",
+        "type": "SYN"
+      },
+      "script": "Stanislav Lobotka gólom rozhodol o víťazstve Neapolu 1:0 nad Boloňou. Pre slovenského stredopoliara je to prvý gól v sezóne.",
+      "duration": 9,
+      "skip": false,
+      "editorChecked": false,
+      "id": "part-sport-3-port-felix",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sport"
+    },
+    {
+      "name": "Šport 3",
+      "rank": 3,
+      "float": false,
+      "partType": "syn",
+      "payload": {
+        "name": "Šport 3",
+        "type": "SYN"
+      },
+      "duration": 10,
+      "script": "",
+      "skip": true,
+      "editorChecked": false,
+      "id": "part-sport-4-port-3",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sport"
+    },
+    {
+      "name": "Počasie",
+      "rank": 0,
+      "float": false,
+      "partType": "gfx",
+      "payload": {
+        "name": "Počasie",
+        "type": "GFX"
+      },
+      "script": "Jasno až polooblačno.",
+      "skip": false,
+      "editorChecked": false,
+      "duration": 25,
+      "id": "part-weather-1-po-asie",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-weather"
+    },
+    {
+      "name": "SYN Avízo",
+      "rank": 2,
+      "float": false,
+      "partType": "syn",
+      "payload": {
+        "name": "SYN Avízo",
+        "type": "SYN"
+      },
+      "script": "",
+      "skip": false,
+      "editorChecked": false,
+      "duration": 20,
+      "id": "part-outro-2-syn-av-zo",
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-outro",
+      "playlistId": null
+    },
+    {
+      "name": "Outro",
+      "rank": 4,
+      "float": false,
+      "partType": "gfx",
+      "payload": {
+        "name": "Outro",
+        "type": "GFX"
+      },
+      "duration": 4,
+      "script": "",
+      "id": "part-outro-4-outro",
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-outro",
+      "playlistId": null
+    },
+    {
+      "name": "GFX",
+      "rank": 0,
+      "float": false,
+      "payload": {
+        "type": "GFX"
+      },
+      "partType": "gfx",
+      "fromPreset": true,
+      "script": "",
+      "skip": true,
+      "editorChecked": false,
+      "id": "5bf9c14a-a357-4d11-8c36-5bbe8a01c226",
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-outro",
+      "playlistId": null
+    },
+    {
+      "name": "ZAVER",
+      "rank": 3,
+      "float": false,
+      "payload": {
+        "type": "Cam"
+      },
+      "partType": "ilu-zaver",
+      "fromPreset": true,
+      "script": "Celý rozhovor nájdete na našom webe. \nA to je na dnes všetko, dovidenia opäť zajtra.\n",
+      "skip": false,
+      "editorChecked": false,
+      "id": "9597f839-cfe2-4615-9769-c0167dd3d420",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-outro"
+    },
+    {
+      "name": "ZAVER",
+      "rank": 1,
+      "float": false,
+      "payload": {
+        "type": "Cam"
+      },
+      "partType": "ilu-zaver",
+      "fromPreset": true,
+      "script": "No a na záver ešte jeden tip od nás. Je už unavený z rečí o kaviarenských povaľačoch a že má ísť robiť skutočnú robotu. V rozhovore s Denisou Hopkovou to povedal herec Roman Pomajbo. Otvorene hovoril aj o skúsenostiach so slovenským zdravotníctvom, keď potrebovala pomoc jeho mama.",
+      "skip": false,
+      "editorChecked": false,
+      "id": "343eab30-71a9-4178-9f46-40c3e25040b3",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-outro"
+    },
+    {
+      "name": "VO",
+      "rank": 0.5,
+      "float": false,
+      "payload": {
+        "type": "VO"
+      },
+      "partType": "vo",
+      "fromPreset": true,
+      "id": "dbe2ceae-c33a-448d-ae3d-58d3dcaf5796",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-4"
+    }
+  ],
+  "pieces": [
+    {
+      "name": "ZAVER",
+      "pieceType": "ilu-zaver",
+      "payload": {
+        "volume": 0.5,
+        "iluFile": "clips/ILU AVIZO POMAJBO.mp4"
+      },
+      "start": 0,
+      "rank": 0,
+      "id": "10a67218-bdad-4b9f-88a8-6fb739d2cbbb",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-outro",
+      "partId": "343eab30-71a9-4178-9f46-40c3e25040b3"
+    },
+    {
+      "name": "ZAVER",
+      "pieceType": "ilu-zaver",
+      "payload": {
+        "volume": 0.5,
+        "iluFile": "clips/ILU AVIZO POMAJBO.mp4"
+      },
+      "start": 0,
+      "rank": 0,
+      "id": "3c0f55c9-ba3b-41f4-a273-21c7753e210b",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-outro",
+      "partId": "9597f839-cfe2-4615-9769-c0167dd3d420"
+    },
+    {
+      "name": "WIPE: wipe.mov",
+      "pieceType": "wipe",
+      "payload": {
+        "scriptOffset": 0,
+        "fileName": "wipes/wipe.mov"
+      },
+      "start": 0,
+      "rank": 0,
+      "id": "863ffe59-864b-4e94-808f-5fc74133da20",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-outro",
+      "partId": "5bf9c14a-a357-4d11-8c36-5bbe8a01c226"
+    },
+    {
+      "name": "Video clip (SOT/VID)",
+      "pieceType": "video",
+      "payload": {
+        "volume": 0.5
+      },
+      "start": 0,
+      "rank": 0,
+      "id": "ecf814e3-c1d0-456a-9270-fa8d0181f36c",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-4",
+      "partId": "dbe2ceae-c33a-448d-ae3d-58d3dcaf5796"
+    },
+    {
+      "name": "L3DH: Volba noveho",
+      "rank": 0,
+      "float": false,
+      "pieceType": "headline",
+      "start": 0,
+      "payload": {
+        "iluFile": "clips/HEADLINE1.mov",
+        "sourceEnabled": false,
+        "source": "",
+        "iluPrerendered": true,
+        "headline": "Volba noveho",
+        "subline": "prokuratora"
+      },
+      "editorChecked": false,
+      "duration": 7,
+      "id": "piece-headlines-1-headline1-1-osobn-daje-v-or-sr",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-headlines",
+      "partId": "part-headlines-1-headline1"
+    },
+    {
+      "name": "Vláda sa vrátila k rokovaniam",
+      "rank": 0,
+      "float": false,
+      "pieceType": "headline",
+      "start": 0,
+      "duration": 8,
+      "payload": {
+        "iluFile": "clips/HEADLINE2.mov",
+        "sourceEnabled": false,
+        "source": "",
+        "iluPrerendered": true
+      },
+      "id": "piece-headlines-2-headline2-1-vl-da-sa-vr-tila-k-rokovaniam",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-headlines",
+      "partId": "part-headlines-2-headline2"
+    },
+    {
+      "name": "Fedorov vyzýva na voľby",
+      "rank": 0,
+      "float": false,
+      "pieceType": "headline",
+      "start": 0,
+      "duration": 8,
+      "payload": {
+        "iluFile": "clips/HEADLINE3.mov",
+        "sourceEnabled": false,
+        "source": "",
+        "iluPrerendered": true
+      },
+      "id": "piece-headlines-3-headline3-1-fedorov-vyz-va-na-vo-by",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-headlines",
+      "partId": "part-headlines-3-headline3"
+    },
+    {
+      "name": "INTRO: intro_michal.mov",
+      "rank": 0,
+      "float": false,
+      "pieceType": "intro",
+      "payload": {
+        "fileName": "assets/intro_michal.mov"
+      },
+      "start": 0,
+      "duration": 8,
+      "id": "piece-intro-1-intro-1-intro-intro-michal-mov",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-intro",
+      "partId": "part-intro-1-intro"
+    },
+    {
+      "name": "Cam 1",
+      "rank": 0,
+      "float": false,
+      "pieceType": "camera",
+      "payload": {
+        "camNo": 1
+      },
+      "start": 0,
+      "id": "piece-intro-2-gabriela-kajt-rov-1-cam-1",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-intro",
+      "partId": "part-intro-2-gabriela-kajt-rov"
+    },
+    {
+      "name": "VID: SYN AVIZO.mp4",
+      "rank": 0,
+      "float": false,
+      "pieceType": "video",
+      "payload": {
+        "fileName": "clips/SYN AVIZO.mp4"
+      },
+      "start": 0,
+      "duration": 20,
+      "id": "piece-outro-2-syn-av-zo-1-syn",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-outro",
+      "partId": "part-outro-2-syn-av-zo"
+    },
+    {
+      "name": "Outro",
+      "rank": 0,
+      "float": false,
+      "pieceType": "outro",
+      "payload": {
+        "fileName": "assets/outro.mov"
+      },
+      "start": 0,
+      "duration": 4,
+      "id": "piece-outro-4-outro-1-outro",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-outro",
+      "partId": "part-outro-4-outro"
+    },
+    {
+      "name": "VID: ILU ZALA.mp4",
+      "rank": 0,
+      "float": false,
+      "pieceType": "video",
+      "payload": {
+        "fileName": "clips/ILU ZALA.mp4"
+      },
+      "start": 0,
+      "duration": 19,
+      "id": "piece-sjv-3-sjv-meta-1-vid-ilu-zala-mp4",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sjv",
+      "partId": "part-sjv-3-sjv-meta"
+    },
+    {
+      "name": "VID: ILU SVIATOK.mp4",
+      "rank": 0,
+      "float": false,
+      "pieceType": "video",
+      "payload": {
+        "fileName": "clips/ILU SVIATOK.mp4"
+      },
+      "start": 0,
+      "duration": 24,
+      "id": "piece-sjv-4-sjv-3-1-vid-ilu-sviatok-mp4",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sjv",
+      "partId": "part-sjv-4-sjv-3"
+    },
+    {
+      "name": "SYN",
+      "rank": 0,
+      "float": false,
+      "pieceType": "video",
+      "payload": {
+        "fileName": "clips/SYN CLUSTER fico tusk.mp4",
+        "sourceDuration": 8000
+      },
+      "start": 0,
+      "duration": 8,
+      "id": "piece-sjv-5-sjv-4-1-syn",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sjv",
+      "partId": "part-sjv-5-sjv-4"
+    },
+    {
+      "name": "VID: ILU LOBOTKA.mp4",
+      "rank": 0,
+      "float": false,
+      "pieceType": "video",
+      "payload": {
+        "fileName": "clips/ILU LOBOTKA.mp4"
+      },
+      "start": 0,
+      "duration": 13,
+      "id": "piece-sport-3-port-felix-1-vid-ilu-lobotka-mp4",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sport",
+      "partId": "part-sport-3-port-felix"
+    },
+    {
+      "name": "SYN",
+      "rank": 0,
+      "float": false,
+      "pieceType": "video",
+      "payload": {
+        "fileName": "clips/SYN bednar ok.mp4",
+        "sourceDuration": 10000
+      },
+      "start": 0,
+      "duration": 10,
+      "id": "piece-sport-4-port-3-1-syn",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sport",
+      "partId": "part-sport-4-port-3"
+    },
+    {
+      "name": "L3DT: Spor Saková – Fico",
+      "rank": 0,
+      "float": false,
+      "pieceType": "doublebox-ilu",
+      "payload": {
+        "text": "ilu zilinka",
+        "iluFile": "clips/ILU GLUCK ZILINKA.mp4",
+        "volume": 0.5,
+        "headline": "Spor Saková – Fico",
+        "subline": ""
+      },
+      "start": 0,
+      "duration": 12,
+      "id": "piece-tema-1-1-ilu-turek-1-dbilu-osobn-daje-na-or-sr",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-1",
+      "partId": "part-tema-1-1-ilu-turek"
+    },
+    {
+      "name": "SYN",
+      "rank": 0,
+      "float": false,
+      "pieceType": "video",
+      "payload": {
+        "fileName": "clips/SYN CLUSTER OBCHODNY REGISTER.mp4",
+        "sourceDuration": 12000
+      },
+      "start": 0,
+      "duration": 12,
+      "id": "piece-tema-1-3-syn-ipo-1-syn",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-1",
+      "partId": "part-tema-1-3-syn-ipo"
+    },
+    {
+      "name": "Osobné údaje v registri",
+      "rank": 0,
+      "float": false,
+      "pieceType": "doublebox-ilu",
+      "payload": {
+        "text": "Osobné údaje v registri",
+        "iluFile": "clips/ILU URAD.mp4"
+      },
+      "start": 0,
+      "duration": 9,
+      "id": "piece-tema-1-4-ilu-rad-1-osobn-daje-v-registri",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-1",
+      "partId": "part-tema-1-4-ilu-rad"
+    },
+    {
+      "name": "DBILU: Spor Saková – Fico",
+      "rank": 0,
+      "float": false,
+      "pieceType": "doublebox-ilu",
+      "payload": {
+        "text": "Spor Saková – Fico",
+        "iluFile": "clips/ILU TARABA KUFFA.mp4",
+        "volume": 0.5
+      },
+      "start": 0,
+      "duration": 12,
+      "id": "piece-tema-2-1-ilu-sakov-fico-1-dbilu-spor-sakov-fico",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-2",
+      "partId": "part-tema-2-1-ilu-sakov-fico"
+    },
+    {
+      "name": "VID: SYN CLUSTER KUFFA.mp4",
+      "rank": 0,
+      "float": false,
+      "pieceType": "video",
+      "payload": {
+        "fileName": "clips/SYN CLUSTER KUFFA.mp4"
+      },
+      "start": 0,
+      "duration": 35,
+      "id": "piece-tema-2-2-syn-tak-tefunko-1-vid-syn-cluster-kuffa-mp4",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-2",
+      "partId": "part-tema-2-2-syn-tak-tefunko"
+    },
+    {
+      "name": "L3D Headline",
+      "pieceType": "l3d-headline",
+      "payload": {},
+      "start": 0,
+      "rank": 0,
+      "id": "piece-tema-2-3-ilu-1-l3d-headline",
+      "float": false,
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-2",
+      "partId": "part-tema-2-3-ilu"
+    },
+    {
+      "name": "DBILU",
+      "pieceType": "doublebox-ilu",
+      "payload": {
+        "iluFile": "clips/ILU TARABA.mp4"
+      },
+      "start": 0,
+      "rank": 0,
+      "duration": 14,
+      "id": "piece-tema-2-4-doublebox-1-dbilu",
+      "float": false,
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-2",
+      "partId": "part-tema-2-4-doublebox"
+    },
+    {
+      "name": "L3DS: Róbert Puci",
+      "pieceType": "l3d-syn",
+      "payload": {
+        "name": "Róbert Puci",
+        "role": "poslanec NR SR (Hlas-SD)"
+      },
+      "start": 0,
+      "rank": 0,
+      "id": "piece-tema-2-5-syn-puci-1-l3ds-r-bert-puci",
+      "float": false,
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-2",
+      "partId": "part-tema-2-5-syn-puci"
+    },
+    {
+      "name": "DBILU: Nerokovali o novele Ústavy",
+      "rank": 0,
+      "float": false,
+      "pieceType": "doublebox-ilu",
+      "payload": {
+        "text": "Nerokovali o novele Ústavy",
+        "iluFile": "clips/ILU UKRAJINA VLAK.mp4"
+      },
+      "start": 0,
+      "duration": 21,
+      "id": "piece-tema-3-1-ilu-susko-1-dbilu-nerokovali-o-novele-stavy",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-3",
+      "partId": "part-tema-3-1-ilu-susko"
+    },
+    {
+      "name": "VID: SYN KALLAS.mp4",
+      "rank": 0,
+      "float": false,
+      "pieceType": "video",
+      "payload": {
+        "fileName": "clips/SYN KALLAS.mp4"
+      },
+      "start": 0,
+      "duration": 12,
+      "id": "piece-tema-3-2-syn-susko-1-vid-syn-kallas-mp4",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-3",
+      "partId": "part-tema-3-2-syn-susko"
+    },
+    {
+      "name": "DBILU: Nerokovali o novele Ústavy",
+      "rank": 0,
+      "float": false,
+      "pieceType": "doublebox-ilu",
+      "start": 0,
+      "payload": {
+        "text": "Nerokovali o novele Ústavy",
+        "iluFile": "clips/ILU REAKCIE POLIAKOV.mp4"
+      },
+      "duration": 11,
+      "id": "piece-tema-3-3-ilu-drucker-1-dbilu-nerokovali-o-novele-stavy",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-3",
+      "partId": "part-tema-3-3-ilu-drucker"
+    },
+    {
+      "name": "L3DS: Radosław Sikorski",
+      "pieceType": "l3d-syn",
+      "payload": {
+        "name": "Radosław Sikorski",
+        "role": "poľský minister zahraničných vecí"
+      },
+      "start": 0,
+      "rank": 0,
+      "id": "piece-tema-3-4-syn-sikorsky-1-l3ds-rados-aw-sikorski",
+      "float": false,
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-3",
+      "partId": "part-tema-3-4-syn-sikorsky"
+    },
+    {
+      "name": "DBILU: Priama výzva na voľby",
+      "rank": 0,
+      "float": false,
+      "pieceType": "doublebox-ilu",
+      "payload": {
+        "text": "Priama výzva na voľby",
+        "iluFile": "clips/ILU CDU.mp4"
+      },
+      "start": 0,
+      "duration": 19,
+      "id": "piece-tema-4-1-ilu-fedorov-1-dbilu-priama-v-zva-na-vo-by",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-4",
+      "partId": "part-tema-4-1-ilu-fedorov"
+    },
+    {
+      "name": "SYN",
+      "rank": 0,
+      "float": false,
+      "pieceType": "video",
+      "payload": {
+        "fileName": "clips/SYN FEDOROV.mp4",
+        "sourceDuration": 12000
+      },
+      "start": 0,
+      "duration": 12,
+      "id": "piece-tema-4-2-syn-fedorov-1-syn",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-4",
+      "partId": "part-tema-4-2-syn-fedorov"
+    },
+    {
+      "name": "Problémy s korupciou",
+      "rank": 0,
+      "float": false,
+      "pieceType": "doublebox-ilu",
+      "start": 0,
+      "payload": {
+        "text": "Problémy s korupciou",
+        "iluFile": "clips/ILU ZELENSKYJ.mp4"
+      },
+      "duration": 12,
+      "id": "piece-tema-4-3-ilu-zelenskyj-1-probl-my-s-korupciou",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-4",
+      "partId": "part-tema-4-3-ilu-zelenskyj"
+    },
+    {
+      "name": "WIPE: wipe_pocasie.mov: Pocasie",
+      "rank": 0,
+      "float": false,
+      "pieceType": "wipe",
+      "payload": {
+        "fileName": "wipes/wipe_pocasie.mov",
+        "transition": "Pocasie",
+        "bypass": false,
+        "cities": "[{\"region\":\"BA\",\"name\":\"BRATISLAVA\",\"temp\":\"5\",\"condition\":\"cloudy\"},{\"region\":\"KE\",\"name\":\"KOŠICE\",\"temp\":\"2\",\"condition\":\"snow\"},{\"region\":\"ZA\",\"name\":\"ŽILINA\",\"temp\":\"-1\",\"condition\":\"clear\"}]"
+      },
+      "duration": 2.5,
+      "start": 0,
+      "id": "piece-weather-1-po-asie-1-wx",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-weather",
+      "partId": "part-weather-1-po-asie"
+    },
+    {
+      "name": "VID: ILU KALAVSKY.mp4",
+      "rank": 0,
+      "float": false,
+      "pieceType": "video",
+      "payload": {
+        "fileName": "clips/ILU KALAVSKY.mp4"
+      },
+      "start": 0.76,
+      "duration": 16,
+      "id": "piece-sjv-2-sjv-minibus-1-vid-ilu-kalavsky-mp4",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sjv",
+      "partId": "part-sjv-2-sjv-minibus"
+    },
+    {
+      "name": "VID: ILU ZVEREV.mp4",
+      "rank": 0,
+      "float": false,
+      "pieceType": "video",
+      "payload": {
+        "fileName": "clips/ILU ZVEREV.mp4",
+        "volume": 0.5
+      },
+      "start": 0.76,
+      "id": "piece-sport-2-port-slovan-1-vid-ilu-zverev-mp4",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sport",
+      "partId": "part-sport-2-port-slovan"
+    },
+    {
+      "name": "L3DS: Boris Susko",
+      "rank": 0,
+      "float": false,
+      "pieceType": "l3d-syn",
+      "payload": {
+        "name": "Boris Susko",
+        "role": "minister spravodlivosti (SMER-SD)"
+      },
+      "duration": 18,
+      "start": 2,
+      "skip": true,
+      "id": "piece-tema-1-2-syn-susko-1-boris-susko",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-1",
+      "partId": "part-tema-1-2-syn-susko"
+    },
+    {
+      "name": "L3DO: Sledujte na www.360tka.sk",
+      "pieceType": "l3d-odporucanie",
+      "payload": {
+        "headline": "Sledujte na www.360tka.sk"
+      },
+      "start": 0,
+      "rank": 1,
+      "id": "0c2d74e1-92af-44e5-be09-f8061359b71e",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-outro",
+      "partId": "9597f839-cfe2-4615-9769-c0167dd3d420"
+    },
+    {
+      "name": "L3DO: Sledujte na www.360tka.sk",
+      "pieceType": "l3d-odporucanie",
+      "payload": {
+        "headline": "Sledujte na www.360tka.sk"
+      },
+      "start": 0,
+      "rank": 1,
+      "id": "48744938-048e-452c-b1c6-dabcf6403330",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-outro",
+      "partId": "343eab30-71a9-4178-9f46-40c3e25040b3"
+    },
+    {
+      "name": "L3DH: Voľba nového: generálneho prokurátora",
+      "rank": 1,
+      "float": false,
+      "pieceType": "l3d-headline",
+      "start": 0,
+      "payload": {
+        "headline": "Voľba nového",
+        "subline": "generálneho prokurátora"
+      },
+      "skip": false,
+      "id": "piece-headlines-1-headline1-2-l3dh",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-headlines",
+      "partId": "part-headlines-1-headline1"
+    },
+    {
+      "name": "L3DH: Kto nahradí: T. Tarabu",
+      "rank": 1,
+      "float": false,
+      "pieceType": "l3d-headline",
+      "start": 0,
+      "payload": {
+        "headline": "Kto nahradí",
+        "subline": "T. Tarabu"
+      },
+      "skip": false,
+      "id": "piece-headlines-2-headline2-2-l3dh",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-headlines",
+      "partId": "part-headlines-2-headline2"
+    },
+    {
+      "name": "L3DH: Európa reaguje: na útok pri Poľsku",
+      "rank": 1,
+      "float": false,
+      "pieceType": "l3d-headline",
+      "start": 0,
+      "payload": {
+        "headline": "Európa reaguje",
+        "subline": "na útok pri Poľsku"
+      },
+      "skip": false,
+      "id": "piece-headlines-3-headline3-2-l3dh",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-headlines",
+      "partId": "part-headlines-3-headline3"
+    },
+    {
+      "name": "L3D P: Jakub Krajniak",
+      "rank": 1,
+      "float": false,
+      "pieceType": "l3d-predstavovak",
+      "payload": {
+        "name": "Jakub Krajniak",
+        "title": "moderátor"
+      },
+      "start": 0,
+      "id": "piece-intro-2-gabriela-kajt-rov-2-gabriela-kajt-rov",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-intro",
+      "partId": "part-intro-2-gabriela-kajt-rov"
+    },
+    {
+      "name": "SJV: B. Susko podal dovolanie",
+      "rank": 1,
+      "float": false,
+      "pieceType": "l3d-sjv",
+      "payload": {
+        "kicker": "SPRÁVY JEDNOU VETOU",
+        "headline": "B. Susko podal dovolanie"
+      },
+      "start": 0,
+      "id": "piece-sjv-2-sjv-minibus-2-sjv-b-susko-podal-dovolanie",
+      "duration": 17,
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sjv",
+      "partId": "part-sjv-2-sjv-minibus"
+    },
+    {
+      "name": "SJV: B. Zala zakladá stranu",
+      "rank": 1,
+      "float": false,
+      "pieceType": "l3d-sjv",
+      "payload": {
+        "kicker": "SPRÁVY JEDNOU VETOU",
+        "headline": "B. Zala zakladá stranu"
+      },
+      "start": 0,
+      "id": "piece-sjv-3-sjv-meta-2-sjv-b-zala-zaklad-stranu",
+      "duration": 9,
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sjv",
+      "partId": "part-sjv-3-sjv-meta"
+    },
+    {
+      "name": "SJV: Zajtrajší sviatok bez voľna",
+      "rank": 1,
+      "float": false,
+      "pieceType": "l3d-sjv",
+      "payload": {
+        "kicker": "SPRÁVY JEDNOU VETOU",
+        "headline": "Zajtrajší sviatok bez voľna"
+      },
+      "start": 0,
+      "id": "piece-sjv-4-sjv-3-2-sjv-zajtraj-sviatok-bez-vo-na",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sjv",
+      "partId": "part-sjv-4-sjv-3"
+    },
+    {
+      "name": "SPORT: Lobotka skóroval",
+      "rank": 1,
+      "float": false,
+      "pieceType": "l3d-sport",
+      "payload": {
+        "kicker": "ŠPORT",
+        "headline": "Lobotka skóroval"
+      },
+      "start": 0,
+      "id": "piece-sport-3-port-felix-2-sport-lobotka-sk-roval",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sport",
+      "partId": "part-sport-3-port-felix"
+    },
+    {
+      "name": "DBILU: Osobné údaje na OR SR",
+      "rank": 1,
+      "float": false,
+      "pieceType": "l3d-tema",
+      "payload": {
+        "headline": "Odvolávanie T. Tarabu",
+        "subline": "",
+        "text": "Osobné údaje na OR SR",
+        "iluFile": "clips/ILU FICO VEDLA TARABU.mp4",
+        "volume": 0.5
+      },
+      "start": 0,
+      "id": "piece-tema-1-1-ilu-turek-2-l3dt-osobn-daje-na-or-sr",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-1",
+      "partId": "part-tema-1-1-ilu-turek"
+    },
+    {
+      "name": "VID: SYN CLUSTER GP 2.mp4",
+      "rank": 1,
+      "float": false,
+      "pieceType": "video",
+      "payload": {
+        "fileName": "clips/SYN CLUSTER GP 2.mp4"
+      },
+      "start": 0,
+      "duration": 33,
+      "id": "piece-tema-1-2-syn-susko-2-vid-syn-cluster-gp-2-mp4",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-1",
+      "partId": "part-tema-1-2-syn-susko"
+    },
+    {
+      "name": "Osobné údaje v registri",
+      "rank": 1,
+      "float": false,
+      "pieceType": "l3d-tema",
+      "payload": {
+        "headline": "Osobné údaje v registri"
+      },
+      "start": 0,
+      "id": "piece-tema-1-4-ilu-rad-2-osobn-daje-v-registri",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-1",
+      "partId": "part-tema-1-4-ilu-rad"
+    },
+    {
+      "name": "L3DT: Nový minister životného prostredia",
+      "rank": 1,
+      "float": false,
+      "pieceType": "l3d-tema",
+      "payload": {
+        "headline": "Nový minister životného prostredia"
+      },
+      "start": 0,
+      "id": "piece-tema-2-1-ilu-sakov-fico-2-l3dt-spor-sakov-fico",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-2",
+      "partId": "part-tema-2-1-ilu-sakov-fico"
+    },
+    {
+      "name": "Camera",
+      "pieceType": "camera",
+      "payload": {
+        "camNo": 1
+      },
+      "start": 0,
+      "rank": 1,
+      "id": "piece-tema-2-3-ilu-2-camera",
+      "float": false,
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-2",
+      "partId": "part-tema-2-3-ilu"
+    },
+    {
+      "name": "Camera",
+      "pieceType": "camera",
+      "payload": {
+        "camNo": 1
+      },
+      "start": 0,
+      "rank": 1,
+      "id": "piece-tema-2-4-doublebox-2-camera",
+      "float": false,
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-2",
+      "partId": "part-tema-2-4-doublebox"
+    },
+    {
+      "name": "VID: SYN PUCI.mp4",
+      "pieceType": "video",
+      "payload": {
+        "fileName": "clips/SYN PUCI.mp4"
+      },
+      "start": 0,
+      "rank": 1,
+      "float": false,
+      "duration": 9,
+      "id": "piece-tema-2-5-syn-puci-2-vid-syn-puci-mp4",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-2",
+      "partId": "part-tema-2-5-syn-puci"
+    },
+    {
+      "name": "L3DT: Útok 2 km od Poľska",
+      "rank": 1,
+      "float": false,
+      "pieceType": "l3d-tema",
+      "payload": {
+        "headline": "Útok 2 km od Poľska"
+      },
+      "start": 0,
+      "id": "piece-tema-3-1-ilu-susko-2-l3dt-tok-2-km-od-po-ska",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-3",
+      "partId": "part-tema-3-1-ilu-susko"
+    },
+    {
+      "name": "L3DS: Kaja Kallas",
+      "rank": 1,
+      "float": false,
+      "pieceType": "l3d-syn",
+      "payload": {
+        "name": "Kaja Kallas",
+        "role": "vysoká predstaviteľka EÚ pre zahraničné veci"
+      },
+      "start": 0,
+      "id": "piece-tema-3-2-syn-susko-2-l3ds-kaja-kallas",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-3",
+      "partId": "part-tema-3-2-syn-susko"
+    },
+    {
+      "name": "L3DT: Reakcie poľských ministrov",
+      "rank": 1,
+      "float": false,
+      "pieceType": "l3d-tema",
+      "start": 0,
+      "payload": {
+        "headline": "Reakcie poľských ministrov"
+      },
+      "id": "piece-tema-3-3-ilu-drucker-2-l3dt-reakcie-po-sk-ch-ministrov",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-3",
+      "partId": "part-tema-3-3-ilu-drucker"
+    },
+    {
+      "name": "VID: SYN SIKORSKI.mp4",
+      "pieceType": "video",
+      "payload": {
+        "fileName": "clips/SYN SIKORSKI.mp4"
+      },
+      "start": 0,
+      "rank": 1,
+      "float": false,
+      "duration": 28,
+      "id": "piece-tema-3-4-syn-sikorsky-2-vid-syn-sikorski-mp4",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-3",
+      "partId": "part-tema-3-4-syn-sikorsky"
+    },
+    {
+      "name": "L3DT: Komunálne voľby v Nemecku",
+      "rank": 1,
+      "float": false,
+      "pieceType": "l3d-tema",
+      "payload": {
+        "headline": "Komunálne voľby v Nemecku"
+      },
+      "start": 0,
+      "id": "piece-tema-4-1-ilu-fedorov-2-l3dt-komun-lne-vo-by-v-nemecku",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-4",
+      "partId": "part-tema-4-1-ilu-fedorov"
+    },
+    {
+      "name": "Problémy s korupciou",
+      "rank": 1,
+      "float": false,
+      "pieceType": "l3d-tema",
+      "start": 0,
+      "payload": {
+        "headline": "Problémy s korupciou"
+      },
+      "id": "piece-tema-4-3-ilu-zelenskyj-2-probl-my-s-korupciou",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-4",
+      "partId": "part-tema-4-3-ilu-zelenskyj"
+    },
+    {
+      "name": "Nové čísla o nezamestnanosti",
+      "rank": 1,
+      "float": false,
+      "pieceType": "l3d-sjv",
+      "payload": {
+        "kicker": "SPRÁVY JEDNOU VETOU",
+        "headline": "Nové čísla o nezamestnanosti"
+      },
+      "duration": 5,
+      "start": 0.5,
+      "id": "piece-sjv-5-sjv-4-2-nov-sla-o-nezamestnanosti",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sjv",
+      "partId": "part-sjv-5-sjv-4"
+    },
+    {
+      "name": "ZAVER",
+      "pieceType": "ilu-zaver",
+      "payload": {
+        "scriptOffset": 281,
+        "iluFile": "clips/ILU AVIZO POMAJBO.mp4"
+      },
+      "start": 0.76,
+      "rank": 1,
+      "id": "3c7f1b75-dff8-4b00-930f-6d0ddd13f011",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-outro",
+      "partId": "5bf9c14a-a357-4d11-8c36-5bbe8a01c226"
+    },
+    {
+      "name": "WX",
+      "rank": 1,
+      "float": false,
+      "pieceType": "weather",
+      "payload": {
+        "bypass": false,
+        "cities": "[{\"region\":\"BA\",\"name\":\"BRATISLAVA\",\"temp\":\"23\",\"image\":\"sunny\",\"condition\":\"Skoro jasno\",\"delay\":200},{\"region\":\"TT\",\"name\":\"TRNAVA\",\"temp\":\"23\",\"image\":\"sunny\",\"condition\":\"Skoro jasno\",\"delay\":400},{\"region\":\"NR\",\"name\":\"NITRA\",\"temp\":\"24\",\"image\":\"sunny\",\"condition\":\"Skoro jasno\",\"delay\":600},{\"region\":\"TN\",\"name\":\"TRENČÍN\",\"temp\":\"23\",\"image\":\"sunny\",\"condition\":\"Skoro jasno\",\"delay\":800},{\"region\":\"ZA\",\"name\":\"ŽILINA\",\"temp\":\"21\",\"image\":\"sunny\",\"condition\":\"Skoro jasno\",\"delay\":1000},{\"region\":\"BB\",\"name\":\"B. BYSTRICA\",\"temp\":\"23\",\"image\":\"cloudy\",\"condition\":\"Polooblačno\",\"delay\":1200},{\"region\":\"KE\",\"name\":\"KOŠICE\",\"temp\":\"22\",\"image\":\"cloudy\",\"condition\":\"Oblačno\",\"delay\":1400},{\"region\":\"PO\",\"name\":\"PREŠOV\",\"temp\":\"21\",\"image\":\"cloudy\",\"condition\":\"Oblačno\",\"delay\":1600}]",
+        "fileName": "assets/bg_pocasie.mov"
+      },
+      "start": 0.76,
+      "id": "piece-weather-1-po-asie-2-wx",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-weather",
+      "partId": "part-weather-1-po-asie"
+    },
+    {
+      "name": "SPORT: Zverev opäť šampión",
+      "rank": 1,
+      "float": false,
+      "pieceType": "l3d-sport",
+      "payload": {
+        "kicker": "ŠPORT",
+        "headline": "Zverev opäť šampión"
+      },
+      "duration": 11,
+      "start": 1,
+      "id": "piece-sport-2-port-slovan-2-sport-zverev-op-ampi-n",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sport",
+      "partId": "part-sport-2-port-slovan"
+    },
+    {
+      "name": "Futbalová liga — výsledky kola",
+      "rank": 1,
+      "float": false,
+      "pieceType": "l3d-sport",
+      "payload": {
+        "kicker": "ŠPORT",
+        "headline": "Futbalová liga — výsledky kola"
+      },
+      "duration": 6,
+      "start": 1,
+      "id": "piece-sport-4-port-3-2-futbalov-liga-v-sledky-kola",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sport",
+      "partId": "part-sport-4-port-3"
+    },
+    {
+      "name": "L3DS: Takáč",
+      "rank": 1,
+      "float": false,
+      "pieceType": "l3d-syn",
+      "payload": {
+        "name": "Takáč",
+        "role": ""
+      },
+      "duration": 7,
+      "start": 1,
+      "skip": true,
+      "id": "piece-tema-2-2-syn-tak-tefunko-2-l3ds-tak",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-2",
+      "partId": "part-tema-2-2-syn-tak-tefunko"
+    },
+    {
+      "name": "Šipoš",
+      "rank": 1,
+      "float": false,
+      "pieceType": "l3d-syn",
+      "payload": {
+        "name": "Šipoš",
+        "role": ""
+      },
+      "duration": 5,
+      "start": 1.5,
+      "id": "piece-tema-1-3-syn-ipo-2-ipo",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-1",
+      "partId": "part-tema-1-3-syn-ipo"
+    },
+    {
+      "name": "Mykhailo Fedorov",
+      "rank": 1,
+      "float": false,
+      "pieceType": "l3d-syn",
+      "payload": {
+        "name": "Mykhailo Fedorov",
+        "role": "bývalý minister obrany Ukrajiny"
+      },
+      "duration": 6,
+      "start": 2,
+      "id": "piece-tema-4-2-syn-fedorov-2-mykhailo-fedorov",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-4",
+      "partId": "part-tema-4-2-syn-fedorov"
+    },
+    {
+      "name": "WIPE: wipe_sjv.mov",
+      "pieceType": "wipe",
+      "payload": {
+        "scriptOffset": 0,
+        "fileName": "wipes/wipe_sjv.mov"
+      },
+      "start": 0,
+      "rank": 2,
+      "id": "2667dfb7-4881-4d92-b865-a8f4fdf96f5e",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sjv",
+      "partId": "part-sjv-2-sjv-minibus"
+    },
+    {
+      "name": "Cam: 1",
+      "pieceType": "camera",
+      "payload": {
+        "scriptOffset": 0,
+        "camNo": 1
+      },
+      "start": 0,
+      "rank": 2,
+      "id": "4ea86bf2-27ca-4d40-b5f6-bb913820178e",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-outro",
+      "partId": "5bf9c14a-a357-4d11-8c36-5bbe8a01c226"
+    },
+    {
+      "name": "Camera",
+      "pieceType": "camera",
+      "payload": {
+        "camNo": 1
+      },
+      "start": 0,
+      "rank": 2,
+      "id": "7d05d1ab-dc84-4863-bd04-3910054ca2fc",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-outro",
+      "partId": "9597f839-cfe2-4615-9769-c0167dd3d420"
+    },
+    {
+      "name": "Camera",
+      "pieceType": "camera",
+      "payload": {
+        "camNo": 1
+      },
+      "start": 0,
+      "rank": 2,
+      "id": "90ffc76f-05c1-444f-a53a-da277508b3cd",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-outro",
+      "partId": "343eab30-71a9-4178-9f46-40c3e25040b3"
+    },
+    {
+      "name": "WIPE: wipe_sport.mov",
+      "pieceType": "wipe",
+      "payload": {
+        "scriptOffset": 0,
+        "fileName": "wipes/wipe_sport.mov"
+      },
+      "start": 0,
+      "rank": 2,
+      "id": "ca27f343-8529-4a97-a0bb-a381cf789487",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sport",
+      "partId": "part-sport-2-port-slovan"
+    },
+    {
+      "name": "Cam",
+      "rank": 2,
+      "float": false,
+      "pieceType": "camera",
+      "start": 0,
+      "payload": {
+        "camNo": 1
+      },
+      "id": "piece-headlines-1-headline1-3-cam",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-headlines",
+      "partId": "part-headlines-1-headline1"
+    },
+    {
+      "name": "Cam",
+      "rank": 2,
+      "float": false,
+      "pieceType": "camera",
+      "start": 0,
+      "payload": {
+        "camNo": 1
+      },
+      "id": "piece-headlines-2-headline2-3-cam",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-headlines",
+      "partId": "part-headlines-2-headline2"
+    },
+    {
+      "name": "Cam",
+      "rank": 2,
+      "float": false,
+      "pieceType": "camera",
+      "start": 0,
+      "payload": {
+        "camNo": 1
+      },
+      "id": "piece-headlines-3-headline3-3-cam",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-headlines",
+      "partId": "part-headlines-3-headline3"
+    },
+    {
+      "name": "Cam 1",
+      "rank": 2,
+      "float": false,
+      "pieceType": "camera",
+      "payload": {
+        "camNo": 1
+      },
+      "start": 0,
+      "id": "piece-tema-1-1-ilu-turek-3-cam-1",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-1",
+      "partId": "part-tema-1-1-ilu-turek"
+    },
+    {
+      "name": "L3D Predstavovak",
+      "pieceType": "l3d-predstavovak",
+      "payload": {
+        "name": "susek",
+        "title": "susko"
+      },
+      "start": 0,
+      "rank": 2,
+      "duration": 6,
+      "skip": true,
+      "id": "piece-tema-1-2-syn-susko-3-l3d-predstavovak",
+      "float": false,
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-1",
+      "partId": "part-tema-1-2-syn-susko"
+    },
+    {
+      "name": "Cam 1",
+      "rank": 2,
+      "float": false,
+      "pieceType": "camera",
+      "payload": {
+        "camNo": 1
+      },
+      "start": 0,
+      "id": "piece-tema-1-4-ilu-rad-3-cam-1",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-1",
+      "partId": "part-tema-1-4-ilu-rad"
+    },
+    {
+      "name": "Cam 1",
+      "rank": 2,
+      "float": false,
+      "pieceType": "camera",
+      "payload": {
+        "camNo": 1
+      },
+      "start": 0,
+      "id": "piece-tema-2-1-ilu-sakov-fico-3-cam-1",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-2",
+      "partId": "part-tema-2-1-ilu-sakov-fico"
+    },
+    {
+      "name": "L3DT: Plány T. Tarabu",
+      "pieceType": "l3d-tema",
+      "payload": {
+        "scriptOffset": 0,
+        "headline": "Plány T. Tarabu"
+      },
+      "start": 0,
+      "rank": 2,
+      "id": "piece-tema-2-4-doublebox-3-l3dt-pl-ny-t-tarabu",
+      "float": false,
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-2",
+      "partId": "part-tema-2-4-doublebox"
+    },
+    {
+      "name": "Cam 1",
+      "rank": 2,
+      "float": false,
+      "pieceType": "camera",
+      "payload": {
+        "camNo": 1
+      },
+      "start": 0,
+      "id": "piece-tema-3-1-ilu-susko-3-cam-1",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-3",
+      "partId": "part-tema-3-1-ilu-susko"
+    },
+    {
+      "name": "Cam",
+      "rank": 2,
+      "float": false,
+      "pieceType": "camera",
+      "start": 0,
+      "payload": {
+        "camNo": 1
+      },
+      "id": "piece-tema-3-3-ilu-drucker-3-cam",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-3",
+      "partId": "part-tema-3-3-ilu-drucker"
+    },
+    {
+      "name": "Cam 1",
+      "rank": 2,
+      "float": false,
+      "pieceType": "camera",
+      "payload": {
+        "camNo": 1
+      },
+      "start": 0,
+      "id": "piece-tema-4-1-ilu-fedorov-3-cam-1",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-4",
+      "partId": "part-tema-4-1-ilu-fedorov"
+    },
+    {
+      "name": "Cam",
+      "rank": 2,
+      "float": false,
+      "pieceType": "camera",
+      "start": 0,
+      "payload": {
+        "camNo": 1
+      },
+      "id": "piece-tema-4-3-ilu-zelenskyj-3-cam",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-4",
+      "partId": "part-tema-4-3-ilu-zelenskyj"
+    },
+    {
+      "name": "L3D SYN",
+      "pieceType": "l3d-syn",
+      "payload": {
+        "scriptOffset": 131
+      },
+      "start": 8.733333333333333,
+      "rank": 2,
+      "id": "3d6296fc-5c1d-48e9-ac7b-bca3973a02fd",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sjv",
+      "partId": "part-sjv-3-sjv-meta"
+    },
+    {
+      "name": "ILU DoubleBox",
+      "pieceType": "doublebox-ilu",
+      "payload": {
+        "scriptOffset": 307
+      },
+      "start": 20.466666666666665,
+      "rank": 2,
+      "duration": 21,
+      "id": "4e1a8639-0056-4cb3-ae32-c9aa87c6fb3c",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-3",
+      "partId": "part-tema-3-4-syn-sikorsky"
+    },
+    {
+      "name": "WIPE: wipe.mov: Double Box",
+      "rank": 3,
+      "float": false,
+      "pieceType": "wipe",
+      "payload": {
+        "fileName": "wipes/wipe.mov",
+        "transition": "Double Box"
+      },
+      "start": 0,
+      "id": "piece-tema-1-1-ilu-turek-4-wipe-wipe-mov-double-box",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-1",
+      "partId": "part-tema-1-1-ilu-turek"
+    },
+    {
+      "name": "WIPE: wipe.mov: SYN TO ILU TEMA",
+      "rank": 3,
+      "float": false,
+      "pieceType": "wipe",
+      "payload": {
+        "fileName": "wipes/wipe.mov",
+        "transition": "SYN TO ILU TEMA"
+      },
+      "duration": 2.5,
+      "start": 0,
+      "id": "piece-tema-2-1-ilu-sakov-fico-4-wipe-wipe-mov-syn-to-ilu-tema",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-2",
+      "partId": "part-tema-2-1-ilu-sakov-fico"
+    },
+    {
+      "name": "WIPE: wipe.mov: SYN TO ILU TEMA",
+      "rank": 3,
+      "float": false,
+      "pieceType": "wipe",
+      "payload": {
+        "fileName": "wipes/wipe.mov",
+        "transition": "SYN TO ILU TEMA"
+      },
+      "duration": 2.5,
+      "start": 0,
+      "id": "piece-tema-3-1-ilu-susko-4-wipe-wipe-mov-syn-to-ilu-tema",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-3",
+      "partId": "part-tema-3-1-ilu-susko"
+    },
+    {
+      "name": "Wipe",
+      "rank": 3,
+      "float": false,
+      "pieceType": "wipe",
+      "payload": {
+        "fileName": "wipes/wipe.mov",
+        "transition": "SYN TO ILU TEMA"
+      },
+      "duration": 0,
+      "start": 0,
+      "id": "piece-tema-4-1-ilu-fedorov-4-wipe",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-4",
+      "partId": "part-tema-4-1-ilu-fedorov"
+    },
+    {
+      "name": "Zdroj",
+      "rank": 3,
+      "float": false,
+      "pieceType": "l3d-syn",
+      "payload": {
+        "name": "Zdroj: Markíza",
+        "role": ""
+      },
+      "duration": 6,
+      "start": 2,
+      "skip": true,
+      "id": "piece-tema-1-2-syn-susko-4-zdroj",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-1",
+      "partId": "part-tema-1-2-syn-susko"
+    },
+    {
+      "name": "L3D Téma",
+      "pieceType": "l3d-tema",
+      "payload": {
+        "scriptOffset": 131
+      },
+      "start": 8.733333333333333,
+      "rank": 3,
+      "id": "e81b9e76-a86c-467a-94e1-da723aa2cd6c",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sjv",
+      "partId": "part-sjv-3-sjv-meta"
+    },
+    {
+      "name": "Logo",
+      "rank": 4,
+      "float": false,
+      "pieceType": "logo-bug",
+      "payload": {},
+      "start": 2.5,
+      "id": "piece-tema-1-1-ilu-turek-5-logo",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-1",
+      "partId": "part-tema-1-1-ilu-turek"
+    },
+    {
+      "name": "L3D Predstavovak",
+      "pieceType": "l3d-predstavovak",
+      "payload": {
+        "scriptOffset": 131
+      },
+      "start": 8.733333333333333,
+      "rank": 4,
+      "id": "5ab2e951-96f5-4b6c-922f-273825ff5a5a",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sjv",
+      "partId": "part-sjv-3-sjv-meta"
+    },
+    {
+      "name": "SRC: zdroj: neviemkto",
+      "pieceType": "source",
+      "payload": {
+        "scriptOffset": 531,
+        "source": "zdroj: neviemkto"
+      },
+      "start": 35.4,
+      "rank": 4,
+      "id": "47f20e1d-3ad8-4ccf-bdcd-1609839e0c31",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-1",
+      "partId": "part-tema-1-2-syn-susko"
+    },
+    {
+      "name": "L3DS: Adel Ghannam",
+      "pieceType": "l3d-syn",
+      "payload": {
+        "scriptOffset": 531,
+        "name": "Adel Ghannam",
+        "role": "redaktor 360tky"
+      },
+      "start": 5,
+      "rank": 5,
+      "duration": 3,
+      "id": "bbab0547-d6ce-47ae-b523-5bc42bfea764",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-tema-1",
+      "partId": "part-tema-1-2-syn-susko"
+    },
+    {
+      "name": "L3D Odporúčanie",
+      "pieceType": "l3d-odporucanie",
+      "payload": {
+        "scriptOffset": 131
+      },
+      "start": 8.733333333333333,
+      "rank": 5,
+      "id": "e8495232-8cae-4725-afa1-5a46f425ac3f",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sjv",
+      "partId": "part-sjv-3-sjv-meta"
+    },
+    {
+      "name": "Background loop",
+      "pieceType": "bg-loop",
+      "payload": {
+        "scriptOffset": 131
+      },
+      "start": 8.733333333333333,
+      "rank": 6,
+      "id": "895301bd-36eb-4a8d-a4bd-b7d50190eaa9",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sjv",
+      "partId": "part-sjv-3-sjv-meta"
+    },
+    {
+      "name": "ILU Závěr",
+      "pieceType": "ilu-zaver",
+      "payload": {
+        "scriptOffset": 131
+      },
+      "start": 8.733333333333333,
+      "rank": 7,
+      "id": "86a42ab7-d562-4ff3-b5e1-1124e8264442",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sjv",
+      "partId": "part-sjv-3-sjv-meta"
+    },
+    {
+      "name": "ILU Headline",
+      "pieceType": "headline",
+      "payload": {
+        "scriptOffset": 131
+      },
+      "start": 8.733333333333333,
+      "rank": 8,
+      "duration": 9,
+      "id": "f33188d1-bd73-4148-9249-670d73bff344",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-sjv",
+      "partId": "part-sjv-3-sjv-meta"
+    }
+  ]
+}
