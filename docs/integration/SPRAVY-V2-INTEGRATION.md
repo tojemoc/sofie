@@ -14,7 +14,8 @@ v2 HTML templates from `tojemoc/sofie-demo-assets`.
 
 **Hypercomposed (LED ≠ PGM):** one Caspar, **four channels** — LED=1, PGM=2, BG A/B=3/4.
 Canonical map: [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md). Story looks pre-build on
-BG 3/4; PGM routes with STING wipe on layer **110** ([ADR 0002](../adr/0002-wipe-prebuild-bg-channels.md),
+BG 3/4; PGM routes with **205** alpha wipe overlay + delayed `route://` cut on layer **110**
+([ADR 0002](../adr/0002-wipe-prebuild-bg-channels.md) historical STING wording is obsolete;
 blueprints [#77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77)). DoubleBox
 compose: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 
@@ -111,8 +112,9 @@ Clip paths are placeholders under `clips/`. Camera letters:
 **A→1**, **P→2**, **M→3**.
 
 Wipes: piece type `wipe`, file `wipes/wipe` (or labelled `wipe_sjv` / `wipe_sport` / `wipe_pocasie`).
-**Shipped:** PGM `PLAY 2-110 route://{3|4}` + STING ([ADR 0002](../adr/0002-wipe-prebuild-bg-channels.md),
-blueprints [#77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77)). Wipe overlay is PGM **205** (200 retired — leftover KEYER).
+**Current:** PGM `PLAY 2-205 "wipes/wipe*"` (alpha overlay) + delayed `PLAY 2-110 route://{3|4}`
+cut ([`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md); ADR 0002 STING wording is historical).
+Layer **200** retired (leftover KEYER).
 Smoke rundown includes story-block wipe pieces with a `transition` label
 (`ILU TO SYN`, `Double Box`, …) — not on HEADLINES / Intro.
 
@@ -227,7 +229,7 @@ The bridge accepts JSON objects and XML-wrapped JSON from Caspar.
 <media-path>/
   loops/     # e.g. bg_loop.mov — bg-loop / baseline LED loop
   clips/     # ILU, VT, VO (e.g. clips/premiera.mp4)
-  wipes/     # alpha wipe media (piece type `wipe` → PGM route STING on layer 110)
+  wipes/     # alpha wipe media (piece type `wipe` → PGM 205 overlay + delayed route cut)
   assets/    # pip-frame.png, etc.
 ```
 

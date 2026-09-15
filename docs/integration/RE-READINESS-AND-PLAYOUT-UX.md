@@ -121,7 +121,8 @@ length — re-pick / blur the media path after upgrading to refresh stored
 
 ### Playout contract (blueprints)
 
-- Piece type `wipe` → Caspar PGM layer **200** (`casparcg_effects_player_pgm`).
+- Piece type `wipe` → Caspar PGM layer **205** (`casparcg_effects_player_pgm`) alpha
+  overlay + delayed `route://` cut on layer 110 (not STING; layer **200** retired).
 - Timeline enable after ingest (`convertIngestData` scales RE seconds → ms):
   - `start = piece.start * 1000` (seconds → ms; missing start → `0`)
   - `duration = piece.duration * 1000` when `piece.duration > 0`
