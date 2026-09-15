@@ -151,7 +151,7 @@ Story compose layers sit on **BG look channels 3/4**; PGM (ch2) only routes + ov
 | `db_loop` frame | **BG 3/4** · 118 | full frame alpha cutouts |
 | Topic L3D | **BG 3/4** · 121 | HTML templates (`l3d-predstavovak`, …) |
 | Logo / countup | **PGM 2** · 123 | above route |
-| Story wipe | **PGM 2** · 110 | `PLAY 2-110 route://{3\|4}` + STING (`wipes/wipe…`) — **not** overlay 200 |
+| Story wipe | **PGM 2** · 205 | overlay `wipes/wipe*` + delayed `route://` cut — not 200 (sticky KEYER) |
 | Intro / outro | **PGM 2** · 210 | full frame — above route; **PGM only** |
 
 Tune FILL against the real HTML chrome; values above match the attached still
@@ -176,8 +176,8 @@ looks pre-build on **BG channels 3/4**; PGM takes
 transition length. See [`adr/0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md)
 and [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md).
 
-**Legacy:** overlay `PLAY 2-200 "wipes/wipe"` while cold-starting on PGM — compatibility
-only; migrated story wipes must not use layer 200.
+**Current:** overlay `PLAY 2-205 "wipes/wipe"` (alpha mixer). Layer **200** is retired —
+leftover `MIXER KEYER` there luma-keyed remastered `wipe.mov` while `outro.mov` on 210 was fine.
 
 **If wipes never appear:** (1) watch **Caspar channel 2**, not LED; (2) confirm
 `PLAY 2-110 route://{3|4}` with STING on Take (not `route://N-0`); (3) Caspar
@@ -216,7 +216,7 @@ labelled variant) and `transition: <label>` for operators.
 | `casparcg_intro_player_pgm` | PGM 2 | 210 | Intro / znelka — **never LED** |
 | `casparcg_graphics_pgm_l3d` / `_b` | BG 3 / 4 | 121 | `l3d-predstavovak` / `l3d-odporucanie` / `l3d-syn` / headline bars |
 | `casparcg_graphics_logo` | PGM 2 | 123 | `gfx/logo-bug` / countup — **above route; not on LED** |
-| `casparcg_effects_player_pgm` | PGM 2 | 200 | Legacy overlay wipe only (story wipes use route STING) |
+| `casparcg_effects_player_pgm` | PGM 2 | 205 | Story wipe overlay (200 retired — leftover KEYER) |
 
 Headline / story ILU on LED vs look: opening **headline** ILU stays on **LED**
 (`casparcg_ilu_player`). Thematic DoubleBox left-window media uses

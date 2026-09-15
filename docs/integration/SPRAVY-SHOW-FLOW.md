@@ -18,10 +18,10 @@ DoubleBox geometry: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 | 8 | SYN → new topic | `bg_loop` | DoubleBox | **Wipe** |
 | 9 | SJV (3–5 SYNs) | `bg_loop` | Timed `l3d-sjv` over SYNs | `wipes/wipe_sjv` on **first SYN** (no empty open Take) |
 | 10 | Šport (2–5) | `bg_loop` | Timed `l3d-sport` (`kicker=ŠPORT`) | `wipes/wipe_sport` on **first SYN** |
-| 11 | Počasie | `bg_loop` | Transparent `gfx/pocasie` on Full look (**routed**; look clip underlay) + logo-bug; or bypass `assets/weather` | `wipes/wipe_pocasie` |
-| 12 | Odporúčanie / Závěr Avízo | `bg_loop` + `route://4` | Full-look CAM + windowed `ilu-zaver` (ch4) + `l3d-odporucanie` — **no** `db_loop` | Normal wipe |
+| 11 | Počasie | `bg_loop` | Transparent `gfx/pocasie` on Full look (**routed**; look clip underlay) + logo-bug; or bypass `assets/weather` | `wipes/wipe_pocasie` + **CLEAR ch4** clip/CAM/`db_loop` (kills leftover sport SYN) |
+| 12 | Odporúčanie / Závěr Avízo | `bg_loop` + `ilu-zaver` on LED 115 | Full-look CAM1 + `l3d-odporucanie` — **no** `db_loop`, **no** CAM on LED | Normal wipe |
 | 12b | optional SYN | `bg_loop` | Hard cut ILU↔SYN | Hard cut |
-| 13 | Outro | `bg_loop` | `assets/outro` on layer 210 (above everything) | — |
+| 13 | Outro | `bg_loop` | `assets/outro` on layer 210 (above everything); **no** kolíska / countup SFX | — |
 
 ## Templates (demo-assets)
 
@@ -35,8 +35,10 @@ DoubleBox geometry: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 ## Timed L3D / Zdroj
 
 RE piece `start` (seconds) → ingest `objectTime` (ms); `duration` (seconds) → piece enable duration.
-Caspar STOP runs the template slide-out. Set SYN L3D duration shorter than the clip so it
-cannot overflow into the next SYN even if Takes are early.
+On Take, blueprints `CG STOP` the outgoing L3D (out-animation), then cut/wipe, then `CG ADD`
+the new L3D so the in-animation is visible. Do not `CG UPDATE` (text-only, no animation).
+Set SYN L3D duration shorter than the clip so it cannot overflow into the next SYN even if
+Takes are early.
 
 ## Media notes
 
@@ -45,12 +47,11 @@ cannot overflow into the next SYN even if Takes are early.
   `assets/bg_pocasie` underlay on the ILU layer (map loop under city cards; `bg_loop`
   stays on the clip layer).
 - Weather bypass clip (when wired): PLAY `assets/weather` premade animation.
-- Outro: PLAY `assets/outro` on PGM intro layer 210 (jingle, no bed music).
+- Outro: PLAY `assets/outro` on PGM intro layer 210 (jingle; **mute** kolíska beds and countup SFX).
 - Headlines: each Take also PLAYs `assets/headline_sfx` (disk `headline_sfx.wav`) on
   LED+PGM audio beds.
-- Závěr + Avízo: Full look — piece type `ilu-zaver` (windowed ILU on ch4 like DoubleBox
-  geometry, no `db_loop`) + fullscreen CAM via `route://4` + `l3d-odporucanie`. LED keeps
-  `bg_loop` with `route://4` on Effects.
+- Závěr + Avízo: LED plays `ilu-zaver` over `bg_loop` (layer 115). PGM is fullscreen CAM1
+  + `l3d-odporucanie`. Do **not** `route://4` onto LED (that put CAM1 on the wall).
 
 ## ILU bypass
 

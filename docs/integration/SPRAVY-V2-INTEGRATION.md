@@ -112,7 +112,7 @@ Clip paths are placeholders under `clips/`. Camera letters:
 
 Wipes: piece type `wipe`, file `wipes/wipe` (or labelled `wipe_sjv` / `wipe_sport` / `wipe_pocasie`).
 **Shipped:** PGM `PLAY 2-110 route://{3|4}` + STING ([ADR 0002](../adr/0002-wipe-prebuild-bg-channels.md),
-blueprints [#77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77)). Overlay layer 200 is legacy only.
+blueprints [#77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77)). Wipe overlay is PGM **205** (200 retired — leftover KEYER).
 Smoke rundown includes story-block wipe pieces with a `transition` label
 (`ILU TO SYN`, `Double Box`, …) — not on HEADLINES / Intro.
 
