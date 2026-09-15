@@ -314,10 +314,11 @@ CG 1-121 ADD 1 "gfx/headline-fallback" "{\"source\":\"TASR\"}"
 ### Merged (PR #32, `6e1f08a`)
 
 - **Media readiness:** `GET /api/rundowns/:id/readiness` — evaluates `mediaPick` fields (no WebM
-  sibling); polls every 10s via `RundownReadinessProvider`. Media picker probes clip duration via
-  ffprobe and pulls it into piece/part duration on save. **Docker images must include
-  the `ffmpeg` package** (`ffprobe` on PATH); without it probes return null silently.
-  Backend logs `ffprobe: available` or a warning at startup.
+  sibling); polls every 10s via `RundownReadinessProvider`. Media picker probes clip length via
+  ffprobe and seeds the piece **On air** value plus `payload.sourceDuration` (ms). **Part Duration**
+  is a separate story-level field managed by the editor / duration sync — not written directly by
+  the probe. **Docker images must include the `ffmpeg` package** (`ffprobe` on PATH); without it
+  probes return null silently. Backend logs `ffprobe: available` or a warning at startup.
 - **Story sidebar:** columnar list (Status | Type | Story | Dur) with READY/NOT READY badges
 - **Theming:** dark default + light option; semantic `--re-*` tokens; ThemeToggle in navbar/login
 - **Rebrand:** Unopus (navbar breadcrumb)
