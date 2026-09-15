@@ -125,13 +125,15 @@ Operator list items assigned to Kubo, landed as sibling-repo PRs (this megarepo 
 | Grafika | v2 “novú” Caspar templates already imported into blueprints; Intro plays as **video** on `pgm_intro` (UI label Intro, not Titles) |
 | Grafika | Wipes set `ignoreMediaObjectStatus` so missing Package Manager objects do not block PLAY |
 | Playout | SYN/VO/VT `trimIn` / `trimOut` (seconds) + `volume` on video pieces; on-air duration is source length minus trims |
-| Zvuk | Clip mixer volume; Koliska bed starts at 1.0 for 4s then ducks to 0.45 |
+| Zvuk | Clip mixer volume; Koliska bed starts at 1.0 for **2s** then ducks to 0.45; wipe ForceMutes Host+Playback and ducks Caspar SYN/ILU volume |
 | Flow | Sofie **Pause clock** / **Resume clock** / **Take Previous** — časovka freezes at `timings.pausedAt`; pause also stops VT/VO clips |
 | Unopus | Full-width story/piece rows colored by ready/NR; compact headings; GFX preview stubs; row lock chips when another user has the row focused |
 
 Video piece payload fields (megarepo `assets/sofie-rundown-editor-piece-types.json`): `trimIn`, `trimOut`, `volume`.
 
-**Out of scope (Ondro / studio):** HTML graphic production, casomierka pips, wall broadcast, FFMPEG record, podcast mix minus music.
+**Out of scope (Ondro / studio hardware):** HTML graphic production, casomierka pips, wall broadcast.
+
+**Ops docs (megarepo):** [`AUDIO-SQ5-ROUTING.md`](./AUDIO-SQ5-ROUTING.md), [`FFMPEG-PGM-RECORD.md`](./FFMPEG-PGM-RECORD.md).
 
 ---
 
