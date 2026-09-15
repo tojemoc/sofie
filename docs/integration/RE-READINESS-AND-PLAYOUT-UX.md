@@ -102,11 +102,11 @@ piece On air (seconds) **and** `sourceDuration` (ms). Operators may override or
 to source length.
 
 **L3D graphics:** empty On air is intentional. Blueprints use `duration: undefined` on
-the timeline enable → L3D **holds until Take**. Smoke `l3d-headline` pieces ship with
-**no** On air (until next Take). RE no longer auto-fills empty L3D On air from part
-duration (that made nuked durations snap back and L3Ds disappear mid-part). This does
-**not** apply to wipes — empty wipe On air still plays `DEFAULT_WIPE_DURATION_MS`
-(**2500**) and RE shows that as **2.5s** (see Wipes below).
+the timeline enable → L3D **holds until Take**. Smoke `l3d-headline` and `l3d-mod`
+pieces ship with **no** On air (until next Take). RE no longer auto-fills empty L3D On
+air from part duration (that made nuked durations snap back and L3Ds disappear
+mid-part). This does **not** apply to wipes — empty wipe On air still plays
+`DEFAULT_WIPE_DURATION_MS` (**2500**) and RE shows that as **2.5s** (see Wipes below).
 
 **Headline ILU clips:** On air should match the source file length (`payload.sourceDuration`
 from ffprobe). Media picker seeds both when you pick/re-pick `iluFile`. Blueprints still

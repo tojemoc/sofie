@@ -101,6 +101,7 @@ the HTML template loaded — the companion ILU PLAY still needs the file.
 | Segment | Parts |
 |---------|--------|
 | HEADLINES | HEADLINE1–3 (ILU + L3D + cam); **no** wipe pieces; `l3d-headline` On air empty (until Take); ILU On air = clip length |
+| INTRO MOD | `l3d-mod` On air empty (until Take) |
 | INTRO | Intro overlay on **PGM**; Mod L3D Gabriela Kajtárová + logo-bug; **no** bg-loop piece, **no** wipe |
 | Téma 1–4 | Obchodný register, Spor Saková – Fico, Referendum / novela Ústavy, Ukrajina — DoubleBox / SYN patterns; open/`skip` parts kept where set in export |
 | SPRÁVY JEDNOU VETOU | GFX open row + SYN slots (`l3d-sjv`); wipe on first SYN |
