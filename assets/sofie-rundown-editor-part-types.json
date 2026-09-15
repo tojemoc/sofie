@@ -26,7 +26,7 @@
 				"pieceType": "video",
 				"optional": true,
 				"payload": {
-					"volume": 0.5
+					"volume": 1
 				}
 			}
 		]
@@ -46,10 +46,10 @@
 				"pieceType": "doublebox-ilu"
 			},
 			{
-				"pieceType": "l3d-predstavovak",
+				"pieceType": "l3d-syn",
 				"payload": {
 					"name": "",
-					"title": ""
+					"role": ""
 				}
 			},
 			{
@@ -85,7 +85,7 @@
 			{
 				"pieceType": "video",
 				"payload": {
-					"volume": 0.5
+					"volume": 1
 				}
 			}
 		]
@@ -111,7 +111,7 @@
 			{
 				"pieceType": "video",
 				"payload": {
-					"volume": 0.5
+					"volume": 1
 				}
 			}
 		]
@@ -137,7 +137,7 @@
 			{
 				"pieceType": "video",
 				"payload": {
-					"volume": 0.5
+					"volume": 1
 				}
 			}
 		]
@@ -205,13 +205,13 @@
 		"buttonLabel": "VO",
 		"ingestType": "VO",
 		"colour": "#1f77b4",
-		"showInToolbar": true,
+		"showInToolbar": false,
 		"payload": [],
 		"defaultPieces": [
 			{
 				"pieceType": "video",
 				"payload": {
-					"volume": 0.5
+					"volume": 1
 				}
 			}
 		]
@@ -224,13 +224,13 @@
 		"buttonLabel": "VT",
 		"ingestType": "VT",
 		"colour": "#0a20ed",
-		"showInToolbar": true,
+		"showInToolbar": false,
 		"payload": [],
 		"defaultPieces": [
 			{
 				"pieceType": "video",
 				"payload": {
-					"volume": 0.5
+					"volume": 1
 				}
 			}
 		]
@@ -247,7 +247,11 @@
 		"payload": [],
 		"defaultPieces": [
 			{
-				"pieceType": "l3d-predstavovak"
+				"pieceType": "l3d-syn",
+				"payload": {
+					"name": "",
+					"role": ""
+				}
 			}
 		]
 	},

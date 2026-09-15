@@ -30,7 +30,7 @@ rundown is this megarepo:
 
 | Path | Purpose |
 |------|---------|
-| `assets/sofie-rundown-editor-piece-types.json` | Piece types + GFX preview templates (includes `wipe`, `l3d-predstavovak`, `l3d-odporucanie`) |
+| `assets/sofie-rundown-editor-piece-types.json` | Piece types + GFX preview templates (includes `wipe`, `l3d-syn`, `l3d-odporucanie`) |
 | `assets/sofie-rundown-editor-part-types.json` | Part presets |
 | `assets/sofie-rundown-editor-segment-types.json` | Segment presets |
 | `assets/spravy-v3-smoke-rundown.json` | Smoke rundown fixture (`spravy-v3-smoke`, 4 topics) |

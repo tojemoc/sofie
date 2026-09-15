@@ -10,7 +10,7 @@ DoubleBox geometry: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 |---|-------|-----------|-----------|------------|
 | 1 | Headlines (3×) | `bg_loop` + ILU (slot or bypass fullscreen) | Fullscreen OBS cam + `l3d-headline` + logo-bug | — |
 | 2 | Intro | `bg_loop` only | Intro overlay (`assets/intro_*`) on layer 210 | — |
-| 3 | MOD | `bg_loop` | Fullscreen OBS + `l3d-predstavovak` / `l3d-mod` | — |
+| 3 | MOD | `bg_loop` | Fullscreen OBS + `l3d-mod` | — |
 | 4 | Topic DoubleBox | `bg_loop` | `db_loop` (118) over CAM (~80% right) + ILU left + topic L3D + bug | Wipe into topic / new story |
 | 5 | Topic SYN | `bg_loop` | Fullscreen SYN + timed `l3d-syn` (+ optional Zdroj) | **Hard cut** from DB (no wipe) |
 | 6 | SYN → SYN | `bg_loop` | Hard cut; L3D duration ends before next SYN | **Hard cut** |
@@ -27,7 +27,8 @@ DoubleBox geometry: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 
 | Piece type | Caspar | Source |
 |------------|--------|--------|
-| `l3d-predstavovak` / `l3d-mod` | `gfx/l3d-predstavovak` | megarepo `spravy_360_predstavovak` |
+| `l3d-mod` | `gfx/l3d-mod` | megarepo `spravy_360_predstavovak` (MOD shell) |
+| `l3d-syn` | `gfx/l3d-syn` | SYN name/role L3D (RE piece type; replaces retired `l3d-predstavovak`) |
 | `l3d-sjv` | `gfx/l3d-sjv` | megarepo `spravy_360_jednou_vetou` (+ kicker) |
 | `l3d-sport` | `gfx/l3d-sport` | same shell, default kicker `ŠPORT` |
 | `l3d-odporucanie` | `gfx/l3d-odporucanie` | same shell, **no** kicker |
@@ -35,10 +36,10 @@ DoubleBox geometry: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 ## Timed L3D / Zdroj
 
 RE piece `start` (seconds) → ingest `objectTime` (ms); `duration` (seconds) → piece enable duration.
-On Take, blueprints `CG STOP` the outgoing L3D (out-animation), then cut/wipe, then `CG ADD`
-the new L3D so the in-animation is visible. Do not `CG UPDATE` (text-only, no animation).
-Set SYN L3D duration shorter than the clip so it cannot overflow into the next SYN even if
-Takes are early.
+On Take, blueprints EMPTY the look L3D layer then CG ADD after a short gap / wipe cut so the
+previous L3D cannot stack and same-template SJV/ŠPORT Takes animate IN (not CG UPDATE).
+Caspar STOP runs the template slide-out when a timed L3D ends. Set SYN L3D duration shorter
+than the clip so it cannot overflow into the next SYN even if Takes are early.
 
 ## Media notes
 
@@ -47,17 +48,17 @@ Takes are early.
   `assets/bg_pocasie` underlay on the ILU layer (map loop under city cards; `bg_loop`
   stays on the clip layer).
 - Weather bypass clip (when wired): PLAY `assets/weather` premade animation.
+<<<<<<< HEAD
 - Outro: PLAY `assets/outro` on PGM intro layer 210 (jingle; **mute** kolíska beds and countup SFX).
+=======
+- Outro: PLAY `assets/outro` on PGM intro layer 210 (jingle); kolíska beds + countup
+  stay muted for the rundown after (no music restart); freeze last frame.
+>>>>>>> origin/cursor/spravy-l3d-wipe-outro-docs-c257
 - Headlines: each Take also PLAYs `assets/headline_sfx` (disk `headline_sfx.wav`) on
   LED+PGM audio beds.
-<<<<<<< HEAD
-- Závěr + Avízo: LED plays `ilu-zaver` over `bg_loop` (layer 115). PGM is fullscreen CAM1
-  + `l3d-odporucanie`. Do **not** `route://4` onto LED (that put CAM1 on the wall).
-=======
 - Závěr + Avízo: `ilu-zaver` windowed (~`PGM_DOUBLEBOX_ILU_FILL`, ≈60–68%) on **LED 115**
   over `bg_loop`. Full look keeps fullscreen CAM + `l3d-odporucanie` on PGM — do **not**
   `route://4` onto LED.
->>>>>>> origin/cursor/spravy-tearing-weather-zaver-9fad
 
 ## ILU bypass
 

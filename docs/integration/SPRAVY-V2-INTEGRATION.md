@@ -167,10 +167,10 @@ Pin the `pre-<sha>` tag you tested; do not assume `latest`.
     headline-fallback/headline-fallback.html
     source/source.html
     l3d-headline/l3d-headline.html
-    l3d-predstavovak/l3d-predstavovak.html
+    l3d-predstavovak/l3d-predstavovak.html  # legacy Caspar only; not an RE piece type
     l3d-mod/l3d-mod.html
     l3d-tema/l3d-tema.html
-    l3d-syn/l3d-syn.html
+    l3d-syn/l3d-syn.html                     # RE nameplate / SYN L3D
     l3d-sjv/l3d-sjv.html
     l3d-sport/l3d-sport.html
     l3d-odporucanie/l3d-odporucanie.html
@@ -202,10 +202,10 @@ The bridge accepts JSON objects and XML-wrapped JSON from Caspar.
 | T01b | `headline-fallback` | `gfx/headline-fallback` | `source` | ILU chrome overlay; **LED ch1 L121** only |
 | T01c | `source` | `gfx/source` | `source` | Standalone source pill; **PGM ch2 L121** |
 | T04b | `l3d-headline` | `gfx/l3d-headline` | `title`, `subtitle` | RE aliases `headline`/`subline`; **PGM ch2 L121** |
-| T03a | `l3d-predstavovak` | `gfx/l3d-predstavovak` | `name`, `title` | Guest/topic nameplate; **PGM ch2** |
+| T03a | ~~`l3d-predstavovak`~~ | ~~`gfx/l3d-predstavovak`~~ | — | **Retired in RE** — use `l3d-syn` (T05). Caspar folder may remain in demo-assets. |
 | T03 | `l3d-mod` | `gfx/l3d-mod` | `name`, `title` | Presenter MOD (Intro); **PGM ch2** |
 | T04 | `l3d-tema` | `gfx/l3d-tema` | `headline` | Thematic doublebox bar; **PGM ch2** |
-| T05 | `l3d-syn` | `gfx/l3d-syn` | `name`, `role` | SYN name/role L3D; **PGM ch2** |
+| T05 | `l3d-syn` | `gfx/l3d-syn` | `name`, `role` | SYN name/role L3D (also replaces retired predstavovak nameplate); **PGM ch2** |
 | T06 | `l3d-sjv` | `gfx/l3d-sjv` | `kicker`, `headline` | SJV segment bar; **PGM ch2** |
 | T06b | `l3d-odporucanie` | `gfx/l3d-odporucanie` | `headline` | Avízo / CTA (no kicker); **PGM ch2** |
 | T07 | `l3d-sport` | `gfx/l3d-sport` | `kicker` *(default `ŠPORT`)*, `headline` | ŠPORT bar; **PGM ch2** |
@@ -282,7 +282,7 @@ PGM hears them via `route://{3|4}` — do not expect `CG 2-121` for hypercompose
 
 ```text
 CG 3-121 ADD 1 "gfx/l3d-tema" "{\"headline\":\"Test\"}"
-CG 3-121 ADD 1 "gfx/l3d-predstavovak" "{\"name\":\"Peter Pellegrini\",\"title\":\"Prezident SR\"}"
+CG 3-121 ADD 1 "gfx/l3d-syn" "{\"name\":\"Peter Pellegrini\",\"role\":\"Prezident SR\"}"
 CG 3-121 ADD 1 "gfx/l3d-mod" "{\"name\":\"Gabriela Kajtárová\",\"title\":\"moderátorka\"}"
 CG 3-121 ADD 1 "gfx/source" "{\"source\":\"TASR\"}"
 CG 2-123 ADD 1 "gfx/logo-bug"
