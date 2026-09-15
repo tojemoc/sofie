@@ -13,13 +13,15 @@
 				"type": "number",
 				"includeInName": true
 			}
-		]
+		],
+		"techOnly": true,
+		"showInToolbar": false
 	},
 	{
 		"id": "video",
 		"entityType": "piece",
-		"name": "Video clip (SOT/VID)",
-		"shortName": "VID",
+		"name": "Synchron (SYN)",
+		"shortName": "SYN",
 		"colour": "#0a20ed",
 		"includeTypeInName": true,
 		"payload": [
@@ -49,7 +51,7 @@
 				"id": "volume",
 				"label": "Volume (0–1)",
 				"type": "number",
-				"default": 0.5
+				"default": 1
 			}
 		]
 	},
@@ -68,7 +70,9 @@
 				"subdir": "assets",
 				"includeInName": true
 			}
-		]
+		],
+		"techOnly": true,
+		"showInToolbar": false
 	},
 	{
 		"id": "bg-loop",
@@ -85,7 +89,9 @@
 				"subdir": "loops",
 				"includeInName": true
 			}
-		]
+		],
+		"techOnly": true,
+		"showInToolbar": false
 	},
 	{
 		"id": "bg-music",
@@ -102,7 +108,9 @@
 				"subdir": "loops",
 				"includeInName": true
 			}
-		]
+		],
+		"techOnly": true,
+		"showInToolbar": false
 	},
 	{
 		"id": "wipe",
@@ -125,7 +133,9 @@
 				"type": "string",
 				"includeInName": true
 			}
-		]
+		],
+		"techOnly": true,
+		"showInToolbar": false
 	},
 	{
 		"id": "l3d-tema",
@@ -138,16 +148,13 @@
 		"payload": [
 			{
 				"id": "headline",
-				"label": "Headline",
+				"label": "Line",
 				"type": "string",
 				"includeInName": true
-			},
-			{
-				"id": "subline",
-				"label": "Subline",
-				"type": "string"
 			}
-		]
+		],
+		"showInToolbar": false,
+		"toolbarGroup": "l3d"
 	},
 	{
 		"id": "l3d-mod",
@@ -169,7 +176,9 @@
 				"label": "Title",
 				"type": "string"
 			}
-		]
+		],
+		"showInToolbar": false,
+		"toolbarGroup": "l3d"
 	},
 	{
 		"id": "l3d-predstavovak",
@@ -191,7 +200,9 @@
 				"label": "Title",
 				"type": "string"
 			}
-		]
+		],
+		"showInToolbar": false,
+		"toolbarGroup": "l3d"
 	},
 	{
 		"id": "l3d-headline",
@@ -213,7 +224,9 @@
 				"label": "Subline",
 				"type": "string"
 			}
-		]
+		],
+		"showInToolbar": false,
+		"toolbarGroup": "l3d"
 	},
 	{
 		"id": "l3d-syn",
@@ -235,7 +248,9 @@
 				"label": "Role",
 				"type": "string"
 			}
-		]
+		],
+		"showInToolbar": false,
+		"toolbarGroup": "l3d"
 	},
 	{
 		"id": "l3d-sjv",
@@ -257,7 +272,9 @@
 				"type": "string",
 				"includeInName": true
 			}
-		]
+		],
+		"showInToolbar": false,
+		"toolbarGroup": "l3d"
 	},
 	{
 		"id": "l3d-sport",
@@ -279,7 +296,9 @@
 				"type": "string",
 				"includeInName": true
 			}
-		]
+		],
+		"showInToolbar": false,
+		"toolbarGroup": "l3d"
 	},
 	{
 		"id": "source",
@@ -323,13 +342,15 @@
 				"label": "Cities JSON (or Sync from iMeteo) — maps to BA_temp…BB_temp",
 				"type": "string"
 			}
-		]
+		],
+		"techOnly": true,
+		"showInToolbar": false
 	},
 	{
 		"id": "headline",
 		"entityType": "piece",
-		"name": "ILU Headline",
-		"shortName": "ILU",
+		"name": "Headline ILU",
+		"shortName": "HEADLINE",
 		"colour": "#9467bd",
 		"includeTypeInName": true,
 		"previewTemplate": "headline",
@@ -366,8 +387,8 @@
 	{
 		"id": "doublebox-ilu",
 		"entityType": "piece",
-		"name": "ILU DoubleBox",
-		"shortName": "DBILU",
+		"name": "ILU (DoubleBox)",
+		"shortName": "ILU",
 		"colour": "#6f42c1",
 		"includeTypeInName": true,
 		"payload": [
@@ -395,7 +416,7 @@
 		"id": "ilu-zaver",
 		"entityType": "piece",
 		"name": "ILU Závěr",
-		"shortName": "ZAVER",
+		"shortName": "ILUZAVER",
 		"colour": "#6f42c1",
 		"includeTypeInName": true,
 		"payload": [
@@ -426,7 +447,9 @@
 		"shortName": "Logo",
 		"colour": "#7f7f7f",
 		"includeTypeInName": true,
-		"payload": []
+		"payload": [],
+		"techOnly": true,
+		"showInToolbar": false
 	},
 	{
 		"id": "outro",
@@ -442,7 +465,9 @@
 				"type": "mediaPick",
 				"subdir": "assets"
 			}
-		]
+		],
+		"techOnly": true,
+		"showInToolbar": false
 	},
 	{
 		"id": "l3d-odporucanie",
@@ -459,6 +484,8 @@
 				"type": "string",
 				"includeInName": true
 			}
-		]
+		],
+		"showInToolbar": false,
+		"toolbarGroup": "l3d"
 	}
 ]
