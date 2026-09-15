@@ -36,8 +36,10 @@ DoubleBox geometry: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 ## Timed L3D / Zdroj
 
 RE piece `start` (seconds) → ingest `objectTime` (ms); `duration` (seconds) → piece enable duration.
-Caspar STOP runs the template slide-out. Set SYN L3D duration shorter than the clip so it
-cannot overflow into the next SYN even if Takes are early.
+On Take, blueprints EMPTY the look L3D layer then CG ADD after a short gap / wipe cut so the
+previous L3D cannot stack and same-template SJV/ŠPORT Takes animate IN (not CG UPDATE).
+Caspar STOP runs the template slide-out when a timed L3D ends. Set SYN L3D duration shorter
+than the clip so it cannot overflow into the next SYN even if Takes are early.
 
 ## Media notes
 
@@ -46,7 +48,8 @@ cannot overflow into the next SYN even if Takes are early.
   `assets/bg_pocasie` underlay on the ILU layer (map loop under city cards; `bg_loop`
   stays on the clip layer).
 - Weather bypass clip (when wired): PLAY `assets/weather` premade animation.
-- Outro: PLAY `assets/outro` on PGM intro layer 210 (jingle, no bed music).
+- Outro: PLAY `assets/outro` on PGM intro layer 210 (jingle); kolíska beds + countup
+  stay muted for the rundown after (no music restart); freeze last frame.
 - Headlines: each Take also PLAYs `assets/headline_sfx` (disk `headline_sfx.wav`) on
   LED+PGM audio beds.
 - Závěr + Avízo: Full look — piece type `ilu-zaver` (windowed ILU on ch4 like DoubleBox
