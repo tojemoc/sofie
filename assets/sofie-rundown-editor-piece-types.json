@@ -320,7 +320,7 @@
 			},
 			{
 				"id": "cities",
-				"label": "Cities JSON (or Sync from iMeteo) — maps to BA_temp…MM_temp",
+				"label": "Cities JSON (or Sync from iMeteo) — maps to BA_temp…BB_temp",
 				"type": "string"
 			}
 		]
