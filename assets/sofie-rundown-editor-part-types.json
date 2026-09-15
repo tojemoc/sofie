@@ -24,7 +24,10 @@
 			},
 			{
 				"pieceType": "video",
-				"optional": true
+				"optional": true,
+				"payload": {
+					"volume": 0.5
+				}
 			}
 		]
 	},
@@ -80,7 +83,62 @@
 				"pieceType": "l3d-syn"
 			},
 			{
-				"pieceType": "video"
+				"pieceType": "video",
+				"payload": {
+					"volume": 0.5
+				}
+			}
+		]
+	},
+	{
+		"id": "sjv",
+		"entityType": "part",
+		"name": "SJV",
+		"shortName": "SJV",
+		"buttonLabel": "SJV",
+		"ingestType": "SYN",
+		"colour": "#ED7200",
+		"showInToolbar": true,
+		"payload": [],
+		"defaultPieces": [
+			{
+				"pieceType": "l3d-sjv",
+				"payload": {
+					"kicker": "SPRÁVY JEDNOU VETOU",
+					"headline": ""
+				}
+			},
+			{
+				"pieceType": "video",
+				"payload": {
+					"volume": 0.5
+				}
+			}
+		]
+	},
+	{
+		"id": "sport",
+		"entityType": "part",
+		"name": "Šport",
+		"shortName": "SPORT",
+		"buttonLabel": "SPORT",
+		"ingestType": "SYN",
+		"colour": "#ED7200",
+		"showInToolbar": true,
+		"payload": [],
+		"defaultPieces": [
+			{
+				"pieceType": "l3d-sport",
+				"payload": {
+					"kicker": "ŠPORT",
+					"headline": ""
+				}
+			},
+			{
+				"pieceType": "video",
+				"payload": {
+					"volume": 0.5
+				}
 			}
 		]
 	},
@@ -151,7 +209,10 @@
 		"payload": [],
 		"defaultPieces": [
 			{
-				"pieceType": "video"
+				"pieceType": "video",
+				"payload": {
+					"volume": 0.5
+				}
 			}
 		]
 	},
@@ -167,7 +228,10 @@
 		"payload": [],
 		"defaultPieces": [
 			{
-				"pieceType": "video"
+				"pieceType": "video",
+				"payload": {
+					"volume": 0.5
+				}
 			}
 		]
 	},
