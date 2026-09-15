@@ -19,7 +19,7 @@ DoubleBox geometry: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 | 9 | SJV (3–5 SYNs) | `bg_loop` | Timed `l3d-sjv` over SYNs | `wipes/wipe_sjv` on **first SYN** (no empty open Take) |
 | 10 | Šport (2–5) | `bg_loop` | Timed `l3d-sport` (`kicker=ŠPORT`) | `wipes/wipe_sport` on **first SYN** |
 | 11 | Počasie | `bg_loop` | Transparent `gfx/pocasie` on Full look (**routed**; look clip underlay) + logo-bug; or bypass `assets/weather` | `wipes/wipe_pocasie` |
-| 12 | Odporúčanie / Závěr Avízo | `bg_loop` + `route://4` | Full-look CAM + windowed `ilu-zaver` (ch4) + `l3d-odporucanie` — **no** `db_loop` | Normal wipe |
+| 12 | Odporúčanie / Závěr Avízo | `bg_loop` + windowed `ilu-zaver` (~60%) | Full-look CAM + `l3d-odporucanie` — **no** `db_loop`, **no** LED `route://4` | Normal wipe |
 | 12b | optional SYN | `bg_loop` | Hard cut ILU↔SYN | Hard cut |
 | 13 | Outro | `bg_loop` | `assets/outro` on layer 210 (above everything) | — |
 
@@ -48,9 +48,9 @@ cannot overflow into the next SYN even if Takes are early.
 - Outro: PLAY `assets/outro` on PGM intro layer 210 (jingle, no bed music).
 - Headlines: each Take also PLAYs `assets/headline_sfx` (disk `headline_sfx.wav`) on
   LED+PGM audio beds.
-- Závěr + Avízo: Full look — piece type `ilu-zaver` (windowed ILU on ch4 like DoubleBox
-  geometry, no `db_loop`) + fullscreen CAM via `route://4` + `l3d-odporucanie`. LED keeps
-  `bg_loop` with `route://4` on Effects.
+- Závěr + Avízo: `ilu-zaver` windowed (~`PGM_DOUBLEBOX_ILU_FILL`, ≈60–68%) on **LED 115**
+  over `bg_loop`. Full look keeps fullscreen CAM + `l3d-odporucanie` on PGM — do **not**
+  `route://4` onto LED.
 
 ## ILU bypass
 
