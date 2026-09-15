@@ -52,7 +52,9 @@ than the clip so it cannot overflow into the next SYN even if Takes are early.
   audio (SYN / VT / weather on ch 3/4) while it plays; kolíska beds + countup stay
   muted for the rundown after (no music restart); freeze last frame.
 - Headlines: each Take also PLAYs `assets/headline_sfx` (disk `headline_sfx.wav`) on
-  LED+PGM audio beds.
+  LED+PGM audio beds. Line1/line2 copy lives only on **`l3d-headline`**
+  (`headline`/`subline`) — the Headline ILU piece is media/bypass/`volume` only;
+  payload `headline`/`subline` on that piece type are ignored.
 - Závěr + Avízo: `ilu-zaver` windowed (~`PGM_DOUBLEBOX_ILU_FILL`, ≈60–68%) on **LED 115**
   over `bg_loop`. Full look keeps fullscreen CAM + `l3d-odporucanie` on PGM — do **not**
   `route://4` onto LED.
