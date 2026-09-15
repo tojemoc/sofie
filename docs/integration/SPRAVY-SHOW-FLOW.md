@@ -48,12 +48,8 @@ than the clip so it cannot overflow into the next SYN even if Takes are early.
   `assets/bg_pocasie` underlay on the ILU layer (map loop under city cards; `bg_loop`
   stays on the clip layer).
 - Weather bypass clip (when wired): PLAY `assets/weather` premade animation.
-<<<<<<< HEAD
-- Outro: PLAY `assets/outro` on PGM intro layer 210 (jingle; **mute** kolíska beds and countup SFX).
-=======
 - Outro: PLAY `assets/outro` on PGM intro layer 210 (jingle); kolíska beds + countup
   stay muted for the rundown after (no music restart); freeze last frame.
->>>>>>> origin/cursor/spravy-l3d-wipe-outro-docs-c257
 - Headlines: each Take also PLAYs `assets/headline_sfx` (disk `headline_sfx.wav`) on
   LED+PGM audio beds.
 - Závěr + Avízo: `ilu-zaver` windowed (~`PGM_DOUBLEBOX_ILU_FILL`, ≈60–68%) on **LED 115**
