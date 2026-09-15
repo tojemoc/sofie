@@ -16,15 +16,15 @@ right / tema+bug bar / `db_loop` frame with bg baked in):
 │   │  (above CAM overhang)    │  │  (115 UVC) │             │
 │   └──────────────────────────┘  └────────────┘             │
 │  ┌────────────────────────────────────┬──────────────────┐ │
-│  │  thematic title (l3d-predstavovak) │  360° sekúnd bug │ │
+│  │  thematic title (l3d-syn / l3d-tema) │  360° sekúnd bug │ │
 │  └────────────────────────────────────┴──────────────────┘ │
 └────────────────────────────────────────────────────────────┘
 ```
 
 **LED (Caspar channel 1)** production rule: **headline ILU + `loops/bg_loop` only**.
 The loop is blueprint **baseline** on layer 110 (not a RE piece) and must never be
-displaced by VT/VO/SYN — those play on **BG look** channels (3/4). `l3d-predstavovak` /
-`l3d-mod` / `l3d-syn` / headline bars are on the **look**, then routed to PGM. No intro /
+displaced by VT/VO/SYN — those play on **BG look** channels (3/4). `l3d-syn` /
+`l3d-mod` / `l3d-tema` / headline bars are on the **look**, then routed to PGM. No intro /
 znelka on LED. Intro overlay plays on **PGM layer 210** (above the route on 110) — see
 [`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md)
 and [`handoffs/blueprints-baseline-bg-loop.md`](./handoffs/blueprints-baseline-bg-loop.md).
@@ -149,7 +149,7 @@ Story compose layers sit on **BG look channels 3/4**; PGM (ch2) only routes + ov
 | CAM1 UVC (headlines/MOD) | **BG 3/4** · 115 | `route://5` + FILL `0 0 1 1` fullscreen |
 | Live CAM ingest | **CAM 5** · 10 | sole `DECKLINK` / `dshow://` |
 | `db_loop` frame | **BG 3/4** · 118 | full frame alpha cutouts |
-| Topic L3D | **BG 3/4** · 121 | HTML templates (`l3d-predstavovak`, …) |
+| Topic L3D | **BG 3/4** · 121 | HTML templates (`l3d-syn`, `l3d-tema`, …) |
 | Logo / countup | **PGM 2** · 123 | above route |
 | Story wipe | **PGM 2** · 110 | `PLAY 2-110 route://{3\|4}` + STING (`wipes/wipe…`) — **not** overlay 200 |
 | Intro / outro | **PGM 2** · 210 | full frame — above route; **PGM only** |
@@ -214,14 +214,14 @@ labelled variant) and `transition: <label>` for operators.
 | `casparcg_pgm_camera_ingest` | CAM 5 | 10 | Sole DeckLink / dshow |
 | `casparcg_pgm_ilu_player` / `_b` | BG 3 / 4 | 116 | Thematic DoubleBox left ILU (`doublebox-ilu`) |
 | `casparcg_intro_player_pgm` | PGM 2 | 210 | Intro / znelka — **never LED** |
-| `casparcg_graphics_pgm_l3d` / `_b` | BG 3 / 4 | 121 | `l3d-predstavovak` / `l3d-odporucanie` / `l3d-syn` / headline bars |
+| `casparcg_graphics_pgm_l3d` / `_b` | BG 3 / 4 | 121 | `l3d-syn` / `l3d-odporucanie` / `l3d-tema` / headline bars |
 | `casparcg_graphics_logo` | PGM 2 | 123 | `gfx/logo-bug` / countup — **above route; not on LED** |
 | `casparcg_effects_player_pgm` | PGM 2 | 200 | Legacy overlay wipe only (story wipes use route STING) |
 
 Headline / story ILU on LED vs look: opening **headline** ILU stays on **LED**
 (`casparcg_ilu_player`). Thematic DoubleBox left-window media uses
 `casparcg_pgm_ilu_player` on the **BG look** (ch 3/4 layer 116) via piece type
-`doublebox-ilu`. Looks also carry camera FILL + `l3d-predstavovak`; PGM only
+`doublebox-ilu`. Looks also carry camera FILL + `l3d-syn` / `l3d-tema`; PGM only
 **routes** the settled mix on layer 110. Baseline `bg_loop` is **LED-only**.
 The **logo-bug is PGM-only** (layer 123).
 

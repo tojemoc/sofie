@@ -1088,17 +1088,17 @@
 			"partId": "part-tema-1-2-syn-susko"
 		},
 		{
-			"name": "L3D Predstavovak",
-			"pieceType": "l3d-predstavovak",
+			"name": "L3D SYN: susek",
+			"pieceType": "l3d-syn",
 			"payload": {
 				"name": "susek",
-				"title": "susko"
+				"role": "susko"
 			},
 			"start": 0,
 			"rank": 2,
 			"duration": 6,
 			"skip": true,
-			"id": "piece-tema-1-2-syn-susko-3-l3d-predstavovak",
+			"id": "piece-tema-1-2-syn-susko-3-l3d-syn-susek",
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-tema-1",

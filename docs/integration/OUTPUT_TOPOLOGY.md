@@ -177,7 +177,7 @@ Check in order:
 | Sofie **output layer** | WebUI track (GFX / PGM / …) | Not the same as Caspar channel |
 | Sofie **source layer** | Exclusive WithinPart slot | Lower Third vs PGM L3D |
 | Media **folder** | Disk under media-path | `clips/`, `loops/`, `wipes/`, `assets/` |
-| HTML **clipName** | Template under template-path | `gfx/l3d-predstavovak` |
+| HTML **clipName** | Template under template-path | `gfx/l3d-syn` |
 
 WebUI “Lower Third can't be found on the playout system” is Package Manager path verify —
 not “Caspar PLAY failed”. See [`assets/README.md`](../../assets/README.md).

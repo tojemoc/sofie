@@ -10,7 +10,7 @@ DoubleBox geometry: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 |---|-------|-----------|-----------|------------|
 | 1 | Headlines (3×) | `bg_loop` + ILU (slot or bypass fullscreen) | Fullscreen OBS cam + `l3d-headline` + logo-bug | — |
 | 2 | Intro | `bg_loop` only | Intro overlay (`assets/intro_*`) on layer 210 | — |
-| 3 | MOD | `bg_loop` | Fullscreen OBS + `l3d-predstavovak` / `l3d-mod` | — |
+| 3 | MOD | `bg_loop` | Fullscreen OBS + `l3d-mod` | — |
 | 4 | Topic DoubleBox | `bg_loop` | `db_loop` (118) over CAM (~80% right) + ILU left + topic L3D + bug | Wipe into topic / new story |
 | 5 | Topic SYN | `bg_loop` | Fullscreen SYN + timed `l3d-syn` (+ optional Zdroj) | **Hard cut** from DB (no wipe) |
 | 6 | SYN → SYN | `bg_loop` | Hard cut; L3D duration ends before next SYN | **Hard cut** |
@@ -27,7 +27,8 @@ DoubleBox geometry: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 
 | Piece type | Caspar | Source |
 |------------|--------|--------|
-| `l3d-predstavovak` / `l3d-mod` | `gfx/l3d-predstavovak` | megarepo `spravy_360_predstavovak` |
+| `l3d-mod` | `gfx/l3d-mod` | megarepo `spravy_360_predstavovak` (MOD shell) |
+| `l3d-syn` | `gfx/l3d-syn` | SYN name/role L3D (RE piece type; replaces retired `l3d-predstavovak`) |
 | `l3d-sjv` | `gfx/l3d-sjv` | megarepo `spravy_360_jednou_vetou` (+ kicker) |
 | `l3d-sport` | `gfx/l3d-sport` | same shell, default kicker `ŠPORT` |
 | `l3d-odporucanie` | `gfx/l3d-odporucanie` | same shell, **no** kicker |

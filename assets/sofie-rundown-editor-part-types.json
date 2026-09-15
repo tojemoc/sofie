@@ -46,10 +46,10 @@
 				"pieceType": "doublebox-ilu"
 			},
 			{
-				"pieceType": "l3d-predstavovak",
+				"pieceType": "l3d-syn",
 				"payload": {
 					"name": "",
-					"title": ""
+					"role": ""
 				}
 			},
 			{
@@ -247,7 +247,11 @@
 		"payload": [],
 		"defaultPieces": [
 			{
-				"pieceType": "l3d-predstavovak"
+				"pieceType": "l3d-syn",
+				"payload": {
+					"name": "",
+					"role": ""
+				}
 			}
 		]
 	},

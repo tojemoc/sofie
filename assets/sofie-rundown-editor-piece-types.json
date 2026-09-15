@@ -176,30 +176,6 @@
 		"toolbarGroup": "l3d"
 	},
 	{
-		"id": "l3d-predstavovak",
-		"entityType": "piece",
-		"name": "L3D Predstavovak",
-		"shortName": "L3DP",
-		"colour": "#a0522d",
-		"includeTypeInName": true,
-		"previewTemplate": "l3d-predstavovak",
-		"payload": [
-			{
-				"id": "name",
-				"label": "Name",
-				"type": "string",
-				"includeInName": true
-			},
-			{
-				"id": "title",
-				"label": "Title",
-				"type": "string"
-			}
-		],
-		"showInToolbar": false,
-		"toolbarGroup": "l3d"
-	},
-	{
 		"id": "l3d-headline",
 		"entityType": "piece",
 		"name": "L3D Headline",
