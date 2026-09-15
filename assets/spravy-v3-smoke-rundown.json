@@ -687,8 +687,7 @@
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-headlines",
-			"partId": "part-headlines-1-headline1",
-			"duration": 7
+			"partId": "part-headlines-1-headline1"
 		},
 		{
 			"name": "Cam",
@@ -742,8 +741,7 @@
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-headlines",
-			"partId": "part-headlines-2-headline2",
-			"duration": 8
+			"partId": "part-headlines-2-headline2"
 		},
 		{
 			"name": "Cam",
@@ -797,8 +795,7 @@
 			"playlistId": null,
 			"rundownId": "spravy-v3-smoke",
 			"segmentId": "seg-headlines",
-			"partId": "part-headlines-3-headline3",
-			"duration": 8
+			"partId": "part-headlines-3-headline3"
 		},
 		{
 			"name": "Cam",

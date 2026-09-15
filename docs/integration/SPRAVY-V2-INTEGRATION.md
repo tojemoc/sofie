@@ -100,7 +100,7 @@ the HTML template loaded — the companion ILU PLAY still needs the file.
 
 | Segment | Parts |
 |---------|--------|
-| HEADLINES | HEADLINE1–3 (ILU + L3D + cam); **no** wipe pieces |
+| HEADLINES | HEADLINE1–3 (ILU + L3D + cam); **no** wipe pieces; `l3d-headline` On air empty (until Take); ILU On air = clip length |
 | INTRO | Intro overlay on **PGM**; Mod L3D Gabriela Kajtárová + logo-bug; **no** bg-loop piece, **no** wipe |
 | Téma 1–4 | Obchodný register, Spor Saková – Fico, Referendum / novela Ústavy, Ukrajina — DoubleBox / SYN patterns; open/`skip` parts kept where set in export |
 | SPRÁVY JEDNOU VETOU | GFX open row + SYN slots (`l3d-sjv`); wipe on first SYN |
@@ -315,7 +315,9 @@ CG 1-121 ADD 1 "gfx/headline-fallback" "{\"source\":\"TASR\"}"
 
 - **Media readiness:** `GET /api/rundowns/:id/readiness` — evaluates `mediaPick` fields (no WebM
   sibling); polls every 10s via `RundownReadinessProvider`. Media picker probes clip duration via
-  ffprobe and pulls it into piece/part duration on save.
+  ffprobe and pulls it into piece/part duration on save. **Docker images must include
+  the `ffmpeg` package** (`ffprobe` on PATH); without it probes return null silently.
+  Backend logs `ffprobe: available` or a warning at startup.
 - **Story sidebar:** columnar list (Status | Type | Story | Dur) with READY/NOT READY badges
 - **Theming:** dark default + light option; semantic `--re-*` tokens; ThemeToggle in navbar/login
 - **Rebrand:** Unopus (navbar breadcrumb)
