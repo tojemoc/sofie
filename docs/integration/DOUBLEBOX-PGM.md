@@ -16,15 +16,15 @@ right / tema+bug bar / `db_loop` frame with bg baked in):
 │   │  (above CAM overhang)    │  │  (115 UVC) │             │
 │   └──────────────────────────┘  └────────────┘             │
 │  ┌────────────────────────────────────┬──────────────────┐ │
-│  │  thematic title (l3d-predstavovak) │  360° sekúnd bug │ │
+│  │  thematic title (l3d-syn / l3d-tema) │  360° sekúnd bug │ │
 │  └────────────────────────────────────┴──────────────────┘ │
 └────────────────────────────────────────────────────────────┘
 ```
 
 **LED (Caspar channel 1)** production rule: **headline ILU + `loops/bg_loop` only**.
 The loop is blueprint **baseline** on layer 110 (not a RE piece) and must never be
-displaced by VT/VO/SYN — those play on **BG look** channels (3/4). `l3d-predstavovak` /
-`l3d-mod` / `l3d-syn` / headline bars are on the **look**, then routed to PGM. No intro /
+displaced by VT/VO/SYN — those play on **BG look** channels (3/4). `l3d-syn` /
+`l3d-mod` / `l3d-tema` / headline bars are on the **look**, then routed to PGM. No intro /
 znelka on LED. Intro overlay plays on **PGM layer 210** (above the route on 110) — see
 [`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md)
 and [`handoffs/blueprints-baseline-bg-loop.md`](./handoffs/blueprints-baseline-bg-loop.md).
@@ -149,9 +149,9 @@ Story compose layers sit on **BG look channels 3/4**; PGM (ch2) only routes + ov
 | CAM1 UVC (headlines/MOD) | **BG 3/4** · 115 | `route://5` + FILL `0 0 1 1` fullscreen |
 | Live CAM ingest | **CAM 5** · 10 | sole `DECKLINK` / `dshow://` |
 | `db_loop` frame | **BG 3/4** · 118 | full frame alpha cutouts |
-| Topic L3D | **BG 3/4** · 121 | HTML templates (`l3d-predstavovak`, …) |
+| Topic L3D | **BG 3/4** · 121 | HTML templates (`l3d-syn`, `l3d-tema`, …) |
 | Logo / countup | **PGM 2** · 123 | above route |
-| Story wipe | **PGM 2** · 110 | `PLAY 2-110 route://{3\|4}` + STING (`wipes/wipe…`) — **not** overlay 200 |
+| Story wipe | **PGM 2** · 205 | overlay `wipes/wipe*` + delayed `route://` cut — not 200 (sticky KEYER) |
 | Intro / outro | **PGM 2** · 210 | full frame — above route; **PGM only** |
 
 Tune FILL against the real HTML chrome; values above match the attached still
@@ -169,19 +169,26 @@ it into HTML); do not put a background loop on look clip 110.
 Story-block transitions use alpha wipe files under Caspar media, default
 `wipes/wipe` (plus `wipe_sjv` / `wipe_sport` / `wipe_pocasie` where labelled).
 
-**Shipped (sofie-demo-blueprints [#77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77)):**
-looks pre-build on **BG channels 3/4**; PGM takes
-`PLAY 2-110 route://{3|4}` with STING (wipe file as mask/overlay). Logo stays on
-**PGM 123** above the route. Empty/0 RE wipe duration still defaults to ~2.5s for the
-transition length. See [`adr/0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md)
+**Shipped (sofie-demo-blueprints [#77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77)+):**
+looks pre-build on **BG channels 3/4**; PGM takes `PLAY 2-110 route://{3|4}` with a
+**delayed cut** at the wipe mid-point, while the alpha wipe overlays on **PGM 205**
+(`PLAY 2-205 "wipes/wipe*"`). Logo stays on **PGM 123** above the route. Empty/0 RE wipe
+duration still defaults to ~2.5s for the transition length. See
+[`adr/0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md)
 and [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md).
 
-**Legacy:** overlay `PLAY 2-200 "wipes/wipe"` while cold-starting on PGM — compatibility
-only; migrated story wipes must not use layer 200.
+**Current:** overlay `PLAY 2-205 "wipes/wipe"` (straight-alpha mixer, `keyer: false`).
+Layer **200** is retired — leftover `MIXER KEYER` there luma-keyed remastered `wipe.mov`
+while `outro.mov` on 210 was fine.
+
+**Historical (pre–layer-205):** some docs and ADR 0002 still describe `PLAY 2-110
+route://{3|4}` **with STING** (wipe file as the route transition mask). That path is
+obsolete for SPRÁVY — do not reintroduce STING or layer 200.
 
 **If wipes never appear:** (1) watch **Caspar channel 2**, not LED; (2) confirm
-`PLAY 2-110 route://{3|4}` with STING on Take (not `route://N-0`); (3) Caspar
-`caspar.config` has **≥4 channels**; (4) re-upload blueprints + Apply studio config.
+`PLAY 2-205 "wipes/wipe*"` (alpha overlay) **and** a delayed `PLAY 2-110 route://{3|4}`
+cut (not `route://N-0`, not STING); (3) Caspar `caspar.config` has **≥4 channels**;
+(4) re-upload blueprints + Apply studio config.
 
 The **label** records direction (file may still be the default wipe):
 
@@ -208,20 +215,20 @@ labelled variant) and `transition: <label>` for operators.
 |------------------|---------|-------|------|
 | `casparcg_clip_player1` | LED 1 | 110 | LED `bg_loop` |
 | `casparcg_clip_player2` / `_b` | BG 3 / 4 | 110 | Story VT / weather on look (no baseline `bg_loop`) |
-| `casparcg_pgm_route` | PGM 2 | 110 | Full-channel `route://{3\|4}` (+ STING wipe) |
+| `casparcg_pgm_route` | PGM 2 | 110 | Full-channel `route://{3\|4}` (delayed cut under 205 wipe) |
 | `casparcg_ilu_player` | LED 1 | 115 | Headline ILU MEDIA (+ `gfx/headline-fallback`) |
 | `casparcg_pgm_camera` / `_b` | BG 3 / 4 | 115 | CAM via MEDIA `route://5` + FILL |
 | `casparcg_pgm_camera_ingest` | CAM 5 | 10 | Sole DeckLink / dshow |
 | `casparcg_pgm_ilu_player` / `_b` | BG 3 / 4 | 116 | Thematic DoubleBox left ILU (`doublebox-ilu`) |
 | `casparcg_intro_player_pgm` | PGM 2 | 210 | Intro / znelka — **never LED** |
-| `casparcg_graphics_pgm_l3d` / `_b` | BG 3 / 4 | 121 | `l3d-predstavovak` / `l3d-odporucanie` / `l3d-syn` / headline bars |
+| `casparcg_graphics_pgm_l3d` / `_b` | BG 3 / 4 | 121 | `l3d-syn` / `l3d-odporucanie` / `l3d-tema` / headline bars |
 | `casparcg_graphics_logo` | PGM 2 | 123 | `gfx/logo-bug` / countup — **above route; not on LED** |
-| `casparcg_effects_player_pgm` | PGM 2 | 200 | Legacy overlay wipe only (story wipes use route STING) |
+| `casparcg_effects_player_pgm` | PGM 2 | 205 | Story wipe overlay (200 retired — leftover KEYER) |
 
 Headline / story ILU on LED vs look: opening **headline** ILU stays on **LED**
 (`casparcg_ilu_player`). Thematic DoubleBox left-window media uses
 `casparcg_pgm_ilu_player` on the **BG look** (ch 3/4 layer 116) via piece type
-`doublebox-ilu`. Looks also carry camera FILL + `l3d-predstavovak`; PGM only
+`doublebox-ilu`. Looks also carry camera FILL + `l3d-syn` / `l3d-tema`; PGM only
 **routes** the settled mix on layer 110. Baseline `bg_loop` is **LED-only**.
 The **logo-bug is PGM-only** (layer 123).
 
@@ -244,12 +251,14 @@ same basename (see [`handoffs/blueprints-baseline-bg-loop.md`](./handoffs/bluepr
    (PLAY path `assets/intro_michal`)
 2. Confirm OBS Virtual Camera name; test `PLAY 3-115 "dshow://…"` by hand (look A)
 3. Import megarepo `assets/spravy-v3-smoke-rundown.json` (includes story-block `wipe` pieces)
-4. Watch **Caspar channel 2** for `route://` + STING wipes + Intro; confirm looks on **3/4**
+4. Watch **Caspar channel 2** for `route://` + **205** alpha wipes + Intro; confirm looks on **3/4**
 5. **Activate (Rehearsal):** LED shows `PLAY 1-110 "loops/bg_loop"`; PGM must **not** play
    `bg_loop` on ClipPlayer2.
 6. **Intro on PGM 210 only:** Intro take must show `PLAY <pgm>-210 "assets/intro_michal"` and
    **must not** play Intro on LED (`1-200`).
 7. **Post-intro MOD:** camera on look channel **{3|4}-115** — not `bg_loop` on PGM.
 8. **Story ILU on look 116 above CAM:** DoubleBox Take must show `PLAY {3|4}-116 "clips/…"`
-9. **Wiped Take:** AMCP shows `PLAY 2-110 route://{3|4}` (full channel, **not** `route://N-0`) with STING; logo on `2-123` uninterrupted
+9. **Wiped Take:** AMCP shows `PLAY 2-205 "wipes/wipe*"` (alpha overlay) and a delayed
+   `PLAY 2-110 route://{3|4}` cut (full channel, **not** `route://N-0`, **not** STING);
+   logo on `2-123` uninterrupted
    and CAM on look **115** (ILU z-order above CAM). Headline parts still use LED `1-115`.

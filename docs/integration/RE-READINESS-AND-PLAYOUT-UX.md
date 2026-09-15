@@ -12,7 +12,7 @@ Status as of 2026-08-05 after DoubleBox / flat-media / PGM L3D work.
 | Sofie WebUI piece status | Package Manager / `PieceStatusCode` from Core |
 | LED `bg_loop` | Baseline on Caspar **1-110**. An optional RE `bg-loop` piece plays the same (or alternate) file at **priority 1** and **overrides** the baseline — operators should keep only one active loop on LED, not two simultaneous loops |
 | Camera A (`camNo: 1`) | Vision-mixer cut + optional Caspar **2-115** UVC when `pgmCameraProducer` is set |
-| Wipe row | PGM **2-200** overlay; `start`/`duration` drive enable, list order does not |
+| Wipe row | PGM **2-205** overlay; `start`/`duration` drive enable, list order does not |
 
 ---
 
@@ -121,7 +121,8 @@ length — re-pick / blur the media path after upgrading to refresh stored
 
 ### Playout contract (blueprints)
 
-- Piece type `wipe` → Caspar PGM layer **200** (`casparcg_effects_player_pgm`).
+- Piece type `wipe` → Caspar PGM layer **205** (`casparcg_effects_player_pgm`) alpha
+  overlay + delayed `route://` cut on layer 110 (not STING; layer **200** retired).
 - Timeline enable after ingest (`convertIngestData` scales RE seconds → ms):
   - `start = piece.start * 1000` (seconds → ms; missing start → `0`)
   - `duration = piece.duration * 1000` when `piece.duration > 0`

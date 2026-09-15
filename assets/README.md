@@ -29,7 +29,12 @@ allow-list is **headline ILU + loop only** (blueprints **baseline**
 `loops/bg_loop` — not listed as a RE piece). Presenter MOD and other L3Ds are
 **PGM**. See integration log and
 `docs/integration/RE-READINESS-AND-PLAYOUT-UX.md`.
-Wipes: piece type `wipe` → Caspar PGM layer 200 (`wipes/wipe`; story blocks may
+Standalone **SRC** piece type id is `source` → Caspar template **`gfx/source`**
+(demo-assets `template/gfx/source.html` / deploy `gfx/source.html`). Preview
+id `source`. If the pill does nothing on air, confirm that HTML template is on
+the Caspar template path and Sofie Reset Rundown after reload.
+
+Wipes: piece type `wipe` → Caspar PGM layer 205 (`wipes/wipe`; story blocks may
 use `wipes/wipe_sjv`, `wipes/wipe_sport`, `wipes/wipe_pocasie`). See
 `docs/integration/DOUBLEBOX-PGM.md` and
 `docs/integration/handoffs/blueprints-baseline-bg-loop.md`.
