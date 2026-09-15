@@ -19,7 +19,7 @@ DoubleBox geometry: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 | 9 | SJV (3–5 SYNs) | `bg_loop` | Timed `l3d-sjv` over SYNs | `wipes/wipe_sjv` on **first SYN** (no empty open Take) |
 | 10 | Šport (2–5) | `bg_loop` | Timed `l3d-sport` (`kicker=ŠPORT`) | `wipes/wipe_sport` on **first SYN** |
 | 11 | Počasie | `bg_loop` | Transparent `gfx/pocasie` on Full look (**routed**; look clip underlay) + logo-bug; or bypass `assets/weather` | `wipes/wipe_pocasie` + **CLEAR ch4** clip/CAM/`db_loop` (kills leftover sport SYN) |
-| 12 | Odporúčanie / Závěr Avízo | `bg_loop` + `ilu-zaver` on LED 115 | Full-look CAM1 + `l3d-odporucanie` — **no** `db_loop`, **no** CAM on LED | Normal wipe |
+| 12 | Odporúčanie / Závěr Avízo | `bg_loop` + windowed `ilu-zaver` (~60%) on LED 115 | Full-look CAM + `l3d-odporucanie` — **no** `db_loop`, **no** LED `route://4` | Normal wipe |
 | 12b | optional SYN | `bg_loop` | Hard cut ILU↔SYN | Hard cut |
 | 13 | Outro | `bg_loop` | `assets/outro` on layer 210 (above everything); **no** kolíska / countup SFX | — |
 
@@ -50,8 +50,14 @@ Takes are early.
 - Outro: PLAY `assets/outro` on PGM intro layer 210 (jingle; **mute** kolíska beds and countup SFX).
 - Headlines: each Take also PLAYs `assets/headline_sfx` (disk `headline_sfx.wav`) on
   LED+PGM audio beds.
+<<<<<<< HEAD
 - Závěr + Avízo: LED plays `ilu-zaver` over `bg_loop` (layer 115). PGM is fullscreen CAM1
   + `l3d-odporucanie`. Do **not** `route://4` onto LED (that put CAM1 on the wall).
+=======
+- Závěr + Avízo: `ilu-zaver` windowed (~`PGM_DOUBLEBOX_ILU_FILL`, ≈60–68%) on **LED 115**
+  over `bg_loop`. Full look keeps fullscreen CAM + `l3d-odporucanie` on PGM — do **not**
+  `route://4` onto LED.
+>>>>>>> origin/cursor/spravy-tearing-weather-zaver-9fad
 
 ## ILU bypass
 
