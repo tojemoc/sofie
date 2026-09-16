@@ -133,7 +133,7 @@
 				"id": "cutPoint",
 				"label": "Cut point (ms)",
 				"type": "number",
-				"default": 760
+				"default": 380
 			}
 		],
 		"techOnly": true
