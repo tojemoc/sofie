@@ -31,33 +31,34 @@ Consumers may temporarily pin **different** Sofie commits when one repo’s test
 depend on an older smoke ID schema. Prefer converging on one tip once blueprints smoke
 specs are rewritten for the 2026-09-14 RE export.
 
-### unopus (SPRÁVY smoke — 2026-09-14 export + SJV/SPORT CPS + BB weather label)
+### unopus (volume 0.5 SJV/SPORT + SRC Zdroj + ILU name-from-file + wipe cutPoint)
 
 | Item | Value |
 |------|--------|
-| Sofie commit | `a1c6b9b727bba9cb9898eff1d3f1b3bc4879740c` |
-| unopus `PINNED_SOFIE_ASSETS_REF` | `a1c6b9b727bba9cb9898eff1d3f1b3bc4879740c` |
+| Sofie commit | `09bb91d9408b426910424a5754273a01d63b5c51` |
+| unopus `PINNED_SOFIE_ASSETS_REF` | `09bb91d9408b426910424a5754273a01d63b5c51` |
 | unopus override (optional) | `SOFIE_ASSETS_REF` — if set, must be a full 40-char lowercase SHA; otherwise defaults to `PINNED_SOFIE_ASSETS_REF` |
 
-### Per-file SHA-256 at unopus pin (`a1c6b9b…`)
+### Per-file SHA-256 at unopus pin (`09bb91d…`)
 
 | File | SHA-256 |
 |------|---------|
-| `spravy-v3-smoke-rundown.json` | `efd3e6b3f6d98b4f1f0f755905989ab349642cee752b0da338cf1964e560f4ad` |
-| `sofie-rundown-editor-piece-types.json` | `dce7e9b7b49a338826864b7f289b8e73a62c38ef04a3fa6dd42bd2c908e6a52d` |
-| `sofie-rundown-editor-part-types.json` | `676ed7eb27f9111dc4c1c173b85a5ccfee6f309db0ed2e351c2190d1d40040fb` |
+| `spravy-v3-smoke-rundown.json` | `2c12c030740c143fcb45bd9887de0c9671b973bedbf6e7dfad90ff970899c0a7` |
+| `sofie-rundown-editor-piece-types.json` | `23c9e4aac5ac9e45d724a23651398b8f5b473e9746fd1fb6c94d67cf82d652af` |
+| `sofie-rundown-editor-part-types.json` | `82ce7da799c7a2011fe1c53b3a7a24e366ad2ff79c8e7efba9e6ecc6c9fadfc9` |
 | `sofie-rundown-editor-segment-types.json` | `56f68da340a1029f4c31a1f69b6594e5d440f1e7223528cd2ce9dbaa8c1aaf7b` |
 
-### Pending pin (wipe `cutPoint` ms + prior l3d-headline / l3d-mod until-Take)
+### Pending pin (volume/SRC/ILU FRs + wipe `cutPoint`)
 
-Update to the merge commit SHA after merge. Bump unopus / blueprints
-`PINNED_SOFIE_ASSETS_REF` + checksums together:
+Branch `cursor/ship-today-volume-src-ilu-341f` @ `09bb91d9408b426910424a5754273a01d63b5c51`
+(includes prior wipe `cutPoint`). After merge to `main`, re-pin unopus to the **merge**
+commit SHA if it differs from this tip. Checksums:
 
 | File | SHA-256 (pre-merge working tree) |
 |------|---------|
 | `spravy-v3-smoke-rundown.json` | `2c12c030740c143fcb45bd9887de0c9671b973bedbf6e7dfad90ff970899c0a7` |
-| `sofie-rundown-editor-piece-types.json` | `82f4b14261a22be09710b4e426239ff7c18c1156e71c7cc4626fd14c3a490391` |
-| `sofie-rundown-editor-part-types.json` | `676ed7eb27f9111dc4c1c173b85a5ccfee6f309db0ed2e351c2190d1d40040fb` |
+| `sofie-rundown-editor-piece-types.json` | `23c9e4aac5ac9e45d724a23651398b8f5b473e9746fd1fb6c94d67cf82d652af` |
+| `sofie-rundown-editor-part-types.json` | `82ce7da799c7a2011fe1c53b3a7a24e366ad2ff79c8e7efba9e6ecc6c9fadfc9` |
 | `sofie-rundown-editor-segment-types.json` | `56f68da340a1029f4c31a1f69b6594e5d440f1e7223528cd2ce9dbaa8c1aaf7b` |
 
 ### sofie-demo-blueprints (pre-619a6f7 smoke IDs)
