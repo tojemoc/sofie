@@ -9,7 +9,7 @@ DoubleBox geometry: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 | # | Block | LED (ch1) | PGM (ch2) | Transition |
 |---|-------|-----------|-----------|------------|
 | 1 | Headlines (3×) | `bg_loop` + ILU (slot or bypass fullscreen) | Fullscreen OBS cam + `l3d-headline` + logo-bug | — |
-| 2 | Intro | `bg_loop` only | Intro overlay (`assets/intro_*`) on layer 210 | — |
+| 2 | Intro | `bg_loop` only | Intro overlay (`assets/intro_*`) on layer 210; **no** countup | — |
 | 3 | MOD | `bg_loop` | Fullscreen OBS + `l3d-mod` | — |
 | 4 | Topic DoubleBox | `bg_loop` | `db_loop` (118) over CAM (~80% right) + ILU left + topic L3D + bug | Wipe into topic / new story |
 | 5 | Topic SYN | `bg_loop` | Fullscreen SYN + timed `l3d-syn` (+ optional Zdroj) | **Hard cut** from DB (no wipe) |
@@ -43,6 +43,10 @@ than the clip so it cannot overflow into the next SYN even if Takes are early.
 
 ## Media notes
 
+- **TODO:** `countup.mov` (`assets/countup` on PGM 2-123) must **not** appear under Intro —
+  not even briefly. Live feedback: it currently flashes/is briefly visible under the
+  intro overlay and should never show there, even momentarily. Hold countup off until
+  Intro has cleared (e.g. post-Intro / first DoubleBox), not as a momentary hide under 210.
 - DoubleBox frame: `loops/db_loop` (production may call the file `dp_loop.mov` — rename/symlink).
 - Weather HTML (`bypass: false` in smoke): transparent `gfx/pocasie` over Full-look
   `assets/bg_pocasie` underlay on the ILU layer (map loop under city cards; `bg_loop`
