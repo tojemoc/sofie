@@ -97,9 +97,11 @@ emitting ExpectedPackages (`toPackageManagerPath`); timeline `PLAY` still uses
   Intro the bed is muted (blueprints `mixer.volume: 0` override).
 - Wipe default duration in blueprints is **2500 ms** (full stinger overlay). The
   **cut point** — when the screen is fully covered and underlying content switches
-  — is at **760 ms** (38 frames @ 50 fps). Wipe SFX is embedded in the `.mov`;
-  Sisyfos playback channels are force-muted for the wipe window so the SFX is
-  isolated.
+  — defaults to **380 ms** (19 frames @ 50 fps) and is editable per wipe piece via
+  payload `cutPoint` (milliseconds) in the Rundown Editor. Blueprints read
+  `attributes.cutPoint` and fall back to `WIPE_CUT_POINT_MS` when unset. Wipe SFX
+  is embedded in the `.mov`; Sisyfos playback channels are force-muted for the wipe
+  window so the SFX is isolated.
 - `intro` must PLAY on **PGM** (target layer 210). A `404` on
   `PLAY … "clips/HEADLINE1"` means the file is missing from the Caspar
   media folder — ingest/copy it; the rundown path is already correct.

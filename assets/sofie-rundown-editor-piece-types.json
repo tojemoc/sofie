@@ -128,6 +128,12 @@
 				"label": "Transition label",
 				"type": "string",
 				"includeInName": true
+			},
+			{
+				"id": "cutPoint",
+				"label": "Cut point (ms)",
+				"type": "number",
+				"default": 380
 			}
 		],
 		"techOnly": true
@@ -284,7 +290,8 @@
 				"id": "source",
 				"label": "Source",
 				"type": "string",
-				"includeInName": true
+				"includeInName": true,
+				"default": "Zdroj: "
 			}
 		]
 	},
@@ -365,19 +372,19 @@
 		"name": "ILU (DoubleBox)",
 		"shortName": "ILU",
 		"colour": "#6f42c1",
-		"includeTypeInName": true,
+		"includeTypeInName": false,
 		"payload": [
-			{
-				"id": "text",
-				"label": "Label",
-				"type": "string",
-				"includeInName": true
-			},
 			{
 				"id": "iluFile",
 				"label": "ILU clip (PGM left window)",
 				"type": "mediaPick",
-				"subdir": "clips"
+				"subdir": "clips",
+				"includeInName": true
+			},
+			{
+				"id": "text",
+				"label": "Label",
+				"type": "string"
 			},
 			{
 				"id": "volume",
