@@ -86,8 +86,10 @@ Pick up the ch5 route fix by uploading blueprints with the ingest helper + **Res
 | `DeckLink … Could not enable video input` with only ingest open | BMD input enable failed after parse | Device not also a Caspar **consumer**; Desktop Video connector mode; live signal |
 | ffmpeg `rtbufsize` / buffer-too-full | **dshow://** path, not DeckLink | See [`CASPAR-FFMPEG-BUFFERS.md`](./CASPAR-FFMPEG-BUFFERS.md) |
 
-`db_loop` is **WithinPart** on DoubleBox Takes only (not Intro) so SYN / weather stay
-fullscreen. Production file may be named `dp_loop.mov` — place/symlink as `loops/db_loop`.
+`db_loop` is **OutOnSegmentEnd** on DoubleBox Takes only (not Intro) so DB→SYN→DB inside
+a tema keeps the frame, then the piece dies with the segment — SJV / ŠPORT / Počasie /
+ZAVER+AVIZO never keep a stray DoubleBox on ch3. Production file may be named
+`dp_loop.mov` — place/symlink as `loops/db_loop`.
 
 **Story ILU piece:** use piece type `doublebox-ilu` (part preset `doublebox`) — not
 `headline`. `doublebox-ilu` plays the clip on **look {3|4}-116** with DoubleBox left FILL
