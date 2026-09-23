@@ -99,9 +99,10 @@ emitting ExpectedPackages (`toPackageManagerPath`); timeline `PLAY` still uses
   **cut point** — when the screen is fully covered and underlying content switches
   — defaults to **380 ms** (19 frames @ 50 fps) and is editable per wipe piece via
   payload `cutPoint` (milliseconds) in the Rundown Editor. Blueprints read
-  `attributes.cutPoint` and fall back to `WIPE_CUT_POINT_MS` when unset. Wipe SFX
-  is embedded in the `.mov`; Sisyfos playback channels are force-muted for the wipe
-  window so the SFX is isolated.
+  `attributes.cutPoint` and fall back to `WIPE_CUT_POINT_MS` when unset. On a wiped
+  first DoubleBox, `assets/countup` also starts at that cut (under the wipe), not at
+  Take. Wipe SFX is embedded in the `.mov`; Sisyfos playback channels are force-muted
+  for the wipe window so the SFX is isolated.
 - `intro` must PLAY on **PGM** (target layer 210). A `404` on
   `PLAY … "clips/HEADLINE1"` means the file is missing from the Caspar
   media folder — ingest/copy it; the rundown path is already correct.
