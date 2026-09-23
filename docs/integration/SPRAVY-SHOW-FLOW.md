@@ -19,7 +19,7 @@ DoubleBox geometry: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 | 9 | SJV (3–5 SYNs) | `bg_loop` | Timed `l3d-sjv` over SYNs | `wipes/wipe_sjv` on **first SYN** (no empty open Take) |
 | 10 | Šport (2–5) | `bg_loop` | Timed `l3d-sport` (`kicker=ŠPORT`) | `wipes/wipe_sport` on **first SYN** |
 | 11 | Počasie | `bg_loop` | Transparent `gfx/pocasie` on Full look (**routed**; look clip underlay) + logo-bug; or bypass `assets/weather` | `wipes/wipe_pocasie` + **CLEAR ch4** clip/CAM/`db_loop` (kills leftover sport SYN) |
-| 12 | Odporúčanie / Závěr Avízo | `bg_loop` + windowed `ilu-zaver` (~60%) on LED 115 | Full-look CAM + `l3d-odporucanie` — **no** `db_loop`, **no** LED `route://4` | Normal wipe |
+| 12 | Odporúčanie / Závěr Avízo | `bg_loop` + windowed `ilu-zaver` (~60%) on LED 115 | Full-look CAM + `l3d-odporucanie` — **no** `db_loop`, **EMPTY look A** (`db_loop`/ILU/CAM/L3D), **no** LED `route://4` | Normal wipe |
 | 12b | optional SYN | `bg_loop` | Hard cut ILU↔SYN | Hard cut |
 | 13 | Outro | `bg_loop` | `assets/outro` on layer 210 (above everything); mute look-channel audio (SYN / VT / weather) + **no** kolíska / countup SFX | — |
 
@@ -44,6 +44,8 @@ than the clip so it cannot overflow into the next SYN even if Takes are early.
 ## Media notes
 
 - DoubleBox frame: `loops/db_loop` (production may call the file `dp_loop.mov` — rename/symlink).
+  Lifespan is **OutOnSegmentEnd** (tema segment only) — not rundown-end — so SJV /
+  ŠPORT / Počasie / ZAVER never keep a stray DoubleBox frame on ch3.
 - Weather HTML (`bypass: false` in smoke): transparent `gfx/pocasie` over Full-look
   `assets/bg_pocasie` underlay on the ILU layer (map loop under city cards; `bg_loop`
   stays on the clip layer).
@@ -57,7 +59,8 @@ than the clip so it cannot overflow into the next SYN even if Takes are early.
   payload `headline`/`subline` on that piece type are ignored.
 - Závěr + Avízo: `ilu-zaver` windowed (~`PGM_DOUBLEBOX_ILU_FILL`, ≈60–68%) on **LED 115**
   over `bg_loop`. Full look keeps fullscreen CAM + `l3d-odporucanie` on PGM — do **not**
-  `route://4` onto LED.
+  `route://4` onto LED. On Take, blueprints also EMPTY look A so a leftover DoubleBox
+  cannot sit under Full `route://4`.
 
 ## ILU bypass
 
