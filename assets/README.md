@@ -99,13 +99,15 @@ emitting ExpectedPackages (`toPackageManagerPath`); timeline `PLAY` still uses
   **cut point** — when the screen is fully covered and underlying content switches
   — defaults to **380 ms** (19 frames @ 50 fps) and is editable per wipe piece via
   payload `cutPoint` (milliseconds) in the Rundown Editor. Blueprints read
-  `attributes.cutPoint` and fall back to `WIPE_CUT_POINT_MS` when unset. Softie
+  `attributes.cutPoint` and fall back to `WIPE_CUT_POINT_MS` when unset. Sofie
   only holds the previous look for each piece's `postrollDuration` past Take into
-  that keepalive window — blueprints therefore reserve ≥2500 ms look-MEDIA postroll
-  so an editorial cutPoint above the 380 ms default actually holds picture. On a wiped
-  first DoubleBox, `assets/countup` also starts at that cut (under the wipe), not at
-  Take. Wipe SFX is embedded in the `.mov`; Sisyfos playback channels are force-muted
-  for the wipe window so the SFX is isolated.
+  that keepalive window — so `cutPoint` must not exceed the reserved postroll.
+  Blueprints reserve ≥2500 ms look-MEDIA postroll by default; a cutPoint above
+  that window needs matching longer postroll (within a segment, blueprints raise
+  the previous part to the next wipe's cutPoint). On a wiped first DoubleBox,
+  `assets/countup` also starts at that cut (under the wipe), not at Take. Wipe
+  SFX is embedded in the `.mov`; Sisyfos playback channels are force-muted for
+  the wipe window so the SFX is isolated.
 - `intro` must PLAY on **PGM** (target layer 210). A `404` on
   `PLAY … "clips/HEADLINE1"` means the file is missing from the Caspar
   media folder — ingest/copy it; the rundown path is already correct.
