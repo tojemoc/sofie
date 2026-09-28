@@ -118,7 +118,7 @@ story VT/SYN fullscreen, no Presenter MOD.
 
 | Content | Mapping id | Layer | Notes |
 |---------|------------|------:|-------|
-| Full-channel route | `casparcg_pgm_route` | **110** | `route://{3\|4}` CUT or STING wipe — **canonical story transition** |
+| Full-channel route | `casparcg_pgm_route` | **110** | Delayed `route://{3\|4}` CUT beneath the PGM alpha wipe — **canonical story transition** |
 | Logo / countup | `casparcg_graphics_logo` | 123 | `assets/countup` — above route |
 | Intro / znelka / outro | `casparcg_intro_player_pgm` | 210 | `assets/intro_*`, `assets/outro` — above route; **never LED** |
 | Audio bed | `casparcg_audio_bed_pgm` | 80 | Mirrors LED kolíska |

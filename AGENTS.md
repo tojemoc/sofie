@@ -119,13 +119,16 @@ v2 Caspar `clipName` convention: `gfx/<template-folder>` (e.g. `gfx/l3d-tema`). 
 
 ### Hypercomposed Caspar
 
-SPRÁVY uses a **single CasparCG server** with **four channels** after sofie-demo-blueprints
-**#77**: LED **1**, PGM **2** (`route://` + overlays), BG A/B **3/4** (render-only
-pre-build). Canonical map: [`docs/integration/OUTPUT_TOPOLOGY.md`](docs/integration/OUTPUT_TOPOLOGY.md).
+SPRÁVY uses a **single CasparCG server** after sofie-demo-blueprints **#77**: output/look
+channels **1–4** — LED **1**, PGM **2** (`route://` + overlays), BG A/B **3/4**
+(render-only pre-build) — plus **channel 5** for CAM ingest when enabled (looks sample
+via `route://5`). Canonical map:
+[`docs/integration/OUTPUT_TOPOLOGY.md`](docs/integration/OUTPUT_TOPOLOGY.md).
 Layer inventory: [`docs/integration/CASPAR-DURABLE-LAYER-MAP.md`](docs/integration/CASPAR-DURABLE-LAYER-MAP.md).
 
-**Ops:** `caspar.config` must declare channels 3 and 4 (no consumers required). Missing
-channels → Caspar `400 ERROR` spam on `LOADBG 3-…` / `4-…` and dead PGM route.
+**Ops:** `caspar.config` must declare channels 3 and 4 (no consumers required). With CAM
+ingest enabled, declare **at least five** channels. Missing look channels → Caspar
+`400 ERROR` spam on `LOADBG 3-…` / `4-…` and dead PGM route.
 ADR: [`docs/adr/0002-wipe-prebuild-bg-channels.md`](docs/adr/0002-wipe-prebuild-bg-channels.md).
 
 ### Gotchas

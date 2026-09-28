@@ -121,7 +121,7 @@ Same layer numbers as channel 4. PGM hears this mix via `PLAY 2-110 "route://3"`
 
 | Layer | Sofie mapping id | AMCP shape | Durable path / payload | When |
 |------:|------------------|------------|------------------------|------|
-| **110** | `casparcg_clip_player2` | `PLAY` / `LOAD` + `RESUME` | `clips/<ILU|SYN|VT…>` | Story VT in left compose / pre-roll |
+| **110** | `casparcg_clip_player2` | `PLAY` / `LOAD` + `RESUME` | `clips/<ILU/SYN/VT…>` | Story VT in left compose / pre-roll |
 | **115** | `casparcg_pgm_camera` | `PLAY 3-115 "route://5"` + FILL | live CAM sample | DoubleBox right window |
 | **116** | `casparcg_pgm_ilu_player` | `PLAY 3-116 "clips/…"` + FILL/CROP | DoubleBox left ILU | `doublebox-ilu` |
 | **118** | `casparcg_pgm_doublebox_loop` | `PLAY 3-118 "loops/db_loop" LOOP` | `loops/db_loop` (aka `dp_loop` on disk) | DoubleBox segment frame |
@@ -218,7 +218,7 @@ All use straight→premul `videoFilter` (`premultiply=inplace=1`) and mixer `key
 |-----------|-------------------|------|
 | `clips/HEADLINE*` / editorial ILU | **1-115** | LED headline ILU |
 | `clips/<story ILU>` | **3-116** / **4-116** | DoubleBox / Full story ILU |
-| `clips/<SYN|VT|cluster…>` | **3-110** / **4-110** | Editorial VT on active look |
+| `clips/<SYN/VT/cluster…>` | **3-110** / **4-110** | Editorial VT on active look |
 
 Filenames are rundown-specific; folders are durable.
 

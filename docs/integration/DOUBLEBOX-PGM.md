@@ -195,9 +195,10 @@ route://{3|4}` **with STING** (wipe file as the route transition mask). That pat
 obsolete for SPRÁVY — do not reintroduce STING or layer 200.
 
 **If wipes never appear:** (1) watch **Caspar channel 2**, not LED; (2) confirm
-`PLAY 2-205 "wipes/wipe*"` (alpha overlay) **and** a delayed `PLAY 2-110 route://{3|4}`
-cut (not `route://N-0`, not STING); (3) Caspar `caspar.config` has **≥4 channels**;
-(4) re-upload blueprints + Apply studio config.
+`PLAY 2-{205|206|207|208}` on the layer assigned to that wipe file (alpha overlay)
+**and** a delayed `PLAY 2-110 route://{3|4}` cut (not `route://N-0`, not STING);
+(3) Caspar `caspar.config` has **≥4 channels**; (4) re-upload blueprints + Apply
+studio config.
 
 The **label** records direction (file may still be the default wipe):
 
@@ -267,7 +268,8 @@ same basename (see [`handoffs/blueprints-baseline-bg-loop.md`](./handoffs/bluepr
    **must not** play Intro on LED (`1-200`).
 7. **Post-intro MOD:** camera on look channel **{3|4}-115** — not `bg_loop` on PGM.
 8. **Story ILU on look 116 above CAM:** DoubleBox Take must show `PLAY {3|4}-116 "clips/…"`
-9. **Wiped Take:** AMCP shows `PLAY 2-205 "wipes/wipe*"` (alpha overlay) and a delayed
+9. **Wiped Take:** AMCP shows `PLAY 2-{205–208}` on the selected wipe file’s assigned
+   layer (alpha overlay) and a delayed
    `PLAY 2-110 route://{3|4}` cut (full channel, **not** `route://N-0`, **not** STING);
    logo on `2-123` uninterrupted
    and CAM on look **115** (ILU z-order above CAM). Headline parts still use LED `1-115`.

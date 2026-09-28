@@ -15,7 +15,8 @@ v2 HTML templates from `tojemoc/sofie-demo-assets`.
 **Hypercomposed (LED ≠ PGM):** one Caspar, **four channels** — LED=1, PGM=2, BG A/B=3/4.
 Canonical map: [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md). Durable layer inventory:
 [`CASPAR-DURABLE-LAYER-MAP.md`](./CASPAR-DURABLE-LAYER-MAP.md). Story looks pre-build on
-BG 3/4; PGM routes with **205** alpha wipe overlay + delayed `route://` cut on layer **110**
+BG 3/4; PGM routes with alpha wipe overlays on layers **205–208** (classical
+`wipes/wipe` on **205**) + delayed `route://` cut on layer **110**
 ([ADR 0002](../adr/0002-wipe-prebuild-bg-channels.md) historical STING wording is obsolete;
 blueprints [#77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77)). DoubleBox
 compose: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
