@@ -99,7 +99,11 @@ emitting ExpectedPackages (`toPackageManagerPath`); timeline `PLAY` still uses
   **cut point** — when the screen is fully covered and underlying content switches
   — defaults to **380 ms** (19 frames @ 50 fps) and is editable per wipe piece via
   payload `cutPoint` (milliseconds) in the Rundown Editor. Blueprints read
-  `attributes.cutPoint` and fall back to `WIPE_CUT_POINT_MS` when unset. Sofie
+  `attributes.cutPoint` and fall back to `WIPE_CUT_POINT_MS` when unset. On-air
+  scheduling adds Caspar PLAY→frame0 latency (`WIPE_PLAYOUT_LATENCY_MS`, **600 ms**
+  after an 11f-early measurement on SYN ADEL→ILU GUBIK) plus a half-frame cover
+  bias for classical `wipes/wipe`, so the route/`look` hard-cut lands at **~1000 ms**
+  Take-relative — do not pad RE `cutPoint` to fix early cuts. Sofie
   only holds the previous look for each piece's `postrollDuration` past Take into
   that keepalive window — so `cutPoint` must not exceed the reserved postroll.
   Blueprints reserve ≥2500 ms look-MEDIA postroll by default; a cutPoint above
