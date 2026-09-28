@@ -1,8 +1,9 @@
 # DoubleBox PGM + LED loop + UVC camera
 
 **Which source → which Caspar channel:** see the canonical
-[`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md) first. This page is the DoubleBox
-compose / FILL / wipe detail.
+[`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md) first. **Every durable AMCP address**
+(wipes, loops, assets, CG): [`CASPAR-DURABLE-LAYER-MAP.md`](./CASPAR-DURABLE-LAYER-MAP.md).
+This page is the DoubleBox compose / FILL / wipe detail.
 
 Target look for **thematic DoubleBox** on a **BG look channel** (3 or 4), routed to
 PGM (Caspar channel 2) via `route://`, matching the production still (ILU left / CAM
@@ -173,15 +174,19 @@ Story-block transitions use alpha wipe files under Caspar media, default
 
 **Shipped (sofie-demo-blueprints [#77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77)+):**
 looks pre-build on **BG channels 3/4**; PGM takes `PLAY 2-110 route://{3|4}` with a
-**delayed cut** at the wipe mid-point, while the alpha wipe overlays on **PGM 205**
-(`PLAY 2-205 "wipes/wipe*"`). Logo stays on **PGM 123** above the route. Empty/0 RE wipe
-duration still defaults to ~2.5s for the transition length. See
-[`adr/0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md)
-and [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md).
+**delayed cut** at the wipe mid-point, while the alpha wipe overlays on **PGM 205–208**
+(one Sofie mapping / physical layer per wipe file — classical `wipe` → **205**,
+`wipe_sjv` → **206**, `wipe_sport` → **207**, `wipe_pocasie` → **208**). Logo stays on
+**PGM 123** above the route. Empty/0 RE wipe duration still defaults to ~2.5s for the
+transition length. See
+[`adr/0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md),
+[`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md), and
+[`CASPAR-DURABLE-LAYER-MAP.md`](./CASPAR-DURABLE-LAYER-MAP.md).
 
-**Current:** overlay `PLAY 2-205 "wipes/wipe"` (straight-alpha mixer, `keyer: false`).
-Layer **200** is retired — leftover `MIXER KEYER` there luma-keyed remastered `wipe.mov`
-while `outro.mov` on 210 was fine.
+**Current:** hot overlay `PLAY 2-205` / `2-206` / … (straight-alpha mixer, `keyer: false`)
+after per-file LOADBG. Layer **200** is retired — leftover `MIXER KEYER` there luma-keyed
+remastered `wipe.mov` while `outro.mov` on 210 was fine. Shared **205** alone is also
+retired for themed stings — PRELOAD of another file on one layer cold-plays Latency 22–34f.
 
 **Historical (pre–layer-205):** some docs and ADR 0002 still describe `PLAY 2-110
 route://{3|4}` **with STING** (wipe file as the route transition mask). That path is

@@ -120,5 +120,6 @@ addressed on channels 3/4.
 ## References
 
 - Current topology: [`OUTPUT_TOPOLOGY.md`](../integration/OUTPUT_TOPOLOGY.md)
+- Durable ch/layer inventory: [`CASPAR-DURABLE-LAYER-MAP.md`](../integration/CASPAR-DURABLE-LAYER-MAP.md)
 - DoubleBox / wipe labels today: [`DOUBLEBOX-PGM.md`](../integration/DOUBLEBOX-PGM.md)
 - Buffer notes when compositing HTML+cam on one channel: [`CASPAR-FFMPEG-BUFFERS.md`](../integration/CASPAR-FFMPEG-BUFFERS.md)

@@ -1,7 +1,8 @@
 # SPRÁVY show flow — LED vs PGM (smoke contract)
 
 Canonical operator sequence for `assets/spravy-v3-smoke-rundown.json` and the
-hypercomposed Caspar stack. Topology layers: [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md).
+hypercomposed Caspar stack. Topology: [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md).
+Durable ch/layer inventory: [`CASPAR-DURABLE-LAYER-MAP.md`](./CASPAR-DURABLE-LAYER-MAP.md).
 DoubleBox geometry: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 
 ## Spine (5 topics — smoke 15.9.2026)

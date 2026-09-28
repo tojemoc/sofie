@@ -196,6 +196,8 @@ relative to L3D/camera when starts are equal.
 | Camera visibility | Include/exclude `camera` piece (`camNo: 1` = Camera A). With `pgmCameraProducer` set → `PLAY 2-115 "dshow://…"`. No camera piece → no UVC on that Take |
 | Intro | PGM layer 210; never LED |
 
-See also: [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md) (canonical Caspar channel/layer
-map — supersedes layer numbers here if they diverge), [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md),
+See also: [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md) (channel policy),
+[`CASPAR-DURABLE-LAYER-MAP.md`](./CASPAR-DURABLE-LAYER-MAP.md) (durable ch/layer
+inventory — supersedes layer numbers here if they diverge),
+[`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md),
 [`SPRAVY-V2-INTEGRATION.md`](./SPRAVY-V2-INTEGRATION.md), ADR 0001.

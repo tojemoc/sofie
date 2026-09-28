@@ -39,6 +39,8 @@ rundown is this megarepo:
 
 **Show flow:** [`docs/integration/SPRAVY-SHOW-FLOW.md`](docs/integration/SPRAVY-SHOW-FLOW.md).
 **LED vs PGM:** [`docs/integration/OUTPUT_TOPOLOGY.md`](docs/integration/OUTPUT_TOPOLOGY.md).
+**Durable Caspar ch/layer map** (wipes, assets, loops, CG):
+[`docs/integration/CASPAR-DURABLE-LAYER-MAP.md`](docs/integration/CASPAR-DURABLE-LAYER-MAP.md).
 DoubleBox compose / UVC / wipes:
 [`docs/integration/DOUBLEBOX-PGM.md`](docs/integration/DOUBLEBOX-PGM.md).
 
@@ -120,6 +122,7 @@ v2 Caspar `clipName` convention: `gfx/<template-folder>` (e.g. `gfx/l3d-tema`). 
 SPRÁVY uses a **single CasparCG server** with **four channels** after sofie-demo-blueprints
 **#77**: LED **1**, PGM **2** (`route://` + overlays), BG A/B **3/4** (render-only
 pre-build). Canonical map: [`docs/integration/OUTPUT_TOPOLOGY.md`](docs/integration/OUTPUT_TOPOLOGY.md).
+Layer inventory: [`docs/integration/CASPAR-DURABLE-LAYER-MAP.md`](docs/integration/CASPAR-DURABLE-LAYER-MAP.md).
 
 **Ops:** `caspar.config` must declare channels 3 and 4 (no consumers required). Missing
 channels → Caspar `400 ERROR` spam on `LOADBG 3-…` / `4-…` and dead PGM route.

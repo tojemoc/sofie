@@ -62,5 +62,6 @@ CasparCG
 ## References
 
 - Topology: [`OUTPUT_TOPOLOGY.md`](../integration/OUTPUT_TOPOLOGY.md)
+- Durable ch/layer inventory: [`CASPAR-DURABLE-LAYER-MAP.md`](../integration/CASPAR-DURABLE-LAYER-MAP.md)
 - DoubleBox / DeckLink notes: [`DOUBLEBOX-PGM.md`](../integration/DOUBLEBOX-PGM.md)
 - Wipe BG channels: [`0002-wipe-prebuild-bg-channels.md`](./0002-wipe-prebuild-bg-channels.md)

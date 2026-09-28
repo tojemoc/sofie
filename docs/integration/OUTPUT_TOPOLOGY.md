@@ -1,6 +1,8 @@
 # Caspar output topology — LED vs PGM
 
 **Canonical** map of which Sofie / RE sources land on which Caspar channel.
+**Layer-by-layer inventory** (wipes, loops, assets, CG, mapping ids):
+[`CASPAR-DURABLE-LAYER-MAP.md`](./CASPAR-DURABLE-LAYER-MAP.md).
 DoubleBox compose detail: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 Integration status / catalogue: [`SPRAVY-V2-INTEGRATION.md`](./SPRAVY-V2-INTEGRATION.md).
 
@@ -236,6 +238,7 @@ Story looks pre-build here; PGM hears them via `route://3` or `route://4` on **l
 
 | Doc | Role |
 |-----|------|
+| [`CASPAR-DURABLE-LAYER-MAP.md`](./CASPAR-DURABLE-LAYER-MAP.md) | Durable ch/layer inventory — wipes 205–208, assets, loops, CG, Sofie mapping ids |
 | [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md) | DoubleBox FILL/CROP, UVC, wipe labels, smoke checklist |
 | [`adr/0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md) | Target: BG pre-build + PGM route wipe |
 | [`handoffs/blueprints-wipe-route-bg-channels.md`](./handoffs/blueprints-wipe-route-bg-channels.md) | Blueprints implementation handoff |
