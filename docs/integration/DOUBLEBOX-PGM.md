@@ -172,7 +172,8 @@ it into HTML); do not put a background loop on look clip 110.
 Story-block transitions use alpha wipe files under Caspar media, default
 `wipes/wipe` (plus `wipe_sjv` / `wipe_sport` / `wipe_pocasie` where labelled).
 
-**Shipped (sofie-demo-blueprints [#77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77)+):**
+**Shipped (sofie-demo-blueprints [#77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77)+;
+wipe layers [#121](https://github.com/tojemoc/sofie-demo-blueprints/pull/121)):**
 looks pre-build on **BG channels 3/4**; PGM takes `PLAY 2-110 route://{3|4}` with a
 **delayed cut** at the wipe mid-point, while the alpha wipe overlays on **PGM 205–208**
 (one Sofie mapping / physical layer per wipe file — classical `wipe` → **205**,
@@ -186,7 +187,8 @@ transition length. See
 **Current:** hot overlay `PLAY 2-205` / `2-206` / … (straight-alpha mixer, `keyer: false`)
 after per-file LOADBG. Layer **200** is retired — leftover `MIXER KEYER` there luma-keyed
 remastered `wipe.mov` while `outro.mov` on 210 was fine. Shared **205** alone is also
-retired for themed stings — PRELOAD of another file on one layer cold-plays Latency 22–34f.
+retired for themed stings — PRELOAD of another file on one layer cold-plays Latency 22–34f
+(fixed in [#121](https://github.com/tojemoc/sofie-demo-blueprints/pull/121)).
 
 **Historical (pre–layer-205):** some docs and ADR 0002 still describe `PLAY 2-110
 route://{3|4}` **with STING** (wipe file as the route transition mask). That path is

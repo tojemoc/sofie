@@ -8,6 +8,10 @@ DoubleBox FILL/CROP: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 + `casparcgLayers.ts` + showstyle helpers (`clips.ts`, `pgmLook.ts`, `graphics.ts`,
 `backgroundMusic.ts`, `baseline.ts`, …).
 
+**Shipping blueprints:** [sofie-demo-blueprints #121](https://github.com/tojemoc/sofie-demo-blueprints/pull/121)
+(per-file PGM wipe layers **205–208**, hard-cut overlap). Topology ADR path remains
+[#77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77).
+
 Default channels: **1** LED · **2** PGM · **3** BG A (DoubleBox) · **4** BG B (Full) ·
 **5** CAM ingest. Studio may remap via `casparcg.hypercomposed.*`.
 
@@ -90,7 +94,8 @@ CasparCG
 Sofie `LookaheadMode.PRELOAD` LOADBGs the **next** wipe onto the EffectsPlayer mapping.
 One shared layer meant PRELOAD of `wipe_sjv` **destroyed** LOADBG'd `wipe.mov`, so the
 next Take cold-played `PLAY 2-205 "wipes/wipe"` (Latency 22–34f) while air cut still
-assumed hot (~0–19f). One Sofie mapping + physical layer **per wipe file** keeps hot PLAY.
+assumed hot (~0–19f). One Sofie mapping + physical layer **per wipe file** keeps hot PLAY
+([blueprints #121](https://github.com/tojemoc/sofie-demo-blueprints/pull/121)).
 
 ### PGM z-order
 
@@ -322,3 +327,4 @@ another wipe file destroyed the LOADBG on the same layer.
 | [`SPRAVY-SHOW-FLOW.md`](./SPRAVY-SHOW-FLOW.md) | Show spine / which wipe when |
 | [`adr/0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md) | Why BG 3/4 exist |
 | [`adr/0003-cam-ingest-channel.md`](../adr/0003-cam-ingest-channel.md) | Why CAM is ch5 |
+| [sofie-demo-blueprints #121](https://github.com/tojemoc/sofie-demo-blueprints/pull/121) | Code: wipe layers 205–208 + hard-cut overlap |
