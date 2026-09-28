@@ -120,7 +120,10 @@ story VT/SYN fullscreen, no Presenter MOD.
 | Logo / countup | `casparcg_graphics_logo` | 123 | `assets/countup` — above route |
 | Intro / znelka / outro | `casparcg_intro_player_pgm` | 210 | `assets/intro_*`, `assets/outro` — above route; **never LED** |
 | Audio bed | `casparcg_audio_bed_pgm` | 80 | Mirrors LED kolíska |
-| Alpha wipe | `casparcg_effects_player_pgm` | **205** | Story wipe overlay (not 200 — leftover KEYER on 200 luma-keyed `wipe.mov`) |
+| Alpha wipe (classical) | `casparcg_effects_player_pgm` | **205** | `wipes/wipe` overlay (not 200 — leftover KEYER on 200 luma-keyed `wipe.mov`) |
+| Alpha wipe (SJV) | `casparcg_effects_player_pgm_sjv` | **206** | `wipes/wipe_sjv` — own layer so PRELOAD cannot evict classical wipe |
+| Alpha wipe (ŠPORT) | `casparcg_effects_player_pgm_sport` | **207** | `wipes/wipe_sport` |
+| Alpha wipe (Počasie) | `casparcg_effects_player_pgm_pocasie` | **208** | `wipes/wipe_pocasie` |
 | Weather / fullscreen (legacy) | `casparcg_clip_player2` | 110 | **Compatibility only** when story still composes on PGM instead of BG 3/4 |
 
 Legacy LED mappings still exist (`casparcg_effects_player` → LED 200,
@@ -141,7 +144,7 @@ SPRÁVY must not route Intro or PGM L3Ds through them.
 | DoubleBox `db_loop` | PGM DoubleBox frame | **look 3/4-118** |
 | `video` SYN/VO | Voice Over | **look 3/4-110** |
 | `logo-bug` / countup | Logo | **PGM 2-123** |
-| `wipe` | PGM Wipe | **PGM 2-205** overlay + delayed `route://` cut (not STING; not 200) |
+| `wipe` | PGM Wipe | **PGM 2-205…208** per file + delayed `route://` cut (not STING; not 200) |
 | `intro` / `outro` | Titles | **PGM 2-210** |
 | `weather` | GFX | **look clip 110** `loops/bg_loop` + transparent HTML `gfx/pocasie` |
 
@@ -204,7 +207,10 @@ not “Caspar PLAY failed”. See [`assets/README.md`](../../assets/README.md).
 
 ```text
 210  Intro / znelka / outro
-205  Wipe overlay (`wipes/wipe*`) — not 200 (retired; leftover MIXER KEYER)
+208  Themed wipe_pocasie
+207  Themed wipe_sport
+206  Themed wipe_sjv
+205  Classical wipe (`wipes/wipe`) — not 200 (retired; leftover MIXER KEYER)
 123  logo-bug / countup
 110  Full-channel route (route://3|4)
  80  Audio bed

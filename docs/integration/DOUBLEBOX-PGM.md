@@ -153,7 +153,7 @@ Story compose layers sit on **BG look channels 3/4**; PGM (ch2) only routes + ov
 | `db_loop` frame | **BG 3/4** · 118 | full frame alpha cutouts |
 | Topic L3D | **BG 3/4** · 121 | HTML templates (`l3d-syn`, `l3d-tema`, …) |
 | Logo / countup | **PGM 2** · 123 | above route |
-| Story wipe | **PGM 2** · 205 | overlay `wipes/wipe*` + delayed `route://` cut — not 200 (sticky KEYER) |
+| Story wipe | **PGM 2** · 205–208 | one layer per wipe file (`wipe`/`wipe_sjv`/`wipe_sport`/`wipe_pocasie`) + delayed `route://` cut — not 200 (sticky KEYER) |
 | Intro / outro | **PGM 2** · 210 | full frame — above route; **PGM only** |
 
 Tune FILL against the real HTML chrome; values above match the attached still
@@ -225,7 +225,7 @@ labelled variant) and `transition: <label>` for operators.
 | `casparcg_intro_player_pgm` | PGM 2 | 210 | Intro / znelka — **never LED** |
 | `casparcg_graphics_pgm_l3d` / `_b` | BG 3 / 4 | 121 | `l3d-syn` / `l3d-odporucanie` / `l3d-tema` / headline bars |
 | `casparcg_graphics_logo` | PGM 2 | 123 | `gfx/logo-bug` / countup — **above route; not on LED** |
-| `casparcg_effects_player_pgm` | PGM 2 | 205 | Story wipe overlay (200 retired — leftover KEYER) |
+| `casparcg_effects_player_pgm` (+ `_sjv` / `_sport` / `_pocasie`) | PGM 2 | 205–208 | One Sofie mapping per wipe file (PRELOAD cannot evict another sting) |
 
 Headline / story ILU on LED vs look: opening **headline** ILU stays on **LED**
 (`casparcg_ilu_player`). Thematic DoubleBox left-window media uses
