@@ -34,8 +34,9 @@ Standalone **SRC** piece type id is `source` → Caspar template **`gfx/source`*
 id `source`. If the pill does nothing on air, confirm that HTML template is on
 the Caspar template path and Sofie Reset Rundown after reload.
 
-Wipes: piece type `wipe` → Caspar PGM layer 205 (`wipes/wipe`; story blocks may
-use `wipes/wipe_sjv`, `wipes/wipe_sport`, `wipes/wipe_pocasie`). See
+Wipes: piece type `wipe` → PGM layers **205–208** by file (`wipes/wipe` → **205**,
+`wipe_sjv` → **206**, `wipe_sport` → **207**, `wipe_pocasie` → **208`). Canonical
+map: `docs/integration/CASPAR-DURABLE-LAYER-MAP.md`. See also
 `docs/integration/DOUBLEBOX-PGM.md` and
 `docs/integration/handoffs/blueprints-baseline-bg-loop.md`.
 
@@ -99,7 +100,12 @@ emitting ExpectedPackages (`toPackageManagerPath`); timeline `PLAY` still uses
   **cut point** — when the screen is fully covered and underlying content switches
   — defaults to **380 ms** (19 frames @ 50 fps) and is editable per wipe piece via
   payload `cutPoint` (milliseconds) in the Rundown Editor. Blueprints read
-  `attributes.cutPoint` and fall back to `WIPE_CUT_POINT_MS` when unset. Sofie
+  `attributes.cutPoint` and fall back to `WIPE_CUT_POINT_MS` when unset. On-air
+  scheduling adds Caspar PLAY→frame0 latency (`WIPE_PLAYOUT_LATENCY_MS`, **380 ms**)
+  plus a half-frame cover bias for classical `wipes/wipe` (**~780 ms** Take-relative
+  on same-slot openings). Do not raise global latency for **Full↔DB**-only timing
+  issues (cross-slot air-cut bias is retired) or other wipes go late.
+  Do not pad RE `cutPoint` to fix early cuts. Sofie
   only holds the previous look for each piece's `postrollDuration` past Take into
   that keepalive window — so `cutPoint` must not exceed the reserved postroll.
   Blueprints reserve ≥2500 ms look-MEDIA postroll by default; a cutPoint above

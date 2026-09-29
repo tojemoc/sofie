@@ -70,4 +70,5 @@ Blueprints do **not** emit RECORD timeline objects by default — recording is a
 
 - [`CASPAR-FFMPEG-BUFFERS.md`](./CASPAR-FFMPEG-BUFFERS.md) — DShow capture `rtbufsize`
 - [`AUDIO-SQ5-ROUTING.md`](./AUDIO-SQ5-ROUTING.md) — live stems into SQ-5
-- [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md) — channel / layer map
+- [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md) — LED / PGM channel policy
+- [`CASPAR-DURABLE-LAYER-MAP.md`](./CASPAR-DURABLE-LAYER-MAP.md) — durable ch/layer inventory

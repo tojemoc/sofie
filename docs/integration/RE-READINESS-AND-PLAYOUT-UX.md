@@ -193,9 +193,11 @@ relative to L3D/camera when starts are equal.
 |------|----------------|
 | LED always has `bg_loop` | Baseline `CasparCGClipPlayer1` prio 0; optional RE `bg-loop` **overrides** at prio 1 (one active loop, not two). Editorial VT/VO/SYN on **PGM ClipPlayer2** when hypercomposed so they never steal 1-110 |
 | LED graphics allow-list | Headline ILU (+ HTML) on LED; `l3d-tema` / `l3d-syn` / `l3d-headline` / `l3d-mod` on **PGM** |
-| Camera visibility | Include/exclude `camera` piece (`camNo: 1` = Camera A). With `pgmCameraProducer` set → `PLAY 2-115 "dshow://…"`. No camera piece → no UVC on that Take |
+| Camera visibility | Include/exclude `camera` piece (`camNo: 1` = Camera A). With `pgmCameraProducer` set → ingest on **channel 5** (`casparcg_pgm_camera_ingest`); look channels **3/4** layer **115** PLAY `route://5` (+ FILL). No camera piece → no UVC on that Take. Durable inventory ([`CASPAR-DURABLE-LAYER-MAP.md`](./CASPAR-DURABLE-LAYER-MAP.md)) overrides conflicting channel/producer details here |
 | Intro | PGM layer 210; never LED |
 
-See also: [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md) (canonical Caspar channel/layer
-map — supersedes layer numbers here if they diverge), [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md),
+See also: [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md) (channel policy),
+[`CASPAR-DURABLE-LAYER-MAP.md`](./CASPAR-DURABLE-LAYER-MAP.md) (durable ch/layer
+inventory — supersedes layer numbers here if they diverge),
+[`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md),
 [`SPRAVY-V2-INTEGRATION.md`](./SPRAVY-V2-INTEGRATION.md), ADR 0001.
