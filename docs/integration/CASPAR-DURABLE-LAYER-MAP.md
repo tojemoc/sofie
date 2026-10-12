@@ -8,9 +8,10 @@ DoubleBox FILL/CROP: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 + `casparcgLayers.ts` + showstyle helpers (`clips.ts`, `pgmLook.ts`, `graphics.ts`,
 `backgroundMusic.ts`, `baseline.ts`, …).
 
-**Shipping blueprints:** [sofie-demo-blueprints #121](https://github.com/tojemoc/sofie-demo-blueprints/pull/121)
-(per-file PGM wipe layers **205–208**, hard-cut overlap). Topology ADR path remains
-[#77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77).
+**Blueprints wipe paths:** the default is the per-file PGM overlay path (layers **205–208**);
+an experimental per-studio STING route-transition toggle is available for the classical
+`wipes/wipe` only. See [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md) and the
+[blueprints wipe implementation](https://github.com/tojemoc/sofie-demo-blueprints/blob/main/packages/blueprints/src/base/showstyle/helpers/pgmLook.ts).
 
 Default channels: **1** LED · **2** PGM · **3** BG A (DoubleBox) · **4** BG B (Full) ·
 **5** CAM ingest. Studio may remap via `casparcg.hypercomposed.*`.
@@ -25,7 +26,7 @@ extensionless under Caspar `media-path`; HTML CG templates live under `template-
 | Channel | Role | Consumer? | What lives here |
 |--------:|------|:---------:|-----------------|
 | **1** | LED wall | yes | `bg_loop`, pod, headline ILU, kolíska bed |
-| **2** | PGM air | yes | `route://3\|4`, wipes 205–208, countup, intro/outro, bed |
+| **2** | PGM air | yes | route layers 110/111, wipes 205–208 (or classical STING trial), countup, intro/outro, bed |
 | **3** | DoubleBox look | no | cam `route://5`, story ILU, `db_loop`, L3D, SYN/VT |
 | **4** | Full look | no | SYN/SJV/sport/weather, fullscreen cam, L3D |
 | **5** | Live CAM ingest | no | sole DeckLink / dshow |
@@ -80,14 +81,31 @@ CasparCG
 | Layer | Sofie mapping id | AMCP shape | Durable path / payload | When |
 |------:|------------------|------------|------------------------|------|
 | **80** | `casparcg_audio_bed_pgm` | `PLAY 2-80 "loops/bg_music_{a\|c}" LOOP` | same files as LED 80 | Mirror of LED kolíska |
-| **110** | `casparcg_pgm_route` | `PLAY 2-110 "route://3"` or `"route://4"` | full-channel route (never `route://N-0`) | Always while on-air; hard-cut under wipe at air cut |
+| **110** | `casparcg_pgm_route` | `PLAY 2-110 "route://3"` | Full-channel route A (never `route://N-0`) | Always live on default path; mixer visibility switches at air cut |
+| **111** | `casparcg_pgm_route` | `PLAY 2-111 "route://4"` | Full-channel route B; canonical route in STING trial | Default path keeps both routes live; trial re-PLAYS the active route here |
 | **123** | `casparcg_graphics_logo` | `PLAY 2-123 "assets/countup" LOOP` (+ MIX opacity) | `assets/countup` | First DoubleBox Take onward; hidden during headlines |
-| **205** | `casparcg_effects_player_pgm` | `LOADBG` / hot `PLAY 2-205` | `wipes/wipe` + `VF premultiply=inplace=1` | Classical story wipe — **own layer** |
+| **205** | `casparcg_effects_player_pgm` | `LOADBG` / hot `PLAY 2-205` | `wipes/wipe` + `VF premultiply=inplace=1` | Classical overlay by default; bypassed for the STING trial |
 | **206** | `casparcg_effects_player_pgm_sjv` | `LOADBG` / hot `PLAY 2-206` | `wipes/wipe_sjv` | SJV entrance wipe |
 | **207** | `casparcg_effects_player_pgm_sport` | `LOADBG` / hot `PLAY 2-207` | `wipes/wipe_sport` | ŠPORT entrance wipe |
 | **208** | `casparcg_effects_player_pgm_pocasie` | `LOADBG` / hot `PLAY 2-208` | `wipes/wipe_pocasie` | Počasie entrance wipe |
 | **210** | `casparcg_intro_player_pgm` | `PLAY 2-210 "assets/intro_*"` / `"assets/outro"` | `assets/intro_michal`, `assets/outro`, … | Intro / znelka / outro — **never LED** |
 | **990** | `casparcg_debug_label_pgm` | debug burn-in | — | Optional |
+
+### Wipe mode setting and AMCP paths
+
+`casparcg.hypercomposed.wipeUseStingRouteTransition` is in **Studio → CasparCG →
+Hypercomposed output channels** and defaults to **false**. It is experimental. With it off,
+blueprints keep both full-channel routes live on **PGM 110/111**, play the wipe on its
+per-file **205–208** EffectsPlayer layer (`LOADBG`, then hot `PLAY`), and switch route
+visibility with MIXER opacity/volume keyframes at the air cut. It does not send a delayed
+`PLAY 2-110 route://…`.
+
+With it on, every Take re-PLAYS the route on canonical **PGM 111**. Only the classical
+`wipes/wipe` uses a STING transition; its preload is a paused `LOADBG 2-111 "route://N"`
+with STING, followed at Take by a hot `PLAY 2-111 … STING`. The STING uses
+`wipes/wipe_mask` (B/W mask) and `wipes/wipe_pm` (premultiplied colour overlay), with
+`delay` in milliseconds. Themed wipes still use their **206–208** overlay layers and a
+plain route re-PLAY at the cut; hard cuts also re-PLAY plainly.
 
 ### Why 205–208 are separate
 
@@ -107,7 +125,8 @@ assumed hot (~0–19f). One Sofie mapping + physical layer **per wipe file** kee
 206  wipe_sjv
 205  wipe (classical)
 123  countup / logo-bug
-110  route://3|4          ◄── hears look compose
+111  route B / STING-trial canonical route
+110  route A
  80  audio bed
 ```
 
@@ -200,6 +219,8 @@ Caspar `media-path` layout (extensionless PLAY; Package Manager needs extension)
 | `wipes/wipe_pocasie` | **208** | `casparcg_effects_player_pgm_pocasie` |
 
 All use straight→premul `videoFilter` (`premultiply=inplace=1`) and mixer `keyer: false`.
+For the opt-in classical STING path, also provide `wipes/wipe_mask` (B/W luma matte) and
+`wipes/wipe_pm` (premultiplied colour overlay); these are the STING transition inputs.
 
 ### `assets/`
 
@@ -300,7 +321,7 @@ Story L3Ds are **never** on LED as the primary copy path — watch **PGM ch2** (
 
 ---
 
-## Example AMCP from a live take (classical wipe into DoubleBox)
+## Example AMCP from a live take (default OVERLAY path)
 
 ```text
 LOADBG 2-205 "wipes/wipe" … VF "premultiply=inplace=1"     ← PRELOAD (hot)
@@ -308,9 +329,25 @@ PLAY   3-116 "clips/…" … FILL …                          ← look A ILU
 PLAY   3-118 "loops/db_loop" LOOP                        ← frame
 PLAY   3-115 "route://5" … FILL …                        ← cam
 PLAY   2-205                                             ← hot PLAY (no filename)
-PLAY   2-110 "route://3" …                               ← air cut under cover
+MIXER  2-110 / 2-111 …                                   ← route visibility keyframe at air cut
 CG     3-121 ADD 1 "gfx/l3d-tema" 1 {…}
 ```
+
+## STING variant (opt-in classical wipe)
+
+With `wipeUseStingRouteTransition: true`, the classical wipe is preloaded on the canonical
+route layer and hot-played at Take. The actual route remains a full-channel `route://N`
+(never `route://N-0`); Caspar receives STING transition arguments using the separate mask
+and premultiplied overlay assets:
+
+```text
+LOADBG 2-111 "route://4" … STING …                         ← paused PRELOAD, mask wipes/wipe_mask
+                                                           ← overlay wipes/wipe_pm; delay is air-cut ms
+PLAY   2-111 … STING …                                     ← hot route re-PLAY at Take
+```
+
+Under this setting themed wipes remain overlays on 206–208; see the mode note above for the
+single-canonical-route behavior that also applies to those Takes.
 
 Healthy hot wipe: `PLAY 2-205` **without** a filename after LOADBG, Caspar
 `Latency: 0`. Cold failure mode: `PLAY 2-205 "wipes/wipe"` with Latency 22–34 after
