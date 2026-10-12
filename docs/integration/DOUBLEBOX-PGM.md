@@ -33,8 +33,10 @@ and [`handoffs/blueprints-baseline-bg-loop.md`](./handoffs/blueprints-baseline-b
 **Story ILU on look 116:** mapping
 `casparcg_pgm_ilu_player` → **BG channel 3/4 layer 116** (piece type `doublebox-ilu`)
 sits **above** CAM (115) so the left window covers CAM overhang without cropping the camera.
-Headline ILU remains on LED `casparcg_ilu_player` (1-115). PGM hears the mix via
-`PLAY 2-110 route://{3|4}` (`layer: null` — full channel, never `route://N-0`).
+Headline ILU remains on LED `casparcg_ilu_player` (1-115). By default PGM keeps both look
+routes live (`2-110 route://3`, `2-111 route://4`) and switches their mixer visibility;
+the STING trial re-PLAYS the active full-channel route on `2-111`. Routes must never be
+`route://N-0`.
 
 **Camera / UVC:** studio `casparcg.hypercomposed.pgmCameraProducer` (e.g.
 `dshow://video=OBS Virtual Camera`, or `DECKLINK DEVICE 1 FORMAT 1080p5000` via TSR **INPUT**)
@@ -232,7 +234,7 @@ labelled variant) and `transition: <label>` for operators.
 |------------------|---------|-------|------|
 | `casparcg_clip_player1` | LED 1 | 110 | LED `bg_loop` |
 | `casparcg_clip_player2` / `_b` | BG 3 / 4 | 110 | Story VT / weather on look (no baseline `bg_loop`) |
-| `casparcg_pgm_route` | PGM 2 | 110/111 | Default dual live routes + mixer cut; trial uses canonical 111 re-PLAY |
+| `casparcg_pgm_route_a` / `casparcg_pgm_route` | PGM 2 | 110/111 | Default dual live routes + mixer cut; trial uses canonical 111 re-PLAY |
 | `casparcg_ilu_player` | LED 1 | 115 | Headline ILU MEDIA (+ `gfx/headline-fallback`) |
 | `casparcg_pgm_camera` / `_b` | BG 3 / 4 | 115 | CAM via MEDIA `route://5` + FILL |
 | `casparcg_pgm_camera_ingest` | CAM 5 | 10 | Sole DeckLink / dshow |

@@ -18,7 +18,7 @@ Canonical map: [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md). Durable layer inven
 BG 3/4; default PGM path keeps routes live on **110/111**, uses alpha wipe overlays on
 **205–208** (classical `wipes/wipe` on **205**), and switches route visibility with MIXER
 keyframes at the air cut. Blueprints also have the experimental per-studio
-`wipeUseStingRouteTransition` toggle (default **false**): only classical `wipes/wipe`
+`casparcg.hypercomposed.wipeUseStingRouteTransition` toggle (default **false**): only classical `wipes/wipe`
 uses STING on canonical route layer **111**; themed wipes stay overlays. See
 [ADR 0002](../adr/0002-wipe-prebuild-bg-channels.md) and
 [the Caspar layer map](./CASPAR-DURABLE-LAYER-MAP.md). Blueprints [#77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77).
@@ -238,7 +238,7 @@ The bridge accepts JSON objects and XML-wrapped JSON from Caspar.
 <media-path>/
   loops/     # e.g. bg_loop.mov — bg-loop / baseline LED loop
   clips/     # ILU, VT, VO (e.g. clips/premiera.mp4)
-  wipes/     # alpha wipe media (piece type `wipe` → PGM 205 overlay + delayed route cut)
+  wipes/     # alpha wipe media (piece type `wipe` → PGM 205–208 overlay; optional classical STING trial)
   assets/    # pip-frame.png, etc.
 ```
 

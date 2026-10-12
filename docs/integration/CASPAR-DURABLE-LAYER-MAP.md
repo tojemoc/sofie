@@ -81,7 +81,7 @@ CasparCG
 | Layer | Sofie mapping id | AMCP shape | Durable path / payload | When |
 |------:|------------------|------------|------------------------|------|
 | **80** | `casparcg_audio_bed_pgm` | `PLAY 2-80 "loops/bg_music_{a\|c}" LOOP` | same files as LED 80 | Mirror of LED kolíska |
-| **110** | `casparcg_pgm_route` | `PLAY 2-110 "route://3"` | Full-channel route A (never `route://N-0`) | Always live on default path; mixer visibility switches at air cut |
+| **110** | `casparcg_pgm_route_a` | `PLAY 2-110 "route://3"` | Full-channel route A (never `route://N-0`) | Always live on default path; mixer visibility switches at air cut |
 | **111** | `casparcg_pgm_route` | `PLAY 2-111 "route://4"` | Full-channel route B; canonical route in STING trial | Default path keeps both routes live; trial re-PLAYS the active route here |
 | **123** | `casparcg_graphics_logo` | `PLAY 2-123 "assets/countup" LOOP` (+ MIX opacity) | `assets/countup` | First DoubleBox Take onward; hidden during headlines |
 | **205** | `casparcg_effects_player_pgm` | `LOADBG` / hot `PLAY 2-205` | `wipes/wipe` + `VF premultiply=inplace=1` | Classical overlay by default; bypassed for the STING trial |
@@ -209,7 +209,7 @@ Caspar `media-path` layout (extensionless PLAY; Package Manager needs extension)
 | `loops/bg_music_a` | **1-80** + **2-80** | Main kolíska bed |
 | `loops/bg_music_c` | **1-80** + **2-80** | ŠPORT bed |
 
-### `wipes/` (PGM overlays — one layer each)
+### `wipes/` (PGM wipe media)
 
 | PLAY path | Layer | Mapping |
 |-----------|------:|---------|
@@ -280,7 +280,8 @@ Story L3Ds are **never** on LED as the primary copy path — watch **PGM ch2** (
 | `casparcg_graphics_strap` | 1 | 122 |
 | `casparcg_effects_player` | 1 | 200 |
 | `casparcg_audio_bed_pgm` | 2 | 80 |
-| `casparcg_pgm_route` | 2 | 110 |
+| `casparcg_pgm_route_a` | 2 | 110 |
+| `casparcg_pgm_route` | 2 | 111 |
 | `casparcg_graphics_logo` | 2 | 123 |
 | `casparcg_effects_player_pgm` | 2 | 205 |
 | `casparcg_effects_player_pgm_sjv` | 2 | 206 |
@@ -329,7 +330,8 @@ PLAY   3-116 "clips/…" … FILL …                          ← look A ILU
 PLAY   3-118 "loops/db_loop" LOOP                        ← frame
 PLAY   3-115 "route://5" … FILL …                        ← cam
 PLAY   2-205                                             ← hot PLAY (no filename)
-MIXER  2-110 / 2-111 …                                   ← route visibility keyframe at air cut
+MIXER  2-110 OPACITY … VOLUME …                           ← route A visibility at air cut
+MIXER  2-111 OPACITY … VOLUME …                           ← route B visibility at air cut
 CG     3-121 ADD 1 "gfx/l3d-tema" 1 {…}
 ```
 

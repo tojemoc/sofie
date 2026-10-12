@@ -118,7 +118,7 @@ story VT/SYN fullscreen, no Presenter MOD.
 
 | Content | Mapping id | Layer | Notes |
 |---------|------------|------:|-------|
-| Full-channel routes | `casparcg_pgm_route` | **110/111** | Default: both `route://3` / `route://4` stay live; MIXER visibility switches at the air cut |
+| Full-channel routes | `casparcg_pgm_route_a` / `casparcg_pgm_route` | **110/111** | Default: both `route://3` / `route://4` stay live; MIXER visibility switches at the air cut |
 | Logo / countup | `casparcg_graphics_logo` | 123 | `assets/countup` — above route |
 | Intro / znelka / outro | `casparcg_intro_player_pgm` | 210 | `assets/intro_*`, `assets/outro` — above route; **never LED** |
 | Audio bed | `casparcg_audio_bed_pgm` | 80 | Mirrors LED kolíska |
@@ -159,7 +159,8 @@ SPRÁVY must not route Intro or PGM L3Ds through them.
 | `weather` | GFX | **look clip 110** `loops/bg_loop` + transparent HTML `gfx/pocasie` |
 
 **Sofie WebUI “GFX” vs “PGM” tracks ≠ Caspar channels.** Story looks compose on BG 3/4;
-PGM only routes the settled mix on **layer 110**.
+PGM routes the settled mix on **110/111** by default; the STING trial uses canonical
+route layer **111**.
 
 ---
 
@@ -168,8 +169,9 @@ PGM only routes the settled mix on **layer 110**.
 Check in order:
 
 1. **Wrong consumer** — watching LED (ch1). Story L3Ds are on look channels routed to **PGM ch2**.
-2. **AMCP fired?** Caspar log should show `CG {3\|4}-121 ADD … "gfx/l3d-…" … 202 CG OK` and
-   `PLAY 2-110 route://{3\|4}` (**not** `route://N-0`).
+2. **AMCP fired?** Caspar log should show `CG {3|4}-121 ADD … "gfx/l3d-…" … 202 CG OK`
+   and full-channel routes on `2-110` / `2-111` (default) or the canonical `2-111`
+   re-PLAY (STING trial) — never `route://N-0`.
 3. **Templates on disk?** `<template-path>/gfx/l3d-headline/l3d-headline.html` (etc.) from
    `demo-assets` `yarn build` → `deploy/template-path`.
 4. **Blank HTML / wrong data** — CG OK means Caspar loaded the template; empty `title` /
