@@ -15,10 +15,14 @@ v2 HTML templates from `tojemoc/sofie-demo-assets`.
 **Hypercomposed (LED ≠ PGM):** one Caspar, **four channels** — LED=1, PGM=2, BG A/B=3/4.
 Canonical map: [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md). Durable layer inventory:
 [`CASPAR-DURABLE-LAYER-MAP.md`](./CASPAR-DURABLE-LAYER-MAP.md). Story looks pre-build on
-BG 3/4; PGM routes with alpha wipe overlays on layers **205–208** (classical
-`wipes/wipe` on **205**) + delayed `route://` cut on layer **110**
-([ADR 0002](../adr/0002-wipe-prebuild-bg-channels.md) historical STING wording is obsolete;
-blueprints [#77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77)). DoubleBox
+BG 3/4; default PGM path keeps routes live on **110/111**, uses alpha wipe overlays on
+**205–208** (classical `wipes/wipe` on **205**), and switches route visibility with MIXER
+keyframes at the air cut. Blueprints also have the experimental per-studio
+`wipeUseStingRouteTransition` toggle (default **false**): only classical `wipes/wipe`
+uses STING on canonical route layer **111**; themed wipes stay overlays. See
+[ADR 0002](../adr/0002-wipe-prebuild-bg-channels.md) and
+[the Caspar layer map](./CASPAR-DURABLE-LAYER-MAP.md). Blueprints [#77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77).
+DoubleBox
 compose: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 
 ---
@@ -114,9 +118,12 @@ Clip paths are placeholders under `clips/`. Camera letters:
 **A→1**, **P→2**, **M→3**.
 
 Wipes: piece type `wipe`, file `wipes/wipe` (or labelled `wipe_sjv` / `wipe_sport` / `wipe_pocasie`).
-**Current:** PGM `PLAY 2-205 "wipes/wipe*"` (alpha overlay) + delayed `PLAY 2-110 route://{3|4}`
-cut ([`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md); ADR 0002 STING wording is historical).
-Layer **200** retired (leftover KEYER).
+**Default:** per-file `LOADBG` + hot `PLAY 2-205…208` alpha overlay; dual always-live
+routes on PGM 110/111 switch via MIXER keyframes. Optional experimental
+`casparcg.hypercomposed.wipeUseStingRouteTransition` (Studio → CasparCG → Hypercomposed
+output channels; default **false**) uses STING on route 111 for classical `wipes/wipe`
+only, with `wipes/wipe_mask` + `wipes/wipe_pm`; themed wipes remain overlays. Layer **200**
+is retired (leftover KEYER). See [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 Smoke rundown includes story-block wipe pieces with a `transition` label
 (`ILU TO SYN`, `Double Box`, …) — not on HEADLINES / Intro.
 
