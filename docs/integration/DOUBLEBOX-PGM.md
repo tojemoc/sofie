@@ -197,7 +197,7 @@ With the flag ON, every Take re-PLAYS the full-channel route on canonical PGM la
 Only classical `wipes/wipe` uses STING: Caspar preloads `route://N` with STING and hot-PLAYS
 that route at Take, with `delay` set in air-cut **milliseconds**. Supply the separate
 `wipes/wipe_mask` B/W luma matte and `wipes/wipe_pm` premultiplied colour overlay. Themed
-`wipe_sjv` / `_sport` / `_pocasie` have no stringer, so they still use their 206–208 overlay
+`wipe_sjv` / `_sport` / `_pocasie` have no stinger, so they still use their 206–208 overlay
 and a plain route re-PLAY at the cut; hard cuts also re-PLAY plainly. STING is therefore a
 supported opt-in variant, not obsolete, but remains an experimental trial.
 
@@ -206,7 +206,8 @@ supported opt-in variant, not obsolete, but remains an experimental trial.
 default mode uses MIXER visibility keyframes on the two always-live routes; STING-trial
 mode uses route layer 111 (STING for classical `wipe`, plain re-PLAY for themed wipes).
 Routes must be full-channel `route://N`, never `route://N-0`.
-(3) Caspar `caspar.config` has **≥4 channels**; (4) re-upload blueprints + Apply
+(3) `caspar.config` has **≥5 channels when CAM ingest is enabled** (channel 5); setups
+without CAM ingest need **≥4 channels** for LED, PGM, and BG A/B; (4) re-upload blueprints + Apply
 studio config.
 
 The **label** records direction (file may still be the default wipe):

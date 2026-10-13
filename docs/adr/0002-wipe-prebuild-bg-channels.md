@@ -105,8 +105,8 @@ PGM layer stack (conceptual):
 210  Intro / outro (may stay PGM-local or move later)
 123  logo-bug / persistent overlays   ◄── above wipe
 205–208 per-file alpha wipe overlays (default)
-110/111 always-live route://N layers (default)
-111  canonical route + optional classical STING transition
+110  route A — always-live route://N (default)
+111  route B / canonical route — always-live by default; optional classical STING transition
 ```
 
 BG A/B reuse today’s DoubleBox / fullscreen layer geometry (110/115/116/118/121), but

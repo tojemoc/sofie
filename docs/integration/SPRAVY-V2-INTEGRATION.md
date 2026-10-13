@@ -12,7 +12,9 @@ demo-assets, blueprints, rundown-editor, or core integration status changes.
 End-to-end demo: **Rundown Editor → Sofie Core → Playout Gateway → CasparCG** driving
 v2 HTML templates from `tojemoc/sofie-demo-assets`.
 
-**Hypercomposed (LED ≠ PGM):** one Caspar, **four channels** — LED=1, PGM=2, BG A/B=3/4.
+**Hypercomposed (LED ≠ PGM):** one Caspar, **four channels** without camera ingest
+(LED=1, PGM=2, BG A/B=3/4), or **five channels** when the CAM ingest helper is enabled
+(channel 5).
 Canonical map: [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md). Durable layer inventory:
 [`CASPAR-DURABLE-LAYER-MAP.md`](./CASPAR-DURABLE-LAYER-MAP.md). Story looks pre-build on
 BG 3/4; default PGM path keeps routes live on **110/111**, uses alpha wipe overlays on
