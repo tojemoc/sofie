@@ -264,6 +264,7 @@
 		"ingestType": "Intro",
 		"colour": "#666666",
 		"showInToolbar": true,
+		"autoNext": true,
 		"payload": [],
 		"defaultPieces": [
 			{

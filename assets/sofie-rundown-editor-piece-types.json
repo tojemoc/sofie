@@ -439,6 +439,7 @@
 		"shortName": "Outro",
 		"colour": "#bcbd22",
 		"includeTypeInName": true,
+		"forcesAutoNext": true,
 		"payload": [
 			{
 				"id": "fileName",
