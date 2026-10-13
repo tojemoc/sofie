@@ -19,7 +19,7 @@ CAM ingest helper — ADR [`0003-cam-ingest-channel.md`](../adr/0003-cam-ingest-
 | Role | Caspar channel | Consumers |
 |------|----------------:|-----------|
 | **LED** | **1** | Screen / NDI / SDI — `bg_loop` + headline ILU + LED audio bed |
-| **PGM** | **2** | Screen / NDI / SDI — `route://{3\|4}` on **layer 110** + logo/countup/intro + PGM audio bed |
+| **PGM** | **2** | Screen / NDI / SDI — route bus on **110/111** + wipe/intro/countup overlays + PGM audio bed |
 | **DoubleBox (BG A)** | **3** | **none** — `route://5` CAM + ILU + `db_loop` + L3D téma (pre-build look A) |
 | **Full (BG B)** | **4** | **none** — SYN / SJV / Sport / Weather / `route://5` fullscreen cam (pre-build look B) |
 | **CAM ingest** | **5** | **none** — sole DeckLink / dshow open (`casparcg_pgm_camera_ingest`) |
@@ -118,7 +118,7 @@ story VT/SYN fullscreen, no Presenter MOD.
 
 | Content | Mapping id | Layer | Notes |
 |---------|------------|------:|-------|
-| Full-channel route | `casparcg_pgm_route` | **110** | Delayed `route://{3\|4}` CUT beneath the PGM alpha wipe — **canonical story transition** |
+| Full-channel routes | `casparcg_pgm_route_a` / `casparcg_pgm_route` | **110/111** | Default: both `route://3` / `route://4` stay live; MIXER visibility switches at the air cut |
 | Logo / countup | `casparcg_graphics_logo` | 123 | `assets/countup` — above route |
 | Intro / znelka / outro | `casparcg_intro_player_pgm` | 210 | `assets/intro_*`, `assets/outro` — above route; **never LED** |
 | Audio bed | `casparcg_audio_bed_pgm` | 80 | Mirrors LED kolíska |
@@ -127,6 +127,14 @@ story VT/SYN fullscreen, no Presenter MOD.
 | Alpha wipe (ŠPORT) | `casparcg_effects_player_pgm_sport` | **207** | `wipes/wipe_sport` |
 | Alpha wipe (Počasie) | `casparcg_effects_player_pgm_pocasie` | **208** | `wipes/wipe_pocasie` |
 | Weather / fullscreen (legacy) | `casparcg_clip_player2` | 110 | **Compatibility only** when story still composes on PGM instead of BG 3/4 |
+
+**Optional experimental STING route trial:** Studio → **CasparCG → Hypercomposed output
+channels** → `wipeUseStingRouteTransition` (default **false**). When enabled, blueprints
+re-PLAY every route on canonical PGM layer **111**; the classical `wipes/wipe` alone is a
+STING transition there, using `wipes/wipe_mask` and `wipes/wipe_pm`. Themed wipes remain
+alpha overlays on **206–208**. With the default flag-off mode, classical and themed wipes
+all use per-file overlays on **205–208**, and the live routes switch via MIXER keyframes.
+See [`CASPAR-DURABLE-LAYER-MAP.md`](./CASPAR-DURABLE-LAYER-MAP.md) for the AMCP shapes.
 
 Legacy LED mappings still exist (`casparcg_effects_player` → LED 200,
 `casparcg_graphics_l3d` → LED 121) for non-hypercomposed / unused paths. Hypercomposed
@@ -146,12 +154,13 @@ SPRÁVY must not route Intro or PGM L3Ds through them.
 | DoubleBox `db_loop` | PGM DoubleBox frame | **look 3/4-118** |
 | `video` SYN/VO | Voice Over | **look 3/4-110** |
 | `logo-bug` / countup | Logo | **PGM 2-123** |
-| `wipe` | PGM Wipe | **PGM 2-205…208** per file + delayed `route://` cut (not STING; not 200) |
+| `wipe` | PGM Wipe | Default: **2-205…208** overlay + route MIXER cut; optional classical STING on **2-111** |
 | `intro` / `outro` | Titles | **PGM 2-210** |
 | `weather` | GFX | **look clip 110** `loops/bg_loop` + transparent HTML `gfx/pocasie` |
 
 **Sofie WebUI “GFX” vs “PGM” tracks ≠ Caspar channels.** Story looks compose on BG 3/4;
-PGM only routes the settled mix on **layer 110**.
+PGM routes the settled mix on **110/111** by default; the STING trial uses canonical
+route layer **111**.
 
 ---
 
@@ -160,13 +169,14 @@ PGM only routes the settled mix on **layer 110**.
 Check in order:
 
 1. **Wrong consumer** — watching LED (ch1). Story L3Ds are on look channels routed to **PGM ch2**.
-2. **AMCP fired?** Caspar log should show `CG {3\|4}-121 ADD … "gfx/l3d-…" … 202 CG OK` and
-   `PLAY 2-110 route://{3\|4}` (**not** `route://N-0`).
+2. **AMCP fired?** Caspar log should show `CG {3|4}-121 ADD … "gfx/l3d-…" … 202 CG OK`
+   and full-channel routes on `2-110` / `2-111` (default) or the canonical `2-111`
+   re-PLAY (STING trial) — never `route://N-0`.
 3. **Templates on disk?** `<template-path>/gfx/l3d-headline/l3d-headline.html` (etc.) from
    `demo-assets` `yarn build` → `deploy/template-path`.
 4. **Blank HTML / wrong data** — CG OK means Caspar loaded the template; empty `title` /
    missing assets can still look invisible.
-5. **Covered** — route STING on **110** or intro (210) sitting above the mix until they clear.
+5. **Covered** — a classical STING transition on **111** (only with the trial enabled) or intro (210) sitting above the mix until they clear.
 6. **Package Manager path** — yellow NR badges: [`PLAYOUT-NR-AND-MEDIA-PATH.md`](./PLAYOUT-NR-AND-MEDIA-PATH.md).
 
 `INFO 2` (or a Screen consumer with `<channel-index>2</channel-index>`) confirms ch2 is live.
@@ -178,7 +188,7 @@ Check in order:
 | Name | What it means | Examples |
 |------|---------------|----------|
 | Caspar **channel** | Physical output | 1 = LED, 2 = PGM |
-| Caspar **layer** | Z-order on that channel | 110 loop/VT, 115 cam, 116 ILU, 118 `db_loop`, 121 L3D, 200 wipe |
+| Caspar **layer** | Z-order on that channel | 110/111 route, 115 cam, 116 ILU, 118 `db_loop`, 121 L3D, 205–208 wipes |
 | Sofie **output layer** | WebUI track (GFX / PGM / …) | Not the same as Caspar channel |
 | Sofie **source layer** | Exclusive WithinPart slot | Lower Third vs PGM L3D |
 | Media **folder** | Disk under media-path | `clips/`, `loops/`, `wipes/`, `assets/` |
@@ -212,9 +222,10 @@ not “Caspar PLAY failed”. See [`assets/README.md`](../../assets/README.md).
 208  Themed wipe_pocasie
 207  Themed wipe_sport
 206  Themed wipe_sjv
-205  Classical wipe (`wipes/wipe`) — not 200 (retired; leftover MIXER KEYER)
+205  Classical wipe overlay by default (`wipes/wipe`) — not 200 (retired; leftover MIXER KEYER)
 123  logo-bug / countup
-110  Full-channel route (route://3|4)
+111  Route B / canonical route in STING trial
+110  Route A
  80  Audio bed
 990  Debug channel label (optional)
 ```

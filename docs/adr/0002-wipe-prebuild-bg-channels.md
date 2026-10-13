@@ -1,6 +1,6 @@
 # ADR 0002: Pre-build wipe scenes on background Caspar channels
 
-**Status:** Implemented in blueprints ([sofie-demo-blueprints #77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77)); look-slot flips are **wipe-gated** (hard cuts stay on the current BG — see follow-up). **Requires Caspar ≥4 channels**. Operator map: PGM `route://{3|4}` on **layer 110** (+ STING); looks on BG **3/4**; logo on PGM **123**. See [`OUTPUT_TOPOLOGY.md`](../integration/OUTPUT_TOPOLOGY.md) and [`DOUBLEBOX-PGM.md`](../integration/DOUBLEBOX-PGM.md).
+**Status:** BG pre-build and PGM routing are implemented in blueprints ([#77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77)); look-slot flips are wipe-gated. Default wipe mode is **OVERLAY**: per-file alpha wipes on PGM **205–208**, with both routes live on **110/111** and route visibility switched by MIXER keyframes. An experimental per-studio `casparcg.hypercomposed.wipeUseStingRouteTransition` flag (default **false**, Studio → CasparCG → Hypercomposed output channels) enables STING for classical `wipes/wipe` only, on canonical route layer **111**, using separate `wipes/wipe_mask` and `wipes/wipe_pm` assets; themed wipes remain overlays. **Requires Caspar ≥4 channels** (≥5 when CAM ingest is enabled). See [`OUTPUT_TOPOLOGY.md`](../integration/OUTPUT_TOPOLOGY.md) and [`DOUBLEBOX-PGM.md`](../integration/DOUBLEBOX-PGM.md).
 **Date:** 2026-09-03
 **Repos affected:** `tojemoc/sofie-demo-blueprints` (primary), Caspar `caspar.config`,
 megarepo docs (`OUTPUT_TOPOLOGY`, `DOUBLEBOX-PGM`)
@@ -11,7 +11,7 @@ megarepo docs (`OUTPUT_TOPOLOGY`, `DOUBLEBOX-PGM`)
 Today DoubleBox, fullscreen SYN/VT, camera, HTML L3Ds, and alpha wipes all live as
 **layers on the same PGM channel** (default Caspar ch2). On Take with a wipe piece,
 Sofie fires `PLAY`/`CG ADD` for the next scene's layers **at the same time** as the
-wipe overlay on layer 200.
+wipe overlay on PGM layers 205–208.
 
 Those producers have very different, non-deterministic load times:
 
@@ -33,8 +33,9 @@ overlays racing layer loads on PGM:
 
 ```text
 BG channel A ──Builds doublebox scene──┐
-                                       ├──► PGM channel (route + wipe transition)
-BG channel B ──Builds fullscreen scene─┘
+                                       ├──► PGM: live routes 110/111 (default)
+BG channel B ──Builds fullscreen scene─┘      + overlay wipe 205–208 (default)
+                                              + optional classical STING on route 111
                                               │
                                               ▼
                                     Persistent overlay layer
@@ -45,14 +46,17 @@ BG channel B ──Builds fullscreen scene─┘
 
 1. **Background channels** (no SDI/Screen consumers required) continuously composite the
    *current* and *next* story looks (DoubleBox vs fullscreen SYN/weather/etc.).
-2. **PGM** only **routes** (`route://`) from the active BG channel and runs the wipe as an
-   AMCP transition wrapping that route producer — sampling already-rendered frames.
+2. **PGM** keeps both already-rendered BG routes live on layers 110/111 by default and
+   plays per-file alpha wipes on layers 205–208, switching route visibility at the air cut.
+   With the optional experimental STING mode enabled, the classical `wipes/wipe` instead
+   wraps the incoming full-channel route on layer 111 in a Caspar STING transition; themed
+   wipes remain overlays.
 3. **Persistent overlays** (logo-bug, optionally long-lived L3Ds that must survive the wipe)
    sit on **PGM layers above the routed bus**, never baked into both BG composites.
 
 This is the standard broadcast “build off-air, then punch up” pattern (preview bus /
-CG pre-render). Caspar’s transition producer wraps generic producers including
-`route://`; asset loading moves **before** the deterministic wipe.
+CG pre-render). The default route-plus-overlay wipe and optional classical STING both
+transition between pre-built BG composites; asset loading moves **before** the wipe.
 
 ## Consequences
 
@@ -74,8 +78,8 @@ CG pre-render). Caspar’s transition producer wraps generic producers including
   equivalent). Fixed preroll alone may still punch up **partial** content if CEF/clip
   cue overruns the timer.
 - **Mapping churn:** hypercomposed studio gains BG channel ids; DoubleBox FILL/L3D
-  targets move from PGM layers to BG channel layers; wipe stops being a pure overlay on
-  200 and becomes a route transition (or route + transition media).
+  targets move from PGM layers to BG channel layers; default wipe overlays move to 205–208.
+  The optional classical STING path uses route layer 111 and its mask/overlay media.
 
 ### Non-goals (this ADR)
 
@@ -103,7 +107,9 @@ PGM layer stack (conceptual):
 ```text
 210  Intro / outro (may stay PGM-local or move later)
 123  logo-bug / persistent overlays   ◄── above wipe
-110  route://N  (+ wipe transition)   ◄── full BG channel composite
+205–208 per-file alpha wipe overlays (default)
+110  route A — always-live route://N (default)
+111  route B / canonical route — always-live by default; optional classical STING transition
 ```
 
 BG A/B reuse today’s DoubleBox / fullscreen layer geometry (110/115/116/118/121), but

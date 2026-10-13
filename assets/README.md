@@ -40,6 +40,15 @@ map: `docs/integration/CASPAR-DURABLE-LAYER-MAP.md`. See also
 `docs/integration/DOUBLEBOX-PGM.md` and
 `docs/integration/handoffs/blueprints-baseline-bg-loop.md`.
 
+The default blueprints wipe mode is the **OVERLAY** path (studio config flag off):
+per-file PGM `LOADBG` + hot `PLAY` on 205–208, with the always-live PGM routes switched
+by MIXER keyframes. An experimental, per-studio
+`casparcg.hypercomposed.wipeUseStingRouteTransition` option (Studio → CasparCG →
+Hypercomposed output channels; default **false**) enables STING for classical
+`wipes/wipe` only. That STING uses `wipes/wipe_mask` (B/W matte) and `wipes/wipe_pm`
+(premultiplied colour overlay) on the canonical PGM route layer 111; themed wipes remain
+OVERLAYs on 206–208. These are Caspar media files, not files included in this manifest repo.
+
 ## Media folder layout (`bg-loop`, wipe, clips, assets)
 
 Three different strings get confused — keep them separate:
@@ -67,6 +76,8 @@ emitting ExpectedPackages (`toPackageManagerPath`); timeline `PLAY` still uses
   loops/bg_music_a.wav        ← A-block background music
   loops/bg_music_c.wav        ← C-block background music (from Šport)
   wipes/wipe.mov              ← disk; PLAY / piece path often `wipes/wipe` (SFX embedded)
+  wipes/wipe_mask.mov         ← optional STING-trial B/W luma matte for classical wipe
+  wipes/wipe_pm.mov           ← optional STING-trial premultiplied colour overlay
   assets/intro_michal.mov     ← disk; intro piece `fileName` often `assets/intro_michal`
   clips/HEADLINE1.mov         ← disk filename (ILU / VT); PLAY → `clips/HEADLINE1`
   clips/ILU ….mp4

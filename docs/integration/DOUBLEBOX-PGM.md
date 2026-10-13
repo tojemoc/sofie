@@ -33,8 +33,10 @@ and [`handoffs/blueprints-baseline-bg-loop.md`](./handoffs/blueprints-baseline-b
 **Story ILU on look 116:** mapping
 `casparcg_pgm_ilu_player` → **BG channel 3/4 layer 116** (piece type `doublebox-ilu`)
 sits **above** CAM (115) so the left window covers CAM overhang without cropping the camera.
-Headline ILU remains on LED `casparcg_ilu_player` (1-115). PGM hears the mix via
-`PLAY 2-110 route://{3|4}` (`layer: null` — full channel, never `route://N-0`).
+Headline ILU remains on LED `casparcg_ilu_player` (1-115). By default PGM keeps both look
+routes live (`2-110 route://3`, `2-111 route://4`) and switches their mixer visibility;
+the STING trial re-PLAYS the active full-channel route on `2-111`. Routes must never be
+`route://N-0`.
 
 **Camera / UVC:** studio `casparcg.hypercomposed.pgmCameraProducer` (e.g.
 `dshow://video=OBS Virtual Camera`, or `DECKLINK DEVICE 1 FORMAT 1080p5000` via TSR **INPUT**)
@@ -172,32 +174,40 @@ it into HTML); do not put a background loop on look clip 110.
 Story-block transitions use alpha wipe files under Caspar media, default
 `wipes/wipe` (plus `wipe_sjv` / `wipe_sport` / `wipe_pocasie` where labelled).
 
-**Shipped (sofie-demo-blueprints [#77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77)+;
-wipe layers [#121](https://github.com/tojemoc/sofie-demo-blueprints/pull/121)):**
-looks pre-build on **BG channels 3/4**; PGM takes `PLAY 2-110 route://{3|4}` with a
-**delayed cut** at the wipe mid-point, while the alpha wipe overlays on **PGM 205–208**
-(one Sofie mapping / physical layer per wipe file — classical `wipe` → **205**,
-`wipe_sjv` → **206**, `wipe_sport` → **207**, `wipe_pocasie` → **208**). Logo stays on
-**PGM 123** above the route. Empty/0 RE wipe duration still defaults to ~2.5s for the
-transition length. See
+**Shipped** (blueprints [#77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77)+;
+wipe layers [#121](https://github.com/tojemoc/sofie-demo-blueprints/pull/121)): looks
+pre-build on **BG channels 3/4**. By default both full-channel PGM routes stay live on
+layers **110/111**; blueprints change their MIXER visibility at the air cut while the
+alpha wipe overlays on **PGM 205–208** (one mapping / physical layer per file: `wipe` →
+**205**, `_sjv` → **206**, `_sport` → **207**, `_pocasie` → **208**). Logo stays on
+**PGM 123** above the route. Empty/0 RE wipe duration still defaults to ~2.5s. See
 [`adr/0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md),
 [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md), and
 [`CASPAR-DURABLE-LAYER-MAP.md`](./CASPAR-DURABLE-LAYER-MAP.md).
 
-**Current:** hot overlay `PLAY 2-205` / `2-206` / … (straight-alpha mixer, `keyer: false`)
-after per-file LOADBG. Layer **200** is retired — leftover `MIXER KEYER` there luma-keyed
-remastered `wipe.mov` while `outro.mov` on 210 was fine. Shared **205** alone is also
-retired for themed stings — PRELOAD of another file on one layer cold-plays Latency 22–34f
-(fixed in [#121](https://github.com/tojemoc/sofie-demo-blueprints/pull/121)).
+**Toggle:** `casparcg.hypercomposed.wipeUseStingRouteTransition` is in Studio →
+**CasparCG → Hypercomposed output channels**; its schema default is **false**. It is an
+experimental, per-studio trial. With the default OFF, all wipe files use the per-file
+overlay path: a PRELOAD `LOADBG` then hot `PLAY 2-205` / `2-206` / … (straight-alpha mixer,
+`keyer: false`), while route visibility switches with MIXER keyframes. Layer **200** is
+retired — its leftover `MIXER KEYER` luma-keyed remastered `wipe.mov`. Separate 205–208
+layers prevent one file's PRELOAD from evicting another's.
 
-**Historical (pre–layer-205):** some docs and ADR 0002 still describe `PLAY 2-110
-route://{3|4}` **with STING** (wipe file as the route transition mask). That path is
-obsolete for SPRÁVY — do not reintroduce STING or layer 200.
+With the flag ON, every Take re-PLAYS the full-channel route on canonical PGM layer **111**.
+Only classical `wipes/wipe` uses STING: Caspar preloads `route://N` with STING and hot-PLAYS
+that route at Take, with `delay` set in air-cut **milliseconds**. Supply the separate
+`wipes/wipe_mask` B/W luma matte and `wipes/wipe_pm` premultiplied colour overlay. Themed
+`wipe_sjv` / `_sport` / `_pocasie` have no stinger, so they still use their 206–208 overlay
+and a plain route re-PLAY at the cut; hard cuts also re-PLAY plainly. STING is therefore a
+supported opt-in variant, not obsolete, but remains an experimental trial.
 
 **If wipes never appear:** (1) watch **Caspar channel 2**, not LED; (2) confirm
-`PLAY 2-{205|206|207|208}` on the layer assigned to that wipe file (alpha overlay)
-**and** a delayed `PLAY 2-110 route://{3|4}` cut (not `route://N-0`, not STING);
-(3) Caspar `caspar.config` has **≥4 channels**; (4) re-upload blueprints + Apply
+`PLAY 2-{205|206|207|208}` on the layer assigned to that wipe file and the route change:
+default mode uses MIXER visibility keyframes on the two always-live routes; STING-trial
+mode uses route layer 111 (STING for classical `wipe`, plain re-PLAY for themed wipes).
+Routes must be full-channel `route://N`, never `route://N-0`.
+(3) `caspar.config` has **≥5 channels when CAM ingest is enabled** (channel 5); setups
+without CAM ingest need **≥4 channels** for LED, PGM, and BG A/B; (4) re-upload blueprints + Apply
 studio config.
 
 The **label** records direction (file may still be the default wipe):
@@ -225,7 +235,7 @@ labelled variant) and `transition: <label>` for operators.
 |------------------|---------|-------|------|
 | `casparcg_clip_player1` | LED 1 | 110 | LED `bg_loop` |
 | `casparcg_clip_player2` / `_b` | BG 3 / 4 | 110 | Story VT / weather on look (no baseline `bg_loop`) |
-| `casparcg_pgm_route` | PGM 2 | 110 | Full-channel `route://{3\|4}` (delayed cut under 205 wipe) |
+| `casparcg_pgm_route_a` / `casparcg_pgm_route` | PGM 2 | 110/111 | Default dual live routes + mixer cut; trial uses canonical 111 re-PLAY |
 | `casparcg_ilu_player` | LED 1 | 115 | Headline ILU MEDIA (+ `gfx/headline-fallback`) |
 | `casparcg_pgm_camera` / `_b` | BG 3 / 4 | 115 | CAM via MEDIA `route://5` + FILL |
 | `casparcg_pgm_camera_ingest` | CAM 5 | 10 | Sole DeckLink / dshow |
@@ -268,8 +278,10 @@ same basename (see [`handoffs/blueprints-baseline-bg-loop.md`](./handoffs/bluepr
    **must not** play Intro on LED (`1-200`).
 7. **Post-intro MOD:** camera on look channel **{3|4}-115** — not `bg_loop` on PGM.
 8. **Story ILU on look 116 above CAM:** DoubleBox Take must show `PLAY {3|4}-116 "clips/…"`
-9. **Wiped Take:** AMCP shows `PLAY 2-{205–208}` on the selected wipe file’s assigned
-   layer (alpha overlay) and a delayed
-   `PLAY 2-110 route://{3|4}` cut (full channel, **not** `route://N-0`, **not** STING);
+9. **Wiped Take (default):** AMCP shows `LOADBG` + hot `PLAY 2-{205–208}` on the selected
+   wipe layer and MIXER keyframes switching the 110/111 route visibility. With the
+   experimental flag enabled, check classical `wipes/wipe` for STING on route layer 111
+   with `_mask` / `_pm` assets; themed wipes remain 206–208 overlays. Every route must be
+   full-channel `route://N`, never `route://N-0`;
    logo on `2-123` uninterrupted
    and CAM on look **115** (ILU z-order above CAM). Headline parts still use LED `1-115`.
