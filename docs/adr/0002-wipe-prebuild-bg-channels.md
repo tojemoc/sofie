@@ -33,8 +33,9 @@ overlays racing layer loads on PGM:
 
 ```text
 BG channel A ──Builds doublebox scene──┐
-                                       ├──► PGM channel (route + wipe transition)
-BG channel B ──Builds fullscreen scene─┘
+                                       ├──► PGM: live routes 110/111 (default)
+BG channel B ──Builds fullscreen scene─┘      + overlay wipe 205–208 (default)
+                                              + optional classical STING on route 111
                                               │
                                               ▼
                                     Persistent overlay layer
@@ -45,15 +46,17 @@ BG channel B ──Builds fullscreen scene─┘
 
 1. **Background channels** (no SDI/Screen consumers required) continuously composite the
    *current* and *next* story looks (DoubleBox vs fullscreen SYN/weather/etc.).
-2. **PGM** routes already-rendered BG channels and runs the wipe as a per-file alpha
-   overlay by default. The optional experimental STING mode wraps the incoming full-channel
-   route in a Caspar transition for the classical wipe only.
+2. **PGM** keeps both already-rendered BG routes live on layers 110/111 by default and
+   plays per-file alpha wipes on layers 205–208, switching route visibility at the air cut.
+   With the optional experimental STING mode enabled, the classical `wipes/wipe` instead
+   wraps the incoming full-channel route on layer 111 in a Caspar STING transition; themed
+   wipes remain overlays.
 3. **Persistent overlays** (logo-bug, optionally long-lived L3Ds that must survive the wipe)
    sit on **PGM layers above the routed bus**, never baked into both BG composites.
 
 This is the standard broadcast “build off-air, then punch up” pattern (preview bus /
-CG pre-render). Caspar’s transition producer wraps generic producers including
-`route://`; asset loading moves **before** the deterministic wipe.
+CG pre-render). The default route-plus-overlay wipe and optional classical STING both
+transition between pre-built BG composites; asset loading moves **before** the wipe.
 
 ## Consequences
 
