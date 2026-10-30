@@ -4,8 +4,8 @@
     "sync": true,
     "isTemplate": false,
     "payload": {},
-    "expectedStartTime": 1789489800000,
-    "expectedEndTime": 1789490700000,
+    "expectedStartTime": 1790616600000,
+    "expectedEndTime": 1790616960000,
     "id": "spravy-v3-smoke",
     "playlistId": null
   },
@@ -177,9 +177,10 @@
       },
       "skip": false,
       "editorChecked": false,
-      "id": "part-headlines-1-headline1",
       "duration": 7,
       "script": "Návrh na odvolanie Tomáša Tarabu je už v paláci. V najbližších týždňoch však minister nikam neodchádza.",
+      "durationMode": "manual",
+      "id": "part-headlines-1-headline1",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-headlines"
@@ -195,9 +196,10 @@
       },
       "skip": false,
       "editorChecked": false,
-      "id": "part-headlines-2-headline2",
       "duration": 7,
       "script": "Začal sa súd v kauze poľovníckej chaty. Stojí pred ním vyšetrovateľ, ktorý nahral špičky Smeru s Bodorom.",
+      "durationMode": "manual",
+      "id": "part-headlines-2-headline2",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-headlines"
@@ -213,9 +215,10 @@
       },
       "skip": false,
       "editorChecked": false,
-      "id": "part-headlines-3-headline3",
       "duration": 8,
       "script": "Vo voľbách budeme krúžkovať už len dvoch poslancov namiesto štyroch. Je to obchod za zrušenie voľby poštou.",
+      "durationMode": "manual",
+      "id": "part-headlines-3-headline3",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-headlines"
@@ -265,9 +268,10 @@
       },
       "skip": false,
       "editorChecked": false,
-      "id": "part-tema-1-1-ilu-fico-tarabu",
       "duration": 13,
       "script": "Dobrý večer. Premiér Fico osobne doručil prezidentovi návrh na odvolanie ministra Tomáša Tarabu. Pred tým ho na spoločnej tlačovke chválil a naznačoval, že ide o ústupok strane SNS.",
+      "durationMode": "manual",
+      "id": "part-tema-1-1-ilu-fico-tarabu",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-1"
@@ -301,9 +305,10 @@
       },
       "skip": false,
       "editorChecked": false,
-      "id": "part-tema-1-3-ilu-taraba",
       "duration": 6,
       "script": "Kým prezident Tomáša Tarabu neodvolá, bude naďalej ministrom - odhadom dva až tri týždne.",
+      "durationMode": "manual",
+      "id": "part-tema-1-3-ilu-taraba",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-1"
@@ -319,9 +324,10 @@
       },
       "skip": false,
       "editorChecked": false,
-      "id": "part-tema-1-4-syn-cluster-kolikova",
       "duration": 17,
       "script": "Kolíková:\n“Takže je vám jedno, čo popodpisuje dovtedy. Necháte ho dokončiť všetky kšefty, ktoré kritizujete, tak asi vám to potom nevadí.”\nMichelko:\n“Vadí, pretože všetko preveríme.”\nKolíková:\n“Tak potom ale nepoužívate všetky nástroje, nepoužívate ich.”",
+      "durationMode": "auto",
+      "id": "part-tema-1-4-syn-cluster-kolikova",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-1"
@@ -337,9 +343,10 @@
       },
       "skip": false,
       "editorChecked": false,
-      "id": "part-tema-2-1-ilu-parlament",
       "duration": 14,
       "script": "Namiesto štyroch poslancov budeme v najbližších voľbách možno krúžkovať len dvoch. Koalícia chce znížiť počet preferenčných krúžkov, aby cez koaličných partnerov prešiel návrh zrušiť voľby poštou zo zahraničia.",
+      "durationMode": "manual",
+      "id": "part-tema-2-1-ilu-parlament",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-2"
@@ -373,9 +380,10 @@
       },
       "skip": false,
       "editorChecked": false,
-      "id": "part-tema-2-3-ilu-gabika-avizo",
       "duration": 3,
       "script": "Celú reportáž nájdete na našom webe.",
+      "durationMode": "manual",
+      "id": "part-tema-2-3-ilu-gabika-avizo",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-2"
@@ -391,9 +399,10 @@
       },
       "skip": false,
       "editorChecked": false,
-      "id": "part-tema-3-1-ilu-ferencak",
       "duration": 9,
       "script": "Poslanca Jána Ferenčáka obvinili k korupcie. Informoval o tom on sám a tvrdí, že je to na objednávku ministra vnútra Šutaja Eštoka.",
+      "durationMode": "manual",
+      "id": "part-tema-3-1-ilu-ferencak",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-3"
@@ -427,9 +436,10 @@
       },
       "skip": false,
       "editorChecked": false,
-      "id": "part-tema-3-3-ilu-estok",
       "duration": 6,
       "script": "Policajné prezídium reagovalo, že zásahy odmieta a vyšetrovanie je nezávislé a zákonné.",
+      "durationMode": "manual",
+      "id": "part-tema-3-3-ilu-estok",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-3"
@@ -445,9 +455,10 @@
       },
       "skip": false,
       "editorChecked": false,
-      "id": "part-tema-4-1-ilu-cifare",
       "duration": 22,
       "script": "Pred piatimi rokmi nahral Roberta Fica na chate v Čifároch, dnes sa za to postavil pred súd. Policajt Martin Juhás čelí obžalobe zo zneužívania právomoci verejného činiteľa pre vyhotovenie nahrávok v kauzy poľovníckej chaty. Na súde bol Adel Ghannam. Adel, je šanca že uvidíme premiéra rozprávať o tom čo sa na chate dialo?",
+      "durationMode": "manual",
+      "id": "part-tema-4-1-ilu-cifare",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-4"
@@ -481,9 +492,10 @@
       },
       "skip": false,
       "editorChecked": false,
-      "id": "part-tema-5-1-ilu-gubik",
       "duration": 10,
       "script": "Približne polovica opozičných voličov odmieta bližšiu spoluprácu s Maďarskou alianciou. Ukázal to exkluzívny prieskum agentúry Focus pre 360tku.",
+      "durationMode": "manual",
+      "id": "part-tema-5-1-ilu-gubik",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-5"
@@ -517,9 +529,10 @@
       },
       "skip": false,
       "editorChecked": false,
-      "id": "part-tema-5-3-ilu-prieskum-avizo",
       "duration": 13,
       "script": "Ako sa líšia názory voličov jednotlivých strán a čo si o spolupráci s opozíciou mysia podporovatelia Maďarskej aliancie - dozviete sa v celom prieskume, ktorý nájdete na našom webe.",
+      "durationMode": "manual",
+      "id": "part-tema-5-3-ilu-prieskum-avizo",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-5"
@@ -535,9 +548,10 @@
       },
       "skip": false,
       "editorChecked": false,
-      "id": "part-sjv-1-litva",
       "duration": 8,
       "script": "Stíhačky NATO zostrelili dron, ktorý vošiel do litovského vzdušného priestoru. Letel z Bieloruska a smeroval na západ.",
+      "durationMode": "manual",
+      "id": "part-sjv-1-litva",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-sjv"
@@ -553,9 +567,10 @@
       },
       "skip": false,
       "editorChecked": false,
-      "id": "part-sjv-2-huliak",
       "duration": 11,
       "script": "Štát vyhral kľúčový súdny spor o Národný futbalový štadión. Nemusí tak zaplatiť požadovaných takmer 70 miliónov, naopak vráti sa mu milión eur na súdnych trovách.",
+      "durationMode": "manual",
+      "id": "part-sjv-2-huliak",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-sjv"
@@ -571,9 +586,10 @@
       },
       "skip": false,
       "editorChecked": false,
-      "id": "part-sport-1-hokej",
       "duration": 13,
       "script": "Dnes sa začína nová sezóna najvyššej slovenskej hokejovej súťaže. Obhajcovia titulu z Nitry hrajú prvý zápas na domácom štadióne so súperom z minuloročného finále - Slovanom Bratislava.",
+      "durationMode": "manual",
+      "id": "part-sport-1-hokej",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-sport"
@@ -589,9 +605,10 @@
       },
       "skip": false,
       "editorChecked": false,
-      "id": "part-sport-2-seria-a",
       "duration": 11,
       "script": "AS Rím aj Inter Miláno si pripísali víťazstvá a sú tak na prvých dvoch priečkach tabuľky talianskej Série A. Oba tímy vyhrali všetky 4 úvodné zápasy sezóny.",
+      "durationMode": "manual",
+      "id": "part-sport-2-seria-a",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-sport"
@@ -607,9 +624,9 @@
       },
       "skip": false,
       "editorChecked": false,
-      "id": "part-weather-1-po-asie",
       "duration": 25,
       "script": "Zajtra bude podobne ako dnes - jasno až polooblačno, cez deň od 19 do 26 stupňov. V noci sa môže ochladiť až na 6 stupňov.",
+      "id": "part-weather-1-po-asie",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-weather"
@@ -734,18 +751,18 @@
       "partId": "part-sjv-1-litva"
     },
     {
-      "name": "VID: ILU HULIAK.mp4",
+      "name": "SYN: ILU HULIAK.mp4",
       "rank": 0,
       "float": false,
       "pieceType": "video",
       "start": 0,
       "payload": {
-        "volume": 0.5,
+        "volume": 0.1,
         "fileName": "clips/ILU HULIAK.mp4"
       },
       "editorChecked": false,
-      "id": "part-sjv-2-huliak-vid",
       "duration": 12,
+      "id": "part-sjv-2-huliak-vid",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-sjv",
@@ -771,37 +788,37 @@
       "partId": "part-sport-1-hokej"
     },
     {
-      "name": "VID: ILU SERIA A.mp4",
+      "name": "SYN: ILU SERIA A.mp4",
       "rank": 0,
       "float": false,
       "pieceType": "video",
       "start": 0,
       "payload": {
-        "volume": 0.5,
+        "volume": 0.1,
         "fileName": "clips/ILU SERIA A.mp4"
       },
       "editorChecked": false,
-      "id": "part-sport-2-seria-a-vid",
       "duration": 11,
+      "id": "part-sport-2-seria-a-vid",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-sport",
       "partId": "part-sport-2-seria-a"
     },
     {
-      "name": "DBILU: Odvolávanie T. Tarabu",
+      "name": "ILU FICO VEDLA TARABU.mp4",
       "rank": 0,
       "float": false,
       "pieceType": "doublebox-ilu",
       "start": 0,
       "payload": {
-        "volume": 0.5,
+        "volume": 0.1,
         "text": "Odvolávanie T. Tarabu",
         "iluFile": "clips/ILU FICO VEDLA TARABU.mp4"
       },
       "editorChecked": false,
-      "id": "part-tema-1-1-ilu-fico-tarabu-dbilu",
       "duration": 13,
+      "id": "part-tema-1-1-ilu-fico-tarabu-dbilu",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-1",
@@ -827,19 +844,19 @@
       "partId": "part-tema-1-2-syn-cluster-taraba"
     },
     {
-      "name": "DBILU: S odvolaním sa neponáhľajú",
+      "name": "ILU TARABA.mp4",
       "rank": 0,
       "float": false,
       "pieceType": "doublebox-ilu",
       "start": 0,
       "payload": {
-        "volume": 0.5,
+        "volume": 0.1,
         "text": "S odvolaním sa neponáhľajú",
         "iluFile": "clips/ILU TARABA.mp4"
       },
       "editorChecked": false,
-      "id": "part-tema-1-3-ilu-taraba-dbilu",
       "duration": 6,
+      "id": "part-tema-1-3-ilu-taraba-dbilu",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-1",
@@ -865,19 +882,19 @@
       "partId": "part-tema-1-4-syn-cluster-kolikova"
     },
     {
-      "name": "DBILU: Menej krúžkovania",
+      "name": "ILU PARLAMENT.mp4",
       "rank": 0,
       "float": false,
       "pieceType": "doublebox-ilu",
       "start": 0,
       "payload": {
-        "volume": 0.5,
+        "volume": 0.1,
         "text": "Menej krúžkovania",
         "iluFile": "clips/ILU PARLAMENT.mp4"
       },
       "editorChecked": false,
-      "id": "part-tema-2-1-ilu-parlament-dbilu",
       "duration": 14,
+      "id": "part-tema-2-1-ilu-parlament-dbilu",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-2",
@@ -903,38 +920,38 @@
       "partId": "part-tema-2-2-syn-cluster-kruzky"
     },
     {
-      "name": "DBILU: Viac na 360tka.sk",
+      "name": "ILU GABIKA AVIZO.mp4",
       "rank": 0,
       "float": false,
       "pieceType": "doublebox-ilu",
       "start": 0,
       "payload": {
-        "volume": 0.5,
+        "volume": 0.1,
         "text": "Viac na 360tka.sk",
         "iluFile": "clips/ILU GABIKA AVIZO.mp4"
       },
       "editorChecked": false,
-      "id": "part-tema-2-3-ilu-gabika-avizo-dbilu",
       "duration": 3,
+      "id": "part-tema-2-3-ilu-gabika-avizo-dbilu",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-2",
       "partId": "part-tema-2-3-ilu-gabika-avizo"
     },
     {
-      "name": "DBILU: Obvinený Ferenčák",
+      "name": "ILU FERENCAK.mp4",
       "rank": 0,
       "float": false,
       "pieceType": "doublebox-ilu",
       "start": 0,
       "payload": {
-        "volume": 0.5,
+        "volume": 0.1,
         "text": "Obvinený Ferenčák",
         "iluFile": "clips/ILU FERENCAK.mp4"
       },
       "editorChecked": false,
-      "id": "part-tema-3-1-ilu-ferencak-dbilu",
       "duration": 9,
+      "id": "part-tema-3-1-ilu-ferencak-dbilu",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-3",
@@ -960,38 +977,38 @@
       "partId": "part-tema-3-2-syn-feren"
     },
     {
-      "name": "DBILU: Reakcia ministerstva",
+      "name": "ILU ESTOK.mp4",
       "rank": 0,
       "float": false,
       "pieceType": "doublebox-ilu",
       "start": 0,
       "payload": {
-        "volume": 0.5,
+        "volume": 0.1,
         "text": "Reakcia ministerstva",
         "iluFile": "clips/ILU ESTOK.mp4"
       },
       "editorChecked": false,
-      "id": "part-tema-3-3-ilu-estok-dbilu",
       "duration": 6,
+      "id": "part-tema-3-3-ilu-estok-dbilu",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-3",
       "partId": "part-tema-3-3-ilu-estok"
     },
     {
-      "name": "DBILU: Súd o poľovníckej chate",
+      "name": "ILU cifare.mp4",
       "rank": 0,
       "float": false,
       "pieceType": "doublebox-ilu",
       "start": 0,
       "payload": {
-        "volume": 0.5,
+        "volume": 0.1,
         "text": "Súd o poľovníckej chate",
         "iluFile": "clips/ILU cifare.mp4"
       },
       "editorChecked": false,
-      "id": "part-tema-4-1-ilu-cifare-dbilu",
       "duration": 22,
+      "id": "part-tema-4-1-ilu-cifare-dbilu",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-4",
@@ -1017,19 +1034,19 @@
       "partId": "part-tema-4-2-syn-cluster-adel"
     },
     {
-      "name": "DBILU: Spolupráca s Alianciou",
+      "name": "ILU GUBIK.mp4",
       "rank": 0,
       "float": false,
       "pieceType": "doublebox-ilu",
       "start": 0,
       "payload": {
-        "volume": 0.5,
+        "volume": 0.1,
         "text": "Spolupráca s Alianciou",
         "iluFile": "clips/ILU GUBIK.mp4"
       },
       "editorChecked": false,
-      "id": "part-tema-5-1-ilu-gubik-dbilu",
       "duration": 10,
+      "id": "part-tema-5-1-ilu-gubik-dbilu",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-5",
@@ -1055,19 +1072,19 @@
       "partId": "part-tema-5-2-syn-prieskum"
     },
     {
-      "name": "DBILU: Viac na 360tka.sk",
+      "name": "ILU PRIESKUM AVIZO.mp4",
       "rank": 0,
       "float": false,
       "pieceType": "doublebox-ilu",
       "start": 0,
       "payload": {
-        "volume": 0.5,
+        "volume": 0.1,
         "text": "Viac na 360tka.sk",
         "iluFile": "clips/ILU PRIESKUM AVIZO.mp4"
       },
       "editorChecked": false,
-      "id": "part-tema-5-3-ilu-prieskum-avizo-dbilu",
       "duration": 13,
+      "id": "part-tema-5-3-ilu-prieskum-avizo-dbilu",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-5",
@@ -1213,18 +1230,18 @@
       "partId": "part-headlines-3-headline3"
     },
     {
-      "name": "VID: ILU LITVA.mp4",
+      "name": "SYN: ILU LITVA.mp4",
       "rank": 1,
       "float": false,
       "pieceType": "video",
       "start": 0,
       "payload": {
-        "volume": 0.5,
+        "volume": 0.1,
         "fileName": "clips/ILU LITVA.mp4"
       },
       "editorChecked": false,
-      "id": "part-sjv-1-litva-vid",
       "duration": 10,
+      "id": "part-sjv-1-litva-vid",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-sjv",
@@ -1249,18 +1266,18 @@
       "partId": "part-sjv-2-huliak"
     },
     {
-      "name": "VID: ILU HOKEJ.mp4",
+      "name": "SYN: ILU HOKEJ.mp4",
       "rank": 1,
       "float": false,
       "pieceType": "video",
       "start": 0,
       "payload": {
-        "volume": 0.5,
+        "volume": 0.1,
         "fileName": "clips/ILU HOKEJ.mp4"
       },
       "editorChecked": false,
-      "id": "part-sport-1-hokej-vid",
       "duration": 13,
+      "id": "part-sport-1-hokej-vid",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-sport",
@@ -1446,41 +1463,23 @@
       "partId": "part-intro-2-gabriela-kajt-rov"
     },
     {
-      "name": "ZAVER",
+      "name": "ILUZAVER: Sledujte na www.360tka.sk",
       "rank": 1,
       "float": false,
       "pieceType": "ilu-zaver",
       "start": 0,
       "payload": {
-        "volume": 0.5,
+        "volume": 0.1,
         "iluFile": "clips/ILU AVIZO SAKOVA.mp4",
         "text": "Sledujte na www.360tka.sk"
       },
       "editorChecked": false,
-      "id": "piece-outro-1-zaver",
       "duration": 19,
+      "id": "piece-outro-1-zaver",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-outro",
       "partId": "part-outro-1-ilu-av-zo"
-    },
-    {
-      "name": "WX",
-      "rank": 1,
-      "float": false,
-      "pieceType": "weather",
-      "start": 0,
-      "payload": {
-        "bypass": false,
-        "cities": "[{\"region\":\"BA\",\"name\":\"BRATISLAVA\",\"temp\":\"25\",\"image\":\"partly-cloudy\",\"condition\":\"Polooblačno\",\"delay\":200},{\"region\":\"TT\",\"name\":\"TRNAVA\",\"temp\":\"25\",\"image\":\"partly-cloudy\",\"condition\":\"Polooblačno\",\"delay\":400},{\"region\":\"NR\",\"name\":\"NITRA\",\"temp\":\"26\",\"image\":\"sunny\",\"condition\":\"Slnečno\",\"delay\":600},{\"region\":\"TN\",\"name\":\"TRENČÍN\",\"temp\":\"24\",\"image\":\"partly-cloudy\",\"condition\":\"Polooblačno\",\"delay\":800},{\"region\":\"ZA\",\"name\":\"ŽILINA\",\"temp\":\"24\",\"image\":\"cloudy\",\"condition\":\"Zamračené\",\"delay\":1000},{\"region\":\"BB\",\"name\":\"B. BYSTRICA\",\"temp\":\"23\",\"image\":\"partly-cloudy\",\"condition\":\"Polooblačno\",\"delay\":1200},{\"region\":\"PO\",\"name\":\"PREŠOV\",\"temp\":\"22\",\"image\":\"partly-cloudy\",\"condition\":\"Polooblačno\",\"delay\":1400},{\"region\":\"KE\",\"name\":\"KOŠICE\",\"temp\":\"23\",\"image\":\"partly-cloudy\",\"condition\":\"Polooblačno\",\"delay\":1600}]",
-        "fileName": "assets/bg_pocasie.mov"
-      },
-      "editorChecked": false,
-      "id": "piece-weather-1-po-asie-2-wx",
-      "playlistId": null,
-      "rundownId": "spravy-v3-smoke",
-      "segmentId": "seg-weather",
-      "partId": "part-weather-1-po-asie"
     },
     {
       "name": "L3DS: Fico",
@@ -1571,6 +1570,24 @@
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-5",
       "partId": "part-tema-5-2-syn-prieskum"
+    },
+    {
+      "name": "WX",
+      "rank": 1,
+      "float": false,
+      "pieceType": "weather",
+      "start": 2,
+      "payload": {
+        "bypass": false,
+        "cities": "[{\"region\":\"BA\",\"name\":\"BRATISLAVA\",\"temp\":\"25\",\"image\":\"partly-cloudy\",\"condition\":\"Polooblačno\",\"delay\":200},{\"region\":\"TT\",\"name\":\"TRNAVA\",\"temp\":\"25\",\"image\":\"partly-cloudy\",\"condition\":\"Polooblačno\",\"delay\":400},{\"region\":\"NR\",\"name\":\"NITRA\",\"temp\":\"26\",\"image\":\"sunny\",\"condition\":\"Slnečno\",\"delay\":600},{\"region\":\"TN\",\"name\":\"TRENČÍN\",\"temp\":\"24\",\"image\":\"partly-cloudy\",\"condition\":\"Polooblačno\",\"delay\":800},{\"region\":\"ZA\",\"name\":\"ŽILINA\",\"temp\":\"24\",\"image\":\"cloudy\",\"condition\":\"Zamračené\",\"delay\":1000},{\"region\":\"BB\",\"name\":\"B. BYSTRICA\",\"temp\":\"23\",\"image\":\"partly-cloudy\",\"condition\":\"Polooblačno\",\"delay\":1200},{\"region\":\"PO\",\"name\":\"PREŠOV\",\"temp\":\"22\",\"image\":\"partly-cloudy\",\"condition\":\"Polooblačno\",\"delay\":1400},{\"region\":\"KE\",\"name\":\"KOŠICE\",\"temp\":\"23\",\"image\":\"partly-cloudy\",\"condition\":\"Polooblačno\",\"delay\":1600}]",
+        "fileName": "assets/bg_pocasie.mov"
+      },
+      "editorChecked": false,
+      "id": "piece-weather-1-po-asie-2-wx",
+      "playlistId": null,
+      "rundownId": "spravy-v3-smoke",
+      "segmentId": "seg-weather",
+      "partId": "part-weather-1-po-asie"
     },
     {
       "name": "L3DS: Richter",
@@ -1913,7 +1930,7 @@
       "pieceType": "wipe",
       "start": 0,
       "payload": {
-        "cutPoint": 380,
+        "cutPoint": 420,
         "fileName": "wipes/wipe.mov",
         "transition": "Double Box"
       },
@@ -1932,7 +1949,7 @@
       "pieceType": "wipe",
       "start": 0,
       "payload": {
-        "cutPoint": 380,
+        "cutPoint": 420,
         "fileName": "wipes/wipe.mov",
         "transition": "SYN TO ILU TEMA"
       },
@@ -1951,13 +1968,13 @@
       "pieceType": "wipe",
       "start": 0,
       "payload": {
-        "cutPoint": 380,
+        "cutPoint": 420,
         "fileName": "wipes/wipe.mov",
         "transition": "SYN TO ILU TEMA"
       },
       "editorChecked": false,
-      "id": "part-tema-3-1-ilu-ferencak-wipe",
       "duration": 2.5,
+      "id": "part-tema-3-1-ilu-ferencak-wipe",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-3",
@@ -1970,13 +1987,13 @@
       "pieceType": "wipe",
       "start": 0,
       "payload": {
-        "cutPoint": 380,
+        "cutPoint": 420,
         "fileName": "wipes/wipe.mov",
         "transition": "SYN TO ILU TEMA"
       },
       "editorChecked": false,
-      "id": "part-tema-4-1-ilu-cifare-wipe",
       "duration": 2.5,
+      "id": "part-tema-4-1-ilu-cifare-wipe",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-4",
@@ -1989,13 +2006,13 @@
       "pieceType": "wipe",
       "start": 0,
       "payload": {
-        "cutPoint": 380,
+        "cutPoint": 420,
         "fileName": "wipes/wipe.mov",
         "transition": "SYN TO ILU TEMA"
       },
       "editorChecked": false,
-      "id": "part-tema-5-1-ilu-gubik-wipe",
       "duration": 2.5,
+      "id": "part-tema-5-1-ilu-gubik-wipe",
       "playlistId": null,
       "rundownId": "spravy-v3-smoke",
       "segmentId": "seg-tema-5",
