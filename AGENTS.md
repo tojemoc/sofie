@@ -23,6 +23,18 @@ working inside that submodule.
 > update one, `cd` into it and use normal git. Do not `git add` these directories into the
 > superproject.
 
+### Pull requests
+
+The user opens PRs themselves. After pushing a branch, hand over a compare link in this exact
+form (base branch first, then `tojemoc:<repo>:<branch>`), e.g.:
+
+`https://github.com/tojemoc/sofie-demo-blueprints/compare/develop...tojemoc:sofie-demo-blueprints:<branch>?expand=1`
+
+Blueprints PRs target `develop`. On the local Windows studio machine there is no `gh` CLI and no
+git identity configured; ask which identity to use per commit and pass it per-command —
+`git -c user.name="<name>" -c user.email="<email>" commit ...` sets both author and committer
+(never change git config).
+
 ### Shared type manifests & smoke rundown (`assets/`)
 
 **Canonical home** for Rundown Editor piece / part / segment type JSON and the SPRÁVY smoke
