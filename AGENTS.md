@@ -31,7 +31,9 @@ form (base branch first, then `tojemoc:<repo>:<branch>`), e.g.:
 `https://github.com/tojemoc/sofie-demo-blueprints/compare/develop...tojemoc:sofie-demo-blueprints:<branch>?expand=1`
 
 Blueprints PRs target `develop`. On the local Windows studio machine there is no `gh` CLI and no
-git identity configured; ask which author to use per commit (never change git config).
+git identity configured; ask which identity to use per commit and pass it per-command —
+`git -c user.name="<name>" -c user.email="<email>" commit ...` sets both author and committer
+(never change git config).
 
 ### Shared type manifests & smoke rundown (`assets/`)
 
