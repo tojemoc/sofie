@@ -27,16 +27,19 @@ Rundown Editor (unopus)                Sofie Core                       Playout
 
 RE calls `coreMethods.dataRundown{Create,Update,Delete}` /
 `data{Segment,Part}{Create,Update,Delete}` with "mutated" documents
-(`mutateRundown` in `backend/src/background/api/rundowns.ts`). Only rundowns
-with `document.sync === true` and `isTemplate !== true` are pushed — and that
-flag is what `playoutLockService` polls for on-air locks.
+(`mutateRundown` in `backend/src/background/api/rundowns.ts`). The shared
+sync predicate in both `sendRundownDiffToCore` and `playoutLockService`'s
+SQL is **`document.sync` truthy AND `document.isTemplate` falsy** — a rundown
+with no `isTemplate` field at all still syncs (absent counts as
+not-a-template; only a truthy `isTemplate` excludes it). That same predicate
+is what `playoutLockService` polls for on-air locks.
 
 Piece/part fields as they cross the wire:
 
 | RE field | → ingest | Units / notes |
 |----------|----------|---------------|
 | `start` | `piece.objectTime` | **seconds** → blueprints `× 1000` (ms) |
-| `duration` | `piece.duration` | **seconds** → `× 1000` ms; `0` = open-ended |
+| `duration` | `piece.duration` | **seconds** → `× 1000` ms (`(d ?? 0) * 1000`); `0`/empty = open-ended for most pieces — **except `wipe`**, which falls back to blueprint `DEFAULT_WIPE_DURATION_MS` (2 500 ms stinger overlay), matching RE-READINESS' "~2.5 s" default |
 | `pieceType` | `piece.objectType` | RE type id (`headline`, `l3d-syn`, `wipe`, `video`, `camera`, …) — **reused as a Sofie object-type discriminator, then overwritten** by the parser |
 | `payload.*` | `piece.attributes.*` | passthrough bag; `adlib: true` marks adlibs |
 | `attributes.cutPoint` | `attributes.cutPoint` | **already ms** (into the wipe file) — the one field NOT in seconds |

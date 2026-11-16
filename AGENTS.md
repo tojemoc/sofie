@@ -173,8 +173,9 @@ ADR: [`docs/adr/0002-wipe-prebuild-bg-channels.md`](docs/adr/0002-wipe-prebuild-
 - **Cloud Agent environment:** `.cursor/environment.json` + `scripts/cloud-agent-setup.sh` +
   `scripts/cloud-env.sh` bootstrap the whole megarepo (pinned Node 22.22.0 + Meteor 3.4.1). The
   install installs dependencies for all four sibling consumer repos (checked out via
-  `repositoryDependencies`) but only *builds* Sofie Core packages and the Demo Assets templates — it
-  does not build the Demo Blueprints bundles (`yarn dist`) or the Rundown Editor production output.
+  `repositoryDependencies`) but only *builds* Sofie Core packages — Demo Assets templates are
+  static HTML (no build; served from `template/`) — and it does not build the Demo Blueprints
+  bundles (`yarn dist`) or the Rundown Editor production output.
   It then starts the three service terminals (`sofie-core`, `rundown-editor`, `demo-assets`). Source
   `scripts/cloud-env.sh` before running any repo command to get the right Node/Meteor/PATH and
   `SOFIE_MEGAREPO_ASSETS`.

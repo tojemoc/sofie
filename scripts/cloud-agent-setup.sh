@@ -92,13 +92,12 @@ else
 	echo "[setup] skip unopus (not checked out)"
 fi
 
-# --- Demo Assets: install deps + build CasparCG templates -> deploy/ ---------
+# --- Demo Assets: install deps only (templates are static HTML, no build) ----
 if [ -n "$ASSETS" ] && [ -d "$ASSETS" ]; then
 	echo "[setup] === sofie-demo-assets ==="
 	cd "$ASSETS"
 	corepack enable
 	yarn install
-	yarn build
 else
 	echo "[setup] skip sofie-demo-assets (not checked out)"
 fi

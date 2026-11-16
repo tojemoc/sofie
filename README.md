@@ -216,7 +216,7 @@ Not a GitHub fork. Started from [mint-dewit/casparcg-vue-boilerplate](https://gi
 | [#17](https://github.com/tojemoc/sofie/pull/17) | 2026-07-23 | Smoke Intro on PGM znelka; LED = headlines + loop |
 | [#18](https://github.com/tojemoc/sofie/pull/18) | 2026-07-23 | Redesign ILU toggle as prerendered/bypass (no WebM) |
 | [#19](https://github.com/tojemoc/sofie/pull/19) | 2026-08-04 | fix(smoke): ILU/L3DH shared duration; Softie manual Take (not AUTO) |
-| [#20](https://github.com/tojemoc/sofie/pull/20) | 2026-08-04 | refactor(media): flatten to sofie-demo-media/clips|loops|wipes |
+| [#20](https://github.com/tojemoc/sofie/pull/20) | 2026-08-04 | refactor(media): flatten to sofie-demo-media/clips\|loops\|wipes |
 | [#22](https://github.com/tojemoc/sofie/pull/22) | 2026-08-05 | fix(smoke): l3d-syn on PGM docs + bump muster paths from RE export |
 | [#23](https://github.com/tojemoc/sofie/pull/23) | 2026-08-06 | docs: UVC camera, LED loop permanence, RE readiness/wipe UX planning |
 | [#24](https://github.com/tojemoc/sofie/pull/24) | 2026-08-06 | docs(integration): handoffs for RE readiness diagnostics + daily template workflow |
@@ -417,7 +417,7 @@ Not a GitHub fork. Started from [mint-dewit/casparcg-vue-boilerplate](https://gi
 | [#46](https://github.com/tojemoc/unopus/pull/46) | 2026-07-22 | fix(typeManifests): allow part+piece to share the same id |
 | [#47](https://github.com/tojemoc/unopus/pull/47) | 2026-07-23 | feat(media): ILU prerendered toggle, ffprobe duration, no WebM check |
 | [#49](https://github.com/tojemoc/unopus/pull/49) | 2026-08-04 | feat(settings): delete-all types and true overwrite on reload |
-| [#50](https://github.com/tojemoc/unopus/pull/50) | 2026-08-04 | refactor(media): scan clips|loops|wipes at ingest root |
+| [#50](https://github.com/tojemoc/unopus/pull/50) | 2026-08-04 | refactor(media): scan clips\|loops\|wipes at ingest root |
 | [#52](https://github.com/tojemoc/unopus/pull/52) | 2026-08-05 | chore(assets): pin sofie megarepo assets to #20 flat paths |
 | [#53](https://github.com/tojemoc/unopus/pull/53) | 2026-08-06 | feat(readiness): observable Core content-status pipeline |
 | [#54](https://github.com/tojemoc/unopus/pull/54) | 2026-08-07 | feat: daily template clone, bulk rewrite, readiness-aware media picker |
@@ -474,15 +474,10 @@ Not a GitHub fork. Started from [mint-dewit/casparcg-vue-boilerplate](https://gi
 
 </details>
 
-<details><summary>tojemoc/sofie-demo-assets — 18 PRs merged since the tables above</summary>
+<details><summary>tojemoc/sofie-demo-assets — 13 PRs merged since the tables above</summary>
 
 | PR | Merged | Title |
 |----|--------|-------|
-| [#11](https://github.com/tojemoc/sofie-demo-assets/pull/11) | 2026-06-27 | Play ILU via Caspar clip layer; headline template is overlay only |
-| [#12](https://github.com/tojemoc/sofie-demo-assets/pull/12) | 2026-06-28 | Cursor/fix headline ilu play layer 715a |
-| [#15](https://github.com/tojemoc/sofie-demo-assets/pull/15) | 2026-07-02 | Fix ILU video invisible when headline block slides in |
-| [#16](https://github.com/tojemoc/sofie-demo-assets/pull/16) | 2026-07-08 | Add headline fallback overlay template for layered ILU playback |
-| [#17](https://github.com/tojemoc/sofie-demo-assets/pull/17) | 2026-07-10 | Cloud agent setup and consolidated GitHub Actions dependency bumps |
 | [#24](https://github.com/tojemoc/sofie-demo-assets/pull/24) | 2026-07-23 | fix(headline): drop HTML WebM ILU; harden L3D stop animation |
 | [#26](https://github.com/tojemoc/sofie-demo-assets/pull/26) | 2026-08-04 | docs(media): flat sofie-demo-media layout (no spravy nesting) |
 | [#27](https://github.com/tojemoc/sofie-demo-assets/pull/27) | 2026-08-14 | Fix L3D templates missing text when PLAY precedes UPDATE |
@@ -509,8 +504,8 @@ Not a GitHub fork. Started from [mint-dewit/casparcg-vue-boilerplate](https://gi
 | `tojemoc/sofie-core` | 22 |
 | `tojemoc/sofie-demo-blueprints` | 153 |
 | `tojemoc/unopus` | 101 |
-| `tojemoc/sofie-demo-assets` | 30 |
-| **Total** | **366** |
+| `tojemoc/sofie-demo-assets` | 25 |
+| **Total** | **361** |
 
 ---
 
