@@ -12,7 +12,7 @@ This is a **superproject** that aggregates four Sofie TV‑automation projects, 
 | `core/` | `tojemoc/sofie-core` | **Sofie Core** — Meteor 3 + Node backend + React (Vite) WebUI |
 | `blueprints/` | `tojemoc/sofie-demo-blueprints` | **Demo Blueprints** — builds `*-bundle.js` uploaded into Core |
 | `rundown-editor/` | `tojemoc/unopus` | **Sofie Rundown Editor** — standalone Express + Socket.IO / React rundown tool |
-| `demo-assets/` | `tojemoc/sofie-demo-assets` | **Demo Assets** — Vue/HTML CasparCG templates + media scaffold; `yarn build` → `deploy/` |
+| `demo-assets/` | `tojemoc/sofie-demo-assets` | **Demo Assets** — hand-written static HTML CasparCG templates in `template/gfx/*.html` + media scaffold (Vue pipeline removed Sept 2026; `yarn build`/`yarn test` are currently dead — see that repo's AGENTS.md) |
 
 Each submodule has its own, more detailed `AGENTS.md` (e.g. `core/AGENTS.md`) — read it before
 working inside that submodule.
@@ -50,6 +50,8 @@ rundown is this megarepo:
 | `spravy_360_jednou_vetou/` | Figma HTML source for SJV/Sport/odporúčanie shell |
 
 **Show flow:** [`docs/integration/SPRAVY-SHOW-FLOW.md`](docs/integration/SPRAVY-SHOW-FLOW.md).
+**Rundown schema + layout end-to-end** (RE JSON docs → ingest payload → blueprint
+parts → TSR/Caspar): [`docs/integration/RUNDOWN-SCHEMA-AND-LAYOUT.md`](docs/integration/RUNDOWN-SCHEMA-AND-LAYOUT.md).
 **LED vs PGM:** [`docs/integration/OUTPUT_TOPOLOGY.md`](docs/integration/OUTPUT_TOPOLOGY.md).
 **Durable Caspar ch/layer map** (wipes, assets, loops, CG):
 [`docs/integration/CASPAR-DURABLE-LAYER-MAP.md`](docs/integration/CASPAR-DURABLE-LAYER-MAP.md).
@@ -90,7 +92,7 @@ before Core commands — a `production` value breaks dev installs/builds.
 | Rundown Editor backend | `rundown-editor` | 3010 | `yarn dev:backend` (or `yarn dev` for both) |
 | Rundown Editor frontend | `rundown-editor` | 5173 | `yarn dev:ui` |
 | Blueprints docs (optional) | `blueprints` | 3030 | `yarn watch:docs` (base path `/sofie-demo-blueprints/`) |
-| CasparCG template dev (optional) | `demo-assets` | 8080 | `yarn serve` → e.g. `http://localhost:8080/l3d-tema/index.html` |
+| CasparCG template dev (optional) | `demo-assets` | 8080 | `python3 -m http.server 8080 --bind ::1 -d template` → `http://localhost:8080/gfx/l3d-tema.html` |
 
 - **Core** uses an embedded MongoDB managed by Meteor in dev — no separate DB to start. First run
   needs packages built once: `node ./scripts/install-and-build.mjs` (or `yarn build:packages`).
@@ -108,8 +110,8 @@ before Core commands — a `production` value breaks dev installs/builds.
 |-----------|------|------|-------|
 | `core` | `yarn lint` (`lint:packages` fast; `lint:meteor` is slow, several minutes) | `yarn unit:packages` (Jest, ~1000+ tests), `yarn unit:meteor` | `node ./scripts/install-and-build.mjs` |
 | `blueprints` | `cd packages/blueprints && yarn lint` | `yarn test:blueprints` | `cd packages/blueprints && yarn dist` |
-| `rundown-editor` | `yarn lint` | (no test suite) | `yarn build` |
-| `demo-assets` | `yarn lint` | (none yet) | `yarn build` → `deploy/template-path` + `deploy/media-path` |
+| `rundown-editor` | `yarn lint` | `yarn test` (node:test in backend; **not run in CI**) | `yarn build` |
+| `demo-assets` | `yarn lint` | (none — `yarn test` references a deleted file) | none — `yarn build` is dead; deploy = copy `template/` + media into Caspar paths |
 
 ### SPRÁVY v2 integration (cross-repo)
 
@@ -126,8 +128,9 @@ a Cursor agent session on `sofie-demo-blueprints`.
 | `rundown-editor` | Loads type manifests from megarepo `assets/`; minimal UI changes for demo |
 | `core` / playout-gateway | No template code; upload blueprint bundle + apply studio config |
 
-v2 Caspar `clipName` convention: `gfx/<template-folder>` (e.g. `gfx/l3d-tema`). Built layout:
-`deploy/template-path/gfx/<name>/<name>.html`. See integration log for full payload table.
+v2 Caspar `clipName` convention: `gfx/<name>` (e.g. `gfx/l3d-tema`). Templates are flat
+static files at `demo-assets/template/gfx/<name>.html` — copy `template/` into Caspar
+`<template-path>` (no build). See integration log for full payload table.
 
 ### Hypercomposed Caspar
 
@@ -157,15 +160,11 @@ ADR: [`docs/adr/0002-wipe-prebuild-bg-channels.md`](docs/adr/0002-wipe-prebuild-
 - Rundown Editor logs `Core Initialization Error: connect ECONNREFUSED 127.0.0.1:3000` when Core is
   not running — benign; the editor is fully usable standalone.
 - All four repos use Husky `lint-staged` pre‑commit hooks where configured.
-- `demo-assets` webpack 4 needs OpenSSL legacy provider — `yarn build` sets it in `package.json` scripts.
-- `demo-assets` `yarn serve` compiles fine but its `publicPath: '../'` (tuned for the built
-  `deploy/` layout) breaks in‑browser bundle resolution — `http://localhost:8080/<tpl>/index.html`
-  loads blank because the dev server returns the SPA fallback for the template's JS bundle. To
-  preview a *rendered* template, use the built output instead: `yarn build`, then serve `dist/`
-  statically from the repo (e.g. `cd demo-assets/dist && python3 -m http.server 8080 --bind ::1`).
-  Served on port 8080, each template auto‑plays its sample data (the `onDevAutoplay` hook keys on
-  `location.host === 'localhost:8080'`). Templates are 1920×1080; zoom the browser out to see
-  lower‑thirds anchored at the bottom.
+- `demo-assets` is now **static HTML** — templates live at `template/gfx/<name>.html`
+  (Caspar `clipName` = `gfx/<name>`). There is no build: edit the HTML directly and
+  serve `template/` statically for preview. `yarn build` / `yarn test` / the Dockerfile
+  still reference the deleted Vue pipeline and fail — treat them as dead until a new
+  assemble script exists.
 - The Core WebUI (Vite, 3005) and Rundown Editor frontend (Vite, 5173) bind to `::1` (IPv6
   loopback), which is what `localhost` resolves to here — use `http://localhost:<port>` (or
   `http://[::1]:<port>`), not `127.0.0.1`. First browser load of the Core WebUI triggers a large
