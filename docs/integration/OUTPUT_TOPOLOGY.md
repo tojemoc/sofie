@@ -1,92 +1,106 @@
 # Caspar output topology — LED vs PGM
 
-**Canonical** map of which Sofie / RE sources land on which Caspar channel.
-**Layer-by-layer inventory** (wipes, loops, assets, CG, mapping ids):
+Canonical map of which Sofie / RE sources land on which Caspar channel.
+Layer-by-layer inventory (loops, assets, CG, mapping ids):
 [`CASPAR-DURABLE-LAYER-MAP.md`](./CASPAR-DURABLE-LAYER-MAP.md).
-DoubleBox compose detail: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
-Integration status / catalogue: [`SPRAVY-V2-INTEGRATION.md`](./SPRAVY-V2-INTEGRATION.md).
+DoubleBox compose + switching mechanics: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 
-**Code truth** (blueprints): `packages/blueprints/src/base/studio/applyConfig/mappings/casparcg.ts` +
-`casparcgLayers.ts`, routing in `helpers/graphics.ts` (`PGM_L3D_CLIP_NAMES`).
+**Code truth:** `blueprints/packages/blueprints/src/base/studio/applyConfig/mappings/casparcg.ts` +
+`casparcgLayers.ts`; vMix switching in `helpers/visionMixer.ts` + `helpers/pgmLook.ts`.
 
 ---
 
-## One picture
+## Studio type decides the topology
 
-One **CasparCG server**, **five channels** (default hypercomposed studio after
-CAM ingest helper — ADR [`0003-cam-ingest-channel.md`](../adr/0003-cam-ingest-channel.md)):
+`visionMixer.type` in the studio blueprint config picks one of two topologies:
 
-| Role | Caspar channel | Consumers |
-|------|----------------:|-----------|
-| **LED** | **1** | Screen / NDI / SDI — `bg_loop` + headline ILU + LED audio bed |
-| **PGM** | **2** | Screen / NDI / SDI — route bus on **110/111** + wipe/intro/countup overlays + PGM audio bed |
-| **DoubleBox (BG A)** | **3** | **none** — `route://5` CAM + ILU + `db_loop` + L3D téma (pre-build look A) |
-| **Full (BG B)** | **4** | **none** — SYN / SJV / Sport / Weather / `route://5` fullscreen cam (pre-build look B) |
-| **CAM ingest** | **5** | **none** — sole DeckLink / dshow open (`casparcg_pgm_camera_ingest`) |
+| `visionMixer.type` | Who switches program | Production status |
+|---|---|---|
+| `vMix` | vMix PROGRAM/stingers; Caspar renders look feeds + clean GFX | **Current SPRÁVY studio** |
+| anything else | Caspar PGM channel routes `route://N` + alpha wipe overlays | Legacy / fallback |
+
+---
+
+## vMix topology (current)
+
+Five numbered roles; channel numbers are studio config
+(`casparcg.hypercomposed.{ledChannel,bgChannelA,bgChannelB,pgmChannel}` — production uses
+**1 / 2 / 3 / 4**). No CAM ingest channel: the camera is a vMix input.
+
+| Channel | Role | Consumers | What lives here |
+|--------:|------|-----------|-----------------|
+| **1** | LED wall | Screen / NDI / SDI | `bg_loop`, pod, headline ILU, LED audio bed |
+| **2** | Look A feed | NDI → vMix look input A | Full look stack (see layer map) |
+| **3** | Look B feed | NDI → vMix look input B | Same stack, `_b` mappings |
+| **4** | Clean GFX feed | NDI → vMix `cleanGfxInput`, keyed on Overlay 1 | Headline L3Ds, intro/outro, logo/countup, PGM audio bed |
 
 ```text
-CasparCG
-├── Channel 1 ──► LED consumer(s)          bg_loop + headline ILU
-├── Channel 2 ──► PGM consumer(s)          route://3|4 (+ wipe) + overlays + beds
-├── Channel 3 ──► (no consumer)            DoubleBox look (CAM = route://5)
-├── Channel 4 ──► (no consumer)            Full look (CAM = route://5)
-└── Channel 5 ──► (no consumer)            live CAM ingest (DECKLINK / dshow once)
+CasparCG                          vMix
+├── 1 LED   ──► consumers         (not wired to vMix)
+├── 2 Look A ──► NDI ──────────► input 2 (lookAInput)
+├── 3 Look B ──► NDI ──────────► input 3 (lookBInput)
+└── 4 Clean GFX ──► NDI ───────► input 4 (cleanGfxInput, Overlay 1)
+                                  camera input 1 = moderator cam
+                                  vMix PROGRAM = camera | look A | look B
 ```
 
-Studio config: `casparcg.hypercomposed.ledChannel` / `pgmChannel` / `bgChannelA` /
-`bgChannelB` / `camIngestChannel` (defaults **1 / 2 / 3 / 4 / 5**).
+vMix input wiring (`vmixProgram.*` studio config): `cameraInput`, `lookAInput`,
+`lookBInput`, `cleanGfxInput`, `bedAInput`, `bedCInput`, optional
+`lookAFeedInput` / `lookBFeedInput`, `micInput`, `recordingInput`.
 
-**Look channels (semantic):** DoubleBox → BG A / ch3; Full (headlines / SYN / weather /
-fullscreen cam) → BG B / ch4. PGM routes `route://3` or `route://4` accordingly.
+**Camera:** lives on layer 1 of the active look input in vMix (fullscreen or
+DoubleBox right window composed by vMix DVE). Optional `look{AFeed,BFeed}Input`
+puts the Caspar look feed on layer 2 above the camera. Caspar only renders the
+look feed content (clips, ILU, db_loop, L3D) — the cam pane itself is a vMix input.
 
-**Live camera ingest:** DeckLink / dshow opens **only** on channel **5**. Look layers
-`3-115` / `4-115` PLAY MEDIA `route://5` with FILL — never a second `PLAY … DECKLINK`.
-Opening DEVICE 1 on both BG looks caused `Could not enable video input` on the second open.
+**Audio:** beds are vMix inputs (`bedAInput`, `bedCInput`), not Caspar layer 80
+on the look channels — Caspar 80 remains only on LED 1 and clean-GFX 4.
 
-**Audio:** SYN/ILU play on the BG look; PGM hears them via a **full-channel** route
-(`route://N`, never `route://N-0`). Beds duplicate on LED+PGM layer 80. RE `volume` on
-video pieces drives clip mixer volume.
+**Switching:** every Take emits one `vmix_me_program` object (look input, or the
+raw `cameraInput` when the part has no look media — never a black look feed).
+Wiped Takes fire `Stinger1–4` mapped from the wipe file (`wipe`→1, `wipe_sjv`→2,
+`wipe_sport`→3, `wipe_pocasie`→4) with a lead PREVIEW so the stinger airs the
+incoming input; hard cuts emit `Cut` at the keepalive point. Caspar sees **no**
+wipe PLAYs and **no** PGM route layers in this mode.
 
-**False “Voice Over / ILU can't be found” badges** while Caspar still plays files:
-[`PLAYOUT-NR-AND-MEDIA-PATH.md`](./PLAYOUT-NR-AND-MEDIA-PATH.md) (Package Manager folder
-must match Caspar `media-path`, e.g. `Y:/360-ingest/sofie-demo-media`).
-
-### Ops: `caspar.config` must declare ≥5 channels
-
-If Caspar logs spam **`400 ERROR`** on every `LOADBG`/`PLAY`/`CG` for `3-*` / `4-*` /
-`5-*`, and `PLAY 2-110 route://3` returns **403 / Check syntax**, the server does not
-have enough channels configured. Blueprints still issue BG + ingest commands; Caspar
-rejects the channel index.
-
-Add render-only channels 3–5 (match LED/PGM `video-mode`; **omit** Screen/NDI/SDI
-consumers on 3/4/5 for production — optional NDI is fine for monitoring only),
-restart Caspar, re-**Apply** studio config / activate rundown:
+### Ops: `caspar.config` — 4 channels
 
 ```xml
 <channels>
-  <channel> <!-- 1 LED — keep existing consumers -->
-    <video-mode>1080p5000</video-mode>
-    <!-- ... -->
-  </channel>
-  <channel> <!-- 2 PGM — keep existing consumers -->
-    <video-mode>1080p5000</video-mode>
-    <!-- ... -->
-  </channel>
-  <channel> <!-- 3 BG A — no consumers -->
-    <video-mode>1080p5000</video-mode>
-  </channel>
-  <channel> <!-- 4 BG B — no consumers -->
-    <video-mode>1080p5000</video-mode>
-  </channel>
-  <channel> <!-- 5 CAM ingest — no consumers; sole DeckLink/dshow -->
-    <video-mode>1080p5000</video-mode>
-  </channel>
+  <channel><video-mode>1080p5000</video-mode><!-- 1 LED: consumers --></channel>
+  <channel><video-mode>1080p5000</video-mode><!-- 2 Look A: NDI out to vMix --></channel>
+  <channel><video-mode>1080p5000</video-mode><!-- 3 Look B: NDI out to vMix --></channel>
+  <channel><video-mode>1080p5000</video-mode><!-- 4 Clean GFX: NDI out to vMix --></channel>
 </channels>
 ```
 
-Five 1080p50 channels can be GPU-heavy — confirm headroom if playback stutters.
-See ADR [`0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md)
-and [`0003-cam-ingest-channel.md`](../adr/0003-cam-ingest-channel.md).
+Symptom of a missing channel: `400 ERROR` spam on `PLAY`/`LOADBG`/`CG` for the
+highest channel index.
+
+---
+
+## Legacy Caspar-switched topology
+
+`visionMixer.type` ≠ `vMix`: five channels, Caspar does program switching itself.
+
+| Channel | Role | Consumers |
+|--------:|------|-----------|
+| **1** | LED | yes |
+| **2** | PGM | yes — route bus **110/111** + wipe overlays 205–208 + intro 210 + logo 123 + bed 80 |
+| **3** | Look A (DoubleBox-semantic) | none — render-only |
+| **4** | Look B (Full-semantic) | none — render-only |
+| **5** | CAM ingest | none — sole `DECKLINK`/`dshow` open; looks sample via `route://5` |
+
+Program switching: both `route://3` / `route://4` stay live on PGM 110/111 and
+MIXER opacity/volume keyframes cut at the air point while an alpha wipe overlays
+on **205–208** (one layer per wipe file). Optional experimental
+`casparcg.hypercomposed.wipeUseStingRouteTransition` uses a real STING on route
+layer 111 for classical `wipes/wipe` only (`wipe_mask` + `wipe_pm` assets).
+CAM ingest needs the 5th channel (`casparcg_pgm_camera_ingest`) — never open
+`DECKLINK`/`dshow` on 3/4-115 directly.
+
+Retired on vMix studios (mappings deleted): `casparcg_pgm_route*`,
+`casparcg_pgm_effects_player*`, `casparcg_pgm_camera_ingest`.
 
 ---
 
@@ -94,168 +108,98 @@ and [`0003-cam-ingest-channel.md`](../adr/0003-cam-ingest-channel.md).
 
 ### LED (channel 1) — only these
 
-| Content | Mapping id | Layer | Typical path / template |
-|---------|------------|------:|-------------------------|
+| Content | Mapping id | Layer | Path / template |
+|---------|------------|------:|-----------------|
 | Background loop | `casparcg_clip_player1` | 110 | `loops/bg_loop` (baseline; optional RE `bg-loop`) |
 | Headline pod | `casparcg_led_pod_headline` | 112 | `assets/pod_headline` (headlines only) |
-| Headline ILU media | `casparcg_ilu_player` | 115 | `clips/<name>` + `gfx/headline-fallback` chrome |
+| Calibration frame | `casparcg_led_testframe` | 114 | `assets/testframe` (pre-first-Take) |
+| Headline / záver ILU | `casparcg_ilu_player` | 115 | `clips/<name>` |
+| Optional ILU chrome | `casparcg_graphics_l3d` | 121 | `gfx/headline-fallback` |
+| Audio bed / headline SFX | `casparcg_audio_bed` | 80 | `loops/bg_music_{a\|c}`, `assets/headline_sfx` |
 
-**Nothing else on LED.** No intro/znelka, no wipe, no `l3d-*`, no logo-bug, no camera, no
-story VT/SYN fullscreen, no Presenter MOD.
+**Nothing else on LED.** No intro/znelka, no wipe, no `l3d-*`, no logo, no camera,
+no story VT/SYN.
 
-### DoubleBox / Full (channels 3 / 4) — story looks
+### Look A / B (channels 2 / 3) — story looks
 
-| Content | Mapping id | Layer | Notes |
-|---------|------------|------:|-------|
-| SYN / VT / weather BG | `casparcg_clip_player2` / `_b` | 110 | Fullscreen editorial on the active look |
-| Camera / UVC | `casparcg_pgm_camera` / `_b` | 115 | MEDIA `route://5` + FILL — native capture is on ch5 only |
-| Live CAM ingest | `casparcg_pgm_camera_ingest` | 10 | Sole `DECKLINK` / `dshow://` on channel **5** |
-| DoubleBox story ILU | `casparcg_pgm_ilu_player` / `_b` | 116 | Piece type `doublebox-ilu` |
-| DoubleBox frame (`db_loop`) | `casparcg_pgm_doublebox_loop` / `_b` | 118 | Alpha cutouts |
-| Topic / SYN L3D HTML | `casparcg_graphics_pgm_l3d` / `_b` | 121 | `l3d-tema`, `l3d-syn`, `pocasie`, … |
+Same layer numbers on both channels; B uses the `*_b` mapping ids.
 
-### PGM (channel 2) — route bus + overlays
+| Layer | Content | Mapping id (A / B) |
+|------:|---------|---------------------|
+| 110 | `loops/bg_loop` sticky underlay | `casparcg_look_bg_loop` / `_b` |
+| 115 | Camera (legacy route producer; vMix composes cam on the input instead) | `casparcg_pgm_camera` / `_b` |
+| 116 | Story ILU (`doublebox-ilu`), weather `assets/bg_pocasie` | `casparcg_pgm_ilu_player` / `_b` |
+| 117 | Calibration CAM (pre-first-Take) | `casparcg_look_calib_cam` (B only) |
+| 118 | `loops/db_loop` DoubleBox frame | `casparcg_pgm_doublebox_loop` / `_b` |
+| 119 | Calibration frame loop (pre-first-Take) | `casparcg_look_calib_frame` (B only) |
+| 120 | SYN/VT/weather clip — **vMix only** (moved above db_loop so the frame keys over clip) | `casparcg_clip_player2` / `_b` |
+| 121 | L3D HTML (`l3d-*`, `gfx/pocasie`) | `casparcg_graphics_pgm_l3d` / `_b` |
 
-| Content | Mapping id | Layer | Notes |
-|---------|------------|------:|-------|
-| Full-channel routes | `casparcg_pgm_route_a` / `casparcg_pgm_route` | **110/111** | Default: both `route://3` / `route://4` stay live; MIXER visibility switches at the air cut |
-| Logo / countup | `casparcg_graphics_logo` | 123 | `assets/countup` — above route |
-| Intro / znelka / outro | `casparcg_intro_player_pgm` | 210 | `assets/intro_*`, `assets/outro` — above route; **never LED** |
-| Audio bed | `casparcg_audio_bed_pgm` | 80 | Mirrors LED kolíska |
-| Alpha wipe (classical) | `casparcg_effects_player_pgm` | **205** | `wipes/wipe` overlay (not 200 — leftover KEYER on 200 luma-keyed `wipe.mov`) |
-| Alpha wipe (SJV) | `casparcg_effects_player_pgm_sjv` | **206** | `wipes/wipe_sjv` — own layer so PRELOAD cannot evict classical wipe |
-| Alpha wipe (ŠPORT) | `casparcg_effects_player_pgm_sport` | **207** | `wipes/wipe_sport` |
-| Alpha wipe (Počasie) | `casparcg_effects_player_pgm_pocasie` | **208** | `wipes/wipe_pocasie` |
-| Weather / fullscreen (legacy) | `casparcg_clip_player2` | 110 | **Compatibility only** when story still composes on PGM instead of BG 3/4 |
+Legacy Caspar-switched looks use clip layer **111** instead of 120 (below CAM).
 
-**Optional experimental STING route trial:** Studio → **CasparCG → Hypercomposed output
-channels** → `wipeUseStingRouteTransition` (default **false**). When enabled, blueprints
-re-PLAY every route on canonical PGM layer **111**; the classical `wipes/wipe` alone is a
-STING transition there, using `wipes/wipe_mask` and `wipes/wipe_pm`. Themed wipes remain
-alpha overlays on **206–208**. With the default flag-off mode, classical and themed wipes
-all use per-file overlays on **205–208**, and the live routes switch via MIXER keyframes.
-See [`CASPAR-DURABLE-LAYER-MAP.md`](./CASPAR-DURABLE-LAYER-MAP.md) for the AMCP shapes.
+### PGM / clean GFX (channel 4 vMix, channel 2 legacy) — overlays only
 
-Legacy LED mappings still exist (`casparcg_effects_player` → LED 200,
-`casparcg_graphics_l3d` → LED 121) for non-hypercomposed / unused paths. Hypercomposed
-SPRÁVY must not route Intro or PGM L3Ds through them.
+| Layer | Content | Mapping id |
+|------:|---------|------------|
+| 80 | Audio bed (legacy PGM bed; vMix beds live in vMix) | `casparcg_audio_bed_pgm` |
+| 121 | Headline L3Ds (clean GFX) | `casparcg_graphics_headline` |
+| 122 | Look-B headline L3D variant | `casparcg_graphics_pgm_l3d` |
+| 123 | Logo / countup `assets/countup` | `casparcg_graphics_logo` |
+| 210 | Intro / znelka / outro `assets/intro_*`, `assets/outro` | `casparcg_intro_player_pgm` |
+| 205–208 | **Legacy only:** alpha wipe overlays | `casparcg_effects_player_pgm*` |
+| 110/111 | **Legacy only:** always-live routes | `casparcg_pgm_route*` |
 
 ---
 
-## RE piece → Caspar (cheat sheet)
+## RE piece → target (cheat sheet)
 
-| RE / piece | Sofie source layer (typical) | Caspar |
-|------------|------------------------------|--------|
-| `bg-loop` / baseline loop | — | **LED 1-110 only** (never PGM companion) |
-| `headline` ILU (`gfx/headline` + `clips/…`) | ILU | **LED 1-115** |
-| `l3d-*` / `l3d-syn` / weather HTML | PGM L3D | **look 3/4-121** (routed to PGM) |
-| `doublebox-ilu` | Lower Third | **look 3/4-116** |
-| `camera` | Camera | **look 3/4-115** = `route://5` (ingest on **5-10**) |
-| DoubleBox `db_loop` | PGM DoubleBox frame | **look 3/4-118** |
-| `video` SYN/VO | Voice Over | **look 3/4-110** |
-| `logo-bug` / countup | Logo | **PGM 2-123** |
-| `wipe` | PGM Wipe | Default: **2-205…208** overlay + route MIXER cut; optional classical STING on **2-111** |
-| `intro` / `outro` | Titles | **PGM 2-210** |
-| `weather` | GFX | **look clip 110** `loops/bg_loop` + transparent HTML `gfx/pocasie` |
-
-**Sofie WebUI “GFX” vs “PGM” tracks ≠ Caspar channels.** Story looks compose on BG 3/4;
-PGM routes the settled mix on **110/111** by default; the STING trial uses canonical
-route layer **111**.
+| RE / piece | Caspar target |
+|------------|---------------|
+| `bg-loop` / baseline loop | LED **1-110** only |
+| `headline` ILU | LED **1-115** + optional **1-121** chrome |
+| `camera` | vMix: input layer 1 on the look input (no Caspar). Legacy: look **{ch}-115** `route://5` |
+| `doublebox-ilu` | look **116** (claimed slot) |
+| DoubleBox `db_loop` | look **118** (phase-locked — see `DOUBLEBOX-PGM.md`) |
+| `video` / SYN / VT | look **120** (vMix) / **111** (legacy) |
+| `l3d-*` story / weather | look **121** CG; `gfx/pocasie` + `assets/bg_pocasie` on **116** |
+| `l3d-headline` (headlines) | clean-GFX PGM **121/122** |
+| `ilu-zaver` | LED **1-115** windowed + Full-look CAM — never `db_loop` |
+| `logo-bug` / countup | PGM **123** |
+| `wipe` | vMix: `Stinger1–4` on the Take. Legacy: **205–208** overlay |
+| `intro` / `outro` | PGM **210** |
 
 ---
 
-## Why “I can’t see the L3D”
+## Why “I can’t see the L3D” — check in order
 
-Check in order:
-
-1. **Wrong consumer** — watching LED (ch1). Story L3Ds are on look channels routed to **PGM ch2**.
-2. **AMCP fired?** Caspar log should show `CG {3|4}-121 ADD … "gfx/l3d-…" … 202 CG OK`
-   and full-channel routes on `2-110` / `2-111` (default) or the canonical `2-111`
-   re-PLAY (STING trial) — never `route://N-0`.
-3. **Templates on disk?** `<template-path>/gfx/l3d-headline/l3d-headline.html` (etc.) from
-   `demo-assets` `yarn build` → `deploy/template-path`.
-4. **Blank HTML / wrong data** — CG OK means Caspar loaded the template; empty `title` /
-   missing assets can still look invisible.
-5. **Covered** — a classical STING transition on **111** (only with the trial enabled) or intro (210) sitting above the mix until they clear.
-6. **Package Manager path** — yellow NR badges: [`PLAYOUT-NR-AND-MEDIA-PATH.md`](./PLAYOUT-NR-AND-MEDIA-PATH.md).
-
-`INFO 2` (or a Screen consumer with `<channel-index>2</channel-index>`) confirms ch2 is live.
-
----
+1. **Wrong feed** — story L3Ds ride the look channel feeding vMix; headline L3Ds
+   ride the clean-GFX channel. Neither appears on LED.
+2. **AMCP fired?** Caspar log shows `CG {2|3}-121 ADD … "gfx/l3d-…"`.
+3. **Templates on disk?** `<template-path>/gfx/*.html` from `demo-assets/template/`
+   (static files, no build).
+4. **Blank data** — `CG OK` means the template loaded; empty `title` still renders nothing.
+5. **vMix side** — the look input must be on program or preview; clean GFX needs
+   Overlay 1 on.
+6. **Package Manager path** — yellow NR badges:
+   [`PLAYOUT-NR-AND-MEDIA-PATH.md`](./PLAYOUT-NR-AND-MEDIA-PATH.md).
 
 ## Taxonomies (do not mix)
 
-| Name | What it means | Examples |
-|------|---------------|----------|
-| Caspar **channel** | Physical output | 1 = LED, 2 = PGM |
-| Caspar **layer** | Z-order on that channel | 110/111 route, 115 cam, 116 ILU, 118 `db_loop`, 121 L3D, 205–208 wipes |
-| Sofie **output layer** | WebUI track (GFX / PGM / …) | Not the same as Caspar channel |
-| Sofie **source layer** | Exclusive WithinPart slot | Lower Third vs PGM L3D |
-| Media **folder** | Disk under media-path | `clips/`, `loops/`, `wipes/`, `assets/` |
-| HTML **clipName** | Template under template-path | `gfx/l3d-syn` |
-
-WebUI “Lower Third can't be found on the playout system” is Package Manager path verify —
-not “Caspar PLAY failed”. See [`assets/README.md`](../../assets/README.md).
-
----
-
-## Layer stacks (z-order)
-
-### LED channel 1
-
-```text
-200  Effects (legacy — do not use for Intro in hypercomposed)
-123  (deprecated logo slot — unused; logo is PGM)
-122  Strap (legacy)
-121  Graphics L3D / headline-fallback chrome
-120  Ticker (legacy)
-115  Headline ILU  ◄── allow-list
-110  bg_loop       ◄── allow-list
-100  Clip preview
- 80  Audio bed
-```
-
-### PGM channel 2
-
-```text
-210  Intro / znelka / outro
-208  Themed wipe_pocasie
-207  Themed wipe_sport
-206  Themed wipe_sjv
-205  Classical wipe overlay by default (`wipes/wipe`) — not 200 (retired; leftover MIXER KEYER)
-123  logo-bug / countup
-111  Route B / canonical route in STING trial
-110  Route A
- 80  Audio bed
-990  Debug channel label (optional)
-```
-
-### DoubleBox / Full channels 3 / 4
-
-Story looks pre-build here; PGM hears them via `route://3` or `route://4` on **layer 110**.
-
-```text
-121  l3d-* HTML (téma / SYN / weather / sport)
-118  db_loop (DoubleBox frame — above cam/ILU)
-116  Story ILU (DoubleBox left — above CAM overhang)
-115  Camera (DoubleBox right / fullscreen headlines)
-110  Fullscreen story GFX / SYN / weather (no baseline bg_loop)
- 80  Audio bed (clip audio from SYN/VT)
-```
-
----
+| Name | Meaning |
+|------|---------|
+| Caspar **channel** | Physical output (1 LED, 2/3 looks, 4 clean GFX) |
+| Caspar **layer** | Z-order inside a channel |
+| vMix **input** | Program source (camera, look feeds, clean GFX, beds) |
+| Sofie **output layer** | WebUI track — not a Caspar channel |
+| Sofie **source layer** | Exclusive WithinPart slot in a part |
+| Media **folder** | `clips/` `loops/` `wipes/` `assets/` under media-path |
+| HTML **clipName** | Template under template-path (`gfx/l3d-syn`) |
 
 ## Related
 
 | Doc | Role |
 |-----|------|
-| [`CASPAR-DURABLE-LAYER-MAP.md`](./CASPAR-DURABLE-LAYER-MAP.md) | Durable ch/layer inventory — wipes 205–208, assets, loops, CG, Sofie mapping ids |
-| [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md) | DoubleBox FILL/CROP, UVC, wipe labels, smoke checklist |
-| [sofie-demo-blueprints #121](https://github.com/tojemoc/sofie-demo-blueprints/pull/121) | Blueprints: per-file wipe layers 205–208 |
-| [`adr/0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md) | Target: BG pre-build + PGM route wipe |
-| [`handoffs/blueprints-wipe-route-bg-channels.md`](./handoffs/blueprints-wipe-route-bg-channels.md) | Blueprints implementation handoff |
-| [`PLAYOUT-NR-AND-MEDIA-PATH.md`](./PLAYOUT-NR-AND-MEDIA-PATH.md) | Mass NR banding / PM path mismatch |
-| [`SPRAVY-SHOW-FLOW.md`](./SPRAVY-SHOW-FLOW.md) | Full show spine: headlines → topics → SJV → sport → weather → outro |
-| [`SPRAVY-V2-INTEGRATION.md`](./SPRAVY-V2-INTEGRATION.md) | Cross-repo status, template catalogue, deploy |
-| [`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md) | Intro → PGM 210 (never LED) |
-| `demo-assets` (when present) | HTML templates + media scaffold; historical path `docs/OUTPUT_TOPOLOGY.md` redirects here |
+| [`CASPAR-DURABLE-LAYER-MAP.md`](./CASPAR-DURABLE-LAYER-MAP.md) | Every durable channel/layer + AMCP shape |
+| [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md) | DoubleBox compose, phase-lock, preview arming, FILL numbers |
+| [`SPRAVY-SHOW-FLOW.md`](./SPRAVY-SHOW-FLOW.md) | Show spine — which transition when |
+| [`adr/0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md) | Why render-only look channels exist |
