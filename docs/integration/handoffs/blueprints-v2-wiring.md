@@ -101,9 +101,10 @@ You must:
 
 Files under `packages/blueprints/src/base/studio/applyConfig/mappings/`.
 
-Current hybrid demo uses ch3 for graphics. **Friday:** keep single-channel; **post-demo:**
-map `headline` → LED channel, and all `gfx/l3d-*` templates →
-`casparcg_graphics_pgm_l3d` on PGM channel 2, layer 121, per
+**Done since:** the hypercomposed topology remapped `gfx/l3d-*` — story L3Ds ride
+the claimed look channel via `casparcg_graphics_pgm_l3d` (look A 2-121) /
+`casparcg_graphics_pgm_l3d_b` (look B 3-121); `gfx/l3d-headline` and `gfx/l3d-mod`
+ride the clean-GFX channel via `casparcg_graphics_headline` (4-121), per
 [`../OUTPUT_TOPOLOGY.md`](../OUTPUT_TOPOLOGY.md).
 
 ### 5. Baseline / rundown start

@@ -34,8 +34,10 @@ switching mechanics: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md). Show spine:
 1. `demo-assets`: edit `template/gfx/*`, copy `template/` + media to Caspar paths.
 2. `blueprints`: `cd packages/blueprints && yarn dist`, upload bundle in Core WebUI.
 3. Core WebUI: **Apply studio config**, then **Reset Rundown** on the active playlist.
-4. RE: verify `INGEST_MEDIA_ROOT` = Sofie `ingestMediaFolder` = Caspar `media-path`
-   (one shared tree; clips under `<root>/clips/`).
+4. RE: verify `INGEST_MEDIA_ROOT`, Sofie `ingestMediaFolder`, and Caspar
+   `media-path` all resolve to the **same shared media tree** — the strings may
+   differ when services mount it at different locations (Docker volumes, NAS
+   shares); the files must be the same. Clips live under `<root>/clips/`.
 5. `caspar.config`: ≥4 channels (vMix) / ≥5 (legacy + cam ingest); restart Caspar on change.
 
 ## Caspar clipName contract
@@ -49,14 +51,14 @@ templates expose `window.play() / stop() / update(data)`.
 |------------|----------------------|----------|
 | `gfx/headline` | `iluFile`, `source` | LED 115 ILU media |
 | `gfx/headline-fallback` | `source` | LED 121 chrome (no text) |
-| `gfx/l3d-headline` | `title`, `subtitle` (aliases `headline`/`subline`) | PGM 121/122 clean GFX |
-| `gfx/l3d-mod` | `name`, `title` | look 121 |
+| `gfx/l3d-headline` | `title`, `subtitle` (aliases `headline`/`subline`) | clean-GFX 4-121 |
+| `gfx/l3d-mod` | `name`, `title` | clean-GFX 4-121 |
 | `gfx/l3d-tema` | `headline` | look 121 |
 | `gfx/l3d-syn` | `name`, `role` (replaces retired `l3d-predstavovak`) | look 121 |
 | `gfx/l3d-sjv` | `kicker`, `headline` | look 121 |
 | `gfx/l3d-sport` | `kicker` (default `ŠPORT`), `headline` | look 121 |
 | `gfx/l3d-odporucanie` | `headline` | look 121 |
-| `gfx/pocasie` | `cities` JSON string `[{region,name,temp,…}]`; blueprints map `region`→`BA_temp` etc. | look 121 + `assets/bg_pocasie` on 116 |
+| `gfx/pocasie` | flat `<REGION>_temp` / `_name` / `_delay` / `_img` keys (`BA_temp`, `BB_name`, …). Blueprints derive them from the editor's `cities` JSON `[{region,name,temp,…}]` — `cities` itself is not sent | look 121 + `assets/bg_pocasie` on 116 |
 | `gfx/ilu-zaver` | `iluFile` | LED 115 windowed (never DoubleBox) |
 | `gfx/outro` | — | PGM |
 | `gfx/logo-bug` | — | PGM 123, `OutOnRundownEnd` |
@@ -107,9 +109,9 @@ GFX). ILU parts never autoNext — Start `0`, begin on Take.
 
 ```text
 # look probe (channel 2 or 3 — whichever slot was claimed)
-CG 2-121 ADD 1 "gfx/l3d-syn" "{\"name\":\"Peter Pellegrini\",\"role\":\"Prezident SR\"}"
-CG 4-121 ADD 1 "gfx/l3d-headline" "{\"title\":\"Test\",\"subtitle\":\"sub\"}"
-CG 4-123 ADD 1 "gfx/logo-bug"
+CG 2-121 ADD 1 "gfx/l3d-syn" 1 "{\"name\":\"Peter Pellegrini\",\"role\":\"Prezident SR\"}"
+CG 4-121 ADD 1 "gfx/l3d-headline" 1 "{\"title\":\"Test\",\"subtitle\":\"sub\"}"
+CG 4-123 ADD 1 "gfx/logo-bug" 1
 PLAY 1-115 "clips/headline1"
 ```
 

@@ -146,9 +146,11 @@ Layer inventory + phase-lock: [`docs/integration/CASPAR-DURABLE-LAYER-MAP.md`](d
 Legacy Caspar-switched topology (PGM 2 + routes + wipe overlays + CAM ingest 5) remains
 as a config fallback — same docs, "legacy" sections.
 
-**Ops:** `caspar.config` must declare all four channels (looks need no consumers — NDI
-out to vMix only). Missing channels → Caspar `400 ERROR` spam on `PLAY`/`LOADBG`/`CG`
-for the missing index. ADR:
+**Ops:** `caspar.config` must declare all four channels, and channels 2/3/4 each need an
+NDI consumer (`<ndi/>` in the channel's `<consumers>`, or `ADD {ch} NDI`) — the NDI
+source name is what the vMix look/clean-GFX inputs attach to. Missing channels → Caspar
+`400 ERROR` spam on `PLAY`/`LOADBG`/`CG` for the missing index; missing NDI consumer →
+black feed in vMix with no Sofie error. ADR:
 [`docs/adr/0002-wipe-prebuild-bg-channels.md`](docs/adr/0002-wipe-prebuild-bg-channels.md).
 
 ### Gotchas

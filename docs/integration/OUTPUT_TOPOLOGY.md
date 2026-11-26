@@ -67,15 +67,28 @@ wipe PLAYs and **no** PGM route layers in this mode.
 
 ```xml
 <channels>
-  <channel><video-mode>1080p5000</video-mode><!-- 1 LED: consumers --></channel>
-  <channel><video-mode>1080p5000</video-mode><!-- 2 Look A: NDI out to vMix --></channel>
-  <channel><video-mode>1080p5000</video-mode><!-- 3 Look B: NDI out to vMix --></channel>
-  <channel><video-mode>1080p5000</video-mode><!-- 4 Clean GFX: NDI out to vMix --></channel>
+  <channel><video-mode>1080p5000</video-mode>
+    <consumers><!-- 1 LED wall: screen / decklink / SDI --></consumers>
+  </channel>
+  <channel><video-mode>1080p5000</video-mode>
+    <consumers><ndi/></consumers><!-- 2 Look A → vMix lookAInput -->
+  </channel>
+  <channel><video-mode>1080p5000</video-mode>
+    <consumers><ndi/></consumers><!-- 3 Look B → vMix lookBInput -->
+  </channel>
+  <channel><video-mode>1080p5000</video-mode>
+    <consumers><ndi/></consumers><!-- 4 Clean GFX → vMix cleanGfxInput -->
+  </channel>
 </channels>
 ```
 
-Symptom of a missing channel: `400 ERROR` spam on `PLAY`/`LOADBG`/`CG` for the
-highest channel index.
+Channels 2/3/4 **need** an NDI consumer — Caspar does not emit NDI without one.
+Either `<ndi/>` in the channel's `<consumers>` (optionally
+`<ndi><name>…</name></ndi>` to pin the source name) or `ADD {ch} NDI` via AMCP
+after startup. The NDI source name is what each vMix look/clean-GFX input
+points at; a missing consumer = black NDI source in vMix while Sofie logs no
+error. Symptom of a missing channel: `400 ERROR` spam on `PLAY`/`LOADBG`/`CG`
+for the highest channel index.
 
 ---
 
@@ -142,8 +155,8 @@ Legacy Caspar-switched looks use clip layer **111** instead of 120 (below CAM).
 | Layer | Content | Mapping id |
 |------:|---------|------------|
 | 80 | Audio bed (legacy PGM bed; vMix beds live in vMix) | `casparcg_audio_bed_pgm` |
-| 121 | Headline L3Ds (clean GFX) | `casparcg_graphics_headline` |
-| 122 | Look-B headline L3D variant | `casparcg_graphics_pgm_l3d` |
+| 121 | Headline L3Ds + MOD nameplate (clean GFX) | `casparcg_graphics_headline` |
+| 122 | — unused (`GraphicsLowerThirdB` declared, never mapped) | — |
 | 123 | Logo / countup `assets/countup` | `casparcg_graphics_logo` |
 | 210 | Intro / znelka / outro `assets/intro_*`, `assets/outro` | `casparcg_intro_player_pgm` |
 | 205–208 | **Legacy only:** alpha wipe overlays | `casparcg_effects_player_pgm*` |
@@ -161,8 +174,8 @@ Legacy Caspar-switched looks use clip layer **111** instead of 120 (below CAM).
 | `doublebox-ilu` | look **116** (claimed slot) |
 | DoubleBox `db_loop` | look **118** (phase-locked — see `DOUBLEBOX-PGM.md`) |
 | `video` / SYN / VT | look **120** (vMix) / **111** (legacy) |
-| `l3d-*` story / weather | look **121** CG; `gfx/pocasie` + `assets/bg_pocasie` on **116** |
-| `l3d-headline` (headlines) | clean-GFX PGM **121/122** |
+| `l3d-*` story / `gfx/pocasie` | look **121** CG; `assets/bg_pocasie` underlay on **116** |
+| `l3d-headline`, `l3d-mod` | clean-GFX **4-121** (`casparcg_graphics_headline`) |
 | `ilu-zaver` | LED **1-115** windowed + Full-look CAM — never `db_loop` |
 | `logo-bug` / countup | PGM **123** |
 | `wipe` | vMix: `Stinger1–4` on the Take. Legacy: **205–208** overlay |

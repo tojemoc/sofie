@@ -56,7 +56,7 @@ Render-only feeds into vMix look inputs. Same layers both channels; B uses `*_b`
 | 117 | `casparcg_look_calib_cam` (B) | `route://` | Pre-first-Take calibration CAM |
 | 118 | `casparcg_pgm_doublebox_loop` / `_b` | `loops/db_loop` LOOP | Phase-locked — see below |
 | 119 | `casparcg_look_calib_frame` (B) | `loops/db_loop` | Pre-first-Take calibration frame |
-| 120 | `casparcg_clip_player2` / `_b` | `clips/<syn/vt>` | **vMix clip layer** — above db_loop so the frame keys over clip content |
+| 120 | `casparcg_clip_player2` / `_b` | `clips/<syn/vt>` | **vMix clip layer** — above db_loop (opaque clip covers the frame where they overlap; DoubleBox clips are FILL-windowed inside it, so no overlap) |
 | 121 | `casparcg_graphics_pgm_l3d` / `_b` | `CG ADD 1 "gfx/l3d-*"` / `gfx/pocasie` | Story L3Ds |
 | 990 | `casparcg_debug_label_{a,b}` | — | Optional |
 
@@ -101,8 +101,8 @@ no routes, no wipes, no cam.
 | Layer | Mapping id | Payload | When |
 |------:|------------|---------|------|
 | 80 | `casparcg_audio_bed_pgm` | `loops/bg_music_{a\|c}` | PGM-side bed mirror |
-| 121 | `casparcg_graphics_headline` | `gfx/l3d-headline` | Headline L3Ds (clean GFX) |
-| 122 | `casparcg_graphics_pgm_l3d` | `gfx/l3d-*` | Look-B headline variant |
+| 121 | `casparcg_graphics_headline` | `gfx/l3d-headline`, `gfx/l3d-mod` | Headline L3Ds + MOD nameplate (clean GFX) |
+| 122 | — | — | Declared (`PgmChannelLayers.GraphicsLowerThirdB`), never mapped |
 | 123 | `casparcg_graphics_logo` | `assets/countup` LOOP + opacity | Logo/countup — above everything |
 | 210 | `casparcg_intro_player_pgm` | `assets/intro_*`, `assets/outro` | Intro/znelka/outro — never LED |
 | 990 | `casparcg_debug_label_pgm` | — | Optional |
@@ -178,10 +178,10 @@ Opened once; looks sample via `PLAY {3|4}-115 route://5`. Never a second
 
 | Template | Look | Role |
 |----------|------|------|
-| `gfx/l3d-headline` | PGM 121/122 | Headline bars (clean GFX) |
+| `gfx/l3d-headline` | clean-GFX 4-121 | Headline bars |
 | `gfx/l3d-tema` | look 121 | Topic line |
 | `gfx/l3d-syn` | look 121 | SYN name/role strap |
-| `gfx/l3d-mod` | look 121 | Presenter MOD |
+| `gfx/l3d-mod` | clean-GFX 4-121 | Presenter MOD nameplate |
 | `gfx/l3d-sjv` / `gfx/l3d-sport` | look 121 | SJV / Šport bars |
 | `gfx/l3d-odporucanie` | look 121 | End tip |
 | `gfx/pocasie` | look 121 | Weather HTML (warm-loads via idle preview) |
