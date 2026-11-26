@@ -1,369 +1,211 @@
 # Caspar durable channel / layer map
 
-**Canonical inventory** of every durable Sofie → CasparCG address used by hypercomposed
-SPRÁVY / 360 sekúnd. Topology rationale: [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md).
-DoubleBox FILL/CROP: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
+Canonical inventory of every durable Sofie → CasparCG address used by
+hypercomposed SPRÁVY / 360 sekúnd. Topology:
+[`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md). DoubleBox / switching mechanics:
+[`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 
 **Code truth:** `blueprints/packages/blueprints/src/base/studio/applyConfig/mappings/casparcg.ts`
-+ `casparcgLayers.ts` + showstyle helpers (`clips.ts`, `pgmLook.ts`, `graphics.ts`,
-`backgroundMusic.ts`, `baseline.ts`, …).
+(`getCasparCGMappings`) + `casparcgLayers.ts` (`LedChannelLayers`,
+`BgChannelLayers`, `PgmChannelLayers`) + showstyle helpers.
 
-**Blueprints wipe paths:** the default is the per-file PGM overlay path (layers **205–208**);
-an experimental per-studio STING route-transition toggle is available for the classical
-`wipes/wipe` only. See [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md) and the
-[blueprints wipe implementation](https://github.com/tojemoc/sofie-demo-blueprints/blob/main/packages/blueprints/src/base/showstyle/helpers/pgmLook.ts).
+AMCP address = `{channel}-{layer}` (e.g. `PLAY 2-120 "clips/x"`). MEDIA paths are
+extensionless under Caspar `media-path`; HTML templates under `template-path`
+as `gfx/<name>`.
 
-Default channels: **1** LED · **2** PGM · **3** BG A (DoubleBox) · **4** BG B (Full) ·
-**5** CAM ingest. Studio may remap via `casparcg.hypercomposed.*`.
-
-AMCP address = `{channel}-{layer}` (e.g. `PLAY 2-205 "wipes/wipe"`). MEDIA paths are
-extensionless under Caspar `media-path`; HTML CG templates live under `template-path`.
+Two topologies exist — **vMix** (current: LED 1, look A 2, look B 3, clean GFX 4)
+and **legacy Caspar-switched** (LED 1, PGM 2, look A 3, look B 4, CAM ingest 5).
+Studio config `casparcg.hypercomposed.*` may remap channel numbers; layer numbers
+are stable.
 
 ---
 
-## Quick matrix (what lands where)
+## Channel 1 — LED (both modes)
 
-| Channel | Role | Consumer? | What lives here |
-|--------:|------|:---------:|-----------------|
-| **1** | LED wall | yes | `bg_loop`, pod, headline ILU, kolíska bed |
-| **2** | PGM air | yes | route layers 110/111, wipes 205–208 (or classical STING trial), countup, intro/outro, bed |
-| **3** | DoubleBox look | no | cam `route://5`, story ILU, `db_loop`, L3D, SYN/VT |
-| **4** | Full look | no | SYN/SJV/sport/weather, fullscreen cam, L3D |
-| **5** | Live CAM ingest | no | sole DeckLink / dshow |
+| Layer | Mapping id | Payload | When |
+|------:|------------|---------|------|
+| 80 | `casparcg_audio_bed` | `loops/bg_music_{a\|c}` LOOP + `assets/headline_sfx` hits | Baseline/segment beds; headline Take stings |
+| 100 | `casparcg_clip_player_preview` | — | Softie preview only |
+| 110 | `casparcg_clip_player1` | `loops/bg_loop` LOOP | Always (baseline) |
+| 112 | `casparcg_led_pod_headline` | `assets/pod_headline` | Headlines segment |
+| 114 | `casparcg_led_testframe` | `assets/testframe` | Pre-first-Take calibration |
+| 115 | `casparcg_ilu_player` | `clips/<headline>` / `clips/<zaver>` | Headline ILU; ilu-zaver avízo (PRELOAD lookahead so the Take is hot) |
+| 120–122 | `casparcg_graphics_ticker` / `_strap` / `_l3d` | — | Legacy; only `121 gfx/headline-fallback` chrome used |
+| 123 | `casparcg_graphics_logo` (LED) | — | Deprecated — logo is PGM 123 |
+| 200 | `casparcg_effects_player` | — | **Do not use** (legacy KEYER bug) |
+| 990 | `casparcg_debug_label_led` | — | Optional burn-in |
+
+**LED must not carry:** wipe, intro/outro, `l3d-*`, logo-bug, camera, story SYN.
 
 ```text
-CasparCG
-├── 1 LED  ──► consumers     durable: loops + headline stack + bed
-├── 2 PGM  ──► consumers     durable: route + overlays (wipe/countup/intro) + bed
-├── 3 BG A ──► (render only) durable look stack (DoubleBox)
-├── 4 BG B ──► (render only) durable look stack (Full)
-└── 5 CAM  ──► (render only) durable: live capture once
+990 debug      200 legacy   121 fallback chrome   115 ILU   114 testframe
+112 pod        110 bg_loop  100 preview            80 bed
 ```
 
 ---
 
-## Channel 1 — LED (allow-list)
+## Channels 2 / 3 — Look A / B (vMix)
 
-| Layer | Sofie mapping id | AMCP shape | Durable path / payload | When |
-|------:|------------------|------------|------------------------|------|
-| **80** | `casparcg_audio_bed` | `PLAY 1-80 "loops/bg_music_{a\|c}" LOOP` + `MIXER … VOLUME` | `loops/bg_music_a` (show bed), `loops/bg_music_c` (ŠPORT) | Baseline + segment beds; mirrored on PGM 80 |
-| **80** | *(same)* | `PLAY 1-80 "assets/headline_sfx"` | `assets/headline_sfx` | Each headline Take (hit, then bed resumes) |
-| **100** | `casparcg_clip_player_preview` | preview only | — | Softie preview; not on-air LED |
-| **110** | `casparcg_clip_player1` | `PLAY 1-110 "loops/bg_loop" LOOP` | `loops/bg_loop` | Always (baseline); tema FILL/CROP zoom on DoubleBox |
-| **112** | `casparcg_led_pod_headline` | `PLAY 1-112 "assets/pod_headline" LOOP` | `assets/pod_headline` (.png) | Headlines segment; cleared on first DoubleBox |
-| **115** | `casparcg_ilu_player` | `PLAY 1-115 "clips/<name>"` | `clips/HEADLINE*`, other headline ILU movs | Headline parts |
-| **120** | `casparcg_graphics_ticker` | legacy CG | — | **Unused** in hypercomposed SPRÁVY |
-| **121** | `casparcg_graphics_l3d` | legacy CG `gfx/headline-fallback` | chrome only | Optional LED ILU frame; **not** story L3D copy |
-| **122** | `casparcg_graphics_strap` | legacy | — | Unused |
-| **123** | `casparcg_graphics_logo` (LED) | deprecated | — | Logo is **PGM 123**, not LED |
-| **200** | `casparcg_effects_player` | legacy | — | **Do not use** for intro/wipe in hypercomposed |
-| **990** | `casparcg_debug_label_led` | debug burn-in | — | Optional |
+Render-only feeds into vMix look inputs. Same layers both channels; B uses `*_b`.
 
-**LED must not carry:** wipe, intro/outro, `l3d-*`, logo-bug/countup, camera, story SYN fullscreen.
+| Layer | Mapping id (A / B) | Payload | Notes |
+|------:|---------------------|---------|-------|
+| 110 | `casparcg_look_bg_loop` / `_b` | `loops/bg_loop` LOOP | Sticky underlay — never CLEAR (shows through transparent cam pane) |
+| 115 | `casparcg_pgm_camera` / `_b` | `route://` or EMPTY | Legacy cam producer slot; vMix composes cam on the look input |
+| 116 | `casparcg_pgm_ilu_player` / `_b` | `clips/<ilu>` (`doublebox-ilu`), `assets/bg_pocasie` | Story ILU / weather map — below db_loop |
+| 117 | `casparcg_look_calib_cam` (B) | `route://` | Pre-first-Take calibration CAM |
+| 118 | `casparcg_pgm_doublebox_loop` / `_b` | `loops/db_loop` LOOP | Phase-locked — see below |
+| 119 | `casparcg_look_calib_frame` (B) | `loops/db_loop` | Pre-first-Take calibration frame |
+| 120 | `casparcg_clip_player2` / `_b` | `clips/<syn/vt>` | **vMix clip layer** — above db_loop (opaque clip covers the frame where they overlap; DoubleBox clips are FILL-windowed inside it, so no overlap) |
+| 121 | `casparcg_graphics_pgm_l3d` / `_b` | `CG ADD 1 "gfx/l3d-*"` / `gfx/pocasie` | Story L3Ds |
+| 990 | `casparcg_debug_label_{a,b}` | — | Optional |
 
-### LED z-order
+Look compose layers use lookahead **NONE** — PRELOAD would replace on-air
+producers under the wipe.
 
 ```text
-990  debug (optional)
-200  legacy effects — unused
-121  headline-fallback chrome (optional)
-115  headline ILU mov          ◄── allow-list
-112  pod_headline              ◄── allow-list (headlines)
-110  bg_loop                   ◄── allow-list
-100  preview
- 80  audio bed / headline_sfx
+990 debug   121 L3D   120 SYN/VT clip   119 calib frame   118 db_loop
+117 calib cam   116 ILU/bg_pocasie   115 cam   110 bg_loop
 ```
 
----
+### db_loop phase-lock (vMix)
 
-## Channel 2 — PGM (route bus + overlays)
+`loops/db_loop` is never EMPTY/paused on 118 — only opacity changes:
 
-| Layer | Sofie mapping id | AMCP shape | Durable path / payload | When |
-|------:|------------------|------------|------------------------|------|
-| **80** | `casparcg_audio_bed_pgm` | `PLAY 2-80 "loops/bg_music_{a\|c}" LOOP` | same files as LED 80 | Mirror of LED kolíska |
-| **110** | `casparcg_pgm_route_a` | `PLAY 2-110 "route://3"` | Full-channel route A (never `route://N-0`) | Always live on default path; mixer visibility switches at air cut |
-| **111** | `casparcg_pgm_route` | `PLAY 2-111 "route://4"` | Full-channel route B; canonical route in STING trial | Default path keeps both routes live; trial re-PLAYS the active route here |
-| **123** | `casparcg_graphics_logo` | `PLAY 2-123 "assets/countup" LOOP` (+ MIX opacity) | `assets/countup` | First DoubleBox Take onward; hidden during headlines |
-| **205** | `casparcg_effects_player_pgm` | `LOADBG` / hot `PLAY 2-205` | `wipes/wipe` + `VF premultiply=inplace=1` | Classical overlay by default; bypassed for the STING trial |
-| **206** | `casparcg_effects_player_pgm_sjv` | `LOADBG` / hot `PLAY 2-206` | `wipes/wipe_sjv` | SJV entrance wipe |
-| **207** | `casparcg_effects_player_pgm_sport` | `LOADBG` / hot `PLAY 2-207` | `wipes/wipe_sport` | ŠPORT entrance wipe |
-| **208** | `casparcg_effects_player_pgm_pocasie` | `LOADBG` / hot `PLAY 2-208` | `wipes/wipe_pocasie` | Počasie entrance wipe |
-| **210** | `casparcg_intro_player_pgm` | `PLAY 2-210 "assets/intro_*"` / `"assets/outro"` | `assets/intro_michal`, `assets/outro`, … | Intro / znelka / outro — **never LED** |
-| **990** | `casparcg_debug_label_pgm` | debug burn-in | — | Optional |
+- DoubleBox part **claims** its slot at Take: `MIXER {ch}-118 OPACITY 1` at start 0.
+- Its other slot reveals at the **offAirMs** of the outgoing part (frame stays up
+  while that channel is off-air).
+- A non-frame look part re-asserts `OPACITY 0` on **its own** claimed slot
+  (`*_db_loop_hold` piece) so a stale reveal can't linger on air.
+- The **idle preview** (`armIdleLookPreviewForNext`, runtime `onSetAsNext`) pushes
+  `OPACITY 1` on the idle slot when the next part owns the frame — the off-air
+  channel is dressed through prep, and the Take diffs to zero AMCP.
 
-### Wipe mode setting and AMCP paths
+### Idle preview arm (runtime)
 
-`casparcg.hypercomposed.wipeUseStingRouteTransition` is in **Studio → CasparCG →
-Hypercomposed output channels** and defaults to **false**. It is experimental. With it off,
-blueprints keep both full-channel routes live on **PGM 110/111**, play the wipe on its
-per-file **205–208** EffectsPlayer layer (`LOADBG`, then hot `PLAY`), and switch route
-visibility with MIXER opacity/volume keyframes at the air cut. It does not send a delayed
-`PLAY 2-110 route://…`.
-
-With it on, every Take re-PLAYS the route on canonical **PGM 111**. Only the classical
-`wipes/wipe` uses a STING transition; its preload is a paused `LOADBG 2-111 "route://N"`
-with STING, followed at Take by a hot `PLAY 2-111 … STING`. The STING uses
-`wipes/wipe_mask` (B/W mask) and `wipes/wipe_pm` (premultiplied colour overlay), with
-`delay` in milliseconds. Themed wipes still use their **206–208** overlay layers and a
-plain route re-PLAY at the cut; hard cuts also re-PLAY plainly.
-
-### Why 205–208 are separate
-
-Sofie `LookaheadMode.PRELOAD` LOADBGs the **next** wipe onto the EffectsPlayer mapping.
-One shared layer meant PRELOAD of `wipe_sjv` **destroyed** LOADBG'd `wipe.mov`, so the
-next Take cold-played `PLAY 2-205 "wipes/wipe"` (Latency 22–34f) while air cut still
-assumed hot (~0–19f). One Sofie mapping + physical layer **per wipe file** keeps hot PLAY
-([blueprints #121](https://github.com/tojemoc/sofie-demo-blueprints/pull/121)).
-
-### PGM z-order
-
-```text
-990  debug (optional)
-210  intro / znelka / outro
-208  wipe_pocasie
-207  wipe_sport
-206  wipe_sjv
-205  wipe (classical)
-123  countup / logo-bug
-111  route B / STING-trial canonical route
-110  route A
- 80  audio bed
-```
-
-Legacy: do **not** put wipes on **200** (sticky `MIXER … KEYER` broken remastered alpha).
+A dormant `look_idle_preview` piece sits on every playable part. At `onSetAsNext`
+it arms `offAirMs + 1500` ms clones of the **next** part's real look media on the
+idle channel: clip/ILU `playing:false` + `volume:0`, the vMix INPUT clone, the
+db_loop reveal above, and a warm `gfx/pocasie` template with empty data (CEF
+preload so the Take is a CG UPDATE, not a cold re-ADD). Clears it would cover are
+moved from `offAirMs` to the same point; originals are stashed on the piece and
+restored on re-arm/re-next.
 
 ---
 
-## Channel 3 — BG A / DoubleBox look (render-only)
+## Channel 4 — PGM / clean GFX (vMix)
 
-Same layer numbers as channel 4. PGM hears this mix via `PLAY 2-110 "route://3"`.
+Feeds vMix `cleanGfxInput` keyed on Overlay 1. Only persistent overlays here —
+no routes, no wipes, no cam.
 
-| Layer | Sofie mapping id | AMCP shape | Durable path / payload | When |
-|------:|------------------|------------|------------------------|------|
-| **110** | `casparcg_clip_player2` | `PLAY` / `LOAD` + `RESUME` | `clips/<ILU/SYN/VT…>` | Story VT in left compose / pre-roll |
-| **115** | `casparcg_pgm_camera` | `PLAY 3-115 "route://5"` + FILL | live CAM sample | DoubleBox right window |
-| **116** | `casparcg_pgm_ilu_player` | `PLAY 3-116 "clips/…"` + FILL/CROP | DoubleBox left ILU | `doublebox-ilu` |
-| **118** | `casparcg_pgm_doublebox_loop` | `PLAY 3-118 "loops/db_loop" LOOP` | `loops/db_loop` (aka `dp_loop` on disk) | DoubleBox segment frame |
-| **121** | `casparcg_graphics_pgm_l3d` | `CG 3-121 ADD 1 "gfx/…" 1 {json}` | see HTML table below | Topic L3Ds on DoubleBox |
-| **990** | `casparcg_debug_label_doublebox` | debug | — | Optional |
-
-Look compose layers use Sofie lookahead **NONE** (PRELOAD would replace on-air producers under the wipe).
-
-### BG A z-order
-
-```text
-990  debug
-121  l3d-* HTML
-118  db_loop frame
-116  story ILU (left)
-115  camera route://5 (right)
-110  fullscreen / preloaded VT
-```
+| Layer | Mapping id | Payload | When |
+|------:|------------|---------|------|
+| 80 | `casparcg_audio_bed_pgm` | `loops/bg_music_{a\|c}` | PGM-side bed mirror |
+| 121 | `casparcg_graphics_headline` | `gfx/l3d-headline`, `gfx/l3d-mod` | Headline L3Ds + MOD nameplate (clean GFX) |
+| 122 | — | — | Declared (`PgmChannelLayers.GraphicsLowerThirdB`), never mapped |
+| 123 | `casparcg_graphics_logo` | `assets/countup` LOOP + opacity | Logo/countup — above everything |
+| 210 | `casparcg_intro_player_pgm` | `assets/intro_*`, `assets/outro` | Intro/znelka/outro — never LED |
+| 990 | `casparcg_debug_label_pgm` | — | Optional |
 
 ---
 
-## Channel 4 — BG B / Full look (render-only)
+## vMix objects (not Caspar)
 
-| Layer | Sofie mapping id | AMCP shape | Durable path / payload | When |
-|------:|------------------|------------|------------------------|------|
-| **110** | `casparcg_clip_player2_b` | `PLAY 4-110 "clips/…"` / `"loops/bg_loop"` | SYN clusters, SJV beds, fullscreen VT | Full-section story |
-| **115** | `casparcg_pgm_camera_b` | `PLAY 4-115 "route://5"` or `EMPTY` | fullscreen cam / cleared under SYN | Headlines cam, MOD, ZAVER |
-| **116** | `casparcg_pgm_ilu_player_b` | `PLAY 4-116 "assets/bg_pocasie"` / clips / `EMPTY` | weather map under HTML; story ILU | Počasie + Full ILU |
-| **118** | `casparcg_pgm_doublebox_loop_b` | usually `EMPTY` / clear | — | Must not leave stray `db_loop` on Full |
-| **121** | `casparcg_graphics_pgm_l3d_b` | `CG 4-121 ADD 1 "gfx/…" 1 {json}` | headline / syn / sjv / sport / pocasie / odporúčanie | Most Full L3Ds |
-| **990** | `casparcg_debug_label_full` | debug | — | Optional |
+vMix switching is TSR objects on `VMixLayers` mappings, not AMCP:
 
-### BG B z-order
+| Object | Purpose |
+|--------|---------|
+| `vmix_me_program` | One per Take — look input or raw `cameraInput` |
+| `vmix_me_preview` | Lead PREVIEW before stingers (Stinger1–4 ignore transition input) |
+| `vmix_look_input_{a,b}` | Look input layer config (cam layer 1, feed layer 2) |
+| `vmix_look_input_{a,b}_audio` | Look input mute/unmute to buses `M,A` |
+| `vmix_bed_{a,c}` / `*_audio` | Kolíska beds as vMix inputs |
+| `vmix_overlay_graphics` | Overlay 1 = clean GFX feed |
+| `vmix_mic_audio` | Moderator mic ramp-down during wipes/SYN |
+| `vmix_recording` | PGM record control |
 
-```text
-990  debug
-121  l3d-* / pocasie HTML
-118  (keep clear on Full)
-116  bg_pocasie / Full ILU
-115  camera route://5 or EMPTY
-110  SYN / loops / fullscreen VT
-```
+Stingers: `wipe`→Stinger1, `wipe_sjv`→Stinger2, `wipe_sport`→Stinger3,
+`wipe_pocasie`→Stinger4 (`vmixStingerForWipeFile`). Stinger transition
+`duration` = wipe duration; `wipe_pocasie` is capped at its real 2000 ms.
 
 ---
 
-## Channel 5 — CAM ingest (render-only)
+## Legacy channels (Caspar-switched mode only)
 
-| Layer | Sofie mapping id | AMCP shape | Durable path / payload | When |
-|------:|------------------|------------|------------------------|------|
-| **10** | `casparcg_pgm_camera_ingest` | `PLAY 5-10 DECKLINK DEVICE 1 FORMAT 1080P5000` (or `dshow://…`) | live input | Opened once; looks sample via `route://5` |
+### Channel 2 — PGM (legacy)
 
-Never `PLAY … DECKLINK` on ch3/4 — second open fails (`Could not enable video input`).
+| Layer | Mapping id | Payload |
+|------:|------------|---------|
+| 80 | `casparcg_audio_bed_pgm` | bed mirror |
+| 110 / 111 | `casparcg_pgm_route_a` / `casparcg_pgm_route` | `route://3` / `route://4` always-live, MIXER cut |
+| 123 | `casparcg_graphics_logo` | `assets/countup` |
+| 205–208 | `casparcg_effects_player_pgm{,_sjv,_sport,_pocasie}` | `wipes/wipe*` — one layer per file so PRELOAD can't evict |
+| 210 | `casparcg_intro_player_pgm` | `assets/intro_*` / `assets/outro` |
+
+### Channels 3 / 4 — looks (legacy)
+
+Same as vMix look stack except clip is layer **111** (`BgChannelLayers.ClipPlayer`,
+below CAM) not 120.
+
+### Channel 5 — CAM ingest (legacy)
+
+| Layer | Mapping id | Payload |
+|------:|------------|---------|
+| 10 | `casparcg_pgm_camera_ingest` | `PLAY 5-10 DECKLINK DEVICE 1 FORMAT 1080P5000` / `dshow://` |
+
+Opened once; looks sample via `PLAY {3|4}-115 route://5`. Never a second
+`PLAY … DECKLINK` — the dual-open fails `EnableVideoInput`.
 
 ---
 
-## Durable media inventory (PLAY paths)
-
-Caspar `media-path` layout (extensionless PLAY; Package Manager needs extension):
-
-### `loops/`
+## Durable media inventory
 
 | PLAY path | Channels / layers | Role |
 |-----------|-------------------|------|
-| `loops/bg_loop` | **1-110** (always); sometimes **4-110** under weather restore | LED baseline / Full bed |
-| `loops/db_loop` | **3-118** (DoubleBox) | Alpha DoubleBox frame |
-| `loops/bg_music_a` | **1-80** + **2-80** | Main kolíska bed |
-| `loops/bg_music_c` | **1-80** + **2-80** | ŠPORT bed |
+| `loops/bg_loop` | 1-110 always; look 110 sticky | Baseline underlay |
+| `loops/db_loop` | look 118 | DoubleBox alpha frame (aka `dp_loop` on disk) |
+| `loops/bg_music_{a,c}` | 1-80 (+ 2/4-80 legacy) | Kolíska beds (a=main, c=Šport) |
+| `wipes/wipe{,_sjv,_sport,_pocasie}` | legacy PGM 205–208 | Alpha wipe overlays (vMix uses stingers instead) |
+| `assets/pod_headline` | 1-112 | Headline pod underlay |
+| `assets/headline_sfx` | 1-80 / PGM 80 | Headline sting hit |
+| `assets/testframe` | 1-114 | Pre-first-Take calibration |
+| `assets/countup` | PGM 123 | Logo + countup |
+| `assets/intro_*` / `assets/outro` | PGM 210 | Znelka / outro overlays |
+| `assets/bg_pocasie` | look 116 | Weather map under `gfx/pocasie` |
+| `clips/*` | LED 115 (headline/zaver); look 116 (ILU); look 120/111 (SYN/VT) | Rundown-specific |
 
-### `wipes/` (PGM wipe media)
+## Durable HTML templates (CG `ADD 1 "gfx/<name>"`)
 
-| PLAY path | Layer | Mapping |
-|-----------|------:|---------|
-| `wipes/wipe` | **205** | `casparcg_effects_player_pgm` |
-| `wipes/wipe_sjv` | **206** | `casparcg_effects_player_pgm_sjv` |
-| `wipes/wipe_sport` | **207** | `casparcg_effects_player_pgm_sport` |
-| `wipes/wipe_pocasie` | **208** | `casparcg_effects_player_pgm_pocasie` |
-
-All use straight→premul `videoFilter` (`premultiply=inplace=1`) and mixer `keyer: false`.
-For the opt-in classical STING path, also provide `wipes/wipe_mask` (B/W luma matte) and
-`wipes/wipe_pm` (premultiplied colour overlay); these are the STING transition inputs.
-
-### `assets/`
-
-| PLAY path | Channels / layers | Role |
-|-----------|-------------------|------|
-| `assets/pod_headline` | **1-112** | LED headline pod underlay |
-| `assets/headline_sfx` | **1-80** + **2-80** | Headline sting hit |
-| `assets/countup` | **2-123** | Logo + seconds countup |
-| `assets/intro_*` (e.g. `intro_michal`) | **2-210** | Intro / znelka overlay |
-| `assets/outro` | **2-210** | Outro jingle overlay |
-| `assets/bg_pocasie` | **4-116** | Weather map under `gfx/pocasie` |
-
-### `clips/`
-
-| PLAY path | Channels / layers | Role |
-|-----------|-------------------|------|
-| `clips/HEADLINE*` / editorial ILU | **1-115** | LED headline ILU |
-| `clips/<story ILU>` | **3-116** / **4-116** | DoubleBox / Full story ILU |
-| `clips/<SYN/VT/cluster…>` | **3-110** / **4-110** | Editorial VT on active look |
-
-Filenames are rundown-specific; folders are durable.
+| Template | Look | Role |
+|----------|------|------|
+| `gfx/l3d-headline` | clean-GFX 4-121 (vMix) / PGM 2-121 (legacy) | Headline bars |
+| `gfx/l3d-tema` | look 121 | Topic line |
+| `gfx/l3d-syn` | look 121 | SYN name/role strap |
+| `gfx/l3d-mod` | clean-GFX 4-121 (vMix) / PGM 2-121 (legacy) | Presenter MOD nameplate |
+| `gfx/l3d-sjv` / `gfx/l3d-sport` | look 121 | SJV / Šport bars |
+| `gfx/l3d-odporucanie` | look 121 | End tip |
+| `gfx/pocasie` | look 121 | Weather HTML (warm-loads via idle preview) |
+| `gfx/headline-fallback` | LED 121 (optional) | ILU chrome only |
+| `gfx/outro` / `gfx/logo-bug` / `gfx/source` | PGM | Overlays |
 
 ---
 
-## Durable HTML templates (CG)
-
-`CG {3\|4}-121 ADD 1 "<template>" 1 {json}` — templates under `template-path/gfx/…`.
-
-| Template (`clipName`) | Typical look | Role |
-|----------------------|--------------|------|
-| `gfx/l3d-headline` | **4-121** | Opening headline bars |
-| `gfx/l3d-tema` | **3-121** | Topic line on DoubleBox |
-| `gfx/l3d-syn` | **4-121** | SYN name strap |
-| `gfx/l3d-mod` | **4-121** | Presenter MOD |
-| `gfx/l3d-predstavovak` | → plays as `gfx/l3d-syn` | Guest introduce alias |
-| `gfx/l3d-sjv` | **4-121** | Správy jednou vetou |
-| `gfx/l3d-sport` | **4-121** | ŠPORT kicker |
-| `gfx/l3d-odporucanie` | **4-121** | End tip / odporúčanie |
-| `gfx/pocasie` | **4-121** | Weather HTML over `bg_pocasie` |
-| `gfx/headline-fallback` | **1-121** (optional) | LED ILU chrome only |
-
-Story L3Ds are **never** on LED as the primary copy path — watch **PGM ch2** (`route://`).
-
----
-
-## Sofie mapping id → Caspar address (defaults)
-
-| Mapping id | Ch | Layer |
-|------------|---:|------:|
-| `casparcg_audio_bed` | 1 | 80 |
-| `casparcg_clip_player_preview` | 1 | 100 |
-| `casparcg_clip_player1` | 1 | 110 |
-| `casparcg_led_pod_headline` | 1 | 112 |
-| `casparcg_ilu_player` | 1 | 115 |
-| `casparcg_graphics_ticker` | 1 | 120 |
-| `casparcg_graphics_l3d` | 1 | 121 |
-| `casparcg_graphics_strap` | 1 | 122 |
-| `casparcg_effects_player` | 1 | 200 |
-| `casparcg_audio_bed_pgm` | 2 | 80 |
-| `casparcg_pgm_route_a` | 2 | 110 |
-| `casparcg_pgm_route` | 2 | 111 |
-| `casparcg_graphics_logo` | 2 | 123 |
-| `casparcg_effects_player_pgm` | 2 | 205 |
-| `casparcg_effects_player_pgm_sjv` | 2 | 206 |
-| `casparcg_effects_player_pgm_sport` | 2 | 207 |
-| `casparcg_effects_player_pgm_pocasie` | 2 | 208 |
-| `casparcg_intro_player_pgm` | 2 | 210 |
-| `casparcg_clip_player2` | 3 | 110 |
-| `casparcg_pgm_camera` | 3 | 115 |
-| `casparcg_pgm_ilu_player` | 3 | 116 |
-| `casparcg_pgm_doublebox_loop` | 3 | 118 |
-| `casparcg_graphics_pgm_l3d` | 3 | 121 |
-| `casparcg_clip_player2_b` | 4 | 110 |
-| `casparcg_pgm_camera_b` | 4 | 115 |
-| `casparcg_pgm_ilu_player_b` | 4 | 116 |
-| `casparcg_pgm_doublebox_loop_b` | 4 | 118 |
-| `casparcg_graphics_pgm_l3d_b` | 4 | 121 |
-| `casparcg_pgm_camera_ingest` | 5 | 10 |
-| `casparcg_debug_label_*` | 1–5 | 990 |
-
----
-
-## RE piece → durable Caspar target
-
-| RE piece type | Caspar |
-|---------------|--------|
-| `bg-loop` | **1-110** `loops/bg_loop` |
-| `bg-music` | **1-80** + **2-80** `loops/bg_music_*` |
-| `headline` | **1-115** `clips/…` (+ optional **1-112** pod) |
-| `camera` | look **3/4-115** = `route://5` (ingest **5-10**) |
-| `doublebox-ilu` | look **3-116** + **3-118** `db_loop` |
-| `video` / SYN | look **3/4-110** |
-| `l3d-*` / `weather` | look **3/4-121** CG (+ weather **4-116** `bg_pocasie`) |
-| `logo-bug` | **2-123** (countup owns production path) |
-| `wipe` | **2-205…208** by file + delayed **2-110** `route://` |
-| `intro` | **2-210** `assets/intro_*` |
-| `outro` | **2-210** `assets/outro` |
-| `ilu-zaver` | LED ILU + Full look compose (see show flow) |
-
----
-
-## Example AMCP from a live take (default OVERLAY path)
+## Example vMix Take (DoubleBox on look B)
 
 ```text
-LOADBG 2-205 "wipes/wipe" … VF "premultiply=inplace=1"     ← PRELOAD (hot)
-PLAY   3-116 "clips/…" … FILL …                          ← look A ILU
-PLAY   3-118 "loops/db_loop" LOOP                        ← frame
-PLAY   3-115 "route://5" … FILL …                        ← cam
-PLAY   2-205                                             ← hot PLAY (no filename)
-MIXER  2-110 OPACITY … VOLUME …                           ← route A visibility at air cut
-MIXER  2-111 OPACITY … VOLUME …                           ← route B visibility at air cut
+PLAY   3-118 "loops/db_loop" LOOP                 ← claimed slot, MIXER OPACITY 1
+LOADBG 3-120 "clips/syn_x"  (playing:false)       ← idle preview armed earlier
 CG     3-121 ADD 1 "gfx/l3d-tema" 1 {…}
+(vmix) PROGRAM input 3 Stinger1 + lead PREVIEW    ← stinger airs input 3
+MIXER  2-118 OPACITY 1                            ← other slot revealed at offAir
 ```
 
-## STING variant (opt-in classical wipe)
-
-With `wipeUseStingRouteTransition: true`, the classical wipe is preloaded on the canonical
-route layer and hot-played at Take. The actual route remains a full-channel `route://N`
-(never `route://N-0`); Caspar receives STING transition arguments using the separate mask
-and premultiplied overlay assets:
-
-```text
-LOADBG 2-111 "route://4" … STING …                         ← paused PRELOAD, mask wipes/wipe_mask
-                                                           ← overlay wipes/wipe_pm; delay is air-cut ms
-PLAY   2-111 … STING …                                     ← hot route re-PLAY at Take
-```
-
-Under this setting themed wipes remain overlays on 206–208; see the mode note above for the
-single-canonical-route behavior that also applies to those Takes.
-
-Healthy hot wipe: `PLAY 2-205` **without** a filename after LOADBG, Caspar
-`Latency: 0`. Cold failure mode: `PLAY 2-205 "wipes/wipe"` with Latency 22–34 after
-another wipe file destroyed the LOADBG on the same layer.
-
----
+No `wipes/` PLAYs, no `route://` PGM layers — vMix owns the transition.
 
 ## Related
 
 | Doc | Role |
 |-----|------|
-| [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md) | LED vs PGM policy, ops `caspar.config` |
-| [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md) | FILL/CROP numbers, wipe checklist |
-| [`SPRAVY-SHOW-FLOW.md`](./SPRAVY-SHOW-FLOW.md) | Show spine / which wipe when |
-| [`adr/0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md) | Why BG 3/4 exist |
-| [`adr/0003-cam-ingest-channel.md`](../adr/0003-cam-ingest-channel.md) | Why CAM is ch5 |
-| [sofie-demo-blueprints #121](https://github.com/tojemoc/sofie-demo-blueprints/pull/121) | Code: wipe layers 205–208 + hard-cut overlap |
+| [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md) | Topology + ops `caspar.config` |
+| [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md) | Compose geometry, cam, phase-lock detail |
+| [`SPRAVY-SHOW-FLOW.md`](./SPRAVY-SHOW-FLOW.md) | Show spine |

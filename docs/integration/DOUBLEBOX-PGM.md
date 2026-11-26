@@ -1,287 +1,166 @@
-# DoubleBox PGM + LED loop + UVC camera
+# DoubleBox compose + look switching
 
-**Which source → which Caspar channel:** see the canonical
-[`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md) first. **Every durable AMCP address**
-(wipes, loops, assets, CG): [`CASPAR-DURABLE-LAYER-MAP.md`](./CASPAR-DURABLE-LAYER-MAP.md).
-This page is the DoubleBox compose / FILL / wipe detail.
-
-Target look for **thematic DoubleBox** on a **BG look channel** (3 or 4), routed to
-PGM (Caspar channel 2) via `route://`, matching the production still (ILU left / CAM
-right / tema+bug bar / `db_loop` frame with bg baked in):
+Which source → which channel: [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md).
+Every durable layer: [`CASPAR-DURABLE-LAYER-MAP.md`](./CASPAR-DURABLE-LAYER-MAP.md).
+This page is the DoubleBox compose, the A/B slot mechanics, and camera wiring.
 
 ```text
+DoubleBox look (claimed slot's channel)
 ┌────────────────────────────────────────────────────────────┐
-│  db_loop frame (bg baked in; LED still has bg_loop)        │
+│  db_loop frame (118, alpha cutouts; bg baked in)           │
 │   ┌──────────────────────────┐  ┌────────────┐             │
-│   │  ILU 16:9 (layer 116)    │  │  CAM1      │             │
-│   │  (above CAM overhang)    │  │  (115 UVC) │             │
-│   └──────────────────────────┘  └────────────┘             │
-│  ┌────────────────────────────────────┬──────────────────┐ │
-│  │  thematic title (l3d-syn / l3d-tema) │  360° sekúnd bug │ │
-│  └────────────────────────────────────┴──────────────────┘ │
+│   │  ILU 16:9 (layer 116)    │  │  CAM pane  │             │
+│   │                          │  │  (vMix DVE │             │
+│   └──────────────────────────┘  │  layer 1)  │             │
+│  ┌───────────────────────────────┴──────────┐              │
+│  │  topic L3D (121)            360° bug     │              │
+│  └──────────────────────────────────────────┘              │
 └────────────────────────────────────────────────────────────┘
 ```
 
-**LED (Caspar channel 1)** production rule: **headline ILU + `loops/bg_loop` only**.
-The loop is blueprint **baseline** on layer 110 (not a RE piece) and must never be
-displaced by VT/VO/SYN — those play on **BG look** channels (3/4). `l3d-syn` /
-`l3d-mod` / `l3d-tema` / headline bars are on the **look**, then routed to PGM. No intro /
-znelka on LED. Intro overlay plays on **PGM layer 210** (above the route on 110) — see
-[`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md)
-and [`handoffs/blueprints-baseline-bg-loop.md`](./handoffs/blueprints-baseline-bg-loop.md).
+**LED rule:** headline ILU + `loops/bg_loop` only (baseline layer 110, plus pod /
+testframe / headline SFX). No `l3d-*`, no intro, no db_loop, no story VT on LED.
 
-**Story ILU on look 116:** mapping
-`casparcg_pgm_ilu_player` → **BG channel 3/4 layer 116** (piece type `doublebox-ilu`)
-sits **above** CAM (115) so the left window covers CAM overhang without cropping the camera.
-Headline ILU remains on LED `casparcg_ilu_player` (1-115). By default PGM keeps both look
-routes live (`2-110 route://3`, `2-111 route://4`) and switches their mixer visibility;
-the STING trial re-PLAYS the active full-channel route on `2-111`. Routes must never be
-`route://N-0`.
+---
 
-**Camera / UVC:** studio `casparcg.hypercomposed.pgmCameraProducer` (e.g.
-`dshow://video=OBS Virtual Camera`, or `DECKLINK DEVICE 1 FORMAT 1080p5000` via TSR **INPUT**)
-opens **once** on the CAM ingest helper (`camIngestChannel`, default Caspar **5**,
-mapping `casparcg_pgm_camera_ingest`). Look layers sample it:
+## A/B slot ping-pong (vMix)
 
-- **Headlines / post-intro MOD** → look **{3\|4}-115** = MEDIA `route://5` **fullscreen** FILL
-- **DoubleBox** → look **{3\|4}-115** = MEDIA `route://5` under ILU (116) and `db_loop` (118),
-  ~**80%** width, right edge stuck (`FILL 0.2 0.1 0.8 0.8`)
+Two identical look channels (A=ch2, B=ch3) feed vMix look inputs. The generated
+`LookSlotSequence` gives every look-bearing Take the **idle** slot — the
+opposite of the last claim — so the incoming look always LOADBGs off-air before
+the vMix stinger airs it. Non-look parts (Remote / Titles / DVE) `peek()` the
+last slot as a stable underlay.
 
-Looks never `PLAY … DECKLINK` / `dshow://` on 3-115 or 4-115 — that was the dual-open
-`EnableVideoInput` failure. See ADR [`0003-cam-ingest-channel.md`](../adr/0003-cam-ingest-channel.md).
-If Caspar logs still show `PLAY … "DECKLINK DEVICE …" SEEK … CLEAR_ON_404` → **404 File not found**, the timeline reaching playout is still **MEDIA** (legacy bundle or cached rundown). Fix: upload demo blueprints with DeckLink → INPUT (`cursor/pgm-camera-config-driven-a90d`), **Reset Rundown**, and deploy **playout-gateway** with DeckLink MEDIA coercion (`sofie-core` `cursor/decklink-media-coerce-a90d`). Correct AMCP is unquoted `PLAY 4-115 DECKLINK DEVICE 1 FORMAT 1080p5000` (no clip quotes, no SEEK/CLEAR_ON_404 on live DeckLink).
+Generation-time slot claims remap the `*_b` layers; runtime arming sees the real
+next part (`onSetAsNext`) and also handles cross-segment / re-next cases.
 
-**Rolling back blueprints will not stop DeckLink.** The producer string lives in **Studio blueprint config** in Core’s DB (`casparcg.hypercomposed.pgmCameraProducer`), not in the bundle. Yesterday’s BPs still do `file: producer` as MEDIA — if that field is still `DECKLINK DEVICE 1 FORMAT 1080p5000`, Caspar keeps getting quoted DeckLink. Unfuck:
+## db_loop phase-lock
 
-1. WebUI → **Settings → Studio** → find `pgmCameraProducer` → set to `dshow://video=OBS Virtual Camera` (or clear to disable CAM).
-2. Save. (Re-upload / Apply Config does **not** overwrite this field from `demo.ts`.)
-3. On the active playlist: **Reset Rundown** (regenerates baseline + camera pieces). Deactivate / re-activate if Reset alone is not enough.
-4. Confirm Caspar no longer shows `DECKLINK` in `PLAY` (expect `dshow://…` or no camera PLAY).
+`loops/db_loop` (layer 118) is only ever opacity-switched, never EMPTY/paused:
 
+| Situation | Object |
+|-----------|--------|
+| DoubleBox part, claimed slot | `MIXER …-118 OPACITY 1` at Take (start 0) |
+| DoubleBox part, other slot | `OPACITY 1` at the outgoing part's offAirMs — frame stays dressed while off-air |
+| Non-frame look part, claimed slot | `*_db_loop_hold` piece, `OPACITY 0` — stale reveals can't linger on air |
+| Next part owns frame, current part armed | idle-preview `OPACITY 1` on the idle slot at `offAirMs + 1500` |
 
-### DeckLink producer notes (DEVICE / 404 / EnableVideoInput)
+`db_loop` is `OutOnSegmentEnd` on DoubleBox parts only, so DB→SYN→DB inside a
+tema keeps the frame; it dies with the segment — SJV / Šport / Počasie /
+ZAVER+AVIZO never keep a stray frame. Production file may be `dp_loop.mov` —
+place/symlink as `loops/db_loop`.
 
-Keep the studio string as Caspar docs show it, e.g. `DECKLINK DEVICE 1 FORMAT 1080p5000`.
-Demo blueprints (≥ sofie-demo-blueprints **#89**) parse that into TSR **INPUT** /
-PlayDecklink on the **ingest** channel only.
+**ZAVER+AVIZO is never a DoubleBox.** An active `gfx/ilu-zaver` object vetoes
+`isDoubleBoxLook` (stray `doublebox` rawType / `doublebox-ilu` objects cannot
+resurrect the shell) and `parseGraphicsFromObjects` drops the stray object.
 
-**AMCP must include `DEVICE`.** Upstream `casparcg-connection` serialized
-`DECKLINK <n>` without the keyword; on some DeckLink hardware that form fails
-`EnableVideoInput` while `DECKLINK DEVICE <n>` works. sofie-core applies a Yarn
-patch so playout emits:
+## Idle preview arm (off-air channel prep)
+
+`armIdleLookPreviewForNext` runs at `onSetAsNext` on the current part's dormant
+`look_idle_preview` piece and pushes, at `offAirMs + 1500` ms on the idle
+channel:
+
+1. `playing:false`, `volume:0` clones of the next part's clip/ILU media
+   (media-identical to the Take object → hot `RESUME`, no producer swap).
+2. The vMix look-INPUT clone (camera pre-positioned off-air).
+3. `loops/db_loop` `OPACITY 1` when the next part owns the frame.
+4. `gfx/pocasie` template with **empty data** — CEF warm-load (~5 s cold);
+   the Take then CG UPDATEs into the real template instead of re-ADD.
+5. A mute-then-unmute pair on the look input's audio bridge so lingering clip
+   audio can't leak onto the program bus during the delay.
+
+Clears the arm would cover are moved from `offAirMs` to the same delayed point;
+originals stash on the piece and restore on re-arm / re-next / cancel.
+
+## Pocasie warm-load + replay
+
+`gfx/pocasie` is the slowest template (~5 s CEF + cascade). Mechanics:
+
+- Preview arm puts the template on the idle channel with `data: {}`.
+- The Take's own template object enters at `start 0` (keeps the armed template
+  alive — a later start would CG STOP and cold re-ADD).
+- A `_replay` object at `wipeDurationMs` (`wipe_pocasie` = real 2000 ms) CG
+  UPDATEs with the data — the cascade unrolls **after the wipe ends**, on air.
+- Same-slot weather→weather Takes keep the template fully live (no re-warm).
+
+## FILL geometry (tune to graphics)
+
+| Region | Layer | FILL `x y xScale yScale` |
+|--------|------:|---------------------------|
+| Story ILU (DoubleBox left) | look 116 | `0.0219 0.0769 0.6802 0.6824` |
+| CAM DoubleBox pane | vMix look-input layer 1 (DVE) | ~80% width, right edge stuck (vMix-side config) |
+| CAM fullscreen (headlines/MOD/ZAVER) | vMix look-input layer 1 | full frame |
+| `db_loop` frame | look 118 | full frame alpha |
+| Headline ILU (LED) | LED 115 | `0.08 0.15 0.62 0.73` (bypass OFF); `0 0 1 1` (bypass ON) |
+
+Soft compositing needs no luma matte: `db_loop` full-frame alpha + MIXER FILL /
+vMix DVE crop for the windows.
+
+---
+
+## Camera wiring
+
+### vMix (current)
+
+The moderator camera is a vMix input (`vmixProgram.cameraInput`), placed on
+layer 1 of the active look input — fullscreen or the DoubleBox right window via
+vMix DVE. Optional `lookAFeedInput`/`lookBFeedInput` put the Caspar look feed on
+layer 2 above the camera (feed mode). **No Caspar ingest channel, no
+`route://`, no DeckLink/dshow in AMCP.**
+
+### Legacy Caspar-switched
+
+`casparcg.hypercomposed.pgmCameraProducer` (e.g. `dshow://video=OBS Virtual
+Camera` or `DECKLINK DEVICE 1 FORMAT 1080p5000`) opens once on CAM ingest ch5
+(`casparcg_pgm_camera_ingest` layer 10). Looks sample it:
 
 ```text
-PLAY 5-10 DECKLINK DEVICE 1 FORMAT 1080p5000
-PLAY 3-115 route://5
-PLAY 4-115 route://5
+PLAY 5-10 DECKLINK DEVICE 1 FORMAT 1080p5000     ← must include DEVICE
+PLAY 3-115 route://5                             ← looks only ever route
+MIXER 3-115 FILL 0.2 0.1 0.8 0.8                 ← DoubleBox pane
 ```
-
-(before the DEVICE patch: `PLAY 5-10 DECKLINK 1 FORMAT …`). Pick up the DEVICE fix by
-rebuilding/restarting **playout-gateway** — **not** by re-uploading blueprints alone.
-Pick up the ch5 route fix by uploading blueprints with the ingest helper + **Reset Rundown**.
 
 | Symptom | Cause | Action |
-|---------|--------|--------|
-| `404 PLAY FAILED` / File not found for a DeckLink string | Bundle still treats producer as **MEDIA** (quoted clip path) | Upload blueprints with #89+, Apply studio config, **Reset Rundown** |
-| AMCP shows `DECKLINK 1` **without** `DEVICE` | playout-gateway still on unpatched `casparcg-connection` | Upgrade/rebuild sofie-core playout-gateway with the DeckLink DEVICE patch; restart gateway |
-| `PLAY 3-115` / `4-115 DECKLINK …` still appears | Old blueprint bundle without CAM ingest | Upload ch5-ingest blueprints; **Reset Rundown** |
-| `400` on `5-*` or `route://5` | `caspar.config` has fewer than 5 channels | Add render-only channel 5; restart Caspar |
-| `DeckLink … Could not enable video input` with only ingest open | BMD input enable failed after parse | Device not also a Caspar **consumer**; Desktop Video connector mode; live signal |
-| ffmpeg `rtbufsize` / buffer-too-full | **dshow://** path, not DeckLink | See [`CASPAR-FFMPEG-BUFFERS.md`](./CASPAR-FFMPEG-BUFFERS.md) |
+|---------|-------|--------|
+| `404 PLAY FAILED` for a DeckLink string | Old bundle treats it as MEDIA | Upload blueprints ≥#89, Apply config, **Reset Rundown** |
+| `DECKLINK 1` without `DEVICE` | Unpatched `casparcg-connection` | Rebuild playout-gateway (Yarn patch), restart |
+| `Could not enable video input` | Second `PLAY … DECKLINK` on a look channel | Route via ch5 only |
+| `400` on `5-*` | `caspar.config` <5 channels | Add render-only ch5, restart Caspar |
+| Producer string edit won't stick | It's in studio config DB, not the bundle | Edit in WebUI Studio settings, save, Reset Rundown |
 
-`db_loop` is **OutOnSegmentEnd** on DoubleBox Takes only (not Intro) so DB→SYN→DB inside
-a tema keeps the frame, then the piece dies with the segment — SJV / ŠPORT / Počasie /
-ZAVER+AVIZO never keep a stray DoubleBox on ch3. Production file may be named
-`dp_loop.mov` — place/symlink as `loops/db_loop`.
+DShow capture drops (`real-time buffer too full`): patch Caspar `rtbufsize=100M`
+or drop OBS Virtual Camera to 720p — see
+[`CASPAR-FFMPEG-BUFFERS.md`](./CASPAR-FFMPEG-BUFFERS.md).
 
-**Story ILU piece:** use piece type `doublebox-ilu` (part preset `doublebox`) — not
-`headline`. `doublebox-ilu` plays the clip on **look {3|4}-116** with DoubleBox left FILL
-+ center cover-crop and **no** `gfx/headline-fallback` chrome. Headline ILU stays on
-LED for the opening block only.
+---
 
-## Getting CAM into Caspar (OBS Virtual Camera → UVC)
+## Wipes — same files, different semantics
 
-Yes. Caspar can PLAY a webcam/UVC device as a media producer on the PGM channel.
+| Mode | Mechanism |
+|------|-----------|
+| vMix | vMix stingers: `wipe`→Stinger1, `wipe_sjv`→2, `wipe_sport`→3, `wipe_pocasie`→4. Lead PREVIEW selects the incoming look first (stingers air whatever sits in Preview). No Caspar wipe PLAYs. |
+| Legacy default | Alpha overlay per file on PGM 205–208 (`LOADBG` then hot `PLAY`); routes 110/111 cut via MIXER opacity/volume keyframes |
+| Legacy STING trial | `wipeUseStingRouteTransition` — classical `wipes/wipe` STINGs on route 111 with `wipe_mask`+`wipe_pm` |
 
-### Recommended path (clean CAM into the right box)
+Wipe labels record direction (`ILU TO SYN`, `Double Box`, `Spravy JV`, …) — the
+file may still be the default `wipe`. Zero/empty RE duration defaults ~2.5 s;
+`wipe_pocasie` is capped at its real 2000 ms.
 
-1. OBS (or any cam app) exposes **OBS Virtual Camera** (or another UVC device) with the
-   moderator feed (no need to bake the LED into OBS if Caspar does DoubleBox).
-2. On the Caspar host (Windows), confirm the device name, e.g. in PowerShell /
-   GraphEdit, or try AMCP:
-
-```text
-PLAY 5-10 "dshow://video=OBS Virtual Camera"
-PLAY 3-115 route://5
-MIXER 3-115 FILL 0.2 0.1 0.8 0.8
-```
-
-(Use channel **4** for look B: `PLAY 4-115 route://5`. Production never opens dshow on 3/4.)
-
-3. Sofie studio config stores that producer string; baseline opens it on **ch5 ingest**,
-   and camera pieces PLAY `route://5` on look layer 115 with the DoubleBox FILL.
-Device string is machine-local — set it in studio config, do not hardcode in
-rundowns.
-
-**DShow buffer drops:** If Caspar logs `real-time buffer … too full (102% of size:
-3041280 [rtbufsize parameter])`, FFmpeg’s default ~3 MiB capture buffer is too small
-for 1080p virtual camera under compositing load. Raising `<consumers><screen><buffer-depth>`
-in `caspar.config` only smooths **output** — it does not fix capture drops. Patch the
-Caspar server to set `rtbufsize=100M` for `dshow://` inputs, or lower OBS Virtual
-Camera to 720p. See [`CASPAR-FFMPEG-BUFFERS.md`](./CASPAR-FFMPEG-BUFFERS.md).
-
-### OBS “finished look” shortcut
-
-If you want a quick preview before Sofie owns the full compose:
-
-1. Caspar ch1 Screen/NDI → OBS (LED = `bg_loop`).
-2. OBS stacks mod footage on top → **Start Virtual Camera**.
-3. Caspar ch2 PLAYs that UVC as a **base** layer; Sofie still overlays PGM wipe /
-   tema / ILU as they land.
-
-Prefer the recommended path for production; the shortcut is fine for lighting/look
-checks.
-
-### FILL geometry (starting point — tune to graphics)
-
-Story compose layers sit on **BG look channels 3/4**; PGM (ch2) only routes + overlays.
-
-| Region | Channel · layer | FILL `x y xScale yScale` |
-|--------|-----------------|---------------------------|
-| Story VT / weather | **BG 3/4** · 110 | full frame (no FILL) — **not** baseline `bg_loop` |
-| CAM1 UVC (DoubleBox) | **BG 3/4** · 115 | `route://5` + FILL `0.2 0.1 0.8 0.8` |
-| Story ILU | **BG 3/4** · 116 | `0.0219 0.0769 0.6802 0.6824` (above CAM) |
-| CAM1 UVC (headlines/MOD) | **BG 3/4** · 115 | `route://5` + FILL `0 0 1 1` fullscreen |
-| Live CAM ingest | **CAM 5** · 10 | sole `DECKLINK` / `dshow://` |
-| `db_loop` frame | **BG 3/4** · 118 | full frame alpha cutouts |
-| Topic L3D | **BG 3/4** · 121 | HTML templates (`l3d-syn`, `l3d-tema`, …) |
-| Logo / countup | **PGM 2** · 123 | above route |
-| Story wipe | **PGM 2** · 205–208 | one layer per wipe file (`wipe`/`wipe_sjv`/`wipe_sport`/`wipe_pocasie`) + delayed `route://` cut — not 200 (sticky KEYER) |
-| Intro / outro | **PGM 2** · 210 | full frame — above route; **PGM only** |
-
-Tune FILL against the real HTML chrome; values above match the attached still
-approximately.
-
-**Cutouts / DoubleBox frame media:** you do **not** need a black/white matte. Soft
-compositing uses `db_loop` full-frame on look **118** + MIXER FILL for ILU/CAM windows
-(115/116). If design needs a branded frame (borders/shadows between windows), use a
-**full-frame PNG or ProRes/Hap alpha `.mov`** with transparent holes — not a luma mask
-(this stack is not wired for luma key). That chrome is `db_loop` on look 118 (or bake
-it into HTML); do not put a background loop on look clip 110.
-
-## Wipes (same media, different semantics)
-
-Story-block transitions use alpha wipe files under Caspar media, default
-`wipes/wipe` (plus `wipe_sjv` / `wipe_sport` / `wipe_pocasie` where labelled).
-
-**Shipped** (blueprints [#77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77)+;
-wipe layers [#121](https://github.com/tojemoc/sofie-demo-blueprints/pull/121)): looks
-pre-build on **BG channels 3/4**. By default both full-channel PGM routes stay live on
-layers **110/111**; blueprints change their MIXER visibility at the air cut while the
-alpha wipe overlays on **PGM 205–208** (one mapping / physical layer per file: `wipe` →
-**205**, `_sjv` → **206**, `_sport` → **207**, `_pocasie` → **208**). Logo stays on
-**PGM 123** above the route. Empty/0 RE wipe duration still defaults to ~2.5s. See
-[`adr/0002-wipe-prebuild-bg-channels.md`](../adr/0002-wipe-prebuild-bg-channels.md),
-[`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md), and
-[`CASPAR-DURABLE-LAYER-MAP.md`](./CASPAR-DURABLE-LAYER-MAP.md).
-
-**Toggle:** `casparcg.hypercomposed.wipeUseStingRouteTransition` is in Studio →
-**CasparCG → Hypercomposed output channels**; its schema default is **false**. It is an
-experimental, per-studio trial. With the default OFF, all wipe files use the per-file
-overlay path: a PRELOAD `LOADBG` then hot `PLAY 2-205` / `2-206` / … (straight-alpha mixer,
-`keyer: false`), while route visibility switches with MIXER keyframes. Layer **200** is
-retired — its leftover `MIXER KEYER` luma-keyed remastered `wipe.mov`. Separate 205–208
-layers prevent one file's PRELOAD from evicting another's.
-
-With the flag ON, every Take re-PLAYS the full-channel route on canonical PGM layer **111**.
-Only classical `wipes/wipe` uses STING: Caspar preloads `route://N` with STING and hot-PLAYS
-that route at Take, with `delay` set in air-cut **milliseconds**. Supply the separate
-`wipes/wipe_mask` B/W luma matte and `wipes/wipe_pm` premultiplied colour overlay. Themed
-`wipe_sjv` / `_sport` / `_pocasie` have no stinger, so they still use their 206–208 overlay
-and a plain route re-PLAY at the cut; hard cuts also re-PLAY plainly. STING is therefore a
-supported opt-in variant, not obsolete, but remains an experimental trial.
-
-**If wipes never appear:** (1) watch **Caspar channel 2**, not LED; (2) confirm
-`PLAY 2-{205|206|207|208}` on the layer assigned to that wipe file and the route change:
-default mode uses MIXER visibility keyframes on the two always-live routes; STING-trial
-mode uses route layer 111 (STING for classical `wipe`, plain re-PLAY for themed wipes).
-Routes must be full-channel `route://N`, never `route://N-0`.
-(3) `caspar.config` has **≥5 channels when CAM ingest is enabled** (channel 5); setups
-without CAM ingest need **≥4 channels** for LED, PGM, and BG A/B; (4) re-upload blueprints + Apply
-studio config.
-
-The **label** records direction (file may still be the default wipe):
-
-| Label | Meaning |
-|-------|---------|
-| `BLANK` | No wipe (HOLD / cold open) |
-| `Headline 1..3` | Into headline ILUs |
-| `Intro` | Into intro overlay |
-| `Double Box` | Into thematic DoubleBox (ILU+CAM+tema) |
-| `ILU TO SYN` / `SYN TO ILU` | DoubleBox ↔ full SYN videoclip |
-| `ILU TO SYN CLUSTER` | Into a SYN cluster after DoubleBox |
-| `SYN TO ILU TEMA` / `ILU TO ILU TEMA` | Into DoubleBox / tema-framed ILU |
-| `SYN TO SYN` | SYN → SYN |
-| `Spravy JV` / `Spravy JV NEXT` | SJV block |
-| `Sport` / `Sport NEXT` | Šport block |
-| `Pocasie` / `Zaver` / `OUTRO` | Closing sequence |
-
-Smoke rundown pieces use piece type `wipe` with `fileName: wipes/wipe` (or a
-labelled variant) and `transition: <label>` for operators.
-
-## Blueprint / mapping notes
-
-| Sofie mapping id | Channel | Layer | Role |
-|------------------|---------|-------|------|
-| `casparcg_clip_player1` | LED 1 | 110 | LED `bg_loop` |
-| `casparcg_clip_player2` / `_b` | BG 3 / 4 | 110 | Story VT / weather on look (no baseline `bg_loop`) |
-| `casparcg_pgm_route_a` / `casparcg_pgm_route` | PGM 2 | 110/111 | Default dual live routes + mixer cut; trial uses canonical 111 re-PLAY |
-| `casparcg_ilu_player` | LED 1 | 115 | Headline ILU MEDIA (+ `gfx/headline-fallback`) |
-| `casparcg_pgm_camera` / `_b` | BG 3 / 4 | 115 | CAM via MEDIA `route://5` + FILL |
-| `casparcg_pgm_camera_ingest` | CAM 5 | 10 | Sole DeckLink / dshow |
-| `casparcg_pgm_ilu_player` / `_b` | BG 3 / 4 | 116 | Thematic DoubleBox left ILU (`doublebox-ilu`) |
-| `casparcg_intro_player_pgm` | PGM 2 | 210 | Intro / znelka — **never LED** |
-| `casparcg_graphics_pgm_l3d` / `_b` | BG 3 / 4 | 121 | `l3d-syn` / `l3d-odporucanie` / `l3d-tema` / headline bars |
-| `casparcg_graphics_logo` | PGM 2 | 123 | `gfx/logo-bug` / countup — **above route; not on LED** |
-| `casparcg_effects_player_pgm` (+ `_sjv` / `_sport` / `_pocasie`) | PGM 2 | 205–208 | One Sofie mapping per wipe file (PRELOAD cannot evict another sting) |
-
-Headline / story ILU on LED vs look: opening **headline** ILU stays on **LED**
-(`casparcg_ilu_player`). Thematic DoubleBox left-window media uses
-`casparcg_pgm_ilu_player` on the **BG look** (ch 3/4 layer 116) via piece type
-`doublebox-ilu`. Looks also carry camera FILL + `l3d-syn` / `l3d-tema`; PGM only
-**routes** the settled mix on layer 110. Baseline `bg_loop` is **LED-only**.
-The **logo-bug is PGM-only** (layer 123).
-
-### `bg-loop` folder structure
-
-```text
-<casparcgMediaFolder>/loops/bg_loop.<ext>
-```
-
-Piece payload: `{ "fileName": "loops/bg_loop" }` (Caspar PLAY omits extension).
-RE piece type `bg-loop` uses `mediaPick` subdir `loops` so the picker opens that
-folder; the stored path still includes `loops/…`. Blueprints baseline must use the
-same basename (see [`handoffs/blueprints-baseline-bg-loop.md`](./handoffs/blueprints-baseline-bg-loop.md)).
+**If wipes never appear:** vMix mode → check the stinger fired (vMix, not Caspar
+log) and the look NDI feeds; legacy → watch PGM ch2, confirm hot `PLAY 2-20x`
+(no filename = warm) and `route://N` full-channel routes.
 
 ## Smoke checklist
 
-1. Put wipe file at `sofie-demo-media/wipes/wipe.*` (and optional
-   `wipe_sjv` / `wipe_sport` / `wipe_pocasie`) and Intro disk asset at
-   `sofie-demo-media/assets/intro_michal.mov`
-   (PLAY path `assets/intro_michal`)
-2. Confirm OBS Virtual Camera name; test `PLAY 3-115 "dshow://…"` by hand (look A)
-3. Import megarepo `assets/spravy-v3-smoke-rundown.json` (includes story-block `wipe` pieces)
-4. Watch **Caspar channel 2** for `route://` + **205** alpha wipes + Intro; confirm looks on **3/4**
-5. **Activate (Rehearsal):** LED shows `PLAY 1-110 "loops/bg_loop"`; PGM must **not** play
-   `bg_loop` on ClipPlayer2.
-6. **Intro on PGM 210 only:** Intro take must show `PLAY <pgm>-210 "assets/intro_michal"` and
-   **must not** play Intro on LED (`1-200`).
-7. **Post-intro MOD:** camera on look channel **{3|4}-115** — not `bg_loop` on PGM.
-8. **Story ILU on look 116 above CAM:** DoubleBox Take must show `PLAY {3|4}-116 "clips/…"`
-9. **Wiped Take (default):** AMCP shows `LOADBG` + hot `PLAY 2-{205–208}` on the selected
-   wipe layer and MIXER keyframes switching the 110/111 route visibility. With the
-   experimental flag enabled, check classical `wipes/wipe` for STING on route layer 111
-   with `_mask` / `_pm` assets; themed wipes remain 206–208 overlays. Every route must be
-   full-channel `route://N`, never `route://N-0`;
-   logo on `2-123` uninterrupted
-   and CAM on look **115** (ILU z-order above CAM). Headline parts still use LED `1-115`.
+1. Media on disk: `loops/db_loop`, `loops/bg_loop`, `assets/intro_*`,
+   `assets/outro`, `assets/bg_pocasie`, `assets/countup`, `wipes/*` (legacy mode).
+2. Templates: `<template-path>/gfx/*.html` from `demo-assets/template/` (no build).
+3. `caspar.config`: ≥4 channels (vMix) / ≥5 (legacy with cam ingest).
+4. DoubleBox Take: `PLAY {look}-118 "loops/db_loop"` + `OPACITY 1` on the claimed
+   slot; ILU on 116; L3D CG on 121; `MIXER {other}-118 OPACITY 1` at offAir.
+5. ZAVER Take: LED `1-115` plays the avízo; **no** `*-118` opacity changes, no
+   look-ILU copy.
+6. Weather Take: `gfx/pocasie` CG UPDATE at wipe end (2000 ms), not under the wipe.
+7. Prep a DoubleBox next: idle channel shows `OPACITY 1` db_loop during the
+   preview window — no pop at the Take's wipe.
+8. Intro plays on PGM 210 only, never LED.

@@ -132,19 +132,26 @@ v2 Caspar `clipName` convention: `gfx/<name>` (e.g. `gfx/l3d-tema`). Templates a
 static files at `demo-assets/template/gfx/<name>.html` — copy `template/` into Caspar
 `<template-path>` (no build). See integration log for full payload table.
 
-### Hypercomposed Caspar
+### Hypercomposed Caspar + vMix
 
-SPRÁVY uses a **single CasparCG server** after sofie-demo-blueprints **#77**: output/look
-channels **1–4** — LED **1**, PGM **2** (`route://` + overlays), BG A/B **3/4**
-(render-only pre-build) — plus **channel 5** for CAM ingest when enabled (looks sample
-via `route://5`). Canonical map:
-[`docs/integration/OUTPUT_TOPOLOGY.md`](docs/integration/OUTPUT_TOPOLOGY.md).
-Layer inventory: [`docs/integration/CASPAR-DURABLE-LAYER-MAP.md`](docs/integration/CASPAR-DURABLE-LAYER-MAP.md).
+SPRÁVY uses a **single CasparCG server + vMix program switching**: LED **1**, look A/B
+feeds **2/3** (rendered stacks → NDI into vMix look inputs), clean-GFX feed **4**
+(headline L3Ds, intro/outro, logo — keyed on vMix Overlay 1). vMix owns all transitions
+(`Stinger1–4` from the wipe file, `Cut` for hard cuts); the camera and beds are vMix
+inputs — there is no Caspar route bus, wipe overlay, or CAM ingest channel in this mode.
+Two identical look channels ping-pong: each look-bearing Take claims the idle slot and
+`armIdleLookPreviewForNext` dresses the off-air channel before the stinger airs it.
+Canonical map: [`docs/integration/OUTPUT_TOPOLOGY.md`](docs/integration/OUTPUT_TOPOLOGY.md).
+Layer inventory + phase-lock: [`docs/integration/CASPAR-DURABLE-LAYER-MAP.md`](docs/integration/CASPAR-DURABLE-LAYER-MAP.md).
+Legacy Caspar-switched topology (PGM 2 + routes + wipe overlays + CAM ingest 5) remains
+as a config fallback — same docs, "legacy" sections.
 
-**Ops:** `caspar.config` must declare channels 3 and 4 (no consumers required). With CAM
-ingest enabled, declare **at least five** channels. Missing look channels → Caspar
-`400 ERROR` spam on `LOADBG 3-…` / `4-…` and dead PGM route.
-ADR: [`docs/adr/0002-wipe-prebuild-bg-channels.md`](docs/adr/0002-wipe-prebuild-bg-channels.md).
+**Ops:** `caspar.config` must declare all four channels, and channels 2/3/4 each need an
+NDI consumer (`<ndi/>` in the channel's `<consumers>`, or `ADD {ch} NDI`) — the NDI
+source name is what the vMix look/clean-GFX inputs attach to. Missing channels → Caspar
+`400 ERROR` spam on `PLAY`/`LOADBG`/`CG` for the missing index; missing NDI consumer →
+black feed in vMix with no Sofie error. ADR:
+[`docs/adr/0002-wipe-prebuild-bg-channels.md`](docs/adr/0002-wipe-prebuild-bg-channels.md).
 
 ### Gotchas
 

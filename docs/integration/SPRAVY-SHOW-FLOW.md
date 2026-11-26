@@ -7,20 +7,20 @@ DoubleBox geometry: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
 
 ## Spine (5 topics — smoke 15.9.2026)
 
-| # | Block | LED (ch1) | PGM (ch2) | Transition |
-|---|-------|-----------|-----------|------------|
-| 1 | Headlines (3×) | `bg_loop` + ILU (slot or bypass fullscreen) | Fullscreen OBS cam + `l3d-headline` + logo-bug | — |
-| 2 | Intro | `bg_loop` only | Intro overlay (`assets/intro_*`) on layer 210 | — |
-| 3 | MOD | `bg_loop` | Fullscreen OBS + `l3d-mod` | — |
-| 4 | Topic DoubleBox | `bg_loop` | `db_loop` (118) over CAM (~80% right) + ILU left + topic L3D + bug | Wipe into topic / new story |
+| # | Block | LED (ch1) | Program (vMix look input) | Transition |
+|---|-------|-----------|---------------------------|------------|
+| 1 | Headlines (3×) | `bg_loop` + ILU (slot or bypass fullscreen) | Fullscreen cam + `l3d-headline` on clean GFX + logo-bug | — |
+| 2 | Intro | `bg_loop` only | Intro overlay (`assets/intro_*`) on PGM layer 210 | — |
+| 3 | MOD | `bg_loop` | Fullscreen cam + `l3d-mod` | — |
+| 4 | Topic DoubleBox | `bg_loop` | `db_loop` (118) over CAM pane + ILU left + topic L3D + bug | Stinger into topic / new story |
 | 5 | Topic SYN | `bg_loop` | Fullscreen SYN + timed `l3d-syn` (+ optional Zdroj) | **Hard cut** from DB (no wipe) |
 | 6 | SYN → SYN | `bg_loop` | Hard cut; L3D duration ends before next SYN | **Hard cut** |
 | 7 | SYN → DB (same topic) | `bg_loop` | Back to DoubleBox | **Hard cut** |
-| 8 | SYN → new topic | `bg_loop` | DoubleBox | **Wipe** |
-| 9 | SJV (3–5 SYNs) | `bg_loop` | Timed `l3d-sjv` over SYNs | `wipes/wipe_sjv` on **first SYN** (no empty open Take) |
-| 10 | Šport (2–5) | `bg_loop` | Timed `l3d-sport` (`kicker=ŠPORT`) | `wipes/wipe_sport` on **first SYN** |
-| 11 | Počasie | `bg_loop` | Transparent `gfx/pocasie` on Full look (**routed**; look clip underlay) + logo-bug; or bypass `assets/weather` | `wipes/wipe_pocasie` + **CLEAR ch4** clip/CAM/`db_loop` (kills leftover sport SYN) |
-| 12 | Odporúčanie / Závěr Avízo | `bg_loop` + windowed `ilu-zaver` (~60%) on LED 115 | Full-look CAM + `l3d-odporucanie` — **no** `db_loop`, **EMPTY look A** (`db_loop`/ILU/CAM/L3D), **no** LED `route://4` | Normal wipe |
+| 8 | SYN → new topic | `bg_loop` | DoubleBox | **Stinger** |
+| 9 | SJV (3–5 SYNs) | `bg_loop` | Timed `l3d-sjv` over SYNs | `wipes/wipe_sjv` → Stinger2 on **first SYN** |
+| 10 | Šport (2–5) | `bg_loop` | Timed `l3d-sport` (`kicker=ŠPORT`) | `wipes/wipe_sport` → Stinger3 on **first SYN** |
+| 11 | Počasie | `bg_loop` | Transparent `gfx/pocasie` over `assets/bg_pocasie` on the claimed look + logo-bug | `wipes/wipe_pocasie` → Stinger4 + clear previous look's clip/CAM/`db_loop` |
+| 12 | Odporúčanie / Závěr Avízo | `bg_loop` + windowed `ilu-zaver` (~60%) on LED 115 | Full-look CAM + `l3d-odporucanie` — **no** `db_loop`, nothing routed to LED | Normal stinger |
 | 12b | optional SYN | `bg_loop` | Hard cut ILU↔SYN | Hard cut |
 | 13 | Outro | `bg_loop` | `assets/outro` on layer 210 (above everything); mute look-channel audio (SYN / VT / weather) + **no** kolíska / countup SFX | — |
 
@@ -46,22 +46,22 @@ than the clip so it cannot overflow into the next SYN even if Takes are early.
 
 - DoubleBox frame: `loops/db_loop` (production may call the file `dp_loop.mov` — rename/symlink).
   Lifespan is **OutOnSegmentEnd** (tema segment only) — not rundown-end — so SJV /
-  ŠPORT / Počasie / ZAVER never keep a stray DoubleBox frame on ch3.
-- Weather HTML (`bypass: false` in smoke): transparent `gfx/pocasie` over Full-look
+  ŠPORT / Počasie / ZAVER never keep a stray DoubleBox frame on a look channel.
+- Weather HTML (`bypass: false` in smoke): transparent `gfx/pocasie` over
   `assets/bg_pocasie` underlay on the ILU layer (map loop under city cards; `bg_loop`
-  stays on the clip layer).
+  stays on the clip layer). The CEF warm-loads off-air via the idle preview and the
+  on-air replay fires at wipe end (2000 ms).
 - Weather bypass clip (when wired): PLAY `assets/weather` premade animation.
 - Outro: PLAY `assets/outro` on PGM intro layer 210 (jingle); mute active-look clip
-  audio (SYN / VT / weather on ch 3/4) while it plays; kolíska beds + countup stay
+  audio (SYN / VT / weather on the look channels) while it plays; kolíska beds + countup stay
   muted for the rundown after (no music restart); freeze last frame.
 - Headlines: each Take also PLAYs `assets/headline_sfx` (disk `headline_sfx.wav`) on
   LED+PGM audio beds. Line1/line2 copy lives only on **`l3d-headline`**
   (`headline`/`subline`) — the Headline ILU piece is media/bypass/`volume` only;
   payload `headline`/`subline` on that piece type are ignored.
 - Závěr + Avízo: `ilu-zaver` windowed (~`PGM_DOUBLEBOX_ILU_FILL`, ≈60–68%) on **LED 115**
-  over `bg_loop`. Full look keeps fullscreen CAM + `l3d-odporucanie` on PGM — do **not**
-  `route://4` onto LED. On Take, blueprints also EMPTY look A so a leftover DoubleBox
-  cannot sit under Full `route://4`.
+  over `bg_loop`. The claimed look keeps fullscreen CAM + `l3d-odporucanie` — never
+  routed to LED, never composed as DoubleBox (`isDoubleBoxLook` veto).
 
 ## ILU bypass
 

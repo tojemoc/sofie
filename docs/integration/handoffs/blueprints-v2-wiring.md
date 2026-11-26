@@ -47,7 +47,7 @@ Repo: https://github.com/tojemoc/sofie-demo-assets (`main` @ PR #3 merged 2026-0
 | `l3d-syn` | `gfx/l3d-syn` | `name`, `role` |
 | `l3d-sjv` | `gfx/l3d-sjv` | `headline` |
 | `l3d-sport` | `gfx/l3d-sport` | `headline`, `source` |
-| `weather` | `gfx/pocasie` | `cities` (JSON **string** of `{ region, name, temp, … }[]`; RE type `weather` → Caspar `gfx/pocasie`; blueprints `JSON.parse`) |
+| `weather` | `gfx/pocasie` | `cities` (JSON **string** of `{ region, name, temp, … }[]`) on the RE piece — blueprints `JSON.parse` it and flatten to `<REGION>_temp` / `_name` / `_delay` / `_img` keys; the template's `data` receives the flat keys, not `cities` |
 | `outro` | `gfx/outro` | _(empty — play/stop only)_ |
 | `logo-bug` | `gfx/logo-bug` | _(empty — play/stop only)_ |
 
@@ -91,25 +91,32 @@ Today: regex routes ticker/strap/fullscreen; **default → `CasparCGGraphicsLowe
 
 You must:
 
-- Route `logo-bug` → `CasparCGGraphicsLogo` (ch3/113) with `PieceLifespan.OutOnRundownEnd`
+- Route `logo-bug` → `casparcg_graphics_logo` (clean-GFX 4-123 vMix / 2-123 legacy)
+  with `PieceLifespan.OutOnRundownEnd`
 - Route fullscreen-style templates (`weather`, `outro`) appropriately
 - Ensure `content.data` spreads **all** `object.attributes` (v2 fields), not only
-  `name`/`description`/`location`/`text` in `templateData`
-- For Friday MVP: single-channel is OK — all GFX on existing lower-third/logo layers
+  `name`/`description`/`location`/`text` in `templateData` — except `weather`'s
+  `cities` JSON string, which blueprints `JSON.parse` into flat `<REGION>_temp` /
+  `_name` / `_delay` / `_img` keys and drop `cities` itself from `data`
+
+(Retired: the Friday-MVP single-channel fallback — the hypercomposed mappings in
+§4 are current.)
 
 ### 4. Layer mappings
 
 Files under `packages/blueprints/src/base/studio/applyConfig/mappings/`.
 
-Current hybrid demo uses ch3 for graphics. **Friday:** keep single-channel; **post-demo:**
-map `headline` → LED channel, and all `gfx/l3d-*` templates →
-`casparcg_graphics_pgm_l3d` on PGM channel 2, layer 121, per
+**Done since:** the hypercomposed topology remapped `gfx/l3d-*` — story L3Ds ride
+the claimed look channel via `casparcg_graphics_pgm_l3d` (look A 2-121) /
+`casparcg_graphics_pgm_l3d_b` (look B 3-121); `gfx/l3d-headline` and `gfx/l3d-mod`
+ride the clean-GFX channel via `casparcg_graphics_headline` (4-121), per
 [`../OUTPUT_TOPOLOGY.md`](../OUTPUT_TOPOLOGY.md).
 
 ### 5. Baseline / rundown start
 
 `logo-bug` should appear at rundown start and persist (`OutOnRundownEnd`). Wire in
-`rundown/baseline.ts` or equivalent — layer 113 exists but is unused today.
+`rundown/baseline.ts` or equivalent — the `casparcg_graphics_logo` mapping
+(clean-GFX 4-123 vMix / 2-123 legacy) exists but is unused today.
 
 ### 6. `packages/blueprints/src/common/definitions/objects.ts`
 

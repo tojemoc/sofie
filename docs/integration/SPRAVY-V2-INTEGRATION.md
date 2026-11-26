@@ -1,446 +1,129 @@
-# SPRÁVY / 360 sekúnd v2 — cross-repo integration log
+# SPRÁVY / 360 sekúnd v2 — cross-repo contract
 
-Living document for agents working across the Sofie megarepo. Update this file when
-demo-assets, blueprints, rundown-editor, or core integration status changes.
+Working agreement across the Sofie megarepo. Update when demo-assets, blueprints,
+rundown-editor, or core wiring changes.
 
-**Last updated:** 2026-09-04
+**Last updated:** 2026-11-25
 
 ---
 
 ## Goal
 
-End-to-end demo: **Rundown Editor → Sofie Core → Playout Gateway → CasparCG** driving
+**Rundown Editor → Sofie Core → Playout Gateway → CasparCG (+ vMix)** driving
 v2 HTML templates from `tojemoc/sofie-demo-assets`.
 
-**Hypercomposed (LED ≠ PGM):** one Caspar, **four channels** without camera ingest
-(LED=1, PGM=2, BG A/B=3/4), or **five channels** when the CAM ingest helper is enabled
-(channel 5).
-Canonical map: [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md). Durable layer inventory:
-[`CASPAR-DURABLE-LAYER-MAP.md`](./CASPAR-DURABLE-LAYER-MAP.md). Story looks pre-build on
-BG 3/4; default PGM path keeps routes live on **110/111**, uses alpha wipe overlays on
-**205–208** (classical `wipes/wipe` on **205**), and switches route visibility with MIXER
-keyframes at the air cut. Blueprints also have the experimental per-studio
-`casparcg.hypercomposed.wipeUseStingRouteTransition` toggle (default **false**): only classical `wipes/wipe`
-uses STING on canonical route layer **111**; themed wipes stay overlays. See
-[ADR 0002](../adr/0002-wipe-prebuild-bg-channels.md) and
-[the Caspar layer map](./CASPAR-DURABLE-LAYER-MAP.md). Blueprints [#77](https://github.com/tojemoc/sofie-demo-blueprints/pull/77).
-DoubleBox
-compose: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
+**Hypercomposed (LED ≠ program):** one Caspar renders LED + two look feeds +
+clean GFX; **vMix** switches program (look inputs, stingers, clean-GFX overlay).
+Legacy fallback: Caspar-switched PGM with `route://` + alpha wipes. Topology:
+[`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md). Layers:
+[`CASPAR-DURABLE-LAYER-MAP.md`](./CASPAR-DURABLE-LAYER-MAP.md). DoubleBox +
+switching mechanics: [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md). Show spine:
+[`SPRAVY-SHOW-FLOW.md`](./SPRAVY-SHOW-FLOW.md).
 
----
+## Repos
 
-## Repo status snapshot
+| Repo | Role | Deploy artifact |
+|------|------|-----------------|
+| `sofie-demo-assets` | Static HTML templates at `template/gfx/*.html` — **no build**; edit HTML directly | copy `template/` → Caspar `<template-path>`, media → `<media-path>` |
+| `sofie-demo-blueprints` | `yarn dist` → `*-bundle.js` | upload bundle to Core → **Apply studio config** → **Reset Rundown** |
+| `unopus` (Rundown Editor) | Piece/part JSON → ingest; loads type manifests from megarepo `assets/` | `yarn build`; Docker needs `ffmpeg` (ffprobe probes) |
+| `sofie-core` | Meteor + playout-gateway | `yarn dev` / `yarn build:packages` |
 
-| Repo | Branch / PR | Status |
-|------|-------------|--------|
-| `tojemoc/sofie-demo-assets` | `cursor/cleanup-v2-graphics-bc1a` / [PR #34](https://github.com/tojemoc/sofie-demo-assets/pull/34) | **v2-only templates** — legacy v1 stubs removed; Bauplan/Diform fonts; see [`demo-assets/docs/BLUEPRINTS_HANDOFF.md`](https://github.com/tojemoc/sofie-demo-assets/blob/main/docs/BLUEPRINTS_HANDOFF.md) |
-| `tojemoc/sofie-demo-assets` | [PR #4](https://github.com/tojemoc/sofie-demo-assets/pull/4) | CI/CD, pre-releases (`sofie-demo-assets-pre-<sha>.zip`), Docker `ghcr.io/tojemoc/sofie-demo-assets` |
-| `tojemoc/sofie-demo-blueprints` | `cursor/spravy-v2-caspar-wire-d6ac` | v2 Caspar clipNames wired; v1 routes removed; `gfx/source` on PGM L121 |
-| `tojemoc/unopus` (Rundown Editor) | `cursor/kubo-unopus-rundown-ux-1ddf` | Full-width status rows, compact rundown, GFX preview stubs, presence lock chips, SYN trim timing |
-| `tojemoc/sofie-core` | `cursor/kubo-take-previous-pause-clock-1ddf` | **Take Previous**, **Pause/Resume clock** (časovka freeze + stop VT/VO) |
+## Deploy order (full update)
 
----
+1. `demo-assets`: edit `template/gfx/*`, copy `template/` + media to Caspar paths.
+2. `blueprints`: `cd packages/blueprints && yarn dist`, upload bundle in Core WebUI.
+3. Core WebUI: **Apply studio config**, then **Reset Rundown** on the active playlist.
+4. RE: verify `INGEST_MEDIA_ROOT`, Sofie `ingestMediaFolder`, and Caspar
+   `media-path` all resolve to the **same shared media tree** — the strings may
+   differ when services mount it at different locations (Docker volumes, NAS
+   shares); the files must be the same. Clips live under `<root>/clips/`.
+5. `caspar.config`: ≥4 channels (vMix) / ≥5 (legacy + cam ingest); restart Caspar on change.
 
-## Intro overlay vs BG loop (2026-07-22)
+## Caspar clipName contract
 
-Operators need **absolute control** over two different Caspar layers / channels:
+`clipName` = `gfx/<file-name>` — templates are flat files
+`template/gfx/<name>.html` (no per-template folder). Sofie sends
+`TimelineContentCCGTemplate` with `templateType: 'html'`, `name`, `data`; the
+templates expose `window.play() / stop() / update(data)`.
 
-| Item | RE part / piece | Caspar target | Role |
-|------|-----------------|---------------|------|
-| **Intro overlay** | Part `Intro` + piece `intro` | **PGM** IntroOverlay **210** (above route 110) | Full-frame znelka / alpha — **never on LED** |
-| **Background loop** | Piece `bg-loop` (optional) + baseline | LED ClipPlayer1 **110** | LED `loops/bg_loop` |
+| `clipName` | `update(data)` fields | Lands on |
+|------------|----------------------|----------|
+| `gfx/headline` | `iluFile`, `source` | LED 115 ILU media |
+| `gfx/headline-fallback` | `source` | LED 121 chrome (no text) |
+| `gfx/l3d-headline` | `title`, `subtitle` (aliases `headline`/`subline`) | clean-GFX 4-121 (vMix) / PGM 2-121 (legacy) |
+| `gfx/l3d-mod` | `name`, `title` | clean-GFX 4-121 (vMix) / PGM 2-121 (legacy) |
+| `gfx/l3d-tema` | `headline` | look 121 |
+| `gfx/l3d-syn` | `name`, `role` (replaces retired `l3d-predstavovak`) | look 121 |
+| `gfx/l3d-sjv` | `kicker`, `headline` | look 121 |
+| `gfx/l3d-sport` | `kicker` (default `ŠPORT`), `headline` | look 121 |
+| `gfx/l3d-odporucanie` | `headline` | look 121 |
+| `gfx/pocasie` | flat `<REGION>_temp` / `_name` / `_delay` / `_img` keys (`BA_temp`, `BB_name`, …). Blueprints derive them from the editor's `cities` JSON `[{region,name,temp,…}]` — `cities` itself is not sent | look 121 + `assets/bg_pocasie` on 116 |
+| `gfx/ilu-zaver` | `iluFile` | LED 115 windowed (never DoubleBox) |
+| `gfx/outro` | — | PGM |
+| `gfx/logo-bug` | — | PGM 123, `OutOnRundownEnd` |
 
-**LED allow-list (channel 1):** **headline ILU** + **`bg_loop` only**.
-`l3d-mod` (Presenter MOD) and other L3Ds are on the **BG look** (ch 3/4 layer 121), then
-routed to PGM — see Headline L3Ds below.
-**Intro / znelka must not appear on LED.** Blueprints map RE `playLayer: 'effects'` →
-`casparcg_intro_player_pgm` (**PGM layer 210**), not LED 200. See handoff
-[`handoffs/blueprints-intro-pgm-layer.md`](./handoffs/blueprints-intro-pgm-layer.md).
+**Removed — do not reference:** `gfx/l3d`, `gfx/mod-l3d`, `gfx/head-spravy`,
+`gfx/ticker`, `gfx/strap`, `gfx/wipe`, `gfx/head`, `gfx/fullscreen`,
+`gfx/l3d-predstavovak` (blueprints coerce old rundowns to `l3d-syn`/`l3d-mod`).
 
-**Why GFX + video failed:** GFX parts require a graphic object. A video-only GFX part produced Sofie Invalid **"No graphic object"**. Use the **Intro** toolbar button instead (or add an `intro` piece). Blueprints also recover video-only GFX parts as Intro overlays so existing smoke attempts keep working after bundle upload.
-
-**Baseline:** `loops/bg_loop` remains on ClipPlayer1 at priority 0 as a safety net. A `bg-loop` piece plays the same (or alternate) file at priority 1 with `OutOnRundownEnd` so operators can see/control it. Smoke Intro no longer carries an explicit `bg-loop` piece. Blueprints still hard-code the baseline basename — see [`handoffs/blueprints-baseline-bg-loop.md`](./handoffs/blueprints-baseline-bg-loop.md).
-
-### Headline ILU `404 PLAY FAILED`
-
-Caspar log pattern:
-
-```text
-CG 1-121 ADD 1 "gfx/headline-fallback" …   → 202 CG OK
-PLAY 1-115 "clips/headline1" … → 404 PLAY FAILED
-```
-
-Path convention is correct (`clips/<name>` without extension for PLAY).
-**404 means the file is not on the Caspar media disk** under
-`<casparcgMediaFolder>/clips/headline1.mp4` (Package Manager
-copy / ingest). Place or ingest the MP4s; Sofie cannot invent media. CG OK only means
-the HTML template loaded — the companion ILU PLAY still needs the file.
-
-### Headline L3Ds (LED vs look → PGM)
-
-- **Field mapping** is fine: RE `headline`/`subline` → Caspar `title`/`subtitle` (templates also accept the RE names). ILU presets include `l3d-headline`; re-upload blueprints and re-ingest if Sofie still omits them.
-- **`l3d-headline` / `l3d-tema` / `l3d-syn` / `l3d-mod` compose on BG look channels 3/4 (layer 121)** by design, then PGM hears them via `route://{3|4}`. LED allow-list is **headline ILU + `bg_loop` only** — if you only watch the LED consumer, those L3Ds look “missing”.
-- **Sofie source layers:** LED headline ILU stays on `Lower Third` / `ILU`. Look L3Ds use `PGM L3D` (`lower_third_pgm`) — a **separate source layer** on the **GFX** output track (PGM output is `isFlattened` with Camera). Caspar plays the templates on **{3|4}-121**. They must not share one Sofie source layer — Core keeps only one WithinPart piece per layer at the same start (otherwise HEADLINE3 can lose `PLAY 1-115` while only `CG {3|4}-121 gfx/l3d-headline` fires).
-- **How to look at PGM:** open the Caspar **channel 2** consumer (screen / NDI / SDI for ch2), not channel 1. Studio mapping id `casparcg_graphics_pgm_l3d` / `_b` → **BG 3/4** layer 121 (routed onto PGM). Confirm with AMCP e.g. `INFO 2` / `INFO 3` or a Screen consumer bound to channel 2.
-- **demo-assets:** v2 HTML must exist on Caspar (`gfx/l3d-headline.html`, etc.). Rebuild with `yarn build` and copy `deploy/template-path` if needed.
-- **`gfx/headline-fallback` (LED 1-121) is chrome only** — transparent ILU window + optional `source` pill. It does **not** render the ILU `text` field; headline copy on PGM comes from **`gfx/l3d-headline` on look layer 121** (visible via the PGM route). If fallback frame shows but words do not, check look ch3/4 (and PGM ch2 route), and redeploy templates after `demo-assets` fixes.
-- **`gfx/l3d-headline` invisible while `l3d-tema` / `l3d-mod` work:** fixed in `demo-assets` — `play()` must set bar transform to `x: 0` before `gsap.from` (otherwise bars stay off-screen at `-1200px` even when AMCP returns `202 CG OK`). Rebuild `yarn build`, copy `deploy/template-path/gfx/l3d-headline/` to Caspar, restart or `CG … STOP` + Take again.
-- **Piece Duration → Part Duration in RE:** backend `syncStoryDurationsForPart` may set
-  unset **part** duration from the longest child On air (or trimmed source). It does
-  **not** force piece On air from ffprobe, and does **not** auto-fill empty L3D On air
-  from the part (empty L3D = hold until Take). Cleared durations persist via JSON
-  merge-patch `null`. See unopus branch `cursor/fix-duration-probe-and-on-air-5c12`.
-- **Timing (not AUTO):** three durations must not be conflated (see [`RE-READINESS-AND-PLAYOUT-UX.md`](./RE-READINESS-AND-PLAYOUT-UX.md)):
-  - **Part Duration** (seconds) — story-level expected length in the Rundown Editor.
-  - **Piece On air** (seconds) — enable length for Sofie timeline; **empty L3D On air**
-    means hold until Take (not inherited from part). Media picker may seed On air from
-    ffprobe; editorial overrides stick.
-  - **Sofie `expectedDuration`** (milliseconds after ingest conversion) — the on-air timeline enable length Sofie uses at playout.
-  - **`payload.sourceDuration`** (milliseconds) — separate from on-air timing; maps to VT/VO `content.sourceDuration` (media clip length from ffprobe using format/stream + frame-count heuristics, not the Dur column).
-  Sofie **AUTO** only appears when blueprints set `autoNext` (VT / Intro / non-ILU GFX). ILU parts (with or without camera) do **not** autoNext — leave Start at `0` so they begin on Take.
-- **RE Ready/NR, DUR, wipe timing, piece order:** planning notes in
-  [`RE-READINESS-AND-PLAYOUT-UX.md`](./RE-READINESS-AND-PLAYOUT-UX.md) (ADR 0001 for Core PM readiness).
-
-## Muster smoke rundown (2026-09-14)
-
-`assets/spravy-v3-smoke-rundown.json` (sofie megarepo `assets/`) mirrors Jakub’s
-2026-09-14 RE export (skipped **Migaľ** segment omitted):
-
-| Segment | Parts |
-|---------|--------|
-| HEADLINES | HEADLINE1–3 (ILU + L3D + cam); **no** wipe pieces; `l3d-headline` On air empty (until Take); ILU On air = clip length |
-| INTRO | Intro overlay on **PGM**; Mod L3D Gabriela Kajtárová (`l3d-mod` On air empty / until Take) + logo-bug; **no** bg-loop piece, **no** wipe |
-| Téma 1–4 | Obchodný register, Spor Saková – Fico, Referendum / novela Ústavy, Ukrajina — DoubleBox / SYN patterns; open/`skip` parts kept where set in export |
-| SPRÁVY JEDNOU VETOU | GFX open row + SYN slots (`l3d-sjv`); wipe on first SYN |
-| ŠPORT | GFX open row + SYN slots (`l3d-sport`); wipe on first SYN |
-| POČASIE | `weather` |
-| ZÁVER + AVIZO | `ilu-zaver` avízo (+ skipped SYN/`ilu-zaver` záver), `outro` |
-
-Clip paths are placeholders under `clips/`. Camera letters:
-**A→1**, **P→2**, **M→3**.
-
-Wipes: piece type `wipe`, file `wipes/wipe` (or labelled `wipe_sjv` / `wipe_sport` / `wipe_pocasie`).
-**Default:** per-file `LOADBG` + hot `PLAY 2-205…208` alpha overlay; dual always-live
-routes on PGM 110/111 switch via MIXER keyframes. Optional experimental
-`casparcg.hypercomposed.wipeUseStingRouteTransition` (Studio → CasparCG → Hypercomposed
-output channels; default **false**) uses STING on route 111 for classical `wipes/wipe`
-only, with `wipes/wipe_mask` + `wipes/wipe_pm`; themed wipes remain overlays. Layer **200**
-is retired (leftover KEYER). See [`DOUBLEBOX-PGM.md`](./DOUBLEBOX-PGM.md).
-Smoke rundown includes story-block wipe pieces with a `transition` label
-(`ILU TO SYN`, `Double Box`, …) — not on HEADLINES / Intro.
-
-## Kubo studio tasks (2026-08-25)
-
-Operator list items assigned to Kubo, landed as sibling-repo PRs (this megarepo tracks docs + piece-type fields):
-
-| Area | Change |
-|------|--------|
-| Grafika | v2 “novú” Caspar templates already imported into blueprints; Intro plays as **video** on `pgm_intro` (UI label Intro, not Titles) |
-| Grafika | Wipes set `ignoreMediaObjectStatus` so missing Package Manager objects do not block PLAY |
-| Playout | SYN/VO/VT `trimIn` / `trimOut` (seconds) + `volume` on video pieces; on-air duration is source length minus trims |
-| Zvuk | Clip mixer volume; Koliska bed starts at 1.0 for **2s** then ducks to 0.45; wipe ForceMutes Host+Playback and ducks Caspar SYN/ILU volume |
-| Flow | Sofie **Pause clock** / **Resume clock** / **Take Previous** — časovka freezes at `timings.pausedAt`; pause also stops VT/VO clips |
-| Unopus | Full-width story/piece rows colored by ready/NR; compact headings; GFX preview stubs; row lock chips when another user has the row focused |
-
-Video piece payload fields (megarepo `assets/sofie-rundown-editor-piece-types.json`): `trimIn`, `trimOut`, `volume`.
-
-**Out of scope (Ondro / studio hardware):** HTML graphic production, casomierka pips, wall broadcast.
-
-**Ops docs (megarepo):** [`AUDIO-SQ5-ROUTING.md`](./AUDIO-SQ5-ROUTING.md), [`FFMPEG-PGM-RECORD.md`](./FFMPEG-PGM-RECORD.md).
-
----
-
-## Demo-assets contract (source of truth for blueprints)
-
-**Canonical handoff:** [`tojemoc/sofie-demo-assets` → `docs/BLUEPRINTS_HANDOFF.md`](https://github.com/tojemoc/sofie-demo-assets/blob/main/docs/BLUEPRINTS_HANDOFF.md) (branch `cursor/cleanup-v2-graphics-bc1a` or later `main` after PR #34 merge).
-
-### Build & deploy
-
-```bash
-cd demo-assets
-yarn build   # → deploy/template-path + deploy/media-path
-```
-
-After PR #4 merges, each push to `main` produces a GitHub **pre-release** zip:
-
-- `sofie-demo-template/` → Caspar `<template-path>`
-- `sofie-demo-media/` → Caspar `<media-path>`
-
-Pin the `pre-<sha>` tag you tested; do not assume `latest`.
-
-### Caspar template paths
-
-`scripts/assemble-caspar.mjs` lays out:
-
-```text
-<template-path>/
-  js/ css/ img/ fonts/ …     # shared webpack bundles + brand fonts
-  gfx/
-    headline/headline.html
-    headline-fallback/headline-fallback.html
-    source/source.html
-    l3d-headline/l3d-headline.html
-    l3d-predstavovak/l3d-predstavovak.html  # legacy Caspar only; not an RE piece type
-    l3d-mod/l3d-mod.html
-    l3d-tema/l3d-tema.html
-    l3d-syn/l3d-syn.html                     # RE nameplate / SYN L3D
-    l3d-sjv/l3d-sjv.html
-    l3d-sport/l3d-sport.html
-    l3d-odporucanie/l3d-odporucanie.html
-    weather/weather.html
-    outro/outro.html
-    logo-bug/logo-bug.html
-```
-
-**Removed — do not reference:** `gfx/l3d`, `gfx/mod-l3d`, `gfx/head-spravy`, `gfx/ticker`, `gfx/strap`, `gfx/wipe`, `gfx/head`, `gfx/fullscreen`.
-
-**Blueprint `clipName` / Caspar `TEMPLATE` name must be:** `gfx/<folder>` (e.g. `gfx/l3d-tema`).
-
-### Caspar control API
-
-All templates use `src/shared/caspar-bridge.js`:
-
-- `window.play()` — intro animation (Promise)
-- `window.stop()` — outro animation (Promise)
-- `window.update(data)` — parse Sofie payload, optional stop/update/play
-
-Sofie sends `TimelineContentCCGTemplate` with `templateType: 'html'`, `name`, `data`.
-The bridge accepts JSON objects and XML-wrapped JSON from Caspar.
-
-### Template catalogue (v2 spec)
-
-| Spec | Folder | `clipName` | `update({ ... })` fields | Notes |
-|------|--------|------------|--------------------------|-------|
-| T01 | `headline` | `gfx/headline` | `iluFile`, `source` | ILU MEDIA on **LED ch1 L115** (not HTML video) |
-| T01b | `headline-fallback` | `gfx/headline-fallback` | `source` | ILU chrome overlay; **LED ch1 L121** only |
-| T01c | `source` | `gfx/source` | `source` | Standalone source pill; **PGM ch2 L121** |
-| T04b | `l3d-headline` | `gfx/l3d-headline` | `title`, `subtitle` | RE aliases `headline`/`subline`; **PGM ch2 L121** |
-| T03a | ~~`l3d-predstavovak`~~ | ~~`gfx/l3d-predstavovak`~~ | — | **Retired in RE** — use `l3d-syn` (T05). Caspar folder may remain in demo-assets. |
-| T03 | `l3d-mod` | `gfx/l3d-mod` | `name`, `title` | Presenter MOD (Intro); **PGM ch2** |
-| T04 | `l3d-tema` | `gfx/l3d-tema` | `headline` | Thematic doublebox bar; **PGM ch2** |
-| T05 | `l3d-syn` | `gfx/l3d-syn` | `name`, `role` | SYN name/role L3D (also replaces retired predstavovak nameplate); **PGM ch2** |
-| T06 | `l3d-sjv` | `gfx/l3d-sjv` | `kicker`, `headline` | SJV segment bar; **PGM ch2** |
-| T06b | `l3d-odporucanie` | `gfx/l3d-odporucanie` | `headline` | Avízo / CTA (no kicker); **PGM ch2** |
-| T07 | `l3d-sport` | `gfx/l3d-sport` | `kicker` *(default `ŠPORT`)*, `headline` | ŠPORT bar; **PGM ch2** |
-| T08 | `weather` | `gfx/pocasie` | `cities` JSON **string** of `[{ region, name, temp, …}]` | Full-frame on **PGM** (RE type `weather` → Caspar `gfx/pocasie` from `template/gfx/pocasie.html`); blueprints parse JSON and map `region` → `BA_temp` etc. |
-| T09 | `outro` | `gfx/outro` | _(none)_ | Hardcoded URL; **PGM** |
-| T10 | `logo-bug` | `gfx/logo-bug` | _(none)_ | Persistent bug on **PGM logo layer**; `OutOnRundownEnd`; alias `gfx/logo-bug-kubo` |
-
-### v2 design decisions (already implemented in templates)
-
-- Frame 01 split: ILU on `headline` (**LED ch1**), text on `l3d-headline` (**PGM ch2**) — see [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md)
-- Bar backgrounds: solid `rgba(8, 16, 40, 0.82)` — no `backdrop-filter`
-- SPORT counter: approach A (client-side timer on `play()`)
-- Placeholders: `public/assets/logo-360.svg`, weather icons in `public/icons/`
-- Old v1 templates (`l3d`, `mod-l3d`, `head-spravy`, `ticker`, `strap`, `wipe`, `head`, `fullscreen`) **removed from demo-assets build** (PR #34)
-
-### Media scaffold
+## Media scaffold
 
 ```text
 <media-path>/
-  loops/     # e.g. bg_loop.mov — bg-loop / baseline LED loop
-  clips/     # ILU, VT, VO (e.g. clips/premiera.mp4)
-  wipes/     # alpha wipe media (piece type `wipe` → PGM 205–208 overlay; optional classical STING trial)
-  assets/    # pip-frame.png, etc.
+  loops/    bg_loop, db_loop, bg_music_{a,c}
+  clips/    ILU, VT, VO, SYN (rundown-specific)
+  wipes/    wipe{,_sjv,_sport,_pocasie}  (legacy overlay mode; vMix uses stingers)
+  assets/   pod_headline, headline_sfx, testframe, countup, intro_*, outro, bg_pocasie
 ```
 
-**Production media still missing** — demo must import/transcode clips. Use H.264 MP4 for
-reliability. Dev autoplay on `headline` uses `iluFile: 'clips/premiera.mp4'`. ILU plays via Caspar MEDIA (not CEF `<video>`); place the `.mp4`/`.mov` master on the Caspar media disk — **no WebM sibling required**.
+ILU plays via Caspar MEDIA (never CEF `<video>`); PLAY paths are extensionless.
+Use H.264 MP4 / ProRes-Hap alpha `.mov` for reliability.
 
-### Still open on demo-assets side (not blocking blueprint spec)
+## Timing fields — do not conflate
 
-- Real media files and production logo SVG
-- Weather map city positions vs `mapa.mov`
-- Font files (Inter/InterBold) — currently Avenir/system fallback
-- PR #4 merge + first verified pre-release zip on demo Caspar
-- Optional: remove legacy v1 template sources
+- **Part Duration** (s) — story length in RE.
+- **Piece On air** (s) — piece enable length; empty L3D On air = hold until Take.
+- **Sofie `expectedDuration`** (ms) — on-air timeline length after ingest.
+- **`payload.sourceDuration`** (ms) — ffprobe media length (VT/VO
+  `content.sourceDuration`), independent of On air.
+- Video piece fields: `trimIn` / `trimOut` / `volume` (canonical in
+  `assets/sofie-rundown-editor-piece-types.json`).
 
----
+Sofie AUTO appears only where blueprints set `autoNext` (VT / Intro / non-ILU
+GFX). ILU parts never autoNext — Start `0`, begin on Take.
 
-## Blueprints work required
+## Package Manager / readiness pitfalls
 
-See **`docs/integration/handoffs/blueprints-v2-wiring.md`** for the copy-paste agent prompt.
+- **False NR badges** = PM folder ≠ Caspar `media-path`:
+  [`PLAYOUT-NR-AND-MEDIA-PATH.md`](./PLAYOUT-NR-AND-MEDIA-PATH.md).
+- `mediaPackages` edits must be **top-level flat fields**, not the nested object —
+  flatten on `cursor/pm-accessor-type-ingest-09c3` or newer.
+- `404 PLAY FAILED` on a headline ILU with `CG OK` = `.mp4` missing under
+  `<media-path>/clips/` — PM/ingest issue, not a template bug.
+- RE ingest root must equal the PM media tree, or both mediaPick and Sofie VID
+  pieces fail to resolve.
+- Docker RE images need the `ffmpeg` package or ffprobe probes silently null.
 
-### Critical path files (`sofie-demo-blueprints`)
-
-| File | Change |
-|------|--------|
-| **Megarepo** `assets/sofie-rundown-editor-piece-types.json` | Add v2 piece types + payload schemas (canonical) |
-| `packages/blueprints/src/base/showstyle/sofie-editor-parsers/index.ts` | Extend `graphicTypes`; map RE payload → template `data` |
-| `packages/blueprints/src/base/showstyle/helpers/graphics.ts` | Route `clipName` → Caspar layer; pass full `attributes` as `data` |
-| `packages/blueprints/src/base/studio/layers.ts` | Possibly new layer enums |
-| `packages/blueprints/src/base/studio/applyConfig/mappings/` | Channel/layer mappings |
-| `packages/blueprints/src/base/rundown/baseline.ts` | `logo-bug` on rundown start |
-| `packages/blueprints/src/common/definitions/objects.ts` | Extend `GraphicObjectAttributes` |
-
-### Current v2 behaviour (2026-08-31)
-
-- Parser: RE graphic piece types → `clipName = 'gfx/' + pieceType` (see `rundownEditorTypes.ts`)
-- Graphics: PGM L3D set routes to `casparcg_graphics_pgm_l3d` (ch2 L121); LED ILU uses `headline-fallback` on ch1 L121
-- v1 spreadsheet remaps (`gfx/l3d`, `gfx/strap`, …) **removed**
-- Piece payloads: canonical field names per table above; blueprints `getTemplateAttributes` maps RE aliases
-
-### Deploy assets to Caspar
-
-After `yarn build` in demo-assets (or CI pre-release zip / Docker image):
-
-1. Copy `deploy/template-path/*` → Caspar `<template-path>`
-2. Copy `deploy/media-path/*` → Caspar `<media-path>`
-3. Upload new blueprint bundle → **Apply studio config** in Sofie Core WebUI
-
-### Verification AMCP (Caspar Client)
-
-Story L3Ds compose on **BG look** channels (probe on **3**; use **4** for look B).
-PGM hears them via `route://{3|4}` — do not expect `CG 2-121` for hypercomposed looks.
+## Verify on Caspar (AMCP)
 
 ```text
-CG 3-121 ADD 1 "gfx/l3d-tema" "{\"headline\":\"Test\"}"
-CG 3-121 ADD 1 "gfx/l3d-syn" "{\"name\":\"Peter Pellegrini\",\"role\":\"Prezident SR\"}"
-CG 3-121 ADD 1 "gfx/l3d-mod" "{\"name\":\"Gabriela Kajtárová\",\"title\":\"moderátorka\"}"
-CG 3-121 ADD 1 "gfx/source" "{\"source\":\"TASR\"}"
-CG 2-123 ADD 1 "gfx/logo-bug"
+# look probe (channel 2 or 3 — whichever slot was claimed)
+CG 2-121 ADD 1 "gfx/l3d-syn" 1 "{\"name\":\"Peter Pellegrini\",\"role\":\"Prezident SR\"}"
+CG 4-121 ADD 1 "gfx/l3d-headline" 1 "{\"title\":\"Test\",\"subtitle\":\"sub\"}"
+CG 4-123 ADD 1 "gfx/logo-bug" 1
 PLAY 1-115 "clips/headline1"
-CG 1-121 ADD 1 "gfx/headline-fallback" "{\"source\":\"TASR\"}"
 ```
 
-### Post-demo (PR2)
+A DoubleBox Take adds `PLAY {2|3}-118 "loops/db_loop" LOOP` + `MIXER {ch}-118
+OPACITY 1`; the idle slot reveals `OPACITY 1` at offAir. vMix Takes show no
+`wipes/` PLAY and no `route://` — check vMix for the stinger + look inputs.
 
-- `hypercomposed` studio preset per [`OUTPUT_TOPOLOGY.md`](./OUTPUT_TOPOLOGY.md)
-- CH1 LED vs CH2 PGM mappings
-- Wipe template + segment transitions
-- Full 10-template coverage
-- **RE readiness from Core (ADR 0001):** `peripheralDevice.packageManager.getContentStatusForRundown` +
-  hybrid fs fallback in Rundown Editor — see `docs/adr/0001-re-readiness-from-core-package-manager.md`
+## Handoffs
 
----
-
-## Rundown Editor (`tojemoc/unopus`)
-
-- No template rendering; stores `pieceType` + payload only
-- Type manifests load from megarepo `assets/` (not from this repo)
-- Standalone CI/Docker fetch pins sofie commit SHA + SHA-256 checksums — see
-  [`MEGAREPO-ASSETS-FETCH.md`](MEGAREPO-ASSETS-FETCH.md) / [unopus #45](https://github.com/tojemoc/unopus/pull/45)
-- Built-in `l3d` manifest uses `name`+`title`; megarepo JSON uses `name`+`description` — **align on import**
-
-### Merged (PR #32, `6e1f08a`)
-
-- **Media readiness:** `GET /api/rundowns/:id/readiness` — evaluates `mediaPick` fields (no WebM
-  sibling); polls every 10s via `RundownReadinessProvider`. Media picker probes clip length via
-  ffprobe and seeds the piece **On air** value plus `payload.sourceDuration` (ms). **Part Duration**
-  is a separate story-level field managed by the editor / duration sync — not written directly by
-  the probe. **Docker images must include the `ffmpeg` package** (`ffprobe` on PATH); without it
-  probes return null silently. Backend logs `ffprobe: available` or a warning at startup.
-- **Story sidebar:** columnar list (Status | Type | Story | Dur) with READY/NOT READY badges
-- **Theming:** dark default + light option; semantic `--re-*` tokens; ThemeToggle in navbar/login
-- **Rebrand:** Unopus (navbar breadcrumb)
-
-Key files: `backend/src/background/mediaReadiness.ts`, `frontend/src/hooks/useRundownReadiness.ts`,
-`RundownReadinessContext.tsx`, `sidebar/partRow.tsx`, `readinessBadge.tsx`, `theme/tokens.scss`
-
-### Open branch: `cursor/quick-story-toolbar-cc55`
-
-PR #32 left per-row `PartTypeButtons` with absolute positioning from the old layout, causing
-complete overlap with the new story table. Fix moves a **single** quick-add strip (ILU, SYN, Cam,
-VO, …) into the blue timing bar; `usePartInsertTarget` inserts after the open story (or at
-segment end). Compare: https://github.com/tojemoc/unopus/compare/main...cursor/quick-story-toolbar-cc55
-
-### ILU architecture (cross-repo)
-
-- **Layer contract (LED channel):** Sofie studio mapping id (= `CasparCGLayers` enum value) → Caspar layer. Parenthetical names are `LedChannelLayers` shorthand only.
-  - `casparcg_clip_player1` (`CasparCGClipPlayer1`) → layer **110** (alias `ClipPlayer`) — LED background loop / VT fullscreen only; **never** apply MIXER FILL here
-  - `casparcg_ilu_player` (`CasparCGIluPlayer`) → layer **115** (alias `IluPlayer`) — headline ILU MEDIA with FILL `0.08 / 0.15 / 0.62 / 0.73` (matches HTML `#ilu-slide`)
-  - `casparcg_graphics_l3d` (`CasparCGGraphicsLowerThird`) → layer **121** (alias `GraphicsLowerThird` / “LowerThird”) — HTML graphics templates (`gfx/headline`, etc.)
-- **Bug (2026-07-15):** FILL landed on `1-110` and scaled the bg loop. Fix branch:
-  `tojemoc/sofie-demo-blueprints` → `cursor/ilu-fill-dedicated-layer-09c3`
-  (compare: https://github.com/tojemoc/sofie-demo-blueprints/compare/develop...cursor/ilu-fill-dedicated-layer-09c3)
-- **demo-assets:** HTML headline templates are overlay-only (no WebM/`<video>`). ILU always plays via Caspar MEDIA on layer 115.
-- **ILU prerendered/bypass** (`iluPrerendered`; legacy `iluFallback` = ON):
-  - **OFF** — full-frame 16:9 `.mp4` with MIXER CROP (cover) + FILL `0.08 / 0.15 / 0.62 / 0.73` + `gfx/headline-fallback` chrome
-  - **ON** — pre-rendered alpha `.mov`, FILL `0 0 1 1`, no HTML chrome
-- **Operator:** after uploading the new blueprint bundle, **re-apply studio config** so Sofie mapping `casparcg_ilu_player` (`CasparCGIluPlayer`) → Caspar layer **115** exists
-
----
-
-## Sofie Core / Playout Gateway
-
-- No code changes for new template names
-- Upload new blueprint bundle → apply studio config → verify Playout Gateway + Caspar subdevice
-- Package Manager connects to Core at `coreHost:corePort` (look for `Core Connected!` / `studioId`)
-
-### Package Manager misconfig (not a Core disconnect)
-
-Symptoms that look like “PM cannot connect” but Core is up:
-
-1. Nested Sofie `mediaPackages` object **does not persist in Settings** (edits vanish). Fixed by flattening to top-level fields on `cursor/pm-accessor-type-ingest-09c3`. After uploading that bundle + refresh: edit **Ingest media folder** (and **CasparCG media folder** if separate) as plain strings — do **not** use the nested “Media package containers” object. **Source of truth** is the shared media tree both Package Manager and Rundown Editor read: Sofie studio `ingestMediaFolder` must match RE `INGEST_MEDIA_ROOT` / Settings → Ingest media root (clips live under `<root>/clips/`). Examples: Windows `c:/casparcg/sofie-demo-media`; Docker-mounted `/app/ingest`. Then Apply Configuration. Until the new blueprints are uploaded, you cannot save that nested field in the UI.
-2. `getAccessorStaticHandle: Accessor type is undefined` — ExpectedPackage source accessors lacked `type`; also on `cursor/pm-accessor-type-ingest-09c3`. After upload, re-apply studio config and re-ingest/reset the rundown so packages regenerate.
-
-### Rundown Editor ingest scan vs Sofie VID pieces (2026-07-15)
-
-Symptoms:
-- Sofie fails regenerating VO/VT/SYN parts with a `video` (VID) piece when **File name** is empty — blueprints called `stripExtension(undefined)` and threw.
-- RE mediaPick was **select-only**; with missing `clips/` under `INGEST_MEDIA_ROOT` (often `/app/ingest` in Docker) you could not type a Caspar/PM-relative path. The warning showed only the relative folder next to “Ingest root: …” which looked nonsensical.
-
-Fixes:
-- Blueprints `cursor/vid-clip-props-harden-09c3`: require a non-empty path; Invalid “Video clip is missing file name”; treat duration as already ms after editor convert; content fallback to VT for video pieces.
-- RE `cursor/media-picker-freetext-09c3`: free-text path (+ datalist/scan picker), show **absolute** scan folder, **Create scan folder** button.
-
-Ops: mount media at the configured ingest root so both RE readiness and Sofie Package Manager see `clips/*.mp4`, or type any path relative to that same media tree.
-
----
-
-## Verification checklist
-
-```text
-[ ] yarn build in demo-assets; inspect deploy/template-path/gfx/*/
-[ ] Copy zip to Caspar; AMCP: CG <ch> ADD 0 "<clipName>" 1
-[ ] CG <ch> UPDATE 0 "<clipName>" "{\"headline\":\"test\"}"
-[ ] Blueprints dist bundle uploaded to Core
-[ ] Studio config applied; Sofie mappings: casparcg_clip_player1 (CasparCGClipPlayer1)→110, casparcg_ilu_player (CasparCGIluPlayer)→115, casparcg_graphics_l3d (CasparCGGraphicsLowerThird)→121
-[ ] Sofie mappings: casparcg_graphics_pgm_l3d / _b (CasparCGGraphicsPgmLowerThird) → BG 3/4, layer 121
-[ ] Take ILU / GFX with l3d-headline: AMCP shows CG/TEMPLATE on {3|4}-121 (casparcg_graphics_pgm_l3d), not on LED 1-121; PGM shows route://{3|4}
-[ ] Headline ILU (bypass OFF): AMCP shows PLAY + MIXER CROP/FILL on 1-115 (casparcg_ilu_player) + CG headline-fallback; loop keeps PLAY on 1-110
-[ ] Headline ILU (bypass ON): AMCP shows PLAY + FILL 0 0 1 1 on 1-115 only (no HTML chrome)
-[ ] RE rundown ingested; take fires correct template + data
-[ ] logo-bug survives across parts until rundown end
-```
-
----
-
-## Rundown Editor: readiness/duration diagnostics + daily template workflow (2026-08-05)
-
-Follow-up planning session on
-[`RE-READINESS-AND-PLAYOUT-UX.md`](RE-READINESS-AND-PLAYOUT-UX.md). Key finding: ADR
-0001 (`docs/adr/0001-re-readiness-from-core-package-manager.md`) is **already
-code-complete** on both `sofie-core` main
-(`peripheralDevice.packageManager.getContentStatusForRundown`) and `unopus` main
-(`backend/src/background/coreContentStatus.ts` hybrid consumer), and the piece
-`externalId` contract between RE and blueprints checks out correctly end-to-end. The
-operator-reported "readiness/duration doesn't work across the Windows Caspar/PM box →
-Alpine LXC" problem is therefore most likely a **silent-failure/observability gap**,
-not a missing feature — every failure mode (Core disconnected, RE peripheral device
-not attached to a studio, Package Manager down/misconfigured) collapses into the same
-unlabeled local-fs fallback today.
-
-Separately, the "editor experience" ask (clone the canonical template — blueprints +
-piece/part/segment types + `assets/spravy-v3-smoke-rundown.json` + demo-assets —
-automatically every day, then bulk-edit only prompter text / L3D names / ILU-SYN
-filenames) turns out to be **mostly already built** in `unopus` main
-(`Rundown.isTemplate`, `mutations.createRundownCopy`, `ImportSegmentModal`) — just
-manual, with no scheduling and no bulk-edit surface. The abandoned `unopus` `backup`
-branch (Google Sheets adapters) and archived `duopus` repo (Sheets + Bitfocus
-Companion, vMix-era) are explicitly **not** reusable — spreadsheet-as-source-of-truth
-fights the current Sofie-centric (Core-as-sync-target) architecture.
-
-See the two handoffs below for the concrete, file-level plan.
-
----
-
-## Agent handoffs
-
-| Handoff | Path |
-|---------|------|
-| Blueprints v2 wiring | [`docs/integration/handoffs/blueprints-v2-wiring.md`](handoffs/blueprints-v2-wiring.md) |
-| Demo-assets canonical handoff | [`tojemoc/sofie-demo-assets` → `docs/BLUEPRINTS_HANDOFF.md`](https://github.com/tojemoc/sofie-demo-assets/blob/main/docs/BLUEPRINTS_HANDOFF.md) |
-| RE readiness/duration diagnostics | [`docs/integration/handoffs/re-readiness-diagnostics.md`](handoffs/re-readiness-diagnostics.md) |
-| RE daily template workflow (clone + bulk rewrite + readiness-aware picker) | [`docs/integration/handoffs/re-daily-template-workflow.md`](handoffs/re-daily-template-workflow.md) |
-| This log | [`docs/integration/SPRAVY-V2-INTEGRATION.md`](SPRAVY-V2-INTEGRATION.md) |
+| Doc | Purpose |
+|-----|---------|
+| [`handoffs/blueprints-v2-wiring.md`](handoffs/blueprints-v2-wiring.md) | Blueprints v2 wiring agent prompt |
+| [demo-assets `docs/BLUEPRINTS_HANDOFF.md`](https://github.com/tojemoc/sofie-demo-assets/blob/main/docs/BLUEPRINTS_HANDOFF.md) | Template-side contract |
+| [`handoffs/re-readiness-diagnostics.md`](handoffs/re-readiness-diagnostics.md) | RE readiness/duration plan |
+| [`handoffs/re-daily-template-workflow.md`](handoffs/re-daily-template-workflow.md) | Daily template clone workflow |
