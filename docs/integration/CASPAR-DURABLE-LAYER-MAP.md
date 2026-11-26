@@ -178,10 +178,10 @@ Opened once; looks sample via `PLAY {3|4}-115 route://5`. Never a second
 
 | Template | Look | Role |
 |----------|------|------|
-| `gfx/l3d-headline` | clean-GFX 4-121 | Headline bars |
+| `gfx/l3d-headline` | clean-GFX 4-121 (vMix) / PGM 2-121 (legacy) | Headline bars |
 | `gfx/l3d-tema` | look 121 | Topic line |
 | `gfx/l3d-syn` | look 121 | SYN name/role strap |
-| `gfx/l3d-mod` | clean-GFX 4-121 | Presenter MOD nameplate |
+| `gfx/l3d-mod` | clean-GFX 4-121 (vMix) / PGM 2-121 (legacy) | Presenter MOD nameplate |
 | `gfx/l3d-sjv` / `gfx/l3d-sport` | look 121 | SJV / Šport bars |
 | `gfx/l3d-odporucanie` | look 121 | End tip |
 | `gfx/pocasie` | look 121 | Weather HTML (warm-loads via idle preview) |

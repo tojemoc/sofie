@@ -51,8 +51,8 @@ templates expose `window.play() / stop() / update(data)`.
 |------------|----------------------|----------|
 | `gfx/headline` | `iluFile`, `source` | LED 115 ILU media |
 | `gfx/headline-fallback` | `source` | LED 121 chrome (no text) |
-| `gfx/l3d-headline` | `title`, `subtitle` (aliases `headline`/`subline`) | clean-GFX 4-121 |
-| `gfx/l3d-mod` | `name`, `title` | clean-GFX 4-121 |
+| `gfx/l3d-headline` | `title`, `subtitle` (aliases `headline`/`subline`) | clean-GFX 4-121 (vMix) / PGM 2-121 (legacy) |
+| `gfx/l3d-mod` | `name`, `title` | clean-GFX 4-121 (vMix) / PGM 2-121 (legacy) |
 | `gfx/l3d-tema` | `headline` | look 121 |
 | `gfx/l3d-syn` | `name`, `role` (replaces retired `l3d-predstavovak`) | look 121 |
 | `gfx/l3d-sjv` | `kicker`, `headline` | look 121 |

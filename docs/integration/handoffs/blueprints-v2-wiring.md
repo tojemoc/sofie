@@ -47,7 +47,7 @@ Repo: https://github.com/tojemoc/sofie-demo-assets (`main` @ PR #3 merged 2026-0
 | `l3d-syn` | `gfx/l3d-syn` | `name`, `role` |
 | `l3d-sjv` | `gfx/l3d-sjv` | `headline` |
 | `l3d-sport` | `gfx/l3d-sport` | `headline`, `source` |
-| `weather` | `gfx/pocasie` | `cities` (JSON **string** of `{ region, name, temp, … }[]`; RE type `weather` → Caspar `gfx/pocasie`; blueprints `JSON.parse`) |
+| `weather` | `gfx/pocasie` | `cities` (JSON **string** of `{ region, name, temp, … }[]`) on the RE piece — blueprints `JSON.parse` it and flatten to `<REGION>_temp` / `_name` / `_delay` / `_img` keys; the template's `data` receives the flat keys, not `cities` |
 | `outro` | `gfx/outro` | _(empty — play/stop only)_ |
 | `logo-bug` | `gfx/logo-bug` | _(empty — play/stop only)_ |
 
@@ -95,7 +95,9 @@ You must:
 - Route fullscreen-style templates (`weather`, `outro`) appropriately
 - Ensure `content.data` spreads **all** `object.attributes` (v2 fields), not only
   `name`/`description`/`location`/`text` in `templateData`
-- For Friday MVP: single-channel is OK — all GFX on existing lower-third/logo layers
+
+(Retired: the Friday-MVP single-channel fallback — the hypercomposed mappings in
+§4 are current.)
 
 ### 4. Layer mappings
 

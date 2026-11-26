@@ -68,7 +68,7 @@ wipe PLAYs and **no** PGM route layers in this mode.
 ```xml
 <channels>
   <channel><video-mode>1080p5000</video-mode>
-    <consumers><!-- 1 LED wall: screen / decklink / SDI --></consumers>
+    <consumers><screen/></consumers><!-- 1 LED wall — keep whatever consumer drives it (screen / decklink / SDI); an empty consumers element = no output -->
   </channel>
   <channel><video-mode>1080p5000</video-mode>
     <consumers><ndi/></consumers><!-- 2 Look A → vMix lookAInput -->
@@ -175,7 +175,7 @@ Legacy Caspar-switched looks use clip layer **111** instead of 120 (below CAM).
 | DoubleBox `db_loop` | look **118** (phase-locked — see `DOUBLEBOX-PGM.md`) |
 | `video` / SYN / VT | look **120** (vMix) / **111** (legacy) |
 | `l3d-*` story / `gfx/pocasie` | look **121** CG; `assets/bg_pocasie` underlay on **116** |
-| `l3d-headline`, `l3d-mod` | clean-GFX **4-121** (`casparcg_graphics_headline`) |
+| `l3d-headline`, `l3d-mod` | clean-GFX **4-121** (vMix) / PGM **2-121** (legacy) — `casparcg_graphics_headline` |
 | `ilu-zaver` | LED **1-115** windowed + Full-look CAM — never `db_loop` |
 | `logo-bug` / countup | PGM **123** |
 | `wipe` | vMix: `Stinger1–4` on the Take. Legacy: **205–208** overlay |
