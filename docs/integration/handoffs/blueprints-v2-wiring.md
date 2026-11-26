@@ -91,10 +91,13 @@ Today: regex routes ticker/strap/fullscreen; **default → `CasparCGGraphicsLowe
 
 You must:
 
-- Route `logo-bug` → `CasparCGGraphicsLogo` (ch3/113) with `PieceLifespan.OutOnRundownEnd`
+- Route `logo-bug` → `casparcg_graphics_logo` (clean-GFX 4-123 vMix / 2-123 legacy)
+  with `PieceLifespan.OutOnRundownEnd`
 - Route fullscreen-style templates (`weather`, `outro`) appropriately
 - Ensure `content.data` spreads **all** `object.attributes` (v2 fields), not only
-  `name`/`description`/`location`/`text` in `templateData`
+  `name`/`description`/`location`/`text` in `templateData` — except `weather`'s
+  `cities` JSON string, which blueprints `JSON.parse` into flat `<REGION>_temp` /
+  `_name` / `_delay` / `_img` keys and drop `cities` itself from `data`
 
 (Retired: the Friday-MVP single-channel fallback — the hypercomposed mappings in
 §4 are current.)
@@ -112,7 +115,8 @@ ride the clean-GFX channel via `casparcg_graphics_headline` (4-121), per
 ### 5. Baseline / rundown start
 
 `logo-bug` should appear at rundown start and persist (`OutOnRundownEnd`). Wire in
-`rundown/baseline.ts` or equivalent — layer 113 exists but is unused today.
+`rundown/baseline.ts` or equivalent — the `casparcg_graphics_logo` mapping
+(clean-GFX 4-123 vMix / 2-123 legacy) exists but is unused today.
 
 ### 6. `packages/blueprints/src/common/definitions/objects.ts`
 
