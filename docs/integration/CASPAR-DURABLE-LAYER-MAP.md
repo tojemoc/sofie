@@ -121,7 +121,7 @@ vMix switching is TSR objects on `VMixLayers` mappings, not AMCP:
 | `vmix_look_input_{a,b}_audio` | Look input mute/unmute to buses `M,A` |
 | `vmix_bed_{a,c}` / `*_audio` | Kolíska beds as vMix inputs |
 | `vmix_overlay_graphics` | Overlay 1 = clean GFX feed |
-| `vmix_mic_audio` | Moderator mic ramp-down during wipes/SYN |
+| `vmix_mic_audio` | Moderator mic ramp-down during wipes/SYN (not SJV/ŠPORT SYNs — live read over muted ILU bed) |
 | `vmix_recording` | PGM record control |
 
 Stingers: `wipe`→Stinger1, `wipe_sjv`→Stinger2, `wipe_sport`→Stinger3,
